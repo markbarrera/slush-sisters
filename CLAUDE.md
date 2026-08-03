@@ -2,7 +2,7 @@
 
 The site for slushsisters.com — frozen drink machine rentals in Lakeway, Bee
 Cave, and Lake Travis, TX. Run by two sisters, ages 8 and 10. Registered as
-Slush Sisters LLC. $275 per rental, delivery and pickup included.
+Slush Sisters LLC. $250 per rental, delivery and pickup included.
 
 ## Stack
 
