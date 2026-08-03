@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Party — Slush Sisters · Lakeway TX</title>
+<meta name="description" content="Book a frozen drink machine rental in Lakeway, Bee Cave, or Lake Travis. We respond the same day.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+/* SIMPLE NAV — borrowed from Shopify store pattern */
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:#1a237e;text-decoration:none;}
+.site-name span{color:#4fc3f7;}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:#4fc3f7;color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:#29b6f6;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;}
+}
+
+/* HERO — big photo with text overlay, like a real Squarespace site */
+.hero-photo{position:relative;background:#e8f4fd;min-height:420px;display:flex;align-items:center;padding:48px 32px;overflow:hidden;}
+.hero-photo .hero-img{position:absolute;right:0;bottom:0;width:55%;max-width:500px;object-fit:contain;}
+@media(max-width:700px){
+.hero-photo{flex-direction:column;text-align:center;padding:40px 24px 0;}
+.hero-photo .hero-img{position:relative;width:80%;max-width:320px;margin-top:24px;}
+}
+.hero-text{max-width:440px;position:relative;z-index:1;}
+.hero-text h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#1a237e;line-height:1.1;margin-bottom:12px;}
+.hero-text p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:24px;}
+.btn{display:inline-block;background:#4fc3f7;color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
+.btn:hover{background:#29b6f6;}
+.btn-outline{background:none;border:2px solid #1a237e;color:#1a237e;}
+.btn-outline:hover{background:#1a237e;color:#fff;}
+
+/* MARQUEE — borrowed from Me & the Bees */
+.marquee{overflow:hidden;background:#1a237e;color:#fff;padding:12px 0;font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;white-space:nowrap;}
+.marquee-inner{display:inline-block;animation:scroll 20s linear infinite;}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:64px 24px;}
+.contain{max-width:800px;margin:0 auto;}
+section h2{font-family:'Sour Gummy',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:8px;}
+section .lead{color:#666;font-size:.95rem;line-height:1.6;margin-bottom:32px;}
+
+/* SIMPLE 3-COL — no cards, just text and icons */
+.three-up{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:center;}
+@media(max-width:600px){.three-up{grid-template-columns:1fr;gap:24px;}}
+.three-up .icon{display:none;}
+.three-up h3{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px;}
+.three-up p{font-size:.85rem;color:#666;line-height:1.55;}
+
+/* PHOTO PAIR — two photos side by side, like a real Squarespace about page */
+.photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+@media(max-width:540px){.photo-pair{grid-template-columns:1fr;}}
+.photo-pair img{border-radius:12px;width:100%;aspect-ratio:3/4;object-fit:cover;}
+
+/* FLAVOR LIST — simple, not cards */
+.flavor-list{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
+@media(max-width:500px){.flavor-list{grid-template-columns:1fr;}}
+.fl-item{display:flex;gap:12px;align-items:flex-start;padding-bottom:16px;border-bottom:1px solid #eee;}
+.fl-item .fl-emoji{font-size:1.8rem;flex-shrink:0;}
+.fl-item h3{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:2px;}
+.fl-item p{font-size:.82rem;color:#666;line-height:1.45;}
+.fl-item .fl-candy{font-size:.72rem;color:#e91e63;font-weight:600;margin-top:4px;}
+
+/* PRICING — simple box, not fancy */
+.price-simple{border:2px solid #1a237e;border-radius:12px;padding:32px;max-width:460px;margin:0 auto;text-align:center;}
+.price-simple .amount{font-family:'Sour Gummy',sans-serif;font-size:3rem;font-weight:900;color:#1a237e;}
+.price-simple .per{color:#888;font-size:.85rem;margin-bottom:16px;}
+.price-simple ul{list-style:none;text-align:left;padding:0;}
+.price-simple ul li{padding:8px 0;font-size:.88rem;color:#444;border-bottom:1px solid #f0f0f0;}
+.price-simple ul li:last-child{border:none;}
+.extras{text-align:center;margin-top:16px;font-size:.82rem;color:#888;}
+
+/* FAQ — borrowed from Hill Country Margaritas */
+details{border-bottom:1px solid #eee;padding:16px 0;}
+details summary{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;}
+details summary::after{content:"+";color:#999;font-size:1.2rem;color:#4fc3f7;}
+details[open] summary::after{content:"−";}
+details p{margin-top:10px;font-size:.88rem;color:#666;line-height:1.6;}
+
+/* FORM */
+.form-wrap{max-width:480px;margin:0 auto;}
+.form-wrap label{display:block;font-weight:500;font-size:.82rem;margin-bottom:4px;margin-top:14px;}
+.form-wrap input,.form-wrap select,.form-wrap textarea{width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:#fafafa;}
+.form-wrap input:focus,.form-wrap select:focus,.form-wrap textarea:focus{outline:none;border-color:#4fc3f7;}
+.form-wrap textarea{height:70px;resize:vertical;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:440px){.row2{grid-template-columns:1fr;}}
+.form-btn{display:block;width:100%;background:#4fc3f7;color:#fff;font-weight:700;font-size:.95rem;padding:14px;border:none;border-radius:8px;cursor:pointer;margin-top:18px;}
+.form-btn:hover{background:#29b6f6;}
+
+/* SOCIAL PLACEHOLDER */
+.social-placeholder{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:20px;}
+@media(max-width:480px){.social-placeholder{grid-template-columns:1fr 1fr;}}
+.sp{aspect-ratio:1;background:#f5f5f5;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
+
+/* FOOTER */
+footer{background:#1a237e;color:#fff;padding:40px 24px;text-align:center;}
+footer .f-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
+footer .f-name span{color:#4fc3f7;}
+footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
+footer a{color:#4fc3f7;}
+
+/* ALT BACKGROUNDS */
+.bg-light{background:#f8fbff;}
+.bg-blush{background:#fff5f7;}
+.fl-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;margin-top:2px;}
+.three-up h3{margin-top:0;}
+
+/* FORM STATES */
+.hint{font-size:.72rem;color:#999;margin-top:4px;}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.notice{border-radius:8px;padding:14px 16px;font-size:.85rem;line-height:1.5;margin:16px 0;}
+.notice strong{display:block;margin-bottom:4px;}
+.notice-warn{background:#fff8e1;border:1.5px solid #ffd54f;color:#6b5200;}
+.notice-error{background:#fff1f2;border:1.5px solid #ffa4b0;color:#8f1d2c;}
+.form-btn[disabled]{background:#c9d3d8;cursor:not-allowed;}
+.form-wrap input:invalid.touched,.form-wrap textarea:invalid.touched{border-color:#ff6b81;}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta name="theme-color" content="#1a237e">
+<link rel="canonical" href="https://slushsisters.com/book">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://slushsisters.com/book">
+<meta property="og:title" content="Book Your Party — Slush Sisters">
+<meta property="og:description" content="Book a frozen drink machine rental in Lakeway, Bee Cave, or Lake Travis. We respond the same day.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Slush Sisters — frozen drink machine rentals in Lakeway, Bee Cave and Lake Travis. $275 all-in.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Book Your Party — Slush Sisters">
+<meta name="twitter:description" content="Book a frozen drink machine rental in Lakeway, Bee Cave, or Lake Travis. We respond the same day.">
+<meta name="twitter:image" content="https://slushsisters.com/img/og.png">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/flavors">Flavors</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<section>
+<div class="contain">
+<h2>Book your party</h2>
+<p class="lead">Tell us about your event and we will get back to you the same day.</p>
+<div class="form-wrap">
+
+<div id="offline-note" class="notice notice-warn" hidden>
+<strong>Online booking is not switched on yet.</strong>
+<span>Requests sent from this page will not reach us, so please get in touch directly instead. We are sorry for the detour.</span>
+</div>
+
+<form id="booking" novalidate>
+<label for="f-name">Your name</label>
+<input id="f-name" name="name" type="text" autocomplete="name" required placeholder="First and last name">
+
+<div class="row2">
+<div><label for="f-date">Event date</label><input id="f-date" name="event_date" type="date" required></div>
+<div><label for="f-guests">Guest count</label><input id="f-guests" name="guest_count" type="number" min="1" inputmode="numeric" placeholder="e.g. 30"></div>
+</div>
+
+<div class="row2">
+<div><label for="f-flavor1">Flavor 1</label><select id="f-flavor1" name="flavor_1"><option value="">Pick a flavor</option><option>Watermelon</option><option>Strawberry Lemonade</option><option>Blue Raspberry</option><option>Mango</option><option>Margarita Lime</option><option>Piña Colada</option></select></div>
+<div><label for="f-flavor2">Flavor 2</label><select id="f-flavor2" name="flavor_2"><option value="">Pick a flavor</option><option>Watermelon</option><option>Strawberry Lemonade</option><option>Blue Raspberry</option><option>Mango</option><option>Margarita Lime</option><option>Piña Colada</option></select></div>
+</div>
+
+<label for="f-address">Event address</label>
+<input id="f-address" name="address" type="text" autocomplete="street-address" required placeholder="Street address and city">
+<p class="hint">We need this to plan delivery and pickup.</p>
+
+<label for="f-contact">Phone or email</label>
+<input id="f-contact" name="contact" type="text" autocomplete="tel" required placeholder="Best way to reach you">
+
+<label for="f-notes">Anything else?</label>
+<textarea id="f-notes" name="notes" placeholder="Type of event, special requests, questions..."></textarea>
+
+<!-- Bots fill hidden fields in; people do not. -->
+<div class="hp" aria-hidden="true"><label for="f-hp">Leave this empty</label><input id="f-hp" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+
+<button id="submit-btn" class="form-btn" type="submit">Send request</button>
+
+<div id="form-error" class="notice notice-error" hidden role="alert"></div>
+</form>
+
+<div id="thx" hidden style="text-align:center;padding:24px 0;">
+<p style="font-family:'Sour Gummy',sans-serif;font-size:1.2rem;font-weight:800;color:#1a237e;">Got it! We will get back to you today.</p>
+<p style="font-size:.85rem;color:#888;margin-top:6px;">Your request is with us — watch for a reply at the number or email you gave.</p>
+</div>
+
+<p style="text-align:center;margin-top:14px;font-size:.78rem;color:#999;">$50 deposit holds your date. We send payment details after confirming.</p>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
+<p>Lakeway, TX · <a href="/book">Book a rental</a></p>
+<p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
+</footer>
+
+<script>
+// ---------------------------------------------------------------------------
+// Booking form.
+//
+// BOOKING_ENDPOINT is the one thing to fill in. Until it holds a URL, the form
+// is disabled and says so — it must never show a success message for a request
+// that went nowhere, which is exactly what the previous version did.
+//
+// The endpoint should accept a POST of JSON and return 2xx once it has stored
+// or forwarded the booking. See docs/booking-form.md.
+// ---------------------------------------------------------------------------
+var BOOKING_ENDPOINT = '';
+
+(function () {
+  var form = document.getElementById('booking');
+  var btn = document.getElementById('submit-btn');
+  var errBox = document.getElementById('form-error');
+  var thx = document.getElementById('thx');
+  var offline = document.getElementById('offline-note');
+
+  function fail(msg) {
+    errBox.textContent = msg;
+    errBox.hidden = false;
+  }
+
+  // No destination configured: disable rather than pretend.
+  if (!BOOKING_ENDPOINT) {
+    offline.hidden = false;
+    btn.disabled = true;
+    btn.textContent = 'Booking form not available yet';
+    return;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errBox.hidden = true;
+
+    // Surface native validation messages instead of silently doing nothing.
+    Array.prototype.forEach.call(form.elements, function (el) {
+      el.classList.add('touched');
+    });
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var data = {};
+    new FormData(form).forEach(function (v, k) { data[k] = v; });
+    if (data.website) return;   // honeypot tripped
+    delete data.website;
+    data.submitted_at = new Date().toISOString();
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(BOOKING_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        form.hidden = true;
+        thx.hidden = false;
+        thx.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Send request';
+        fail('That did not go through — please check your connection and try again. Nothing was sent, so your date is not held yet.');
+      });
+  });
+})();
+</script>
+</body></html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — Slush Sisters</title>
+<meta name="robots" content="noindex">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;display:flex;flex-direction:column;min-height:100vh;}
+a{color:inherit;}
+
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:#1a237e;text-decoration:none;}
+.site-name span{color:#4fc3f7;}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:#4fc3f7;color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:#29b6f6;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;}
+}
+
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background:#e8f4fd;}
+main h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#1a237e;line-height:1.1;margin-bottom:12px;}
+main p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:28px;max-width:420px;}
+.btn{display:inline-block;background:#4fc3f7;color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
+.btn:hover{background:#29b6f6;}
+
+footer{background:#1a237e;color:#fff;padding:40px 24px;text-align:center;}
+footer .f-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
+footer .f-name span{color:#4fc3f7;}
+footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
+footer a{color:#4fc3f7;}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta name="theme-color" content="#1a237e">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/flavors">Flavors</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<main>
+<h1>This page melted</h1>
+<p>We could not find that page. The machines are still cold and the dates are still open — start from the top.</p>
+<a href="/" class="btn">Back to the home page</a>
+</main>
+
+<footer>
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
+<p>Lakeway, TX · <a href="/book">Book a rental</a></p>
+<p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
+</footer></body></html>

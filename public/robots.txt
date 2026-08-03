@@ -1,0 +1,76 @@
+# slushsisters.com
+#
+# Everything is allowed, deliberately — search crawlers, social link-preview
+# fetchers, and AI assistant crawlers alike. This is a small brand that wants to
+# be found and cited, not one protecting proprietary content. Do not add
+# Disallow rules here without a specific reason.
+#
+# Note: this file only covers crawlers that choose to obey it. Cloudflare's
+# bot-blocking features sit in front of it and can block a crawler before it
+# ever reads this. See docs/crawlers.md.
+
+User-agent: *
+Allow: /
+
+# Named explicitly so a future blanket block does not quietly cut them off.
+# Search
+User-agent: Googlebot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# AI assistants — these drive "who rents margarita machines near Lakeway"
+# style answers, which is a real discovery channel for this business.
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: meta-externalagent
+Allow: /
+User-agent: CCBot
+Allow: /
+
+# Social link previews — without these, a link texted or put in an Instagram
+# bio previews as bare text with no image.
+User-agent: facebookexternalhit
+Allow: /
+User-agent: Twitterbot
+Allow: /
+User-agent: LinkedInBot
+Allow: /
+User-agent: Pinterestbot
+Allow: /
+User-agent: Slackbot-LinkExpanding
+Allow: /
+User-agent: WhatsApp
+Allow: /
+User-agent: TelegramBot
+Allow: /
+User-agent: Discordbot
+Allow: /
+
+Sitemap: https://slushsisters.com/sitemap.xml

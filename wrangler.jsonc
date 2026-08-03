@@ -1,0 +1,20 @@
+{
+  // Slush Sisters — static site served by Cloudflare Workers Static Assets.
+  //
+  // `name` MUST match the Worker that currently serves slushsisters.com, or a
+  // deploy will create a second Worker and leave the live site untouched.
+  // See docs/hosting.md for how to confirm this before the first deploy.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "drop-b4ff8c50-e5c",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./public",
+    // Serves /about for public/about.html and 307s /about.html -> /about.
+    // This matches what production does today.
+    "html_handling": "auto-trailing-slash",
+    // Production currently returns index.html with a 200 for every unknown
+    // path, which makes typos and dead links look like real pages to Google.
+    // "404-page" serves public/404.html with a real 404 status instead.
+    "not_found_handling": "404-page"
+  }
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Slush Sisters · Lakeway TX</title>
+<meta name="description" content="$275 per rental. Dual-tank machine, 2 flavors, delivery, setup, pickup. Serving Lakeway, Bee Cave, Lake Travis.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+/* SIMPLE NAV — borrowed from Shopify store pattern */
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:#1a237e;text-decoration:none;}
+.site-name span{color:#4fc3f7;}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:#4fc3f7;color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:#29b6f6;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;}
+}
+
+/* HERO — big photo with text overlay, like a real Squarespace site */
+.hero-photo{position:relative;background:#e8f4fd;min-height:420px;display:flex;align-items:center;padding:48px 32px;overflow:hidden;}
+.hero-photo .hero-img{position:absolute;right:0;bottom:0;width:55%;max-width:500px;object-fit:contain;}
+@media(max-width:700px){
+.hero-photo{flex-direction:column;text-align:center;padding:40px 24px 0;}
+.hero-photo .hero-img{position:relative;width:80%;max-width:320px;margin-top:24px;}
+}
+.hero-text{max-width:440px;position:relative;z-index:1;}
+.hero-text h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#1a237e;line-height:1.1;margin-bottom:12px;}
+.hero-text p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:24px;}
+.btn{display:inline-block;background:#4fc3f7;color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
+.btn:hover{background:#29b6f6;}
+.btn-outline{background:none;border:2px solid #1a237e;color:#1a237e;}
+.btn-outline:hover{background:#1a237e;color:#fff;}
+
+/* MARQUEE — borrowed from Me & the Bees */
+.marquee{overflow:hidden;background:#1a237e;color:#fff;padding:12px 0;font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;white-space:nowrap;}
+.marquee-inner{display:inline-block;animation:scroll 20s linear infinite;}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:64px 24px;}
+.contain{max-width:800px;margin:0 auto;}
+section h2{font-family:'Sour Gummy',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:8px;}
+section .lead{color:#666;font-size:.95rem;line-height:1.6;margin-bottom:32px;}
+
+/* SIMPLE 3-COL — no cards, just text and icons */
+.three-up{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;text-align:center;}
+@media(max-width:600px){.three-up{grid-template-columns:1fr;gap:24px;}}
+.three-up .icon{display:none;}
+.three-up h3{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px;}
+.three-up p{font-size:.85rem;color:#666;line-height:1.55;}
+
+/* PHOTO PAIR — two photos side by side, like a real Squarespace about page */
+.photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+@media(max-width:540px){.photo-pair{grid-template-columns:1fr;}}
+.photo-pair img{border-radius:12px;width:100%;aspect-ratio:3/4;object-fit:cover;}
+
+/* FLAVOR LIST — simple, not cards */
+.flavor-list{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
+@media(max-width:500px){.flavor-list{grid-template-columns:1fr;}}
+.fl-item{display:flex;gap:12px;align-items:flex-start;padding-bottom:16px;border-bottom:1px solid #eee;}
+.fl-item .fl-emoji{font-size:1.8rem;flex-shrink:0;}
+.fl-item h3{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:2px;}
+.fl-item p{font-size:.82rem;color:#666;line-height:1.45;}
+.fl-item .fl-candy{font-size:.72rem;color:#e91e63;font-weight:600;margin-top:4px;}
+
+/* PRICING — simple box, not fancy */
+.price-simple{border:2px solid #1a237e;border-radius:12px;padding:32px;max-width:460px;margin:0 auto;text-align:center;}
+.price-simple .amount{font-family:'Sour Gummy',sans-serif;font-size:3rem;font-weight:900;color:#1a237e;}
+.price-simple .per{color:#888;font-size:.85rem;margin-bottom:16px;}
+.price-simple ul{list-style:none;text-align:left;padding:0;}
+.price-simple ul li{padding:8px 0;font-size:.88rem;color:#444;border-bottom:1px solid #f0f0f0;}
+.price-simple ul li:last-child{border:none;}
+.extras{text-align:center;margin-top:16px;font-size:.82rem;color:#888;}
+
+/* FAQ — borrowed from Hill Country Margaritas */
+details{border-bottom:1px solid #eee;padding:16px 0;}
+details summary{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;}
+details summary::after{content:"+";color:#999;font-size:1.2rem;color:#4fc3f7;}
+details[open] summary::after{content:"−";}
+details p{margin-top:10px;font-size:.88rem;color:#666;line-height:1.6;}
+
+/* FORM */
+.form-wrap{max-width:480px;margin:0 auto;}
+.form-wrap label{display:block;font-weight:500;font-size:.82rem;margin-bottom:4px;margin-top:14px;}
+.form-wrap input,.form-wrap select,.form-wrap textarea{width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:#fafafa;}
+.form-wrap input:focus,.form-wrap select:focus,.form-wrap textarea:focus{outline:none;border-color:#4fc3f7;}
+.form-wrap textarea{height:70px;resize:vertical;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:440px){.row2{grid-template-columns:1fr;}}
+.form-btn{display:block;width:100%;background:#4fc3f7;color:#fff;font-weight:700;font-size:.95rem;padding:14px;border:none;border-radius:8px;cursor:pointer;margin-top:18px;}
+.form-btn:hover{background:#29b6f6;}
+
+/* SOCIAL PLACEHOLDER */
+.social-placeholder{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:20px;}
+@media(max-width:480px){.social-placeholder{grid-template-columns:1fr 1fr;}}
+.sp{aspect-ratio:1;background:#f5f5f5;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
+
+/* FOOTER */
+footer{background:#1a237e;color:#fff;padding:40px 24px;text-align:center;}
+footer .f-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
+footer .f-name span{color:#4fc3f7;}
+footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
+footer a{color:#4fc3f7;}
+
+/* ALT BACKGROUNDS */
+.bg-light{background:#f8fbff;}
+.bg-blush{background:#fff5f7;}
+.fl-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;margin-top:2px;}
+.three-up h3{margin-top:0;}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta name="theme-color" content="#1a237e">
+<link rel="canonical" href="https://slushsisters.com/pricing">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://slushsisters.com/pricing">
+<meta property="og:title" content="$275 All-In — Slush Sisters Pricing">
+<meta property="og:description" content="$275 per rental. Dual-tank machine, 2 flavors, delivery, setup, pickup. Serving Lakeway, Bee Cave, Lake Travis.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Slush Sisters — frozen drink machine rentals in Lakeway, Bee Cave and Lake Travis. $275 all-in.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="$275 All-In — Slush Sisters Pricing">
+<meta name="twitter:description" content="$275 per rental. Dual-tank machine, 2 flavors, delivery, setup, pickup. Serving Lakeway, Bee Cave, Lake Travis.">
+<meta name="twitter:image" content="https://slushsisters.com/img/og.png">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/flavors">Flavors</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<section>
+<div class="contain">
+<h2>Pricing</h2>
+<p class="lead">One price. Everything included. No surprises.</p>
+<div class="price-simple">
+<div class="amount">$275</div>
+<div class="per">per rental</div>
+<ul>
+<li>Dual-tank frozen drink machine (2 flavors at once)</li>
+<li>Your choice of any 2 flavors</li>
+<li>Professional rolling cart and full setup</li>
+<li>Delivery and next-morning pickup</li>
+<li>Cups, straws, and napkins</li>
+<li>Candy garnish on every cup</li>
+<li>Printed instructions for your guests</li>
+<li>Free delivery within 15 miles of Lakeway</li>
+</ul>
+</div>
+<p class="extras">Add-ons: Extra flavor batch $25 · Second machine same event $225 · Beyond 15 mi $1/mile</p>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>Common questions</h2>
+<details><summary>How far in advance should I book?</summary><p>At least 1-2 weeks. Weekends in summer fill up fast. Earlier is always better.</p></details>
+<details><summary>How many drinks does the machine make?</summary><p>Each tank makes about 35-40 twelve-ounce drinks. Both tanks full = 70-80 drinks. Plenty for parties of 20-50 people with refills.</p></details>
+<details><summary>Do you provide alcohol?</summary><p>No. We provide the frozen mixer base. Adults add their own spirits. No liquor license needed.</p></details>
+<details><summary>Where do you deliver?</summary><p>Free within 15 miles of Lakeway. That covers Bee Cave, Westlake, Steiner Ranch, and most of the Lake Travis area.</p></details>
+<details><summary>What electrical outlet do I need?</summary><p>A regular household outlet. Nothing special. Just needs to be close to where you want the machine.</p></details>
+<details><summary>What about cleanup?</summary><p>We handle it. We pick up the machine the next morning and clean everything ourselves.</p></details>
+<details><summary>Are you insured?</summary><p>Yes. Slush Sisters LLC is a registered Texas business with liability insurance. Schools, HOAs, and corporate events can book us.</p></details>
+</div>
+</section>
+
+<section style="text-align:center;">
+<div class="contain">
+<a href="/book" class="btn">Book your party</a>
+</div>
+</section>
+
+<footer>
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
+<p>Lakeway, TX · <a href="/book">Book a rental</a></p>
+<p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
+</footer></body></html>
