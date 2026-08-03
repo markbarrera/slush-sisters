@@ -161,12 +161,20 @@ building starts, the real handles need to be secured across Instagram, TikTok,
 and YouTube — ideally the same string on all three — and every reference on the
 site updated to match.
 
-**The site publishes a precise location for two named minors.** Every page
-footer currently reads "Lakeway, TX 78734". Paired with photos and first names,
-that is a tighter identification than a kid-fronted public brand should carry.
-The service area does not require a ZIP code — "Lakeway, Bee Cave & Lake Travis"
-is equally useful for both customers and local SEO. Recommend dropping the ZIP
-and never publishing a school, a home address, or a regular schedule.
+**Decided by Mark, 2026-08-03 — do not re-litigate these.**
+
+- *School name visible on a shirt is fine.* It reads as local proof, which is
+  the point. Photos are not screened for it.
+- *The home bar in frame is fine, and useful.* The machine's main commercial
+  use is margaritas, "margarita machine rental" is the highest-volume term in
+  the category, and a stocked bar behind the machine reads as competence to the
+  adult doing the booking. No cropping needed on those shots.
+- *First names are in use.* Finley (older) and Harper (younger).
+
+The one thing that did change: the "78734" ZIP came out of the page footers.
+"Lakeway, Bee Cave & Lake Travis" serves customers and local SEO equally well
+without publishing a precise home area alongside photos. Street address and a
+regular schedule still stay off the site.
 
 **Platform minimum age is 13.** Both girls are under it. The accounts have to be
 parent-operated, and saying so plainly in the bio is both honest and the thing
