@@ -6,7 +6,6 @@
 <title>Book Your Party — Slush Sisters · Lakeway TX</title>
 <meta name="description" content="Book a frozen drink machine rental in Lakeway, Bee Cave, or Lake Travis. We respond the same day.">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
 a{color:inherit;}
@@ -119,15 +118,46 @@ footer a{color:#4fc3f7;}
 .bg-blush{background:#fff5f7;}
 .fl-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;margin-top:2px;}
 .three-up h3{margin-top:0;}
+
+/* FORM STATES */
+.hint{font-size:.72rem;color:#999;margin-top:4px;}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.notice{border-radius:8px;padding:14px 16px;font-size:.85rem;line-height:1.5;margin:16px 0;}
+.notice strong{display:block;margin-bottom:4px;}
+.notice-warn{background:#fff8e1;border:1.5px solid #ffd54f;color:#6b5200;}
+.notice-error{background:#fff1f2;border:1.5px solid #ffa4b0;color:#8f1d2c;}
+.form-btn[disabled]{background:#c9d3d8;cursor:not-allowed;}
+.form-wrap input:invalid.touched,.form-wrap textarea:invalid.touched{border-color:#ff6b81;}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta name="theme-color" content="#1a237e">
+<link rel="canonical" href="https://slushsisters.com/book">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://slushsisters.com/book">
+<meta property="og:title" content="Book Your Party — Slush Sisters">
+<meta property="og:description" content="Book a frozen drink machine rental in Lakeway, Bee Cave, or Lake Travis. We respond the same day.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Slush Sisters — frozen drink machine rentals in Lakeway, Bee Cave and Lake Travis. $275 all-in.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Book Your Party — Slush Sisters">
+<meta name="twitter:description" content="Book a frozen drink machine rental in Lakeway, Bee Cave, or Lake Travis. We respond the same day.">
+<meta name="twitter:image" content="https://slushsisters.com/img/og.png">
 </head>
 <body><header id="hdr">
-<a href="index.html" class="site-name"><span>Slush</span> Sisters</a>
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
 <nav>
-<a href="flavors.html">Flavors</a>
-<a href="pricing.html">Pricing</a>
-<a href="about.html">About</a>
-<a href="book.html" class="cta">Book Now</a>
+<a href="/flavors">Flavors</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
 </nav>
 <button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
 </header>
@@ -137,30 +167,50 @@ footer a{color:#4fc3f7;}
 <h2>Book your party</h2>
 <p class="lead">Tell us about your event and we will get back to you the same day.</p>
 <div class="form-wrap">
-<label>Your name</label>
-<input type="text" placeholder="First and last name">
-<div class="row2">
-<div><label>Event date</label><input type="date"></div>
-<div><label>Guest count</label><input type="number" placeholder="e.g. 30"></div>
+
+<div id="offline-note" class="notice notice-warn" hidden>
+<strong>Online booking is not switched on yet.</strong>
+<span>Requests sent from this page will not reach us, so please get in touch directly instead. We are sorry for the detour.</span>
 </div>
+
+<form id="booking" novalidate>
+<label for="f-name">Your name</label>
+<input id="f-name" name="name" type="text" autocomplete="name" required placeholder="First and last name">
+
 <div class="row2">
-<div><label>Flavor 1</label><select><option value="">Pick a flavor</option><option>Watermelon</option><option>Strawberry Lemonade</option><option>Blue Raspberry</option><option>Mango</option><option>Margarita Lime</option><option>Piña Colada</option></select></div>
-<div><label>Flavor 2</label><select><option value="">Pick a flavor</option><option>Watermelon</option><option>Strawberry Lemonade</option><option>Blue Raspberry</option><option>Mango</option><option>Margarita Lime</option><option>Piña Colada</option></select></div>
+<div><label for="f-date">Event date</label><input id="f-date" name="event_date" type="date" required></div>
+<div><label for="f-guests">Guest count</label><input id="f-guests" name="guest_count" type="number" min="1" inputmode="numeric" placeholder="e.g. 30"></div>
 </div>
-<label>Event address</label>
-<input type="text" placeholder="Street address and city">
-<label>Phone or email</label>
-<input type="text" placeholder="Best way to reach you">
-<label>Anything else?</label>
-<textarea placeholder="Type of event, special requests, questions..."></textarea>
-<button class="form-btn" onclick="document.getElementById('thx').style.display='block';this.style.display='none';">Send request</button>
-<div id="thx" style="display:none;text-align:center;padding:24px 0;">
+
+<div class="row2">
+<div><label for="f-flavor1">Flavor 1</label><select id="f-flavor1" name="flavor_1"><option value="">Pick a flavor</option><option>Watermelon</option><option>Strawberry Lemonade</option><option>Blue Raspberry</option><option>Mango</option><option>Margarita Lime</option><option>Piña Colada</option></select></div>
+<div><label for="f-flavor2">Flavor 2</label><select id="f-flavor2" name="flavor_2"><option value="">Pick a flavor</option><option>Watermelon</option><option>Strawberry Lemonade</option><option>Blue Raspberry</option><option>Mango</option><option>Margarita Lime</option><option>Piña Colada</option></select></div>
+</div>
+
+<label for="f-address">Event address</label>
+<input id="f-address" name="address" type="text" autocomplete="street-address" required placeholder="Street address and city">
+<p class="hint">We need this to plan delivery and pickup.</p>
+
+<label for="f-contact">Phone or email</label>
+<input id="f-contact" name="contact" type="text" autocomplete="tel" required placeholder="Best way to reach you">
+
+<label for="f-notes">Anything else?</label>
+<textarea id="f-notes" name="notes" placeholder="Type of event, special requests, questions..."></textarea>
+
+<!-- Bots fill hidden fields in; people do not. -->
+<div class="hp" aria-hidden="true"><label for="f-hp">Leave this empty</label><input id="f-hp" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+
+<button id="submit-btn" class="form-btn" type="submit">Send request</button>
+
+<div id="form-error" class="notice notice-error" hidden role="alert"></div>
+</form>
+
+<div id="thx" hidden style="text-align:center;padding:24px 0;">
 <p style="font-family:'Sour Gummy',sans-serif;font-size:1.2rem;font-weight:800;color:#1a237e;">Got it! We will get back to you today.</p>
+<p style="font-size:.85rem;color:#888;margin-top:6px;">Your request is with us — watch for a reply at the number or email you gave.</p>
 </div>
+
 <p style="text-align:center;margin-top:14px;font-size:.78rem;color:#999;">$50 deposit holds your date. We send payment details after confirming.</p>
-<div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid #eee;">
-<p style="font-size:.85rem;color:#888;">Rather DM us? <a href="#" style="color:#4fc3f7;font-weight:700;">@SlushSisters on Instagram</a></p>
-</div>
 </div>
 </div>
 </section>
@@ -170,4 +220,80 @@ footer a{color:#4fc3f7;}
 <p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
 <p>Lakeway, TX 78734 · <a href="#">@SlushSisters</a></p>
 <p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
-</footer></body></html>
+</footer>
+
+<script>
+// ---------------------------------------------------------------------------
+// Booking form.
+//
+// BOOKING_ENDPOINT is the one thing to fill in. Until it holds a URL, the form
+// is disabled and says so — it must never show a success message for a request
+// that went nowhere, which is exactly what the previous version did.
+//
+// The endpoint should accept a POST of JSON and return 2xx once it has stored
+// or forwarded the booking. See docs/booking-form.md.
+// ---------------------------------------------------------------------------
+var BOOKING_ENDPOINT = '';
+
+(function () {
+  var form = document.getElementById('booking');
+  var btn = document.getElementById('submit-btn');
+  var errBox = document.getElementById('form-error');
+  var thx = document.getElementById('thx');
+  var offline = document.getElementById('offline-note');
+
+  function fail(msg) {
+    errBox.textContent = msg;
+    errBox.hidden = false;
+  }
+
+  // No destination configured: disable rather than pretend.
+  if (!BOOKING_ENDPOINT) {
+    offline.hidden = false;
+    btn.disabled = true;
+    btn.textContent = 'Booking form not available yet';
+    return;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errBox.hidden = true;
+
+    // Surface native validation messages instead of silently doing nothing.
+    Array.prototype.forEach.call(form.elements, function (el) {
+      el.classList.add('touched');
+    });
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var data = {};
+    new FormData(form).forEach(function (v, k) { data[k] = v; });
+    if (data.website) return;   // honeypot tripped
+    delete data.website;
+    data.submitted_at = new Date().toISOString();
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(BOOKING_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        form.hidden = true;
+        thx.hidden = false;
+        thx.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Send request';
+        fail('That did not go through — please check your connection and try again. Nothing was sent, so your date is not held yet.');
+      });
+  });
+})();
+</script>
+</body></html>
