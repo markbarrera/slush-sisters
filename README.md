@@ -12,9 +12,16 @@ that time, so this repo is now the source of truth.
 ```
 public/              the site — one self-contained HTML file per page
 wrangler.jsonc       Cloudflare deploy config
+docs/setup-guide.md  one-time setup, step by step
 docs/hosting.md      how the site is served, and what access deploys need
 docs/site-audit.md   known problems with the live site
 ```
+
+## First time here?
+
+Start with [`docs/setup-guide.md`](docs/setup-guide.md). It walks through the
+one-time setup click by click, and assumes no prior experience with Cloudflare
+or GitHub.
 
 ## Deploying
 
@@ -23,7 +30,7 @@ preview version and comments the URL, without moving production traffic.
 
 Two GitHub Actions secrets are required before either workflow can run —
 `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. See
-[`docs/hosting.md`](docs/hosting.md).
+[`docs/setup-guide.md`](docs/setup-guide.md).
 
 ## Local development
 

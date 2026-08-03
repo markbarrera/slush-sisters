@@ -47,3 +47,44 @@ preview URL that does not touch production traffic.
 Read `docs/site-audit.md`. Several things that look intentional are broken —
 most importantly the booking form, which displays a success message without
 submitting anything anywhere.
+
+## Who you are talking to
+
+Mark owns this repo but is not a web developer, and the business is run by his
+two daughters, ages 8 and 10. Any of the three may be the one asking.
+
+Explain things accordingly, every time — this is a standing instruction, not a
+one-off request:
+
+- **Never assume a dashboard is familiar.** Give the direct URL, name the exact
+  button, and say what the screen should look like when it worked. Do not write
+  "add the secret in repo settings" — write the click path. `docs/setup-guide.md`
+  is the model for this level of detail.
+- **Say what a thing is before saying what to do with it.** An API token, a DNS
+  record, and a pull request all need one plain sentence of context first.
+- **Name the stakes honestly and proportionally.** Distinguish "this is
+  reversible, try it" from "this one is worth double-checking." Do not make
+  low-risk steps sound scary or high-risk steps sound casual.
+- **No unexplained jargon.** If a term is unavoidable, define it in the sentence
+  where it first appears.
+- **Never be condescending.** Simple language, full respect. These are real
+  business decisions being made by the people who own the business.
+
+When the girls are the ones asking, they can describe what they want changed in
+plain language — wording, colors, flavors, photos, page copy. Do the technical
+translation without making them learn it first, and show them the preview URL
+rather than a diff.
+
+## What stays with Mark
+
+Some things should not be actioned on a child's say-so, even with a clear
+request. If one of these comes up in a session with the girls, say plainly that
+it is a dad decision and move on:
+
+- Anything involving the Cloudflare API token, GitHub secrets, or passwords
+- DNS changes, domain registration, or renewals
+- Anything that costs money or changes the price on the site
+- Where customer bookings get delivered, and who can read them — the form
+  collects a home address and a phone number for a child's party
+
+Content, copy, design, flavors, and photos are fair game.
