@@ -29,10 +29,10 @@ header.open nav{display:flex;}
 
 /* HERO — big photo with text overlay, like a real Squarespace site */
 .hero-photo{position:relative;background:#e8f4fd;min-height:420px;display:flex;align-items:center;padding:48px 32px;overflow:hidden;}
-.hero-photo .hero-img{position:absolute;right:0;bottom:0;width:55%;max-width:500px;object-fit:contain;}
+.hero-photo .hero-img{position:absolute;right:36px;bottom:0;width:40%;max-width:360px;aspect-ratio:3/4;object-fit:cover;border-radius:18px 18px 0 0;box-shadow:0 18px 50px rgba(26,35,126,.18);}
 @media(max-width:700px){
 .hero-photo{flex-direction:column;text-align:center;padding:40px 24px 0;}
-.hero-photo .hero-img{position:relative;width:80%;max-width:320px;margin-top:24px;}
+.hero-photo .hero-img{position:relative;right:auto;width:78%;max-width:300px;margin:24px auto 0;}
 }
 .hero-text{max-width:440px;position:relative;z-index:1;}
 .hero-text h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#1a237e;line-height:1.1;margin-bottom:12px;}
@@ -192,7 +192,10 @@ footer a{color:#4fc3f7;}
 <p>We are two sisters in Lakeway who rent out our slushie machine for birthdays, pool parties, and any excuse to celebrate. We deliver, set up, and pick up the next morning. You just enjoy.</p>
 <a href="/book" class="btn">Book your party</a>
 </div>
-<img src="/img/hero.svg" alt="One of the Slush Sisters holding a last day of school sign" class="hero-img">
+<picture>
+<source type="image/webp" srcset="/img/photos/sisters-cups-640.webp 640w, /img/photos/sisters-cups-1024.webp 1024w" sizes="(max-width:700px) 78vw, 360px">
+<img src="/img/photos/sisters-cups-1024.jpg" alt="Finley and Harper holding cups of bright red frozen strawberry slush" class="hero-img" fetchpriority="high" decoding="async">
+</picture>
 </div>
 
 <div class="marquee"><div class="marquee-inner">FROZEN DRINK RENTALS · LAKEWAY · BEE CAVE · LAKE TRAVIS · TWO FLAVORS · CANDY GARNISH ON EVERY CUP · DELIVERY + PICKUP INCLUDED · FROZEN DRINK RENTALS · LAKEWAY · BEE CAVE · LAKE TRAVIS · TWO FLAVORS · CANDY GARNISH ON EVERY CUP · DELIVERY + PICKUP INCLUDED · </div></div>

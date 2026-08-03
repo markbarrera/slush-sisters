@@ -64,9 +64,9 @@ section .lead{color:#666;font-size:.95rem;line-height:1.6;margin-bottom:32px;}
 .photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
 @media(max-width:540px){.photo-pair{grid-template-columns:1fr;}}
 .photo-pair img{border-radius:12px;width:100%;aspect-ratio:3/4;object-fit:cover;}
-.photo-single{margin:28px 0;}
-.photo-single img{border-radius:14px;width:100%;max-width:700px;height:auto;margin:0 auto;}
-.photo-single figcaption{text-align:center;font-size:.8rem;color:#999;margin-top:10px;font-style:italic;}
+.photo-pair-fig{margin:28px 0;}
+.photo-pair-fig .photo-pair{margin:0;}
+.photo-pair-fig figcaption{text-align:center;font-size:.8rem;color:#999;margin-top:12px;font-style:italic;}
 
 /* FLAVOR LIST — simple, not cards */
 .flavor-list{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
@@ -159,12 +159,18 @@ footer a{color:#4fc3f7;}
 <div class="contain">
 <h2>About us</h2>
 <p class="lead">We are two sisters who started a real business because we wanted to learn how real businesses work.</p>
-<figure class="photo-single">
+<figure class="photo-pair-fig">
+<div class="photo-pair">
 <picture>
-<source type="image/webp" srcset="/img/photos/candy-window-640.webp 640w, /img/photos/candy-window-1024.webp 1024w" sizes="(max-width:700px) 100vw, 700px">
-<img src="/img/photos/candy-window-1024.jpg" width="1024" height="1365" loading="lazy" decoding="async" alt="One of the Slush Sisters leaning out of a candy shop window holding a frozen drink piled with whipped cream and cookie crumbles">
+<source type="image/webp" srcset="/img/photos/finley-window-640.webp 640w, /img/photos/finley-window-1024.webp 1024w" sizes="(max-width:540px) 100vw, 380px">
+<img src="/img/photos/finley-window-1024.jpg" loading="lazy" decoding="async" alt="Finley leaning out of a candy shop window holding a frozen drink topped with whipped cream and cookie crumbles">
 </picture>
-<figcaption>Research, obviously.</figcaption>
+<picture>
+<source type="image/webp" srcset="/img/photos/harper-window-640.webp 640w, /img/photos/harper-window-1024.webp 1024w" sizes="(max-width:540px) 100vw, 380px">
+<img src="/img/photos/harper-window-1024.jpg" loading="lazy" decoding="async" alt="Harper leaning out of the same candy shop window holding a frozen drink with a brownie on top">
+</picture>
+</div>
+<figcaption>Same window, same day. Research, obviously.</figcaption>
 </figure>
 <p style="font-size:.92rem;color:#444;line-height:1.7;margin-top:8px;">We are 8 and 10 years old and we live in Lakeway, Texas. We named this company, picked the colors, run the Instagram, and show up at every event in matching shirts. Dad helps with the driving. Mom makes sure we have everything packed. We handle the rest.</p>
 <p style="font-size:.92rem;color:#444;line-height:1.7;margin-top:12px;">The candy garnish was our idea. Every single cup we serve gets a piece of candy that matches the flavor. Watermelon slushie gets a Sour Patch Watermelon on the rim. Strawberry gets a strawberry gummy. Nobody else does this. It is our thing.</p>
