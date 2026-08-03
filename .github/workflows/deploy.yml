@@ -28,3 +28,48 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # Deploying updates the Worker, but Cloudflare's edge keeps serving the
+      # previously cached HTML — after the last two deploys the live site still
+      # showed the old pages until the cache was purged by hand. This purges
+      # automatically so a deploy actually means "live".
+      #
+      # Needs CLOUDFLARE_ZONE_ID, and a token with Zone > Cache Purge. The
+      # "Edit Cloudflare Workers" token template does NOT include that
+      # permission, so this step is allowed to fail without failing the deploy —
+      # the Worker is already published by this point either way.
+      - name: Purge Cloudflare cache
+        # `secrets` is not available in an `if:` expression, so the value is
+        # lifted into env first and the env var is what gets tested.
+        env:
+          ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        if: ${{ env.ZONE_ID != '' }}
+        continue-on-error: true
+        run: |
+          response=$(curl -sS -w '\n%{http_code}' -X POST \
+            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CF_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          body=$(echo "$response" | sed '$d')
+          code=$(echo "$response" | tail -1)
+          echo "$body"
+          if [ "$code" = "200" ]; then
+            echo "::notice::Cache purged — the new version is live now."
+          else
+            echo "::warning::Cache purge returned HTTP $code. The deploy succeeded, but visitors may see the previous version until the edge cache expires. Purge manually at Cloudflare > Caching > Configuration > Purge Everything, and check the API token has Zone > Cache Purge permission."
+          fi
+
+      - name: Verify production
+        run: |
+          sleep 10
+          for path in / /pricing /book /margarita-machine-rental-austin /robots.txt /sitemap.xml /llms.txt; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://slushsisters.com$path")
+            echo "$path -> $code"
+            if [ "$code" != "200" ]; then
+              echo "::error::$path returned $code"; exit 1
+            fi
+          done
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://slushsisters.com/this-should-not-exist")
+          [ "$code" = "404" ] && echo "unknown path -> 404 (correct)" || echo "::warning::unknown path returned $code, expected 404"
