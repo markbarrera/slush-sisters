@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Everything we have made — Slush Sisters</title>
+<style>
+:root{
+  --brand:#1a237e; --ice:#4fc3f7; --wash:#e8f4fd; --blush:#fff5f7;
+  --ink-ice:#0165a8; --ink-pink:#c2185b; --line:#e4ebf2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',system-ui,sans-serif;color:#1a1a1a;background:#fff;
+  line-height:1.6;padding:32px 20px 72px;}
+.wrap{max-width:820px;margin:0 auto;}
+h1{font-family:'Baloo 2',system-ui,sans-serif;font-size:clamp(1.7rem,6vw,2.3rem);
+  font-weight:800;color:var(--brand);line-height:1.1;margin-bottom:10px;}
+.kicker{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-ice);margin-bottom:8px;}
+.lede{color:#555;font-size:.98rem;margin-bottom:6px;}
+.stat{font-size:.82rem;color:#777;margin-bottom:30px;}
+.stat b{color:var(--brand);font-family:'Baloo 2',system-ui,sans-serif;
+  font-variant-numeric:tabular-nums lining;}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px;}
+.toc a{font-size:.78rem;font-weight:600;text-decoration:none;color:var(--brand);
+  background:var(--wash);border-radius:99px;padding:7px 14px;}
+.toc a:hover{background:var(--ice);color:#fff;}
+section{margin-bottom:38px;}
+h2{font-family:'Baloo 2',system-ui,sans-serif;font-size:1.25rem;font-weight:800;
+  color:var(--brand);margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.count{font-size:.7rem;font-weight:700;background:var(--brand);color:#fff;
+  border-radius:99px;padding:3px 9px;font-variant-numeric:tabular-nums lining;}
+.blurb{font-size:.86rem;color:#666;margin-bottom:14px;}
+ul.list{list-style:none;}
+ul.list li{padding:13px 0;border-bottom:1px solid var(--line);display:flex;
+  flex-direction:column;gap:3px;}
+ul.list li:last-child{border-bottom:none;}
+a.n{font-weight:700;font-size:.96rem;color:var(--brand);text-decoration:none;}
+a.n:hover{text-decoration:underline;}
+.meta{font-size:.74rem;color:#8a8f99;font-variant-numeric:tabular-nums lining;}
+.d{font-size:.85rem;color:#555;}
+.note{border-left:3px solid var(--ink-pink);padding:2px 0 2px 15px;margin:26px 0;}
+.note p{font-size:.86rem;color:#555;}
+.note b{color:var(--ink-pink);}
+.hist{font-size:.8rem;color:#666;}
+.hist code{background:var(--wash);border-radius:5px;padding:2px 7px;font-size:.78rem;}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.76rem;color:#8a8f99;}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">Not linked from anywhere · Not in search</p>
+<h1>Everything we have made</h1>
+<p class="lede">One page listing every page on the site and every document in the repo, so it can all be reviewed from one place. Nothing here is typed by hand — titles, descriptions, word counts and dates are read off the files themselves each time this is rebuilt, so it cannot quietly go out of date.</p>
+<p class="stat">Roughly <b>65k</b> words across <b>31</b> pages and <b>15</b> documents.</p>
+
+<div class="toc">
+  <a href="#site">The site</a>
+  <a href="#read">The reading room</a>
+  <a href="#orphan">Orphan pages</a>
+  <a href="#docs">Research &amp; strategy</a>
+  <a href="#build">How it gets built</a>
+  <a href="#history">Visual history</a>
+</div>
+
+
+<section>
+<h2 id="site">The site <span class="count">19</span></h2>
+<p class="blurb">Pages a customer can reach by clicking or searching. These are indexed and in the sitemap.</p>
+<ul class="list">
+<li>
+  <a class="n" href="/about">Meet the Slush Sisters</a>
+  <span class="meta">/about · 2026-08-04 · 260 words</span>
+  <span class="d">Slush Sisters is run by two sisters, ages 8 and 11, in Lakeway TX. We rent frozen drink machines for parties across the Lake Travis area.</span>
+</li>
+<li>
+  <a class="n" href="/austin">Frozen Drink Machine Rental in Austin, TX</a>
+  <span class="meta">/austin · 2026-08-04 · 935 words</span>
+  <span class="d">Two sisters rent out a frozen drink machine across the Austin area. Frozen or chilled, two flavors, delivery and setup included, $250. Lakeway, Bee Cave, Westlake, Lake Travis and beyond.</span>
+</li>
+<li>
+  <a class="n" href="/book">Book a Frozen Drink Machine</a>
+  <span class="meta">/book · 2026-08-04 · 290 words</span>
+  <span class="d">Book a frozen drink machine rental in Lakeway, Bee Cave, or Lake Travis. We respond the same day.</span>
+</li>
+<li>
+  <a class="n" href="/community-events">HOA, School &amp; Community Events</a>
+  <span class="meta">/community-events · 2026-08-04 · 1.4k words</span>
+  <span class="d">Frozen drinks for HOA pool parties, school field days, teacher appreciation and neighborhood events around Lakeway, Bee Cave and Lake Travis. One price, and two sisters who show up and explain it themselves.</span>
+</li>
+<li>
+  <a class="n" href="/flavors">Six Slushie &amp; Margarita Flavors, Candy Garnish on Every Cup</a>
+  <span class="meta">/flavors · 2026-08-04 · 456 words</span>
+  <span class="d">Choose from 6 frozen drink flavors. Watermelon, Strawberry Lemonade, Blue Raspberry, Mango, Margarita Lime, Piña Colada. Every cup gets a candy garnish.</span>
+</li>
+<li>
+  <a class="n" href="/fresh-press">Fresh Press</a>
+  <span class="meta">/fresh-press · 2026-08-04 · 1.3k words</span>
+  <span class="d">The one where we squeeze the limes. Real citrus, no artificial dye, and we publish the sugar reading for every recipe. Lakeway, Bee Cave and Lake Travis.</span>
+</li>
+<li>
+  <a class="n" href="/frozen-drink-machine-rental-bee-cave">Frozen Drink &amp; Margarita Machine Rental in Bee Cave, TX</a>
+  <span class="meta">/frozen-drink-machine-rental-bee-cave · 2026-08-04 · 800 words</span>
+  <span class="d">Slushie and margarita machine rental for Bee Cave parties — Falconhead, Spanish Oaks, Uplands, Lake Pointe. $250 all in, delivery and setup included.</span>
+</li>
+<li>
+  <a class="n" href="/frozen-drink-machine-rental-dripping-springs">Frozen Drink &amp; Margarita Machine Rental</a>
+  <span class="meta">/frozen-drink-machine-rental-dripping-springs · 2026-08-04 · 818 words</span>
+  <span class="d">Slushie and margarita machine rental for Dripping Springs parties — Belterra, Headwaters, Caliterra. $250 plus mileage. Delivery, setup, and pickup included.</span>
+</li>
+<li>
+  <a class="n" href="/frozen-drink-machine-rental-lake-austin">Margarita &amp; Frozen Drink Machine Rental</a>
+  <span class="meta">/frozen-drink-machine-rental-lake-austin · 2026-08-04 · 924 words</span>
+  <span class="d">Frozen margarita and slushie machine rental for Lake Austin and Westlake. Rob Roy, Davenport Ranch, Barton Creek. $250 all in, delivery included.</span>
+</li>
+<li>
+  <a class="n" href="/frozen-drink-machine-rental-lake-travis">Margarita &amp; Frozen Drink Machine Rental</a>
+  <span class="meta">/frozen-drink-machine-rental-lake-travis · 2026-08-04 · 933 words</span>
+  <span class="d">Frozen margarita and slushie machine rental for Lake Travis houses and lake parties. Spicewood, Hudson Bend, Briarcliff, Point Venture. $250 all in.</span>
+</li>
+<li>
+  <a class="n" href="/frozen-drink-machine-rental-lakeway">Frozen Drink &amp; Margarita Machine Rental in Lakeway, TX</a>
+  <span class="meta">/frozen-drink-machine-rental-lakeway · 2026-08-04 · 801 words</span>
+  <span class="d">Slushie and margarita machine rental in Lakeway. We live here — 10 minutes away, no delivery fee, $250 all in. Two flavors, setup, and next-morning pickup.</span>
+</li>
+<li>
+  <a class="n" href="/frozen-drink-machine-rental-steiner-ranch">Frozen Drink &amp; Margarita Machine Rental</a>
+  <span class="meta">/frozen-drink-machine-rental-steiner-ranch · 2026-08-04 · 810 words</span>
+  <span class="d">Slushie and margarita machine rental for Steiner Ranch parties. Inside our free delivery radius. $250 all in — two flavors, setup, next-morning pickup.</span>
+</li>
+<li>
+  <a class="n" href="/grown-ups">Frozen or Chilled Drink Machine Rental for Grown-Up Parties</a>
+  <span class="meta">/grown-ups · 2026-08-04 · 778 words</span>
+  <span class="d">The machine chills as well as freezes, so it works in December as well as July. Two tanks, delivery, setup and next-morning pickup included. $250. Lakeway and the Austin area.</span>
+</li>
+<li>
+  <a class="n" href="/">Frozen Drink &amp; Margarita Machine Rentals</a>
+  <span class="meta">/ · 2026-08-04 · 456 words</span>
+  <span class="d">Slush Sisters: frozen slushie and margarita machine rentals in Lakeway, Bee Cave, and Lake Travis. Run by two sisters. $250 per rental, delivery included.</span>
+</li>
+<li>
+  <a class="n" href="/lab">The Lab</a>
+  <span class="meta">/lab · 2026-08-04 · 2.4k words</span>
+  <span class="d">Two sisters working out how a frozen drink machine actually works — why sugar stops it freezing, how to get color from plants instead of dye, and the tests that went wrong. With calculators you can play with.</span>
+</li>
+<li>
+  <a class="n" href="/margarita-machine-rental-austin">Margarita Machine Rental in Austin &amp; Lake Travis</a>
+  <span class="meta">/margarita-machine-rental-austin · 2026-08-04 · 782 words</span>
+  <span class="d">Frozen margarita machine rental for Austin, Lakeway, Bee Cave and Lake Travis parties. $250 flat — two flavors, delivery, setup, and next-morning pickup included.</span>
+</li>
+<li>
+  <a class="n" href="/our-rules">Our Rules</a>
+  <span class="meta">/our-rules · 2026-08-04 · 1k words</span>
+  <span class="d">Seven rules we hold ourselves to, published so you can check them. Written by two sisters who rent frozen drink machines in Lakeway, Bee Cave and Lake Travis.</span>
+</li>
+<li>
+  <a class="n" href="/pricing">Frozen Drink Machine Rental Pricing</a>
+  <span class="meta">/pricing · 2026-08-04 · 852 words</span>
+  <span class="d">$250 per rental. Dual-tank machine, 2 flavors, delivery, setup, pickup. Serving Lakeway, Bee Cave, Lake Travis.</span>
+</li>
+<li>
+  <a class="n" href="/promise">Our Promise</a>
+  <span class="meta">/promise · 2026-08-04 · 483 words</span>
+  <span class="d">Slush Sisters is run by two sisters, ages 8 and 11. This page says plainly what is in the machine, how the grown-up side works, and the four things this company will not do.</span>
+</li>
+</ul>
+</section>
+
+
+<section>
+<h2 id="read">The reading room <span class="count">10</span></h2>
+<p class="blurb">Every strategy document rewritten for the two people who own the business, as cards they can read on a phone. Noindex, and linked only from its own hub.</p>
+<ul class="list">
+<li>
+  <a class="n" href="/read/as-good-as-a-bar">As good as a bar</a>
+  <span class="meta">/read/as-good-as-a-bar · 2026-08-04 · 1.3k words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/how-people-find-us">How people find out about you</a>
+  <span class="meta">/read/how-people-find-us · 2026-08-04 · 484 words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/how-we-built-this">How we built this</a>
+  <span class="meta">/read/how-we-built-this · 2026-08-04 · 888 words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/">The reading room</a>
+  <span class="meta">/read/ · 2026-08-04 · 467 words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/other-kids-businesses">What happened to other kids</a>
+  <span class="meta">/read/other-kids-businesses · 2026-08-04 · 1.3k words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/pick-the-colors">Pick the colors</a>
+  <span class="meta">/read/pick-the-colors · 2026-08-04 · 867 words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/two-kinds-of-drinks">Two kinds of drinks</a>
+  <span class="meta">/read/two-kinds-of-drinks · 2026-08-04 · 458 words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/what-do-we-call-it">What do we call it?</a>
+  <span class="meta">/read/what-do-we-call-it · 2026-08-04 · 1.1k words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/what-we-figured-out">What we figured out</a>
+  <span class="meta">/read/what-we-figured-out · 2026-08-04 · 1.7k words</span>
+  
+</li>
+<li>
+  <a class="n" href="/read/why-it-freezes">Why it freezes</a>
+  <span class="meta">/read/why-it-freezes · 2026-08-04 · 994 words</span>
+  
+</li>
+</ul>
+</section>
+
+
+<section>
+<h2 id="orphan">Orphan pages <span class="count">2</span></h2>
+<p class="blurb">Deliberately linked from nowhere and kept out of search. Including this one.</p>
+<ul class="list">
+<li>
+  <a class="n" href="/ideas">Slush Sisters</a>
+  <span class="meta">/ideas · 2026-08-04 · 2.7k words</span>
+  
+</li>
+<li>
+  <a class="n" href="/inventory">Everything we have made</a>
+  <span class="meta">/inventory · 1.7k words</span>
+  
+</li>
+</ul>
+</section>
+
+<section>
+<h2 id="docs">Research &amp; strategy <span class="count">15</span></h2>
+<p class="blurb">The grown-up versions. These live in the repository rather than on the website, so the links go to GitHub.</p>
+<ul class="list">
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/big-ideas.md" rel="noopener">Bigger swings</a>
+  <span class="meta">docs/big-ideas.md · 2026-08-04 · 2.6k words</span>
+  <span class="d">The playbook in marketing.md is the day-to-day. This is the ambitious list — ideas with a higher ceiling, some of which need a grown-up to make a phone call first, and one of which needs a lawyer.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/booking-form.md" rel="noopener">The booking form</a>
+  <span class="meta">docs/booking-form.md · 2026-08-03 · 609 words</span>
+  <span class="d">public/book.html holds a real &lt;form>. On submit it POSTs the fields as JSON to whatever URL is in BOOKING_ENDPOINT, near the bottom of the file:</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/build-log.md" rel="noopener">The build log</a>
+  <span class="meta">docs/build-log.md · 2026-08-04 · 2.2k words</span>
+  <span class="d">What this site was, on each day it changed, and why.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/case-review.md" rel="noopener">The case review</a>
+  <span class="meta">docs/case-review.md · 2026-08-04 · 10.7k words</span>
+  <span class="d">Five analysts were pointed at this business at once and told to disagree with each other. A market and unit-economics analyst. A brand and positioning strategist. An operations analyst wearing a red team hat. A growth and…</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/category-and-bar-program.md" rel="noopener">The bar program and the category question</a>
+  <span class="meta">docs/category-and-bar-program.md · 2026-08-04 · 2.2k words</span>
+  <span class="d">Two reports, 2026-08-04. One asks can we actually make a drink that stands next to a good Austin bar's frozen margarita. The other asks is "margarita machine rental" a category we can redefine, or one we should just win.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/crawlers.md" rel="noopener">Crawler access</a>
+  <span class="meta">docs/crawlers.md · 2026-08-03 · 629 words</span>
+  <span class="d">The goal is that nothing is blocked. Search crawlers, AI assistants, and social link-preview fetchers should all be able to read the whole site.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/hosting.md" rel="noopener">Hosting &amp; access</a>
+  <span class="meta">docs/hosting.md · 2026-08-03 · 495 words</span>
+  <span class="d">What is known about how slushsisters.com is served, how it was determined, and what is still unconfirmed.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/marketing.md" rel="noopener">The Slush Sisters playbook</a>
+  <span class="meta">docs/marketing.md · 2026-08-04 · 3.3k words</span>
+  <span class="d">Strategy and ideas in one place, on purpose. Finley and Harper should read the strategy too, not just the task list — understanding why something works is the part that lasts after this particular business is over.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/origin-story.md" rel="noopener">The origin story page</a>
+  <span class="meta">docs/origin-story.md · 2026-08-03 · 1.1k words</span>
+  <span class="d">The single most valuable page on the site, and the one only they can write.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/outreach.md" rel="noopener">Real places and people to reach</a>
+  <span class="meta">docs/outreach.md · 2026-08-04 · 1.4k words</span>
+  <span class="d">Everything here was verified against a live page. Anything unconfirmed is marked. Nothing was invented — no guessed emails, no made-up handles.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/product-tiers.md" rel="noopener">Two products, not one</a>
+  <span class="meta">docs/product-tiers.md · 2026-08-04 · 1.5k words</span>
+  <span class="d">An idea worth taking seriously: adults and kids should not be drinking the same thing, and should not be paying the same price.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/research-2026-08-04.md" rel="noopener">Research round two — the whiteboards and the teardowns</a>
+  <span class="meta">docs/research-2026-08-04.md · 2026-08-04 · 4.1k words</span>
+  <span class="d">The case review was a debate between five analysts. This was different: five whiteboards told to generate volume with no ranking and no filtering, plus two teardowns of real creator accounts. The brief was explicit that the previous…</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/setup-guide.md" rel="noopener">Setup guide</a>
+  <span class="meta">docs/setup-guide.md · 2026-08-03 · 1.1k words</span>
+  <span class="d">Step-by-step, assuming no prior experience with Cloudflare or GitHub. Do these once. After that, changes to the site ship without touching any of it again.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/site-audit.md" rel="noopener">Site audit — 2026-08-03</a>
+  <span class="meta">docs/site-audit.md · 2026-08-03 · 989 words</span>
+  <span class="d">Findings from the live site at the time it was recovered into this repo.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/strategy.md" rel="noopener">Strategy — what this site is for</a>
+  <span class="meta">docs/strategy.md · 2026-08-04 · 1.7k words</span>
+  <span class="d">That reframing matters, because it inverts what the site should optimize for. This document records the search data, what it does and does not justify, and the architecture that follows.</span>
+</li>
+</ul>
+</section>
+
+
+<section>
+<h2 id="build">How it gets built <span class="count">4</span></h2>
+<p class="blurb">The scripts that generate pages and check them. Run by hand, not on deploy.</p>
+<ul class="list">
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/scripts/snapshot.js" rel="noopener">scripts/snapshot.js</a>
+  <span class="meta">scripts/snapshot.js · 2026-08-04 · 8KB</span>
+  <span class="d">Snapshot every page of the site, at phone width and desktop width, into docs/history/&lt;date>/.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/scripts/build-inventory.js" rel="noopener">scripts/build-inventory.js</a>
+  <span class="meta">scripts/build-inventory.js · 12KB</span>
+  <span class="d">Build /inventory — one orphan page listing everything this project has published, so it can all be reviewed from one place.</span>
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/board/generate.js" rel="noopener">docs/board/generate.js</a>
+  <span class="meta">docs/board/generate.js · 2026-08-04 · 27KB</span>
+  
+</li>
+<li>
+  <a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/board/reading-room.js" rel="noopener">docs/board/reading-room.js</a>
+  <span class="meta">docs/board/reading-room.js · 2026-08-04 · 78KB</span>
+  <span class="d">Builds the reading room — the visual, readable version of everything in docs/, made for Finley and Harper rather than for an adult.</span>
+</li>
+</ul>
+</section>
+
+<section>
+<h2 id="history">Visual history <span class="count">1</span></h2>
+<p class="blurb">Every canonical page rendered at phone and desktop width, kept by date, so you can see what the site looked like on a given day rather than only what the code was.</p>
+<ul class="list">
+<li><a class="n" href="https://github.com/markbarrera/slush-sisters/blob/main/docs/history/2026-08-04" rel="noopener">2026-08-04</a><span class="meta">docs/history/2026-08-04</span></li>
+</ul>
+</section>
+
+<div class="note">
+<p><b>To rebuild this page:</b> <code>node scripts/build-inventory.js</code>. It reads the filesystem and git, so anything added since the last run appears automatically and nothing needs editing here.</p>
+</div>
+
+<footer>
+Generated 2026-08-04 · Slush Sisters LLC · this page is noindex and absent from the sitemap
+</footer>
+</div>
+</body>
+</html>

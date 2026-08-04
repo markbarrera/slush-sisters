@@ -124,6 +124,13 @@ the people who own this business. Write the grown-up version, then add it to
 `reading-room.js` and regenerate. Rewrite, do not simplify — leave the hard
 numbers and the arguments in, including both sides of each one.
 
+`scripts/build-inventory.js` builds `/inventory` — one orphan page listing
+every page on the site and every document in `docs/`, so the whole body of work
+can be reviewed from one place. **Run `npm run inventory` after adding or
+removing a page or a doc.** It reads titles, descriptions, word counts and
+dates off the files and out of git, so nothing is typed by hand and it cannot
+quietly go out of date — but it does have to be re-run to pick up new files.
+
 ## Before changing anything
 
 Read `docs/site-audit.md`. Several things that look intentional are broken —
