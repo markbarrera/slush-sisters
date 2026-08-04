@@ -13,7 +13,7 @@ const IDEAS = [
   ['week','Invent a terrible flavour','Make one on purpose that is awful. Post it anyway. These always do well.','free','easy'],
   ['week','Set up, sped up','A whole party setup squeezed into ten seconds.','free','easy'],
   ['week','Squeeze a hundred limes','Satisfying, ridiculous, obviously real work.','cheap','easy'],
-  ['week','Read the other guys’ ingredients','Read the label on the bulk mix everyone else uses. Out loud. Slowly.','free','easy'],
+  ['week','Read the other guys ingredients','Read the label on the bulk mix everyone else uses. Out loud. Slowly.','free','easy'],
   ['week','Clean the machine','People genuinely love watching this. No idea why. They do.','free','easy'],
 
   // SHOW THE MONEY
@@ -42,6 +42,45 @@ const IDEAS = [
   ['make','Name a flavour with a local shop','Team up with a bakery or coffee place. Their name on it. Limited run.','cheap','medium'],
   ['make','The Garnish Kit','A little box of the six candies, matched to the flavours, in your handwriting. Ships anywhere.','money','big'],
 
+  // MORE TO POST
+  ['week','Pour the first cup of the day','The very first one out of the tank. Slow motion.','free','easy'],
+  ['week','Layer two flavours','One cup, both tanks. See what happens.','free','easy'],
+  ['week','All six garnishes lined up','Every candy next to the flavour it belongs with.','free','easy'],
+  ['week','Blind taste test','Can you actually tell which flavour is which? Prove it.','free','easy'],
+  ['week','Time-lapse the freeze','Watch liquid turn into slush. Oddly hypnotic.','free','easy'],
+  ['week','What is in the setup kit','Empty the bag out. Explain every single thing.','free','easy'],
+  ['week','Load the van','Everything that goes in, in order.','free','easy'],
+  ['week','Pick up the next morning','The unglamorous half nobody sees.','free','easy'],
+  ['week','A setup that went wrong','Rain, a spill, a forgotten lid. Post the bad one.','free','easy'],
+  ['week','Every flavour with Tajin','Rate them. Be honest about the bad ones.','cheap','easy'],
+
+  // MORE MONEY
+  ['money','Open the business mail','Whatever came. Read it out.','free','easy'],
+  ['money','What you are saving for','The actual goal, and how close you are.','free','easy'],
+  ['money','What you would do differently','If you started the whole thing again tomorrow.','free','easy'],
+  ['money','The hardest part','Say the genuinely hard thing, not the polite version.','free','easy'],
+  ['money','Who does what','Finley jobs and Harper jobs. Where you overlap and argue.','free','easy'],
+
+  // MORE JUST YOU TWO
+  ['you','Swap jobs for a day',"Do each other's job. Find out which is harder.",'free','easy'],
+  ['you','Make each other laugh, no talking','Sixty seconds. First to break loses.','free','easy'],
+  ['you','Rate each others outfits','Out of ten. No mercy.','free','easy'],
+  ['you','Your favourite spot in Lakeway','Somewhere you actually go.','free','easy'],
+  ['you','Something you were scared of','And did anyway. What happened.','free','easy'],
+  ['you','Advice for a kid starting a business','What you wish someone had told you.','free','easy'],
+
+  // GROW THE BUSINESS - the structural stuff
+  ['grow','The birthday loop','Every customer has a birthday every year. Write to them in month eleven: same week next year? This is the biggest one on the whole board.','free','easy'],
+  ['grow','Winter business','Nov to Feb is dead. A hot cocoa bar rental is the same job, same neighbourhoods, opposite season. Doubles your year.','money','big'],
+  ['grow','Sell the garnish to competitors','Every other margarita company has a boring identical product. Sell them your garnish system. Two kids supplying the grown-ups.','free','big'],
+  ['grow','Be the overflow','When another company is double booked on a Saturday they lose that party. Offer to take their overflow. Free bookings.','free','medium'],
+  ['grow','Weekday offices','Austin offices do summer parties on Tuesdays. Bigger budgets, and the machine is sitting idle anyway.','free','medium'],
+  ['grow','PTA season tickets','Every school has a PTA with a budget and several events a year. Sell the year, not the party.','free','medium'],
+  ['grow','Keep a customer list','Names, dates, which flavours they picked, whether they had a good time. Boring. Worth more than any video.','free','easy'],
+  ['grow','Ask how they found you','Every single booking. Write it down. After twenty you will know exactly what works.','free','easy'],
+  ['grow','A second machine, on purpose','Two machines means two parties on one Saturday. Work out whether the maths actually works before buying.','money','big'],
+  ['grow','Raise the price on peak dates','Saturdays in June are worth more than Tuesdays in March. Most businesses charge the same anyway.','free','medium'],
+
   // BIG SWINGS
   ['big','Apprentice of the Day','The birthday kid gets a shirt, a title and the first fifteen minutes of the job. They keep the shirt.','cheap','easy'],
   ['big','The Annual Report','A real printed report from a 10-year-old CEO. Post forty copies to people who matter.','cheap','big'],
@@ -55,6 +94,34 @@ const IDEAS = [
   ['big','Kid Business Radio','Interview other kids who run businesses. Ask about money, not hobbies.','free','big'],
   ['big','Write to the candy company','You have used their sweets on every cup since day one, free. Tell them, with the numbers.','free','easy'],
   ['big','Chapters','Kids in other cities running their own Slush Sisters off a playbook you write.','free','big'],
+  // REAL PLACES TO ENTER - every one of these was checked
+  ['reach','Children\u2019s Business Fair, West Lake Hills',"A real market where kids run booths. Acton Academy West, 3423 Bee Caves Rd - about four miles away. Saturday 1 May 2027, applications open NOW. You do the selling, not a grown-up.",'free','medium'],
+  ['reach','Host your own Business Fair',"They hand you the playbook, the website and the prize money for free. You find the place. Being the organiser beats being a stall holder. Possibly the best single thing on this board.",'free','big'],
+  ['reach','Kids Market at Volente Beach',"22 August, at a waterpark, in August. Ages 5 to 17. Check the food rules first - some markets only allow packaged food.",'cheap','medium'],
+  ['reach','Lake Travis Current: Meet Your Neighbour',"A local newsletter, 4,000+ readers every week, with a feature slot built exactly for this. Smallest ask, best match.",'free','easy'],
+  ['reach','Lake Travis View',"The Statesman\u2019s Lake Travis section. Real local news, and the mayors of Lakeway and Bee Cave both write columns in it.",'free','medium'],
+  ['reach','Neighbours of Lakeway and Bee Cave',"A magazine posted to local homes whose whole job is featuring local families. They have a form to nominate someone.",'free','easy'],
+  ['reach','Steiner Ranch Ranch Record',"The Steiner Ranch newsletter goes to 5,000 homes and is paid for by local adverts. Small ad, exactly the right people.",'money','easy'],
+  ['reach','Rough Hollow Rough Life Director',"Rough Hollow employs someone whose entire job is running community events all year. Kid events and grown-up events. Best phone call on this list.",'free','easy'],
+  ['reach','Headwaters lifestyle team',"Headwaters in Dripping Springs has a lifestyle director and a farmers market every Saturday.",'free','easy'],
+  ['reach','West Austin Moms group',"A Facebook group that literally says Lakeway, Bee Cave, Westlake and Spicewood in its description.",'free','easy'],
+  ['reach','Every LTISD school PTO',"Eleven schools, every one with a parents group and a budget. Birthday party word of mouth runs straight through these.",'free','medium'],
+  ['reach','Lemonade Day Entrepreneur of the Year',"A national title you can enter from age five. Prizes $500, $300, $200. Mikaila Ulmer did Lemonade Day in Austin at six and ended up on Shark Tank.",'free','easy'],
+  ['reach','NFTE Imagination League',"National competition, ages 5 to 12, free. New challenges every September.",'free','medium'],
+  ['reach','TIME Kid of the Year',"Ages 8 to 17. Running a business is one of the things they specifically look for. A grown-up enters you. Free.",'free','medium'],
+  ['reach','Young Entrepreneur Pitch Challenge',"A 30 to 90 second video pitch. Separate brackets for K-4 and 5-8, so you two are not competing against each other. Opens around March.",'free','easy'],
+  ['reach','Message the good news accounts',"@goodnews_movement has about six million followers and asks people to send in local good news. Two sisters with a real LLC is exactly their thing. Costs one message.",'free','easy'],
+  ['reach','Austin family accounts',"@austinfunforkids (85k), @austinwithkids (69k), @austinadventurekids (39k), @do512family. Big enough to matter, small enough to reply.",'free','easy'],
+  ['reach','Mikaila Ulmer, Me and the Bees',"Started her lemonade company at four, went on Shark Tank, sells in Whole Foods, and lives in Austin. Fun fact: whoever built your website borrowed a design idea from hers.",'free','medium'],
+  ['reach','Alina Morse, Zolli Candy',"Started at ten. Sells sweets. You put sweets on every single cup. Obvious person to talk to.",'free','medium'],
+  ['reach','Backyard Bounce LT',"A bounce house company based in Lakeway that delivers to all the same places you do. Same party, same customer, no overlap. Start here.",'free','easy'],
+  ['reach','Little Acorns Photography',"A kids party photographer based in Lakeway. You are both at the same parties.",'free','easy'],
+  ['reach','Lakeway city events',"July 4th parade, Trail of Lights, Movies at the Park, and Christmas in July at the swim centre. Some already take food vendors. events@lakeway-tx.gov",'free','medium'],
+  ['reach','Dripping Springs Founders Day',"April, 37th year, 150+ vendor booths, a parade and a carnival. There is a vendor page on the city website.",'cheap','medium'],
+  ['reach','Entrepreneur Kids Legacy Show',"A podcast hosted by two kids that is genuinely still going. Small, friendly, and they answer. Good first interview.",'free','easy'],
+  ['reach','Million Bazillion',"A big national money podcast for kids from public radio. They use recorded questions from kids. Send one.",'free','easy'],
+  ['reach','Rental Management magazine',"The trade magazine for rental companies. They profile new ones. You would be the youngest in the entire industry.",'free','medium'],
+  ['reach','Shark Tank',"Applications usually open January to April and a parent applies with you. Kids as young as six have pitched. The audition tape is worth making either way.",'free','big'],
 ];
 
 const CATS = {
@@ -62,7 +129,9 @@ const CATS = {
   money: ['Show the money',   '#7ed957', 'Your best ones. Nobody else can make these.'],
   you:   ['Just you two',     '#ff4081', 'Nothing to do with slushies. Half your posts should be these.'],
   make:  ['Make something',   '#ffd54f', 'New recipes, new products. Test before you sell.'],
+  grow:  ['Grow the business','#b06cf0', 'Not posts. Ways the business itself gets bigger.'],
   big:   ['Big swings',       '#ff8a3d', 'Ambitious. Some need a grown-up to make a call first.'],
+  reach: ['Real places to enter','#4dd0c4','Actual competitions, awards and people. All checked and real.'],
 };
 
 const COST = { free: ['Free', '#7ed957'], cheap: ['A few $', '#ffd54f'], money: ['Costs money', '#ff8a3d'] };
