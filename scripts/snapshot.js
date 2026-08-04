@@ -49,6 +49,7 @@ const PAGES = [
   ['lab', '/lab'],
   ['fresh-press', '/fresh-press'],
   ['our-rules', '/our-rules'],
+  ['community-events', '/community-events'],
   ['read-hub', '/read'],
   ['read-pick-colours', '/read/pick-the-colours'],
   ['read-freezes', '/read/why-it-freezes'],
