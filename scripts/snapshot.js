@@ -51,6 +51,8 @@ const PAGES = [
   ['read-pick-colours', '/read/pick-the-colours'],
   ['read-freezes', '/read/why-it-freezes'],
   ['read-other-kids', '/read/other-kids-businesses'],
+  ['read-as-good-as-a-bar', '/read/as-good-as-a-bar'],
+  ['read-what-do-we-call-it', '/read/what-do-we-call-it'],
   ['margarita-machine-rental-austin', '/margarita-machine-rental-austin'],
   ['service-area-lakeway', '/frozen-drink-machine-rental-lakeway'],
 ];

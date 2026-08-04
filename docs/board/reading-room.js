@@ -611,6 +611,151 @@ const PAGES = [
 },
   ],
 },
+
+/* ================= 5. A DRINK AS GOOD AS A BAR MAKES ===================== */
+{
+  slug: 'as-good-as-a-bar',
+  title: 'As good as a bar',
+  kicker: 'The recipe',
+  lede: `Somebody who builds frozen drinks for actual bars worked out whether you could make one that stands next to theirs. You can. And it turns out the hardest part of the job is the one part you already do not have to do.`,
+  close: [
+    ['The lucky bit is not luck, it is the rule you already follow.',
+     `Grown-ups add the tequila at the party, not you. That rule was there to keep you out of the alcohol. It also happens to hand you the cleanest measurement in the whole business — and most bars would love to have it.`],
+    ['None of this works until somebody measures the syrup.',
+     `Every number on this page depends on knowing how sweet our syrup already is. Nobody has ever measured it. That is one afternoon with a refractometer and it unlocks the rest.`],
+  ],
+  groups: [
+{
+  name: 'The number you are aiming at',
+  colour: '#4fc3f7',
+  blurb: 'There is one right answer and a fairly narrow window around it.',
+  cards: [
+    ['number', 'How sweet the finished drink should be', '13.5',
+     `Thirteen and a half Brix. Below about 12 it freezes so hard the machine's screw strains and can stall. Above about 16 it never sets and you have handed somebody a cold drink instead of a frozen one. 13.5 sits in the middle with room on both sides for a hot day.`],
+
+    ['number', 'So build the mix to this', '16.9',
+     `The grown-up's tequila waters the mix down by about a fifth. So the mix you make has to start sweeter than the drink ends up. Multiply your mix by 0.8 and you get the finished drink. Work it backwards: 13.5 divided by 0.8 is 16.9. That is the number on the recipe card.`],
+
+    ['number', 'And the alcohol has to stay under', '9%',
+     `Alcohol fights freezing about seven and a half times harder than sugar does, gram for gram. Past roughly 9% in the finished drink there is no amount of sugar fiddling that saves it — it just will not freeze. That is a number to hand the grown-up doing the pouring.`],
+
+    ['plain', 'Salt is a very short lever',
+     `Salt pushes the freezing point down about <b>eleven times</b> harder than sugar does, gram for gram. A quarter teaspoon across the whole tank is a real change. Salt on the rim of the cup is free and lovely. Salt <i>in</i> the mix is something to test carefully before it goes near a customer.`],
+  ],
+},
+{
+  name: 'The thing that makes you better at this than a bar',
+  colour: '#81c784',
+  blurb: 'This is the best fact anyone found today.',
+  cards: [
+    ['plain', 'Measuring sugar in alcohol is really hard. You never have to.',
+     `A refractometer works by bending light through the liquid. Alcohol bends light differently than sugar does, so in an alcoholic mix the reading comes out wrong and you need correction tables or a second instrument to fix it. It is the fiddliest part of batching frozen cocktails. <b>You only ever handle the mix before the tequila goes in.</b> So there is no alcohol in what you measure. Your number is just the number. No correction, no tables, no guessing.`],
+
+    ['plain', 'What a machine drink actually is',
+     `A blender margarita is ice plus liquid, whizzed up. A machine margarita is <b>a blender margarita with the ice already melted into it</b>. Everything that makes a blender drink go watery and grainy after twenty minutes is the ice melting. You do not have ice. That is why yours is still good an hour later, and it is worth saying out loud.`],
+
+    ['plain', 'The machine temperature matters as much as the recipe',
+     `A mix that is perfect at one setting is soup at another. So a recipe is not finished when the ingredients are written down — it is finished when the machine setting is written down next to them. Any recipe we publish has to say both, or nobody can actually repeat it.`],
+  ],
+},
+{
+  name: 'What the fancy version costs',
+  colour: '#ffb74d',
+  blurb: 'Less than anyone guessed.',
+  cards: [
+    ['number', 'Extra ingredients, per party', '$20–40',
+     `That is the whole difference between bulk syrup and real squeezed citrus. Not $200. Twenty to forty dollars. Which means whether to do it is a decision about what to charge, not a decision about whether it is affordable.`],
+
+    ['number', 'Limes you have to squeeze, using the trick', '≈7',
+     `There is a bartender technique called <b>super juice</b>: you use the peels plus two acids you can buy in a tub, and you get the same sourness and the same lime smell out of about seven limes that would normally take fifty. Same drink. An eighth of the squeezing and an eighth of the grocery bill.`],
+
+    ['debate', 'So should you squeeze fifty limes on camera anyway?',
+     `Fifty limes in a bucket is the best thing you could possibly film. It looks like exactly what it is — obvious, ridiculous, real work — and it is the entire argument for the fancy version in one shot.`,
+     `Seven limes makes the same drink for an eighth of the money. Squeezing fifty every single Saturday because it films well is doing hard work for a camera instead of for a customer.`,
+     `Film the fifty <b>once</b>. That video lasts forever. Then use the seven-lime trick every weekend after that, and say so — "we found a better way" is a good second video, not a confession.`],
+  ],
+},
+  ],
+},
+
+/* ==================== 6. WHAT DO WE EVEN CALL IT? ======================== */
+{
+  slug: 'what-do-we-call-it',
+  title: 'What do we call it?',
+  kicker: 'The name argument',
+  lede: `Someone whose whole job is naming things looked at whether you could invent a brand new kind of business. Their answer was no — and then they explained something better you can do instead. Nothing here is decided. Two of you have to be able to say it out loud first.`,
+  close: [
+    ['You get to kill this one.',
+     `A name only works if the person saying it is you. If either of you feels silly saying "the everybody bar" to a grown-up in a driveway, it is the wrong name and we bin it. That is not being polite — that is genuinely how names fail.`],
+    ['And there is a rule for finding out.',
+     `After twenty parties, listen to how customers describe you to their friends. If they still say "the margarita machine people", the name did not take and we drop it. You can suggest what people call you. You cannot make them.`],
+  ],
+  groups: [
+{
+  name: 'What everyone else is doing',
+  colour: '#e57373',
+  blurb: 'Two of these were a surprise and one of them is a bit worrying.',
+  cards: [
+    ['plain', 'Two tanks is not actually special',
+     `We have been treating the two tanks as our big secret. One company in Austin already rents a two-tank machine for $350. So it is not a secret — plenty of people have it. It is still worth saying loudly, because most customers do not know two-tank machines exist. But it is not a moat.`],
+
+    ['plain', 'Here is what nobody is doing though',
+     `That same company lists five flavors and <b>every single one is a grown-up drink</b>. Two tanks, two adult drinks. Nobody has said the obvious thing: the second tank should be the kids'. The gap is not the machine. The gap is what people do with it.`],
+
+    ['number', 'And this one is a real threat', '$269.99',
+     `A company called Ninja sells a home slush machine for $269.99, and about 91,000 people a month look it up. For a small party, buying one now costs about the same as renting from you once. That floor is rising, and the answer is not to be cheaper — it is to be something a countertop machine cannot be.`],
+
+    ['sortable', 'Us against the ones we know about',
+     'Tap a heading to sort. The one column where nobody else scores is the one worth building on.',
+     ['Who', 'Price', 'Tanks', 'Kid flavors'],
+     [
+       ['Slush Sisters', 250, 2, 'yes'],
+       ['ATX Marg Rentals', 350, 2, 'no'],
+       ['Ninja SLUSHi (buy it)', 270, 1, 'yes'],
+     ]],
+  ],
+},
+{
+  name: 'The two names',
+  colour: '#ba68c8',
+  blurb: 'One is what the business is. The other is what a customer repeats to a friend. They do different jobs.',
+  cards: [
+    ['plain', 'The everybody bar',
+     `That is the whole thing in two words: one machine, one price, and nobody standing at your party drinking something they did not want. It says what is different without listing a single feature.`],
+
+    ['plain', 'The kids’ tank',
+     `This is the bit somebody actually repeats. Short, you can picture it, and it explains itself with no help. If only one of these two survives, it should be this one.`],
+
+    ['plain', 'The rule that protects the money',
+     `Six of our pages exist only to be found by people typing "margarita machine rental" into Google — about 900 people a month. <b>Those pages never change.</b> A new name goes on the front page and the pages people read once they have already found us. Swap the words on the Google pages and we lose the 900 and gain a phrase nobody is searching for.`],
+
+    ['debate', 'Should you invent a completely new kind of business?',
+     `If you name the category, you own it. Everyone else becomes a copy of you, and you never have to compete on price again.`,
+     `Nobody in Lakeway is Googling a word you made up. Inventing a category means teaching people a new word <i>and</i> selling to them at the same time — that is two hard jobs, and the searches you already have are the actual business.`,
+     `Not a new category. A new <b>corner</b> of the existing one, with your rules written down in public. You keep the words people search for, and you add something they cannot search for because only you do it.`],
+  ],
+},
+{
+  name: 'Writing your rules down where everyone can see them',
+  colour: '#4fc3f7',
+  blurb: 'Nine rules. The test for whether a rule belongs on the list is unusual.',
+  cards: [
+    ['plain', 'A rule only counts if copying it is hard',
+     `Anyone can add a sentence to their website. So a rule like "we care about quality" is worth nothing — a competitor matches it in ten seconds. A rule like "we publish the sugar reading and the machine temperature for every recipe" costs them real work to match, or they visibly do not match it. Every rule on the list has to cost something.`],
+
+    ['plain', 'The strongest four so far',
+     `A measured sugar number for every recipe. The machine temperature written next to it. A version with no artificial dye. The full ingredient list published, all of it, nothing left out.`],
+
+    ['plain', 'You cannot hand out badges, and that is the law',
+     `The first idea was a badge other companies could earn. It turns out there is an actual American law about this: whoever hands out that kind of badge is <b>not allowed to sell the thing the badge is for</b>. So Slush Sisters could certify everybody else's margarita machines — but then Slush Sisters could not rent one. Publishing your own rules under your own name does the same job, is free, and is legal.`],
+
+    ['unknown', 'Can you both say the name out loud without laughing?',
+     'Costs nothing. Takes five minutes.',
+     `Try it on each other. Then try it on a grown-up who does not know about any of this. If it comes out easily, it is a name. If you have to explain it first, it is a slogan, and slogans do not survive a driveway.`],
+  ],
+},
+  ],
+},
 ];
 
 /* ------------------------------------------------------------------ render */
