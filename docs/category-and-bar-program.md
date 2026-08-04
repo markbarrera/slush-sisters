@@ -49,7 +49,30 @@ Finished Brix = Base Brix × 0.8
 ```
 
 So to land a finished drink at 13.5 Brix, **build the base to 16.9 Brix.**
-That is the single number the recipe card needs.
+
+### Correction, 2026-08-04: that is not one number, it is two
+
+Building the base builder for `/lab` surfaced something the report missed.
+16.9 is correct **only for the tank a grown-up pours tequila into.** Nothing is
+added to the kids' tank, so a 16.9 base stays at 16.9 — which is above the
+~16.5 ceiling and produces a drink that never properly sets. Sweet, slumping,
+technically not frozen.
+
+**Fresh Press therefore needs two builds, not one:**
+
+| | Base target | What happens to it | Lands at |
+| --- | --- | --- | --- |
+| Grown-ups' tank | **16.9 Brix** | diluted ~0.8× by the pour | 13.5 |
+| Kids' tank | **15 Brix** | nothing added | 15 |
+
+Same limes, same agave, less agave in the kids' batch — at 3 gallons and 15%
+lime, about 8.7 cups instead of 9.9. The calculator on `/lab` shows the gap and
+names the fix.
+
+This is a small correction with an operational tail: **Fresh Press means making
+two batches on the morning of a party, not one.** That is a real labour cost
+that the $20–40 ingredient figure does not capture, and it should be weighed
+before the tier goes live.
 
 ### Salt
 
