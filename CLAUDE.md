@@ -60,6 +60,18 @@ Three things it argues that are easy to get wrong:
 
 It is a living document — record what was tried and how it went.
 
+`docs/big-ideas.md` holds the ambitious swings — the annual report, the public
+ledger, Dad's performance review, the realtor circuit, Chapters. Higher ceiling,
+some need a grown-up to make a call first.
+
+`docs/product-tiers.md` is the biggest product idea on the table: a second,
+premium tier made with fresh-squeezed citrus rather than bulk syrup, aimed at
+the Lake Austin market, plus a no-artificial-dye version for kids' parties. Read
+the freeze-test warning before building anything on it — low-sugar mixes can
+freeze too hard for the machine.
+
+`docs/board/generate.js` builds the visual idea board the girls actually use.
+
 ## Before changing anything
 
 Read `docs/site-audit.md`. Several things that look intentional are broken —
