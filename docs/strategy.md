@@ -65,7 +65,7 @@ Winning the Austin term outright is realistic within a few months. It is also
 worth roughly this much:
 
 > 90 searches/mo × ~30% click share at #1 × ~10% enquiry-to-booking ≈ **2–3
-> bookings a month**, or **$550–$825/mo** at $275 a rental.
+> bookings a month**, or **$500–$750/mo** at $250 a rental.
 
 Real money for two kids. Not a brand. This is the number that justifies doing
 local SEO *well and cheaply*, and justifies not building the whole site around
@@ -94,6 +94,10 @@ So the site has three jobs, in priority order:
    not the first.
 
 ### Proposed architecture
+
+> **Superseded, 2026-08-04.** The architecture below was drawn before the case
+> review, which changed the underlying picture — see `docs/case-review.md`,
+> Part 3. The three jobs above still hold. The page list below does not.
 
 ```
 /                     The sisters first, the machine second.

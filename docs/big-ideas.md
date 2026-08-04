@@ -6,6 +6,10 @@ first, and one of which needs a lawyer.
 
 Nothing here is decided. Read it, argue about it, pick the ones you like.
 
+Several of these got stress-tested by five analysts who were told to disagree
+with each other. The argument, with every position and its counter, is in
+`case-review.md`. Nothing was thrown out; some things changed order.
+
 ---
 
 ## Things nobody else in this business has
