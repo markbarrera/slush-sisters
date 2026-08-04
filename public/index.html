@@ -30,6 +30,16 @@
   --pop:#ff4081;        /* 3.33:1 on white — fills, big type, shapes ONLY */
   --ink-pink:#c2185b;   /* 5.87:1 on white — body text, links, small labels */
   --pink-pale:#ffd6e7;  /* background tint only, never ink */
+
+  /* The Book button. White on --ice is 2.00:1 — the primary conversion
+     action on the site had unreadable text. --cta is a light blue that
+     actually passes. When the pink lands this becomes the pink; every
+     candidate pink clears 4.5:1 as a button fill, which --ice never did. */
+  --cta:#0277bd;        /* 4.80:1 with white text */
+  --cta-deep:#01579b;   /* 7.40:1 — hover/pressed */
+
+  /* Form control borders need 3:1 as non-text UI. #ddd was 1.36:1. */
+  --line-strong:#767b85; /* 4.20:1 on white */
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -44,15 +54,15 @@ header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:c
 header nav{display:flex;gap:24px;}
 header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
 header nav a:hover{color:#1a1a1a;}
-header nav a.cta{background:var(--ice);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
-header nav a.cta:hover{background:var(--ice-deep);}
+header nav a.cta{background:var(--cta);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--cta-deep);}
 .cta-m{display:none;}
 .menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
 @media(max-width:600px){
 header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
 header.open nav{display:flex;}
 .menu-btn{display:block;}
-.cta-m{display:inline-block;background:var(--ice);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+.cta-m{display:inline-block;background:var(--cta);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
 .menu-btn{padding:10px 6px;line-height:1;}
 }
 
@@ -67,8 +77,8 @@ header.open nav{display:flex;}
 .kicker{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:.78rem;letter-spacing:.14em;color:var(--ink-ice);text-transform:uppercase;margin-bottom:10px;}
 .hero-text h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--brand);line-height:1.1;margin-bottom:12px;}
 .hero-text p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:24px;}
-.btn{display:inline-block;background:var(--ice);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
-.btn:hover{background:var(--ice-deep);}
+.btn{display:inline-block;background:var(--cta);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
+.btn:hover{background:var(--cta-deep);}
 .btn-outline{background:none;border:2px solid var(--brand);color:var(--brand);}
 .btn-outline:hover{background:var(--brand);color:#fff;}
 
@@ -123,13 +133,13 @@ details p{margin-top:10px;font-size:.88rem;color:#666;line-height:1.6;}
 /* FORM */
 .form-wrap{max-width:480px;margin:0 auto;}
 .form-wrap label{display:block;font-weight:500;font-size:.82rem;margin-bottom:4px;margin-top:14px;}
-.form-wrap input,.form-wrap select,.form-wrap textarea{width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:#fafafa;}
+.form-wrap input,.form-wrap select,.form-wrap textarea{width:100%;padding:10px 14px;border:1.5px solid var(--line-strong);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:#fafafa;}
 .form-wrap input:focus,.form-wrap select:focus,.form-wrap textarea:focus{outline:2px solid var(--ink-ice);outline-offset:1px;border-color:var(--ink-ice);}
 .form-wrap textarea{height:70px;resize:vertical;}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:440px){.row2{grid-template-columns:1fr;}}
-.form-btn{display:block;width:100%;background:var(--ice);color:#fff;font-weight:700;font-size:.95rem;padding:14px;border:none;border-radius:8px;cursor:pointer;margin-top:18px;}
-.form-btn:hover{background:var(--ice-deep);}
+.form-btn{display:block;width:100%;background:var(--cta);color:#fff;font-weight:700;font-size:.95rem;padding:14px;border:none;border-radius:8px;cursor:pointer;margin-top:18px;}
+.form-btn:hover{background:var(--cta-deep);}
 
 /* SOCIAL PLACEHOLDER */
 .social-placeholder{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:20px;}
