@@ -759,7 +759,7 @@ const card = (c) => {
 };
 
 const STYLE = `<style>
-@font-face{font-family:'Sour Gummy';font-weight:800;font-display:swap;src:url(data:font/ttf;base64,${SOUR}) format('truetype');}
+@font-face{font-family:'Baloo 2';font-weight:800;font-display:swap;src:url(data:font/ttf;base64,${SOUR}) format('truetype');}
 :root{
   --ground:#eef6fd; --panel:#ffffff; --ink:#16203f; --soft:#5d6b8c;
   --brand:#1a237e; --ice:#4fc3f7; --line:#d6e6f5;
@@ -779,7 +779,7 @@ const STYLE = `<style>
 body{margin:0;background:var(--ground);color:var(--ink);
   font-family:'DM Sans',system-ui,sans-serif;font-weight:500;line-height:1.6;
   -webkit-text-size-adjust:100%;}
-h1,h2,h3{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;margin:0;text-wrap:balance;line-height:1.08;}
+h1,h2,h3{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;margin:0;text-wrap:balance;line-height:1.08;}
 p{margin:0;}
 a{color:inherit;}
 
@@ -813,7 +813,7 @@ a{color:inherit;}
 .card h3{font-size:1.06rem;letter-spacing:-.01em;line-height:1.25;}
 .card p{font-size:.92rem;color:var(--soft);line-height:1.62;}
 .card b{color:var(--ink);font-weight:700;}
-.big{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;
+.big{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;
   font-size:clamp(2.2rem,6vw,3rem);color:var(--ice);line-height:1;
   font-variant-numeric:tabular-nums;}
 
@@ -848,7 +848,7 @@ a{color:inherit;}
 .check input:checked + .box::after{transform:rotate(-45deg) scale(1);}
 .check input:focus-visible + .box{outline:3px solid var(--ice);outline-offset:2px;}
 .check .ct{display:flex;flex-direction:column;gap:3px;}
-.check .ct b{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;font-size:1.02rem;line-height:1.25;}
+.check .ct b{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;font-size:1.02rem;line-height:1.25;}
 .check .ct em{font-style:normal;font-weight:700;font-size:.78rem;color:var(--ice);}
 .card.unknown input:checked ~ .ct b{text-decoration:line-through;color:var(--soft);}
 
@@ -859,20 +859,20 @@ a{color:inherit;}
 .demo{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;margin-top:6px;}
 .demo-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding:11px 14px;background:var(--panel);border-bottom:1px solid var(--line);}
-.demo-name{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;font-size:1.02rem;color:var(--brand);}
+.demo-name{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;font-size:1.02rem;color:var(--brand);}
 .demo-name b{color:var(--ink);font-weight:800;}
 .demo-btn{background:var(--brand);color:var(--on-brand);font-weight:700;font-size:.78rem;
   padding:8px 15px;border-radius:8px;}
 .demo-hero{background:var(--ground);padding:18px 16px;display:flex;flex-direction:column;gap:7px;align-items:flex-start;}
 .demo-kicker{font-weight:700;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);}
-.demo-h1{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;font-size:1.35rem;
+.demo-h1{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;font-size:1.35rem;
   line-height:1.12;color:var(--ink);}
 .demo-body{font-size:.83rem;color:var(--soft);line-height:1.5;}
 .demo-cta{background:var(--brand);color:var(--on-brand);font-weight:700;font-size:.82rem;
   padding:11px 20px;border-radius:8px;margin-top:3px;}
 .demo-price{background:var(--panel);padding:12px 16px;display:flex;align-items:baseline;gap:8px;
   border-top:1px solid var(--line);}
-.demo-price b{font-family:'Sour Gummy',system-ui,sans-serif;font-size:1.7rem;color:var(--brand);
+.demo-price b{font-family:'Baloo 2',system-ui,sans-serif;font-size:1.7rem;color:var(--brand);
   font-variant-numeric:tabular-nums;}
 .demo-price span{font-size:.78rem;color:var(--soft);}
 .gives{font-size:.86rem;}
@@ -899,7 +899,7 @@ a{color:inherit;}
 
 /* ---- brix slider ---- */
 .brix-out{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px;}
-.brix-out output{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;
+.brix-out output{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;
   font-size:clamp(2.4rem,7vw,3.2rem);color:var(--ice);line-height:1;font-variant-numeric:tabular-nums;}
 .brix-out .unit{font-weight:700;color:var(--soft);}
 .brix-out .verdict{flex:1 0 100%;font-weight:700;color:var(--ink);font-size:.98rem;margin-top:6px;}
@@ -917,7 +917,7 @@ a{color:inherit;}
 .tile .go{margin-top:auto;padding-top:10px;font-weight:700;font-size:.82rem;color:var(--ice);}
 
 footer{border-top:1.5px solid var(--line);padding-top:22px;display:flex;flex-direction:column;gap:16px;}
-footer .fi b{display:block;color:var(--ink);font-family:'Sour Gummy',sans-serif;font-weight:800;
+footer .fi b{display:block;color:var(--ink);font-family:'Baloo 2',sans-serif;font-weight:800;
   font-size:1.02rem;margin-bottom:4px;}
 footer .fi p{color:var(--soft);font-size:.9rem;}
 

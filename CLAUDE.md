@@ -36,7 +36,16 @@ preview URL that does not touch production traffic.
   in every page that has them.
 - Brand colors: `#1a237e` deep blue, `#4fc3f7` light blue, `#e8f4fd` pale blue
   background.
-- Fonts: Sour Gummy for headings and the wordmark, DM Sans for body.
+- Fonts: **Baloo 2** for headings and the wordmark, DM Sans for body. Baloo 2
+  runs 400–800 — never ask for 900, it triggers faux-bold synthesis, which
+  thickens strokes unevenly and is exactly what an embroiderer cannot use.
+  Sour Gummy was replaced 2026-08-04: its zero is permanently slashed (three
+  contours, no alternate glyph, no feature to toggle it), so every price on
+  the site looked like code, and it had no tabular figures.
+- **Numbers that line up in a column use `.tabular`.** DM Sans has no tabular
+  figures at all — no `tnum` feature and a 93% digit-width spread — so
+  `font-variant-numeric: tabular-nums` on it silently does nothing. The
+  utility switches to Baloo 2, which has them.
 - Copy is written plainly and in the sisters' own voice — first person, short
   sentences, no marketing throat-clearing. Match it.
 - The candy garnish on every cup is the differentiator. It appears on most

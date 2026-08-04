@@ -185,7 +185,7 @@ const html = `${NOINDEX ? `<!DOCTYPE html>
 <style>
 /* swap, never block: with font-display:block the whole page stays invisible
    until the face resolves, so a slow or failed decode renders a blank screen. */
-@font-face{font-family:'Sour Gummy';font-weight:800;font-display:swap;src:url(data:font/ttf;base64,${SOUR}) format('truetype');}
+@font-face{font-family:'Baloo 2';font-weight:800;font-display:swap;src:url(data:font/ttf;base64,${SOUR}) format('truetype');}
 
 :root{
   --ground:#eef6fd; --panel:#ffffff; --ink:#16203f; --soft:#5d6b8c;
@@ -206,7 +206,7 @@ const html = `${NOINDEX ? `<!DOCTYPE html>
 body{margin:0;background:var(--ground);color:var(--ink);
   font-family:'DM Sans',system-ui,sans-serif;font-weight:500;line-height:1.55;
 }
-h1,h2,h3{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;margin:0;text-wrap:balance;line-height:1.05;}
+h1,h2,h3{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;margin:0;text-wrap:balance;line-height:1.05;}
 p{margin:0;}
 
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px 88px;}
@@ -284,7 +284,7 @@ p{margin:0;}
 
 footer{border-top:1.5px solid var(--line);padding-top:22px;color:var(--soft);font-size:.86rem;
   display:flex;flex-direction:column;gap:8px;}
-footer b{color:var(--ink);font-family:'Sour Gummy',sans-serif;font-weight:800;}
+footer b{color:var(--ink);font-family:'Baloo 2',sans-serif;font-weight:800;}
 
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;}}
 @media (max-width:520px){ .hero{padding:40px 0 28px;} .grid{grid-template-columns:1fr;} }

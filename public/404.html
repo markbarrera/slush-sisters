@@ -47,7 +47,7 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;display:flex
 a{color:inherit;}
 
 header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
-.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
 .site-name span{color:var(--ice);}
 header nav{display:flex;gap:24px;}
 header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
@@ -65,20 +65,27 @@ header.open nav{display:flex;}
 }
 
 main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background:var(--wash);}
-main h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--brand);line-height:1.1;margin-bottom:12px;}
+main h1{font-family:'Baloo 2',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:800;color:var(--brand);line-height:1.1;margin-bottom:12px;}
 main p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:28px;max-width:420px;}
 .btn{display:inline-block;background:var(--cta);color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
 .btn:hover{background:var(--cta-deep);}
 
 footer{background:var(--brand);color:#fff;padding:40px 24px;text-align:center;}
-footer .f-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
+footer .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
 footer .f-name span{color:var(--ice);}
 footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
 footer a{color:var(--ice);}
+
+/* Numbers that line up in a column — ledger rows, cup counts, price tables.
+   DM Sans has no tabular figures at all (no tnum feature, 93% digit-width
+   spread), so tabular-nums on it silently does nothing. Baloo 2 has them. */
+.tabular{font-family:'Baloo 2',system-ui,sans-serif;font-weight:600;
+  font-variant-numeric:tabular-nums lining;font-feature-settings:'tnum' 1;
+  letter-spacing:0;text-align:right;}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <meta name="theme-color" content="var(--brand)">
