@@ -16,8 +16,7 @@ docs/setup-guide.md  one-time setup, step by step
 docs/hosting.md      how the site is served, and what access deploys need
 docs/site-audit.md   known problems with the live site
 docs/strategy.md     what the site is for, and the keyword research
-docs/marketing.md    marketing plan — channels, campaigns, calendar
-docs/content-ideas.md  content idea bank, written for the girls
+docs/marketing.md    the playbook — strategy, campaigns, content ideas, trends
 docs/origin-story.md  plan and interview questions for the origin story page
 ```
 

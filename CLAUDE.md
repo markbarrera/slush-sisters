@@ -44,15 +44,21 @@ preview URL that does not touch production traffic.
 
 ## Marketing and content
 
-`docs/marketing.md` is the working marketing plan — channels, campaigns, the
-seasonal calendar, and what has been tried. `docs/content-ideas.md` is the
-executable idea bank, written for Finley and Harper to read and act on
-themselves. Both are living documents: when something gets tried, record how it
-went rather than leaving the plan frozen.
+`docs/marketing.md` is the playbook — strategy, campaigns, the content idea
+bank, how to ride trends, and the safety rules, deliberately in one file. The
+girls read the strategy too; splitting the thinking from the doing would gate
+them out of the part that actually teaches something.
 
-The strategy in one line: the rentals fund the operation, the girls are the
-brand, and neighbourhood Facebook groups convert better than either social or
-search.
+Three things it argues that are easy to get wrong:
+
+- Neighbourhood Facebook groups convert better than either social or search for
+  a kids' party rental.
+- People share videos about two kids running a real business, not videos about
+  slushies.
+- It cannot all be selling. Roughly half of what they post should have nothing
+  to do with the product, or the only followers are people who already want one.
+
+It is a living document — record what was tried and how it went.
 
 ## Before changing anything
 
