@@ -914,7 +914,9 @@ ${g.cards.map(card).join('\n')}
   }).join('\n\n');
 
   const inner = `<div class="wrap top">
-  <a class="back" href="/read">&larr; All of them</a>
+  <!-- trailing slash on purpose: /read 307-redirects to /read/ on the Worker,
+       and this link gets used on every page, on a phone -->
+  <a class="back" href="/read/">&larr; All of them</a>
   <div class="hero">
     <p class="eyebrow">${esc(page.kicker)}</p>
     <h1>${esc(page.title)}</h1>
