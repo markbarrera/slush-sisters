@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Press Kit — Slush Sisters, Lakeway TX</title>
+<meta name="description" content="Everything a reporter, producer or partner needs about Slush Sisters: the bio, the facts, the photos, what the girls can talk about, and the rules we ask you to follow.">
+<style>
+:root{
+  --brand:#1a237e;
+  --ice:#4fc3f7;
+  --ice-deep:#29b6f6;
+  --wash:#e8f4fd;
+  --blush:#fff5f7;
+  --on-brand:#fff;
+  --ink-ice:#0165a8;    /* 6.13:1 on white, 5.48:1 on --wash */
+  --pop:#ff4081;        /* 3.33:1 — fills, big type, shapes ONLY */
+  --ink-pink:#c2185b;   /* 5.87:1 — body text, links, small labels */
+  --pink-pale:#ffd6e7;
+  --cta:#0277bd;        /* 4.80:1 with white text */
+  --cta-deep:#01579b;
+  --line-strong:#767b85;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:var(--cta);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--cta-deep);}
+.cta-m{display:none;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;padding:10px 6px;line-height:1;}
+.cta-m{display:inline-block;background:var(--cta);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+}
+
+section{padding:52px 24px;}
+.contain{max-width:780px;margin:0 auto;}
+section h1{font-family:'Baloo 2',sans-serif;font-size:clamp(1.9rem,7vw,2.5rem);font-weight:800;margin-bottom:10px;color:var(--brand);line-height:1.1;}
+section h2{font-family:'Baloo 2',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:8px;color:var(--brand);}
+section h3{font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;margin-bottom:5px;}
+section .lead{color:#555;font-size:1rem;line-height:1.65;margin-bottom:24px;}
+section p{line-height:1.65;}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-ice);margin-bottom:10px;}
+.btn{display:inline-block;background:var(--cta);color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;}
+.btn:hover{background:var(--cta-deep);}
+.bg-light{background:#f8fbff;}
+.bg-wash{background:var(--wash);}
+
+/* BIO — the copy-paste blocks. A reporter on deadline wants to take these
+   whole, so they are set apart and easy to select. */
+.bio{border:1.5px solid #e4ebf2;border-radius:12px;padding:20px 22px;background:#fff;margin-top:14px;}
+.bio .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--ink-ice);background:var(--wash);
+  border-radius:99px;padding:4px 11px;margin-bottom:10px;}
+.bio p{font-size:.92rem;color:#333;}
+.bio p + p{margin-top:10px;}
+
+/* FACTS — the eight-second scan */
+.facts{margin-top:16px;}
+.facts .r{display:flex;justify-content:space-between;gap:18px;padding:11px 0;
+  border-bottom:1px solid #eaeff5;font-size:.89rem;}
+.facts .r:last-child{border-bottom:none;}
+.facts .r span:first-child{color:#666;}
+.facts .r span:last-child{font-weight:600;text-align:right;color:var(--brand);
+  font-variant-numeric:tabular-nums lining;}
+
+.topics{list-style:none;margin-top:14px;}
+.topics li{padding:11px 0;border-bottom:1px solid #eaeff5;font-size:.9rem;color:#444;}
+.topics li:last-child{border-bottom:none;}
+.topics b{color:var(--brand);}
+
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+@media(min-width:640px){.shots{grid-template-columns:repeat(4,1fr);}}
+.shots a{display:block;border-radius:10px;overflow:hidden;border:1.5px solid #e4ebf2;}
+.shots img{width:100%;aspect-ratio:3/4;object-fit:cover;}
+
+.note{border-left:3px solid var(--ink-ice);padding:2px 0 2px 16px;margin-top:22px;}
+.note p{font-size:.88rem;color:#555;}
+.note p + p{margin-top:8px;}
+.note.warn{border-left-color:var(--ink-pink);}
+.note.warn b{color:var(--ink-pink);}
+
+.byo{background:var(--wash);border-radius:12px;padding:22px;margin-top:22px;}
+.byo h3{color:var(--brand);margin-bottom:6px;}
+.byo p{font-size:.88rem;color:#555;}
+.byo p + p{margin-top:8px;}
+
+footer{background:var(--brand);color:#fff;padding:40px 24px;text-align:center;}
+footer .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
+footer .f-name span{color:var(--ice);}
+footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
+footer a{color:var(--ice);}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://slushsisters.com/press">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:url" content="https://slushsisters.com/press">
+<meta property="og:title" content="Press Kit — Slush Sisters">
+<meta property="og:description" content="The bio, the facts, the photos, and what two sisters running a frozen drink rental company in Lakeway can talk about.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/grown-ups">For Grown-Ups</a>
+<a href="/flavors">Flavors</a>
+<a href="/lab">The Lab</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<a href="/book" class="cta-m">Book</a>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<section>
+<div class="contain">
+<p class="kicker">For reporters, producers and partners</p>
+<h1>Press kit</h1>
+<p class="lead">Everything you need to decide whether this is a story, on one page, without emailing anybody first. If you want something that is not here, ask &mdash; <a href="mailto:hello@slushsisters.com" style="color:var(--ink-ice);font-weight:600;">hello@slushsisters.com</a> reaches a grown-up the same day.</p>
+<div class="note warn">
+<p><b>Straight answer first, because it is usually the first question.</b> Yes, they are really 11 and 8, and yes it is a real registered company that pays for itself. Their dad drives the van because they cannot, and their mom runs the accounts because the platforms require an adult. Everything else &mdash; the flavors, the recipes, the setups, the candy &mdash; is theirs.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>The bio, ready to take</h2>
+<p class="lead">Written to be copied straight out. If you need a different length, ask.</p>
+
+<div class="bio">
+<span class="tag">One line</span>
+<p>Slush Sisters is a frozen drink machine rental company in Lakeway, Texas, run by two sisters &mdash; Harper, 11, and Finley, 8.</p>
+</div>
+
+<div class="bio">
+<span class="tag">One paragraph</span>
+<p>Slush Sisters is a frozen drink machine rental company in Lakeway, Texas, run by sisters Harper (11) and Finley (8). They rent a two-tank machine for parties at $250, and one tank is always a drink with no alcohol in it &mdash; which is the thing that makes them different, because every other rental in the area fills both tanks with grown-up drinks and leaves the kids with juice boxes. They put a piece of candy matching the flavor on the rim of every cup. Slush Sisters LLC is a registered Texas business.</p>
+</div>
+
+<div class="bio">
+<span class="tag">The longer version</span>
+<p>Slush Sisters is a frozen drink machine rental company in Lakeway, Texas, run by two sisters &mdash; Harper, 11, and Finley, 8. They rent one two-tank machine for parties across the Lake Travis area at $250, everything included, and they come back the next morning to clean it themselves.</p>
+<p>What makes it unusual is not the machine. It is that they treat it like a science problem. They measure the sugar in every batch with a refractometer, because sugar is what stops a slush freezing solid, and they publish the numbers and the failed experiments on their own website. They have written down seven rules they can be caught breaking, each one with a line saying what it costs them to keep.</p>
+<p>They also published a rule about alcohol before anybody asked them to: they make the frozen mix, which has none in it, and a grown-up adds their own spirits after the girls have left.</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>Fast facts</h2>
+<div class="facts">
+<div class="r"><span>Founders</span><span>Harper, 11 &amp; Finley, 8</span></div>
+<div class="r"><span>Based</span><span>Lakeway, Texas</span></div>
+<div class="r"><span>Legal entity</span><span>Slush Sisters LLC</span></div>
+<div class="r"><span>What they rent</span><span>One two-tank frozen drink machine</span></div>
+<div class="r"><span>Price</span><span>$250, everything included</span></div>
+<div class="r"><span>Service area</span><span>Lakeway, Bee Cave, Lake Travis, Steiner Ranch, Lake Austin, Dripping Springs</span></div>
+<div class="r"><span>The differentiator</span><span>One tank is always the kids&rsquo;</span></div>
+<div class="r"><span>The signature</span><span>A candy garnish matching every flavor</span></div>
+<div class="r"><span>Who does what</span><span>Girls: flavors, recipes, setup, garnish. Dad: driving. Mom: the accounts</span></div>
+</div>
+<div class="note">
+<p><b>Two things we are not going to pretend about.</b> They have one machine, so they can only do one party at a time. And the premium recipe &mdash; fresh limes and agave instead of syrup &mdash; is new, and the page for it says exactly what has and has not been tested.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-wash">
+<div class="contain">
+<h2>What they can actually talk about</h2>
+<p class="lead">These are the ones where an 11-year-old and an 8-year-old will give you a real answer rather than a rehearsed one.</p>
+<ul class="topics">
+<li><b>Why sugar is antifreeze.</b> Take the sugar out of a slushie and you do not get a healthy slushie, you get an ice cube. They have made one. They can show you the number where it happens.</li>
+<li><b>Blue raspberry is not a fruit.</b> Somebody made it up, so there is nothing blue to squeeze. Their answer is a flower that turns pink when you add lemon, in the cup, while you are holding it.</li>
+<li><b>Running a business with your sister.</b> Who decides, what they argue about, what each of them is actually better at.</li>
+<li><b>The things they got wrong.</b> They keep a public list. It includes a calculator on their own site that told customers their best recipe was a block of ice.</li>
+<li><b>Why they will not touch the alcohol</b>, and why they wrote that down before anyone asked.</li>
+<li><b>What it costs.</b> They know their numbers &mdash; what a machine costs, what a party costs them, why the price does not change on a hot weekend.</li>
+</ul>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>Photos</h2>
+<p class="lead">Free to use with a credit to Slush Sisters. Click any of these for the full-size file. If you need something specific &mdash; a setup shot, a particular flavor, the two of them working &mdash; ask and they will take it.</p>
+<div class="shots">
+<a href="/img/photos/sisters-cups-1024.jpg"><img src="/img/photos/sisters-cups-1024.jpg" alt="Harper and Finley holding cups of bright red frozen strawberry slush" loading="lazy" decoding="async"></a>
+<a href="/img/photos/sisters-machine-1024.jpg"><img src="/img/photos/sisters-machine-1024.jpg" alt="Harper and Finley standing with their two-tank frozen drink machine" loading="lazy" decoding="async"></a>
+<a href="/img/photos/harper-window-1024.jpg"><img src="/img/photos/harper-window-1024.jpg" alt="Harper leaning out of a candy shop window holding a frozen drink" loading="lazy" decoding="async"></a>
+<a href="/img/photos/finley-window-1024.jpg"><img src="/img/photos/finley-window-1024.jpg" alt="Finley leaning out of the same candy shop window holding a frozen drink" loading="lazy" decoding="async"></a>
+</div>
+<div class="note">
+<p><b>Photo metadata is stripped before anything goes up here</b>, including GPS. These were taken at home and location data on pictures of children is not something to publish by accident. If you re-host them, please do not add it back.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>Three things we ask</h2>
+<p class="lead">None of these are unusual and all of them are quick.</p>
+<div class="byo">
+<h3>1. No address, no school, no schedule</h3>
+<p>Please do not publish their street, their house, the name of their school, or where they will be at a specific time in the future. Afterwards is fine. This is the one we will ask you to change if it slips through.</p>
+</div>
+<div class="byo">
+<h3>2. Ask before filming at a customer&rsquo;s party</h3>
+<p>The party belongs to the family who booked it. If you want to film at one, we have to ask them first, and some of them will say no. Give us a few days and we will find you one that says yes.</p>
+</div>
+<div class="byo">
+<h3>3. A grown-up is on every interview</h3>
+<p>Not to script the answers &mdash; the good quotes are the unscripted ones. Just present. Mark handles anything about money, insurance or where bookings go.</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>Coverage</h2>
+<p class="lead">None yet. This page exists so that saying yes to the first one is easy.</p>
+<p style="font-size:.92rem;color:#444;">When there is coverage it will be listed here, including anything that got a detail wrong, because a page that only lists the flattering ones is not a record.</p>
+</div>
+</section>
+
+<section class="bg-wash" style="text-align:center;">
+<h2>Get in touch</h2>
+<p class="lead"><a href="mailto:hello@slushsisters.com" style="color:var(--ink-ice);font-weight:700;">hello@slushsisters.com</a> &mdash; it reaches a grown-up, and we answer the same day.</p>
+<a href="/about" class="btn">Read their story</a>
+</section>
+
+<footer>
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
+<p>Lakeway, TX · <a href="/book">Book a rental</a> · <a href="/promise">Our promise</a> · <a href="/our-rules">Our rules</a></p>
+<p><a href="mailto:hello@slushsisters.com">hello@slushsisters.com</a></p>
+<p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
+</footer></body></html>

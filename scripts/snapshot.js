@@ -50,6 +50,7 @@ const PAGES = [
   ['fresh-press', '/fresh-press'],
   ['our-rules', '/our-rules'],
   ['community-events', '/community-events'],
+  ['press', '/press'],
   ['inventory', '/inventory'],
   ['read-hub', '/read'],
   ['read-pick-colors', '/read/pick-the-colors'],
@@ -128,7 +129,12 @@ function serve() {
           // a single querySelector here reports a false negative.
           const visible = e => !!(e && e.offsetParent !== null);
           const bookVisible = [...document.querySelectorAll('.cta-m, header nav a.cta')].some(visible);
-          const broken = [...document.images].filter(i => !i.complete || i.naturalWidth === 0).length;
+          // An image is broken only if the browser FINISHED with it and got
+          // nothing. "!complete" just means still in flight — which is the
+          // normal state of every loading="lazy" image below the fold, and
+          // treating that as broken made /press fail with four false alarms.
+          const broken = [...document.images]
+            .filter(i => i.complete && i.naturalWidth === 0).length;
           return {
             bookVisible,
             // /book is the booking form itself, and /read and /ideas are
