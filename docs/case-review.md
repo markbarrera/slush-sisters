@@ -992,6 +992,44 @@ distinction has to stay visible in the site's structure. Where the two-tank
 story is told, children are present and it's daylight. Where the adult offer is
 sold, it's a different page with a different message order.
 
+## This is a phone site
+
+Before any of the page structure below: **nearly everyone arrives on a phone**,
+from a bio link, a text message, a neighbourhood Facebook post, or a shared
+story. Desktop is the exception. Every page gets designed at 390px first and
+allowed to grow — see the mobile-first convention in `CLAUDE.md`.
+
+One thing this immediately settles: **the three-part split below is not
+navigation.** On a phone the nav collapses behind a ☰, so anything put there is
+invisible until someone taps. Three doors in the nav would be three doors
+nobody sees. The split lives in the **first screen of the homepage** — three
+tappable cards, above the fold, each one a full-width target. The nav stays
+short, and "Book" stays visible in the header at every width, outside the menu.
+
+### Different doors for different arrivals
+
+The same homepage has to serve people who arrive by very different routes and
+want very different things. On a phone, in the first three seconds:
+
+| They arrive from | They are | What they need first |
+|---|---|---|
+| **A social bio link** (Instagram, TikTok) | Curious about *the girls* — many not local, and many will never rent anything | The story, and something to follow or subscribe to. Not a booking form |
+| **SMS / a text from a friend** | Already sold. Someone told them "book these kids" | The Book button, immediately. Nothing else matters |
+| **A neighbourhood Facebook group** | Local, comparing options, mildly sceptical | Price, area, proof it's real. Then the story |
+| **Google** ("margarita machine rental austin") | An adult with an event and a budget | Capability, price, insured/LLC. Founders last |
+| **Press coverage** | The whole metro at once, briefly | Who they are, do you come to my part of Austin, and how do I get in touch |
+
+Two implications worth building for:
+
+- **Tag the links so the site can tell them apart.** Bio links and SMS links
+  carry a `?from=` parameter; the page can lead with the right door. This costs
+  a few lines of JavaScript and no extra pages. Start by tagging the links and
+  reading the data — reorder the page only once there's evidence.
+- **The social arrival is the most valuable and the worst served.** They are the
+  audience the whole strategy is built to earn, they are mostly not local, and
+  today they land on a page selling a machine they cannot rent. That is the
+  single biggest mobile gap on the site.
+
 ## What's wrong with the site today
 
 Five pages built around one product at one price for one audience, plus six
@@ -1013,11 +1051,12 @@ service-area pages and an SEO page bolted on. Specifically:
 ## The proposed shape
 
 ```
-/                    THE STORY FIRST
-                     Two sisters, then the machine. Social proof
-                     above the fold. Email capture. One clear route
-                     for each of the three visitors: book a party,
-                     book an event, or find out who these kids are.
+/                    THE STORY FIRST, ON A PHONE
+                     Two sisters, then the machine. Above the fold at
+                     390px: a photo of them, one line of who they are,
+                     and three full-width tappable doors — book a
+                     party, book an event, find out who these kids are.
+                     Email capture. "Book" pinned in the header.
 
   ── the party path (kids, daylight, the girls front all of it) ──
 
@@ -1037,6 +1076,17 @@ service-area pages and an SEO page bolted on. Specifically:
 /margarita-machine-rental-austin
                      Stays exactly as it is. It's the SEO page and it
                      already gets the message order right.
+
+  ── the metro catch-all ──
+
+/austin              BUILT 2026-08-04. The page for when Austin press
+                     hits and the whole metro arrives at once. Covers
+                     the full service area rather than one neighbourhood,
+                     is honest about how far the van will go, answers
+                     "are you really kids" directly, and gives press and
+                     event enquiries somewhere to land. Deliberately does
+                     NOT target the margarita keyword — that would
+                     compete with the SEO page above.
 
   ── the brand path (the reason any of this matters) ──
 

@@ -7,9 +7,11 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "preview": "wrangler versions upload",
-    "images": "node scripts/optimize-images.js"
+    "images": "node scripts/optimize-images.js",
+    "snapshot": "node scripts/snapshot.js"
   },
   "devDependencies": {
+    "playwright": "^1.56.0",
     "sharp": "^0.35.3",
     "wrangler": "^4.42.0"
   }

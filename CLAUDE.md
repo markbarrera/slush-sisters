@@ -42,6 +42,34 @@ preview URL that does not touch production traffic.
 - The candy garnish on every cup is the differentiator. It appears on most
   pages on purpose.
 
+## Mobile first — this is the default, not a checkbox
+
+Nearly everyone arrives on a phone: from a bio link, a text message, a
+neighbourhood Facebook post, a shared story. Desktop is the exception. Build
+and judge every page at **390px wide first**, then let it grow.
+
+What that means in practice:
+
+- **Design the phone layout, then add the desktop one.** Use `min-width` media
+  queries, so the base CSS *is* the mobile CSS. The site currently does the
+  opposite — six ad-hoc `max-width` breakpoints (440, 480, 500, 540, 600, 700)
+  that treat mobile as a series of exceptions. Move toward `min-width` on any
+  page you touch; don't rewrite all thirteen in one go.
+- **The primary action is never behind a tap.** "Book" stays visible in the
+  header at every width. It must never live only inside the ☰ menu — that was a
+  real defect, fixed 2026-08-04.
+- **Tap targets are at least 44×44px.** Anything smaller gets missed by a thumb.
+- **Never scroll sideways.** Check `scrollWidth <= innerWidth` at 390px.
+- **Something real is visible without scrolling.** A headline, a photo of the
+  girls, and a button — not a headline that fills the screen on its own.
+- **Weigh every kilobyte.** Photos go through `<picture>` with 640px WebP for
+  phones. Do not hardcode a 1024px image and let the phone download it.
+- **Verify on a phone viewport, don't assume.** `scripts/snapshot.js` renders
+  every page at 390px. Look at the output before saying it works.
+
+Different visitors arrive by different routes and want different things —
+see `docs/case-review.md` Part 3 for the entry-point map.
+
 ## Marketing and content
 
 `docs/marketing.md` is the playbook — strategy, campaigns, the content idea

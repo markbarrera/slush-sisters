@@ -1,0 +1,133 @@
+# The build log
+
+What this site was, on each day it changed, and why.
+
+Git already records every edit. This file records something git cannot: the
+*reasoning* — what was broken, what was decided, what turned out to be wrong.
+That is the part that is worth reading later, and the part that makes this a
+story rather than a changelog.
+
+Two audiences, on purpose:
+
+- **The girls.** This is the record of them building something real, including
+  the parts that did not work. A business that only publishes its wins teaches
+  nothing.
+- **Anyone telling the story afterwards** — a case study, a talk, a post, a
+  press feature. The receipts are here, dated, with the mistakes left in.
+
+## How it works
+
+- **Visual snapshots** live in `docs/history/<date>/`. Every canonical page,
+  rendered at 390px (phone) and 1280px (desktop), full page. Run
+  `node scripts/snapshot.js` after any meaningful change and commit the output.
+  The snapshot run also checks each page for a visible Book button, sideways
+  scroll, and broken images, and fails loudly if it finds any.
+- **Entries below** are newest first. Each one says what changed, why, and —
+  where it applies — what was got wrong.
+- **Keep the mistakes in.** They are the most useful thing in the file. A
+  corrected error is more instructive than a decision that happened to be right
+  first time.
+
+---
+
+## 2026-08-04 — Mobile first, and an Austin page
+
+**What changed**
+
+- **The Book button is now visible on a phone.** It was not. On any screen
+  under 600px the entire nav — including the "Book Now" button — collapsed
+  behind a ☰ icon. The single action the site exists to produce was invisible
+  by default on the device most visitors use. Fixed across all thirteen pages
+  with a header Book button that lives outside the collapsible nav, at a 44px
+  tap target.
+- **`/austin` added.** A metro-wide catch-all, distinct from the existing
+  `/margarita-machine-rental-austin` SEO page. Reason: if an Austin outlet runs
+  a story, the whole metro arrives at once, and every existing page is either
+  about one neighbourhood or written for adults booking a margarita machine.
+  This one covers the whole area, is honest about how far the van will go, and
+  answers "are you really kids" directly.
+- **Mobile-first written into `CLAUDE.md`** as a standing convention rather
+  than a preference.
+- **Snapshot system added** (`scripts/snapshot.js`), and this file started.
+
+**What was got wrong along the way**
+
+- Suspected the homepage was shipping a 219KB hero image to phones. It is not —
+  there is a `<picture>` element serving a 90KB 640px WebP. Checked before
+  reporting, which is the only reason it did not become a "fix" that broke
+  working code.
+- Set the mobile Book button to a 40px tap target on the first pass. The
+  accessibility floor is 44px. Caught by measuring it in a real browser rather
+  than trusting the CSS.
+
+**What is still wrong**
+
+The CSS is desktop-first — six ad-hoc `max-width` breakpoints (440, 480, 500,
+540, 600, 700) that treat the phone as a series of exceptions. It should be
+`min-width`, so the base styles *are* the phone styles. Not rewritten in one
+go, deliberately: thirteen pages of inline CSS, changed all at once, with no
+test suite, is how you break a live site. It moves page by page as pages get
+touched.
+
+---
+
+## 2026-08-04 — The case review
+
+Five analysts pointed at the business at once and told to disagree with each
+other. The full argument is in `case-review.md`; the short version of what it
+changed:
+
+- The "$27,000 ceiling" turned out to be one machine's annual calendar, not a
+  statement about demand.
+- The highest-value idea in the review was one nobody was arguing about:
+  selling cups at school and community events rather than renting the machine
+  out. Higher yield, no alcohol anywhere near it, and the only version of this
+  business the girls can actually front.
+- The best structural insight: the machine has two tanks, and a backyard party
+  is a kids' party and an adult party *simultaneously*. Every competitor serves
+  half of it.
+
+Also fixed: `strategy.md` was calculating booking value at $275 when the price
+is $250.
+
+---
+
+## 2026-08-03 — Recovery, and the form that was lying
+
+The site existed and was live. It was not in version control anywhere. First
+job was getting it into git before anything else could safely happen.
+
+**The worst thing found:** the booking form did not submit anywhere. It was a
+button with an `onclick` that hid itself and revealed a "thanks, we'll be in
+touch" message. Every booking request anyone had ever submitted had been
+displayed a success message and then discarded. Nobody knew.
+
+Replaced with a real form that only shows success on an actual `res.ok`, and
+which disables itself with an honest message when no endpoint is configured —
+so it can never silently lie again.
+
+**Other things that looked intentional and were not:**
+
+- `not_found_handling` was set to SPA fallback, so every wrong URL returned the
+  homepage with a 200 instead of a 404.
+- Four pages had no `<h1>`.
+- The footer linked to `instagram.com/slushsisters`, which belongs to an
+  unrelated account with three followers. Anyone following that instruction
+  landed on a stranger. Links removed until the real handles are secured.
+- Deploys were being served stale from the edge cache. Added an automatic purge
+  to the deploy workflow.
+
+**Also that day:** real photos of the girls added, with EXIF and GPS stripped
+before upload — the photos were taken at home, and location metadata on
+pictures of children is not something to publish by accident.
+
+---
+
+## Before this log
+
+The site was built and put live without version control. There is no record of
+what it looked like before 2026-08-03 beyond what is in the first commit, which
+is why this file and `docs/history/` exist.
+
+That is itself the first lesson worth writing down: **the record starts the day
+you decide to keep one, and everything before that is gone.**
