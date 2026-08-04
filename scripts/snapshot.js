@@ -44,6 +44,8 @@ const PAGES = [
   ['pricing', '/pricing'],
   ['flavors', '/flavors'],
   ['austin', '/austin'],
+  ['grown-ups', '/grown-ups'],
+  ['promise', '/promise'],
   ['read-hub', '/read'],
   ['read-freezes', '/read/why-it-freezes'],
   ['read-other-kids', '/read/other-kids-businesses'],

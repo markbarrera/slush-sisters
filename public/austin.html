@@ -6,6 +6,32 @@
 <title>Frozen Drink Machine Rental in Austin, TX — Slush Sisters</title>
 <meta name="description" content="Two sisters rent out a frozen drink machine across the Austin area. Frozen or chilled, two flavors, delivery and setup included, $250. Lakeway, Bee Cave, Westlake, Lake Travis and beyond.">
 <style>
+/* ---- BRAND TOKENS ----------------------------------------------------
+   Every brand colour on this page resolves through these. To change the
+   brand, change these values — nothing else. Kept identical across pages
+   deliberately; see CLAUDE.md on inline CSS.
+   -------------------------------------------------------------------- */
+:root{
+  --brand:#1a237e;      /* deep blue: headings, wordmark, footer */
+  --ice:#4fc3f7;        /* light blue: buttons, accents, links */
+  --ice-deep:#29b6f6;   /* light blue, pressed/hover */
+  --wash:#e8f4fd;       /* pale blue section background */
+  --blush:#fff5f7;      /* warm section background */
+  --on-brand:#fff;      /* text on brand/ice fills */
+
+  /* Text-safe variants. --ice is 2.00:1 on white — it is a FILL colour and
+     must never carry small text. Use --ink-ice for eyebrows, labels and
+     links. Measured against #fff and --wash; both pass WCAG AA. */
+  --ink-ice:#0165a8;    /* 6.13:1 on white, 5.48:1 on --wash */
+
+  /* Pink, held ready for the girls' decision. Two values on purpose: no
+     single pink is both bright enough to fill and dark enough to read.
+     --pop is display only (>=24px or shapes). --ink-pink carries text. */
+  --pop:#ff4081;        /* 3.33:1 on white — fills, big type, shapes ONLY */
+  --ink-pink:#c2185b;   /* 5.87:1 on white — body text, links, small labels */
+  --pink-pale:#ffd6e7;  /* background tint only, never ink */
+}
+
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
 a{color:inherit;}
@@ -13,40 +39,40 @@ img{max-width:100%;display:block;}
 
 /* SIMPLE NAV — borrowed from Shopify store pattern */
 header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
-.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:#1a237e;text-decoration:none;}
-.site-name span{color:#4fc3f7;}
+.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
 header nav{display:flex;gap:24px;}
 header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
 header nav a:hover{color:#1a1a1a;}
-header nav a.cta{background:#4fc3f7;color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
-header nav a.cta:hover{background:#29b6f6;}
+header nav a.cta{background:var(--ice);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--ice-deep);}
 .cta-m{display:none;}
 .menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
 @media(max-width:600px){
 header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
 header.open nav{display:flex;}
 .menu-btn{display:block;}
-.cta-m{display:inline-block;background:#4fc3f7;color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+.cta-m{display:inline-block;background:var(--ice);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
 .menu-btn{padding:10px 6px;line-height:1;}
 }
 
 /* HERO — big photo with text overlay, like a real Squarespace site */
-.hero-photo{position:relative;background:#e8f4fd;min-height:420px;display:flex;align-items:center;padding:48px 32px;overflow:hidden;}
+.hero-photo{position:relative;background:var(--wash);min-height:420px;display:flex;align-items:center;padding:48px 32px;overflow:hidden;}
 .hero-photo .hero-img{position:absolute;right:36px;bottom:0;width:40%;max-width:360px;aspect-ratio:3/4;object-fit:cover;border-radius:18px 18px 0 0;box-shadow:0 18px 50px rgba(26,35,126,.18);}
 @media(max-width:700px){
 .hero-photo{flex-direction:column;text-align:center;padding:40px 24px 0;}
 .hero-photo .hero-img{position:relative;right:auto;width:78%;max-width:300px;margin:24px auto 0;}
 }
 .hero-text{max-width:440px;position:relative;z-index:1;}
-.hero-text h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#1a237e;line-height:1.1;margin-bottom:12px;}
+.hero-text h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--brand);line-height:1.1;margin-bottom:12px;}
 .hero-text p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:24px;}
-.btn{display:inline-block;background:#4fc3f7;color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
-.btn:hover{background:#29b6f6;}
-.btn-outline{background:none;border:2px solid #1a237e;color:#1a237e;}
-.btn-outline:hover{background:#1a237e;color:#fff;}
+.btn{display:inline-block;background:var(--ice);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
+.btn:hover{background:var(--ice-deep);}
+.btn-outline{background:none;border:2px solid var(--brand);color:var(--brand);}
+.btn-outline:hover{background:var(--brand);color:#fff;}
 
 /* MARQUEE — borrowed from Me & the Bees */
-.marquee{overflow:hidden;background:#1a237e;color:#fff;padding:12px 0;font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;white-space:nowrap;}
+.marquee{overflow:hidden;background:var(--brand);color:#fff;padding:12px 0;font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;white-space:nowrap;}
 .marquee-inner{display:inline-block;animation:scroll 20s linear infinite;}
 @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
@@ -75,11 +101,11 @@ section .lead{color:#666;font-size:.95rem;line-height:1.6;margin-bottom:32px;}
 .fl-item .fl-emoji{font-size:1.8rem;flex-shrink:0;}
 .fl-item h3{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:2px;}
 .fl-item p{font-size:.82rem;color:#666;line-height:1.45;}
-.fl-item .fl-candy{font-size:.72rem;color:#e91e63;font-weight:600;margin-top:4px;}
+.fl-item .fl-candy{font-size:.72rem;color:var(--ink-pink);font-weight:600;margin-top:4px;}
 
 /* PRICING — simple box, not fancy */
-.price-simple{border:2px solid #1a237e;border-radius:12px;padding:32px;max-width:460px;margin:0 auto;text-align:center;}
-.price-simple .amount{font-family:'Sour Gummy',sans-serif;font-size:3rem;font-weight:900;color:#1a237e;}
+.price-simple{border:2px solid var(--brand);border-radius:12px;padding:32px;max-width:460px;margin:0 auto;text-align:center;}
+.price-simple .amount{font-family:'Sour Gummy',sans-serif;font-size:3rem;font-weight:900;color:var(--brand);}
 .price-simple .per{color:#888;font-size:.85rem;margin-bottom:16px;}
 .price-simple ul{list-style:none;text-align:left;padding:0;}
 .price-simple ul li{padding:8px 0;font-size:.88rem;color:#444;border-bottom:1px solid #f0f0f0;}
@@ -89,7 +115,7 @@ section .lead{color:#666;font-size:.95rem;line-height:1.6;margin-bottom:32px;}
 /* FAQ — borrowed from Hill Country Margaritas */
 details{border-bottom:1px solid #eee;padding:16px 0;}
 details summary{font-family:'Sour Gummy',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;}
-details summary::after{content:"+";color:#999;font-size:1.2rem;color:#4fc3f7;}
+details summary::after{content:"+";font-size:1.2rem;color:var(--ink-ice);}
 details[open] summary::after{content:"−";}
 details p{margin-top:10px;font-size:.88rem;color:#666;line-height:1.6;}
 
@@ -97,12 +123,12 @@ details p{margin-top:10px;font-size:.88rem;color:#666;line-height:1.6;}
 .form-wrap{max-width:480px;margin:0 auto;}
 .form-wrap label{display:block;font-weight:500;font-size:.82rem;margin-bottom:4px;margin-top:14px;}
 .form-wrap input,.form-wrap select,.form-wrap textarea{width:100%;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:#fafafa;}
-.form-wrap input:focus,.form-wrap select:focus,.form-wrap textarea:focus{outline:none;border-color:#4fc3f7;}
+.form-wrap input:focus,.form-wrap select:focus,.form-wrap textarea:focus{outline:2px solid var(--ink-ice);outline-offset:1px;border-color:var(--ink-ice);}
 .form-wrap textarea{height:70px;resize:vertical;}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:440px){.row2{grid-template-columns:1fr;}}
-.form-btn{display:block;width:100%;background:#4fc3f7;color:#fff;font-weight:700;font-size:.95rem;padding:14px;border:none;border-radius:8px;cursor:pointer;margin-top:18px;}
-.form-btn:hover{background:#29b6f6;}
+.form-btn{display:block;width:100%;background:var(--ice);color:#fff;font-weight:700;font-size:.95rem;padding:14px;border:none;border-radius:8px;cursor:pointer;margin-top:18px;}
+.form-btn:hover{background:var(--ice-deep);}
 
 /* SOCIAL PLACEHOLDER */
 .social-placeholder{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:20px;}
@@ -110,15 +136,15 @@ details p{margin-top:10px;font-size:.88rem;color:#666;line-height:1.6;}
 .sp{aspect-ratio:1;background:#f5f5f5;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
 
 /* FOOTER */
-footer{background:#1a237e;color:#fff;padding:40px 24px;text-align:center;}
+footer{background:var(--brand);color:#fff;padding:40px 24px;text-align:center;}
 footer .f-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
-footer .f-name span{color:#4fc3f7;}
+footer .f-name span{color:var(--ice);}
 footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
-footer a{color:#4fc3f7;}
+footer a{color:var(--ice);}
 
 /* ALT BACKGROUNDS */
 .bg-light{background:#f8fbff;}
-.bg-blush{background:#fff5f7;}
+.bg-blush{background:var(--blush);}
 .fl-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;margin-top:2px;}
 .three-up h3{margin-top:0;}
 
@@ -126,18 +152,18 @@ footer a{color:#4fc3f7;}
 .area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 20px;margin-top:20px;}
 @media(max-width:600px){.area-grid{grid-template-columns:1fr 1fr;}}
 .area-grid li{list-style:none;font-size:.88rem;color:#444;padding:7px 0;border-bottom:1px solid #eee;}
-.kicker{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:2px;color:#4fc3f7;text-transform:uppercase;margin-bottom:10px;}
-.byo{background:#e8f4fd;border-radius:12px;padding:24px;margin-top:28px;}
-.byo h3{font-family:'Sour Gummy',sans-serif;font-size:1.05rem;color:#1a237e;margin-bottom:6px;}
+.kicker{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:2px;color:var(--ink-ice);text-transform:uppercase;margin-bottom:10px;}
+.byo{background:var(--wash);border-radius:12px;padding:24px;margin-top:28px;}
+.byo h3{font-family:'Sour Gummy',sans-serif;font-size:1.05rem;color:var(--brand);margin-bottom:6px;}
 .byo p{font-size:.88rem;color:#555;line-height:1.6;}
-.sisters-note{border-left:4px solid #4fc3f7;padding:4px 0 4px 18px;margin-top:28px;}
+.sisters-note{border-left:4px solid var(--ice);padding:4px 0 4px 18px;margin-top:28px;}
 .sisters-note p{font-size:.92rem;color:#555;line-height:1.7;}
 </style><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-<meta name="theme-color" content="#1a237e">
+<meta name="theme-color" content="var(--brand)">
 <link rel="canonical" href="https://slushsisters.com/austin">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Slush Sisters">
@@ -188,7 +214,7 @@ footer a{color:#4fc3f7;}
 <body><header id="hdr">
 <a href="/" class="site-name"><span>Slush</span> Sisters</a>
 <nav>
-<a href="/margarita-machine-rental-austin">For Grown-Ups</a>
+<a href="/grown-ups">For Grown-Ups</a>
 <a href="/flavors">Flavors</a>
 <a href="/pricing">Pricing</a>
 <a href="/about">About</a>

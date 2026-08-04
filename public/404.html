@@ -6,51 +6,77 @@
 <title>Page not found — Slush Sisters</title>
 <meta name="robots" content="noindex">
 <style>
+/* ---- BRAND TOKENS ----------------------------------------------------
+   Every brand colour on this page resolves through these. To change the
+   brand, change these values — nothing else. Kept identical across pages
+   deliberately; see CLAUDE.md on inline CSS.
+   -------------------------------------------------------------------- */
+:root{
+  --brand:#1a237e;      /* deep blue: headings, wordmark, footer */
+  --ice:#4fc3f7;        /* light blue: buttons, accents, links */
+  --ice-deep:#29b6f6;   /* light blue, pressed/hover */
+  --wash:#e8f4fd;       /* pale blue section background */
+  --blush:#fff5f7;      /* warm section background */
+  --on-brand:#fff;      /* text on brand/ice fills */
+
+  /* Text-safe variants. --ice is 2.00:1 on white — it is a FILL colour and
+     must never carry small text. Use --ink-ice for eyebrows, labels and
+     links. Measured against #fff and --wash; both pass WCAG AA. */
+  --ink-ice:#0165a8;    /* 6.13:1 on white, 5.48:1 on --wash */
+
+  /* Pink, held ready for the girls' decision. Two values on purpose: no
+     single pink is both bright enough to fill and dark enough to read.
+     --pop is display only (>=24px or shapes). --ink-pink carries text. */
+  --pop:#ff4081;        /* 3.33:1 on white — fills, big type, shapes ONLY */
+  --ink-pink:#c2185b;   /* 5.87:1 on white — body text, links, small labels */
+  --pink-pale:#ffd6e7;  /* background tint only, never ink */
+}
+
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;display:flex;flex-direction:column;min-height:100vh;}
 a{color:inherit;}
 
 header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
-.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:#1a237e;text-decoration:none;}
-.site-name span{color:#4fc3f7;}
+.site-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
 header nav{display:flex;gap:24px;}
 header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
 header nav a:hover{color:#1a1a1a;}
-header nav a.cta{background:#4fc3f7;color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
-header nav a.cta:hover{background:#29b6f6;}
+header nav a.cta{background:var(--ice);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--ice-deep);}
 .cta-m{display:none;}
 .menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
 @media(max-width:600px){
 header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
 header.open nav{display:flex;}
 .menu-btn{display:block;}
-.cta-m{display:inline-block;background:#4fc3f7;color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+.cta-m{display:inline-block;background:var(--ice);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
 .menu-btn{padding:10px 6px;line-height:1;}
 }
 
-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background:#e8f4fd;}
-main h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#1a237e;line-height:1.1;margin-bottom:12px;}
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background:var(--wash);}
+main h1{font-family:'Sour Gummy',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--brand);line-height:1.1;margin-bottom:12px;}
 main p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:28px;max-width:420px;}
-.btn{display:inline-block;background:#4fc3f7;color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
-.btn:hover{background:#29b6f6;}
+.btn{display:inline-block;background:var(--ice);color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
+.btn:hover{background:var(--ice-deep);}
 
-footer{background:#1a237e;color:#fff;padding:40px 24px;text-align:center;}
+footer{background:var(--brand);color:#fff;padding:40px 24px;text-align:center;}
 footer .f-name{font-family:'Sour Gummy',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
-footer .f-name span{color:#4fc3f7;}
+footer .f-name span{color:var(--ice);}
 footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
-footer a{color:#4fc3f7;}
+footer a{color:var(--ice);}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Sour+Gummy:wght@400;600;700;800;900&display=swap">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-<meta name="theme-color" content="#1a237e">
+<meta name="theme-color" content="var(--brand)">
 </head>
 <body><header id="hdr">
 <a href="/" class="site-name"><span>Slush</span> Sisters</a>
 <nav>
-<a href="/margarita-machine-rental-austin">For Grown-Ups</a>
+<a href="/grown-ups">For Grown-Ups</a>
 <a href="/flavors">Flavors</a>
 <a href="/pricing">Pricing</a>
 <a href="/about">About</a>
