@@ -1,7 +1,8 @@
 # Slush Sisters
 
 The site for slushsisters.com — frozen drink machine rentals in Lakeway, Bee
-Cave, and Lake Travis, TX. Run by two sisters, ages 8 and 10. Registered as
+Cave, and Lake Travis, TX. Run by two sisters: **Harper is 11, Finley is 8** — get this the right way round, it was
+published backwards across the whole site once. Registered as
 Slush Sisters LLC. $250 per rental, delivery and pickup included.
 
 ## Stack
@@ -36,11 +37,48 @@ preview URL that does not touch production traffic.
   in every page that has them.
 - Brand colors: `#1a237e` deep blue, `#4fc3f7` light blue, `#e8f4fd` pale blue
   background.
-- Fonts: Sour Gummy for headings and the wordmark, DM Sans for body.
+- Fonts: **Baloo 2** for headings and the wordmark, DM Sans for body. Baloo 2
+  runs 400–800 — never ask for 900, it triggers faux-bold synthesis, which
+  thickens strokes unevenly and is exactly what an embroiderer cannot use.
+  Sour Gummy was replaced 2026-08-04: its zero is permanently slashed (three
+  contours, no alternate glyph, no feature to toggle it), so every price on
+  the site looked like code, and it had no tabular figures.
+- **Numbers that line up in a column use `.tabular`.** DM Sans has no tabular
+  figures at all — no `tnum` feature and a 93% digit-width spread — so
+  `font-variant-numeric: tabular-nums` on it silently does nothing. The
+  utility switches to Baloo 2, which has them.
 - Copy is written plainly and in the sisters' own voice — first person, short
   sentences, no marketing throat-clearing. Match it.
 - The candy garnish on every cup is the differentiator. It appears on most
   pages on purpose.
+
+## Mobile first — this is the default, not a checkbox
+
+Nearly everyone arrives on a phone: from a bio link, a text message, a
+neighbourhood Facebook post, a shared story. Desktop is the exception. Build
+and judge every page at **390px wide first**, then let it grow.
+
+What that means in practice:
+
+- **Design the phone layout, then add the desktop one.** Use `min-width` media
+  queries, so the base CSS *is* the mobile CSS. The site currently does the
+  opposite — six ad-hoc `max-width` breakpoints (440, 480, 500, 540, 600, 700)
+  that treat mobile as a series of exceptions. Move toward `min-width` on any
+  page you touch; don't rewrite all thirteen in one go.
+- **The primary action is never behind a tap.** "Book" stays visible in the
+  header at every width. It must never live only inside the ☰ menu — that was a
+  real defect, fixed 2026-08-04.
+- **Tap targets are at least 44×44px.** Anything smaller gets missed by a thumb.
+- **Never scroll sideways.** Check `scrollWidth <= innerWidth` at 390px.
+- **Something real is visible without scrolling.** A headline, a photo of the
+  girls, and a button — not a headline that fills the screen on its own.
+- **Weigh every kilobyte.** Photos go through `<picture>` with 640px WebP for
+  phones. Do not hardcode a 1024px image and let the phone download it.
+- **Verify on a phone viewport, don't assume.** `scripts/snapshot.js` renders
+  every page at 390px. Look at the output before saying it works.
+
+Different visitors arrive by different routes and want different things —
+see `docs/case-review.md` Part 3 for the entry-point map.
 
 ## Marketing and content
 
@@ -70,7 +108,15 @@ the Lake Austin market, plus a no-artificial-dye version for kids' parties. Read
 the freeze-test warning before building anything on it — low-sugar mixes can
 freeze too hard for the machine.
 
-`docs/board/generate.js` builds the visual idea board the girls actually use.
+`docs/board/generate.js` builds the visual idea board the girls actually use,
+and `docs/board/reading-room.js` builds `/read` — every document in `docs/`
+rewritten as cards they can read, in their language rather than a grown-up's.
+
+**Every deliverable gets a version in the reading room.** A strategy document
+that only exists in Markdown, written for an adult, has not been delivered to
+the people who own this business. Write the grown-up version, then add it to
+`reading-room.js` and regenerate. Rewrite, do not simplify — leave the hard
+numbers and the arguments in, including both sides of each one.
 
 ## Before changing anything
 
@@ -81,7 +127,7 @@ submitting anything anywhere.
 ## Who you are talking to
 
 Mark owns this repo but is not a web developer, and the business is run by his
-two daughters, ages 8 and 10. Any of the three may be the one asking.
+two daughters, Harper (11) and Finley (8). Any of the three may be the one asking.
 
 Explain things accordingly, every time — this is a standing instruction, not a
 one-off request:

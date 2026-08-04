@@ -7,7 +7,8 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "preview": "wrangler versions upload",
-    "images": "node scripts/optimize-images.js"
+    "images": "node scripts/optimize-images.js",
+    "snapshot": "node scripts/snapshot.js"
   },
   "devDependencies": {
     "sharp": "^0.35.3",
