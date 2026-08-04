@@ -47,6 +47,7 @@ const PAGES = [
   ['grown-ups', '/grown-ups'],
   ['promise', '/promise'],
   ['read-hub', '/read'],
+  ['read-pick-colours', '/read/pick-the-colours'],
   ['read-freezes', '/read/why-it-freezes'],
   ['read-other-kids', '/read/other-kids-businesses'],
   ['margarita-machine-rental-austin', '/margarita-machine-rental-austin'],

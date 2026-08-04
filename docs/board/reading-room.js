@@ -30,6 +30,62 @@ const SOUR = fs.readFileSync('/root/.fonts/brand-1.ttf').toString('base64');
 
 const PAGES = [
 
+/* ====================== 0. PICK THE COLOURS ============================== */
+{
+  slug: 'pick-the-colours',
+  title: 'Pick the colours',
+  kicker: 'Your decision',
+  lede: `You said you wanted more pink. A designer worked out four ways to do it and measured every single one, so all four actually work — nobody is going to tell you your favourite is wrong. Look at them on your phone and pick a letter.`,
+  close: [
+    ['Why you cannot have the brightest pink in the writing',
+     `A really bright pink on a white background is too pale to read — that is measured, not an opinion. So bright pink is for buttons, big words and shapes, and a deeper raspberry pink does the small writing. <b>Except at night.</b> On a dark background the bright pink works perfectly, which is why the dark version of every one of these is where your pink looks best.`],
+    ['One more thing, and it is the whole point',
+     `Somebody who studies brands said the strongest thing about picking your own colours is that <i>you</i> picked them. A colour chosen by a grown-up consultant does not prove two kids run this company. A colour chosen by Harper does. But only if we say so on the website — so whichever you pick, we are going to write one line: <b>"Harper picked the pink."</b>`],
+  ],
+  groups: [
+{
+  name: 'The four ways to do it',
+  colour: '#ff4081',
+  blurb: 'Each box below is a tiny version of the real website in those colours. Same words, same buttons, same price — only the colours change.',
+  cards: [
+    ['palette', 'A', 'Two Tanks', 'Pink and blue, equal partners. The reason: your machine has two tanks. Two sisters, two tanks, two colours. It is the only one where the colours mean something true about the business.',
+     'It is the smallest change. It looks like a tidy-up rather than something new.',
+     {ground:'#fdf2f7', panel:'#ffffff', ink:'#171f4d', soft:'#5b6690', brand:'#cd1c73', line:'#f2d9e6', 'on-brand':'#ffffff'}],
+
+    ['palette', 'B', 'Raspberry First', 'Pink runs everything and blue almost disappears. Every other frozen drink company in Austin is blue or red or green. Not one is pink. You would be the only one.',
+     'You lose the blue, and blue is how a cold drink says "cold" without using a word.',
+     {ground:'#fff3f8', panel:'#ffffff', ink:'#3a1027', soft:'#8a5570', brand:'#c2185b', line:'#f7d7e5', 'on-brand':'#ffffff'}],
+
+    ['palette', 'C', 'Sorbet', 'The paper is pink instead of the writing. The whole page glows pink from across a room, and every word on it is a deep dark plum so it is easy to read.',
+     'Every photo of you two sits on a pink background forever, and every screenshot anyone takes is pink.',
+     {ground:'#fbe6ee', panel:'#ffffff', ink:'#2b1231', soft:'#6f4a63', brand:'#b0165f', line:'#f0c9da', 'on-brand':'#ffffff'}],
+
+    ['palette', 'D', 'Neon Ice', 'Dark background, bright neon pink writing. This is the only one where you get the actual brightest pink in the words, because on a dark background it finally works.',
+     'It looks odd next to sunny photos of a pool party, and dark shirts cost more and show every bit of fluff.',
+     {ground:'#120a24', panel:'#1d1033', ink:'#f7ecff', soft:'#b6a0cc', brand:'#ff4fa3', line:'#33204f', 'on-brand':'#1a0410'}],
+  ],
+},
+{
+  name: 'Things worth knowing before you pick',
+  colour: '#4fc3f7',
+  blurb: 'None of these should change your mind. They are just true.',
+  cards: [
+    ['plain', 'The Book button was broken and pink fixes it',
+     `The blue button with white writing on it was too pale to read properly — it has been like that the whole time, on every page. Every single pink here works as a button. So the pink you want and the version that actually works are the same change.`],
+
+    ['plain', 'Pink was a boys’ colour first',
+     `In 1918 a magazine for baby shops told people pink was for boys, because it was "a decided and stronger color", and blue was for girls. In 1927 six big shops said pink for boys and four said pink for girls. The whole pink-for-girls thing is about seventy years old. It is a habit, not a fact.`],
+
+    ['plain', 'Our letters have a slashed zero and it is stuck',
+     `The font we use puts a line through the middle of every 0. So $250 has a line through it, always, and there is no way to switch it off. It makes prices look like computer code. If you want that fixed, the font has to change too — that is a separate decision and it can wait.`],
+
+    ['plain', 'Whatever you pick works in the dark too',
+     `Every one of these has a night-time version built in, and that is also the grown-up version. Your pink at a December work party is the same pink — just at night. That means we never need a boring second version of your brand for adults.`],
+  ],
+},
+  ],
+},
+
 /* ========================= 1. WHAT WE FIGURED OUT ======================== */
 {
   slug: 'what-we-figured-out',
@@ -616,6 +672,38 @@ const card = (c) => {
   </div>
 </article>`;
   }
+
+  // A live colour direction: real header, real hero, real button, at real
+  // size, in the actual colours. Nobody can judge a palette from a swatch
+  // row — you judge it by looking at the thing it will become.
+  if (kind === 'palette') {
+    const [, letter, name, thesis, gives, tok] = c;
+    const id = 'p' + (++uid);
+    const v = Object.entries(tok).map(([k, val]) => `--${k}:${val}`).join(';');
+    return `<article class="card wide palette" data-palette="${id}" data-letter="${esc(letter)}">
+  <div class="slush" style="--c:${tok.brand}"></div>
+  <div class="body">
+    <h3><span class="letter">${esc(letter)}</span> ${esc(name)}</h3>
+    <p>${esc(thesis)}</p>
+    <div class="demo" style="${v}">
+      <div class="demo-bar">
+        <span class="demo-name">Slush<b> Sisters</b></span>
+        <span class="demo-btn">Book</span>
+      </div>
+      <div class="demo-hero">
+        <p class="demo-kicker">Finley, 11 &amp; Harper, 8</p>
+        <p class="demo-h1">Frozen drinks for your party.</p>
+        <p class="demo-body">Two flavors, a candy on every cup, and we come back the next morning.</p>
+        <span class="demo-cta">Check your date</span>
+      </div>
+      <div class="demo-price"><b>$250</b><span>per party</span></div>
+    </div>
+    <p class="gives"><b>What it gives up:</b> ${esc(gives)}</p>
+    <button class="pick-side vote" data-vote="${esc(letter)}">Pick ${esc(letter)}</button>
+  </div>
+</article>`;
+  }
+
   // Sortable table. Built for one job: sort the sweeteners by sweetness,
   // then by freezing power, and watch the two orders refuse to match. That
   // mismatch IS the science — no paragraph explains it as well as doing it.
@@ -764,6 +852,37 @@ a{color:inherit;}
 .check .ct em{font-style:normal;font-weight:700;font-size:.78rem;color:var(--ice);}
 .card.unknown input:checked ~ .ct b{text-decoration:line-through;color:var(--soft);}
 
+
+/* ---- palette chooser ---- */
+.palette .letter{display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;
+  background:var(--ice);color:var(--on-brand);font-size:.85em;vertical-align:middle;margin-right:6px;}
+.demo{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;margin-top:6px;}
+.demo-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:11px 14px;background:var(--panel);border-bottom:1px solid var(--line);}
+.demo-name{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;font-size:1.02rem;color:var(--brand);}
+.demo-name b{color:var(--ink);font-weight:800;}
+.demo-btn{background:var(--brand);color:var(--on-brand);font-weight:700;font-size:.78rem;
+  padding:8px 15px;border-radius:8px;}
+.demo-hero{background:var(--ground);padding:18px 16px;display:flex;flex-direction:column;gap:7px;align-items:flex-start;}
+.demo-kicker{font-weight:700;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);}
+.demo-h1{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;font-size:1.35rem;
+  line-height:1.12;color:var(--ink);}
+.demo-body{font-size:.83rem;color:var(--soft);line-height:1.5;}
+.demo-cta{background:var(--brand);color:var(--on-brand);font-weight:700;font-size:.82rem;
+  padding:11px 20px;border-radius:8px;margin-top:3px;}
+.demo-price{background:var(--panel);padding:12px 16px;display:flex;align-items:baseline;gap:8px;
+  border-top:1px solid var(--line);}
+.demo-price b{font-family:'Sour Gummy',system-ui,sans-serif;font-size:1.7rem;color:var(--brand);
+  font-variant-numeric:tabular-nums;}
+.demo-price span{font-size:.78rem;color:var(--soft);}
+.gives{font-size:.86rem;}
+.gives b{color:var(--ink);}
+.vote{align-self:flex-start;margin-top:4px;}
+.card.chosen{box-shadow:0 0 0 3px var(--ice),var(--shadow);}
+.tally{position:sticky;bottom:12px;z-index:5;margin:22px 0 0;padding:13px 17px;border-radius:999px;
+  background:var(--panel);border:1.5px solid var(--line);box-shadow:var(--shadow);
+  font-weight:700;font-size:.9rem;text-align:center;}
+
 /* ---- sortable table ---- */
 .card.wide{grid-column:1/-1;}
 .tw{overflow-x:auto;margin-top:4px;}
@@ -847,6 +966,27 @@ ${inner}
     box.addEventListener('change',function(){ save(key, box.checked?'1':'0'); });
   });
 
+
+  // Palette vote. One choice, remembered, shown at the bottom.
+  var voteBox=document.getElementById('voteOut');
+  if(voteBox){
+    var vk='ss-palette-choice';
+    function showVote(v){
+      document.querySelectorAll('[data-palette]').forEach(function(card){
+        var on=card.dataset.letter===v;
+        card.classList.toggle('chosen',on);
+        var b=card.querySelector('.vote');
+        b.setAttribute('aria-pressed',String(on));
+        b.textContent=on?('Picked '+card.dataset.letter):('Pick '+card.dataset.letter);
+      });
+      voteBox.textContent=v?('You picked '+v+'. Tell Dad.'):'Pick one. You can change your mind.';
+    }
+    document.querySelectorAll('.vote').forEach(function(b){
+      b.addEventListener('click',function(){ save(vk,b.dataset.vote); showVote(b.dataset.vote); });
+    });
+    showVote(load(vk)||'');
+  }
+
   // Sortable tables. Numeric where the cell parses as a number, else text.
   document.querySelectorAll('.sortable table').forEach(function(t){
     var body=t.tBodies[0];
@@ -926,6 +1066,8 @@ ${g.cards.map(card).join('\n')}
 
 <div class="wrap">
 ${groups}
+
+  ${page.slug === 'pick-the-colours' ? '<p class="tally" id="voteOut">Pick one. You can change your mind.</p>' : ''}
 
   <footer>
 ${page.close.map(([h, b]) => `    <div class="fi"><b>${esc(h)}</b><p>${esc(b)}</p></div>`).join('\n')}
