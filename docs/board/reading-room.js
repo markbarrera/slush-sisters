@@ -671,6 +671,13 @@ const PAGES = [
     ['number', 'Limes you have to squeeze, using the trick', '≈7',
      `There is a bartender technique called <b>super juice</b>: you use the peels plus two acids you can buy in a tub, and you get the same sourness and the same lime smell out of about seven limes that would normally take fifty. Same drink. An eighth of the squeezing and an eighth of the grocery bill.`],
 
+    ['number', 'The sums told us something nobody had noticed', '2',
+     `Fresh Press needs <b>two</b> recipes, not one. The grown-ups' mix has to be built extra sweet, because the tequila waters it down. But nobody waters down the kids' tank — so that same mix stays too sweet, and too sweet means it never really freezes. It just slumps. Same limes, same agave, less agave in the kids' batch. Nobody spotted this until the calculator was built, which is the entire argument for building calculators.`],
+
+    ['unknown', 'Measure the agave and the limes',
+     'A $30 tool and about ten minutes.',
+     `Every single number in the Fresh Press recipe rests on two things nobody has ever checked: how sweet our agave is, and how sweet our limes are. We are guessing both. We already got burned once by hiding a guess inside a calculator, so this time the guesses are on the screen where you can see them — but guesses on a screen are still guesses.`],
+
     ['number', 'And here is what we are charging for it', '$375',
      `Classic stays at $250. The fresh one is $375 — which is $125 more for something that costs about $30 more to make, and that is on purpose. You are not selling limes. You are selling <i>we got up and squeezed these this morning</i>, and nobody else within thirty miles will do that. The company down the road charges $350 for a two-tank machine full of the same syrup everybody uses. Being cheaper than them would say ours is the worse drink.`],
 

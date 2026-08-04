@@ -403,6 +403,89 @@ footer a{color:var(--ice);}
 
 <section class="bg-blush">
 <div class="contain">
+<h2>Building the Fresh Press recipe</h2>
+<p class="lead">This is the one we have not made yet. Fresh Press is real limes and agave instead of syrup out of a jug, and the whole problem is getting the sugar right &mdash; because with fresh stuff you are mixing it yourself instead of following a label.</p>
+<p class="lead" style="margin-top:-18px;">Here is the maths, so you can watch us work it out.</p>
+
+<div class="tool">
+<h3>Try it: the Fresh Press base builder</h3>
+<p class="why">Tell it how much you need and how sour you want it. It works out how much agave to add so the sugar lands where the machine is happy.</p>
+<p class="why" style="background:var(--blush);border-radius:10px;padding:12px 14px;"><b>Two of these are guesses and we have marked them.</b> We have not measured our agave or our limes yet. We put a guess inside a calculator once before and it told everybody our best recipe was a block of ice &mdash; so this time the guesses are boxes you can see and change.</p>
+<div class="field">
+<label for="fpGal">How much base do you need (gallons)</label>
+<input type="number" id="fpGal" value="3" min="0.5" max="6" step="0.5">
+</div>
+<div class="field">
+<label for="fpSour">How sour &mdash; lime juice as a share of the base</label>
+<select id="fpSour">
+<option value="10">10% &mdash; gentle</option>
+<option value="15" selected>15% &mdash; about like a bar margarita</option>
+<option value="20">20% &mdash; properly sharp</option>
+</select>
+</div>
+<div class="field">
+<label for="fpAgave">How sweet your agave is (&deg;Brix) &mdash; <b>guess</b></label>
+<input type="number" id="fpAgave" value="76" min="50" max="90" step="1">
+</div>
+<div class="field">
+<label for="fpLime">How sweet lime juice is (&deg;Brix) &mdash; <b>guess</b></label>
+<input type="number" id="fpLime" value="8" min="2" max="14" step="0.5">
+</div>
+<div class="rows">
+<div class="r"><span>Agave to add</span><span id="fpA">&mdash;</span></div>
+<div class="r"><span>Lime juice to add</span><span id="fpL">&mdash;</span></div>
+<div class="r"><span>Limes that is, squeezing them all</span><span id="fpLimes">&mdash;</span></div>
+<div class="r"><span>Limes using the super juice trick</span><span id="fpSuper">&mdash;</span></div>
+<div class="r"><span>Water to add</span><span id="fpW">&mdash;</span></div>
+</div>
+
+<div class="readout" id="fpBoxA" style="margin-top:14px;">
+<span class="big" id="fpBrixA">&mdash;</span><span class="unit">&deg;Brix</span>
+<p class="verdict" id="fpVA">&mdash;</p>
+<p class="detail" id="fpDA">&mdash;</p>
+</div>
+<p class="why" style="margin-top:10px;"><b>Above:</b> what happens in the grown-ups&rsquo; tank, after somebody pours their tequila in. The tequila waters it down, so the base has to start sweeter than you want it to end up.</p>
+
+<div class="readout" id="fpBoxK" style="margin-top:14px;">
+<span class="big" id="fpBrixK">&mdash;</span><span class="unit">&deg;Brix</span>
+<p class="verdict" id="fpVK">&mdash;</p>
+<p class="detail" id="fpDK">&mdash;</p>
+</div>
+<p class="why" style="margin-top:10px;"><b>Below:</b> the exact same mix in the kids&rsquo; tank, where nobody adds anything to it.</p>
+</div>
+
+<div class="byo">
+<h3>We found something out doing this</h3>
+<p>The two readouts above do not match, and at first we thought the calculator was broken.</p>
+<p style="margin-top:8px;">It is not. A base built for grown-ups has to be extra sweet, because the tequila is going to water it down by about a fifth. But <b>nobody waters down the kids&rsquo; tank.</b> So the same mix that comes out perfect for the grown-ups comes out too sweet for the kids, and too sweet means it never really freezes &mdash; it just slumps in the cup.</p>
+<p style="margin-top:8px;"><b>So Fresh Press needs two recipes, not one.</b> Same limes, same agave, different amount of agave. We did not know that this morning. It came out of doing the sums, which is exactly what the sums are for.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>How we are actually going to measure it</h2>
+<p class="lead">Every number on this page is waiting on one ten-minute job nobody has done yet. Here is the plan, written down before we do it so we cannot quietly change it afterwards.</p>
+<div class="rows" style="gap:0;">
+<div class="r"><span><b>1.</b> Get a refractometer</span><span>about $30</span></div>
+<div class="r"><span><b>2.</b> Measure the syrup we already use, straight out of the jug</span><span>2 min</span></div>
+<div class="r"><span><b>3.</b> Measure a normal batch after mixing it with water</span><span>2 min</span></div>
+<div class="r"><span><b>4.</b> Check that against what the calculator up there predicted</span><span>1 min</span></div>
+<div class="r"><span><b>5.</b> Measure the agave and the lime juice</span><span>3 min</span></div>
+<div class="r"><span><b>6.</b> Write all five numbers on this page, right or wrong</span><span>&mdash;</span></div>
+</div>
+<p class="note">Step 4 is the interesting one. If the real number and the predicted number do not match, the calculator is wrong and we will say so here rather than quietly fixing it. That is the whole point of writing the plan down first.</p>
+<div class="byo">
+<h3>And then the part that actually takes time</h3>
+<p>Measuring is quick. Making the Fresh Press recipe <i>work</i> is not, because a real-fruit mix has to survive four hours in a tank on a Texas afternoon without separating, and the only way to find that out is to make it and watch it.</p>
+<p style="margin-top:8px;">That is why <a href="/fresh-press">the Fresh Press page</a> says you cannot book it yet. We would rather be slow than hand somebody a broken party.</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="contain">
 <h2>Things we got wrong</h2>
 <p class="lead">These stay up. If we only showed you the parts that worked, this would not be a lab, it would be an advert.</p>
 <div class="byo" style="margin-bottom:18px;">
@@ -434,6 +517,8 @@ footer a{color:var(--ice);}
 <div class="r"><span>Whether kids can even tell a no-dye version apart</span><span>Planned</span></div>
 <div class="r"><span>How many cups one tank really pours</span><span>Counting</span></div>
 <div class="r"><span>How sweet our own syrup actually is, with the refractometer</span><span>First up</span></div>
+<div class="r"><span>How sweet our agave and our limes are</span><span>Same day</span></div>
+<div class="r"><span>Whether a fresh-fruit mix separates over four hours in a hot tank</span><span>Gates Fresh Press</span></div>
 <div class="r"><span>Whether a drink sweetened only with sucralose freezes solid</span><span>Planned</span></div>
 <div class="r"><span>Whether butterfly pea flower really turns pink in the cup</span><span>Planned</span></div>
 </div>
@@ -530,6 +615,70 @@ footer a{color:var(--ice);}
   }
   guests.addEventListener('input',cups); hours.addEventListener('input',cups);
   weather.addEventListener('change',cups); cups();
+
+  // --- Fresh Press base builder ----------------------------------------
+  // Mass balance on sugar, treating Brix as percent sugar by weight and the
+  // densities as close enough at these concentrations:
+  //   Brix_base x Total = Brix_lime x Lime + Brix_agave x Agave
+  // Lime volume is fixed by how sour you want it, so agave is what solves.
+  //
+  // Two targets, not one. The grown-ups' tank gets tequila poured in at the
+  // party, which dilutes it to about 0.8x — so that base is built high. The
+  // kids' tank has nothing added, so it must be built at the final number.
+  var ADULT_BASE = 16.9, KID_BASE = 15, DILUTION = 0.8;
+  var fpGal=document.getElementById('fpGal'), fpSour=document.getElementById('fpSour'),
+      fpAgave=document.getElementById('fpAgave'), fpLime=document.getElementById('fpLime');
+
+  function fpOz(oz){
+    if(oz>=128) return (oz/128).toFixed(2).replace(/\.?0+$/,'')+' gal';
+    if(oz>=8)   return (oz/8).toFixed(1).replace(/\.0$/,'')+' cups';
+    return Math.round(oz)+' fl oz';
+  }
+  function fp(){
+    var totalOz=(parseFloat(fpGal.value)||0)*128;
+    var limeOz=totalOz*(parseFloat(fpSour.value)/100);
+    var bA=parseFloat(fpAgave.value)||0, bL=parseFloat(fpLime.value)||0;
+
+    // Solve for the adult base; the kids' build differs only in target.
+    function agaveFor(target){
+      if(bA<=0) return 0;
+      return Math.max(0,(target*totalOz - bL*limeOz)/bA);
+    }
+    var agaveOz=agaveFor(ADULT_BASE);
+    var waterOz=Math.max(0,totalOz-limeOz-agaveOz);
+
+    // A lime yields roughly 1 fl oz of juice. Super juice gets the same acid
+    // and aroma from about a seventh as many, using the peels plus acid.
+    document.getElementById('fpA').textContent=fpOz(agaveOz);
+    document.getElementById('fpL').textContent=fpOz(limeOz);
+    document.getElementById('fpLimes').textContent=Math.ceil(limeOz)+' limes';
+    document.getElementById('fpSuper').textContent=Math.ceil(limeOz/7)+' limes';
+    document.getElementById('fpW').textContent=fpOz(waterOz);
+
+    // What the base actually measures, then what each tank ends up at.
+    var baseBrix=(bL*limeOz + bA*agaveOz)/totalOz;
+    var adult=baseBrix*DILUTION, kid=baseBrix;
+
+    function show(val,boxId,numId,vId,dId,label){
+      var b=band(val), box=document.getElementById(boxId);
+      document.getElementById(numId).textContent=val.toFixed(1);
+      document.getElementById(vId).textContent=label+' '+b[0];
+      document.getElementById(dId).textContent=b[1];
+      box.classList.toggle('warn',!!b[2]);
+    }
+    show(adult,'fpBoxA','fpBrixA','fpVA','fpDA','With tequila added:');
+    show(kid,'fpBoxK','fpBrixK','fpVK','fpDK','Kids’ tank, nothing added:');
+
+    // If the kids' tank misses, say by how much rather than just flagging it.
+    var kidAgave=agaveFor(KID_BASE);
+    var d=document.getElementById('fpDK');
+    if(kid>16.5){
+      d.textContent += ' To fix it, build the kids’ batch with '
+        + fpOz(kidAgave) + ' of agave instead of ' + fpOz(agaveOz) + '.';
+    }
+  }
+  [fpGal,fpAgave,fpLime].forEach(function(el){el.addEventListener('input',fp);});
+  fpSour.addEventListener('change',fp); fp();
 
   // --- sortable sweetener table ---------------------------------------
   var tbl=document.getElementById('pac'),tb=tbl.tBodies[0];
