@@ -21,7 +21,7 @@ const SOUR = fs.readFileSync('/root/.fonts/brand-1.ttf').toString('base64');
 /* ---------------------------------------------------------------------------
    THE CONTENT
    Each page: { slug, title, kicker, lede, close, groups: [...] }
-   Each group: { name, colour, blurb, cards: [...] }
+   Each group: { name, color, blurb, cards: [...] }
    Card kinds:
      ['plain',  title, body]
      ['debate', title, forSide, againstSide, landing]
@@ -30,26 +30,26 @@ const SOUR = fs.readFileSync('/root/.fonts/brand-1.ttf').toString('base64');
 
 const PAGES = [
 
-/* ====================== 0. PICK THE COLOURS ============================== */
+/* ====================== 0. PICK THE COLORS ============================== */
 {
-  slug: 'pick-the-colours',
-  title: 'Pick the colours',
+  slug: 'pick-the-colors',
+  title: 'Pick the colors',
   kicker: 'Your decision',
-  lede: `You said you wanted more pink. A designer worked out four ways to do it and measured every single one, so all four actually work — nobody is going to tell you your favourite is wrong. Look at them on your phone and pick a letter.`,
+  lede: `You said you wanted more pink. A designer worked out four ways to do it and measured every single one, so all four actually work — nobody is going to tell you your favorite is wrong. Look at them on your phone and pick a letter.`,
   close: [
     ['Why you cannot have the brightest pink in the writing',
      `A really bright pink on a white background is too pale to read — that is measured, not an opinion. So bright pink is for buttons, big words and shapes, and a deeper raspberry pink does the small writing. <b>Except at night.</b> On a dark background the bright pink works perfectly, which is why the dark version of every one of these is where your pink looks best.`],
     ['One more thing, and it is the whole point',
-     `Somebody who studies brands said the strongest thing about picking your own colours is that <i>you</i> picked them. A colour chosen by a grown-up consultant does not prove two kids run this company. A colour chosen by Harper does. But only if we say so on the website — so whichever you pick, we are going to write one line: <b>"Harper picked the pink."</b>`],
+     `Somebody who studies brands said the strongest thing about picking your own colors is that <i>you</i> picked them. A color chosen by a grown-up consultant does not prove two kids run this company. A color chosen by Harper does. But only if we say so on the website — so whichever you pick, we are going to write one line: <b>"Harper picked the pink."</b>`],
   ],
   groups: [
 {
   name: 'The four ways to do it',
-  colour: '#ff4081',
-  blurb: 'Each box below is a tiny version of the real website in those colours. Same words, same buttons, same price — only the colours change.',
+  color: '#ff4081',
+  blurb: 'Each box below is a tiny version of the real website in those colors. Same words, same buttons, same price — only the colors change.',
   cards: [
-    ['palette', 'A', 'Two Tanks', 'Pink and blue, equal partners. The reason: your machine has two tanks. Two sisters, two tanks, two colours. It is the only one where the colours mean something true about the business.',
-     'It is the smallest change. It looks like a tidy-up rather than something new.',
+    ['palette', 'A', 'Two Tanks', 'Pink and blue, equal partners. The reason: your machine has two tanks. Two sisters, two tanks, two colors. It is the only one where the colors mean something true about the business.',
+     'It is the smallest change. It looks like a cleanup rather than something new.',
      {ground:'#fdf2f7', panel:'#ffffff', ink:'#171f4d', soft:'#5b6690', brand:'#cd1c73', line:'#f2d9e6', 'on-brand':'#ffffff'}],
 
     ['palette', 'B', 'Raspberry First', 'Pink runs everything and blue almost disappears. Every other frozen drink company in Austin is blue or red or green. Not one is pink. You would be the only one.',
@@ -61,20 +61,20 @@ const PAGES = [
      {ground:'#fbe6ee', panel:'#ffffff', ink:'#2b1231', soft:'#6f4a63', brand:'#b0165f', line:'#f0c9da', 'on-brand':'#ffffff'}],
 
     ['palette', 'D', 'Neon Ice', 'Dark background, bright neon pink writing. This is the only one where you get the actual brightest pink in the words, because on a dark background it finally works.',
-     'It looks odd next to sunny photos of a pool party, and dark shirts cost more and show every bit of fluff.',
+     'It looks odd next to sunny photos of a pool party, and dark shirts cost more and show every speck of lint.',
      {ground:'#120a24', panel:'#1d1033', ink:'#f7ecff', soft:'#b6a0cc', brand:'#ff4fa3', line:'#33204f', 'on-brand':'#1a0410'}],
   ],
 },
 {
   name: 'Things worth knowing before you pick',
-  colour: '#4fc3f7',
+  color: '#4fc3f7',
   blurb: 'None of these should change your mind. They are just true.',
   cards: [
     ['plain', 'The Book button was broken and pink fixes it',
      `The blue button with white writing on it was too pale to read properly — it has been like that the whole time, on every page. Every single pink here works as a button. So the pink you want and the version that actually works are the same change.`],
 
-    ['plain', 'Pink was a boys’ colour first',
-     `In 1918 a magazine for baby shops told people pink was for boys, because it was "a decided and stronger color", and blue was for girls. In 1927 six big shops said pink for boys and four said pink for girls. The whole pink-for-girls thing is about seventy years old. It is a habit, not a fact.`],
+    ['plain', 'Pink was a boys’ color first',
+     `In 1918 a magazine for baby stores told people pink was for boys, because it was "a decided and stronger color", and blue was for girls. In 1927 six big stores said pink for boys and four said pink for girls. The whole pink-for-girls thing is about seventy years old. It is a habit, not a fact.`],
 
     ['plain', 'Our letters have a slashed zero and it is stuck',
      `The font we use puts a line through the middle of every 0. So $250 has a line through it, always, and there is no way to switch it off. It makes prices look like computer code. If you want that fixed, the font has to change too — that is a separate decision and it can wait.`],
@@ -101,11 +101,11 @@ const PAGES = [
   groups: [
 {
   name: 'How big could this actually get?',
-  colour: '#4fc3f7',
+  color: '#4fc3f7',
   blurb: 'Somebody said you could only ever make $27,000 a year. They were wrong, and the reason why is interesting.',
   cards: [
     ['number', 'The $27,000 was not about customers', '104',
-     `Somebody worked out you could only make $27,000 a year. Then someone else did the maths: $27,000 divided by $250 is 108 parties. And there are only about 104 weekend nights in a year. So that number was not "how many people want this." It was "how many Saturdays exist." Those are completely different things.`],
+     `Somebody worked out you could only make $27,000 a year. Then someone else did the math: $27,000 divided by $250 is 108 parties. And there are only about 104 weekend nights in a year. So that number was not "how many people want this." It was "how many Saturdays exist." Those are completely different things.`],
 
     ['plain', 'One machine is not a rule of nature',
      `A second machine costs around $1,500 and pays for itself in about ten parties. If you keep saying no to people because the machine is busy, the machine is the problem — and problems you can buy your way out of are the good kind.`],
@@ -121,7 +121,7 @@ const PAGES = [
 },
 {
   name: 'The best idea nobody was arguing about',
-  colour: '#ffb74d',
+  color: '#ffb74d',
   blurb: 'This one came up sideways and it might be the most important thing in here.',
   cards: [
     ['plain', 'Stop renting the machine. Sell the cups.',
@@ -144,7 +144,7 @@ const PAGES = [
 },
 {
   name: 'The two-tank idea',
-  colour: '#ba68c8',
+  color: '#ba68c8',
   blurb: 'The single best thing anyone said. It is about a machine you already own.',
   cards: [
     ['plain', 'Your machine has two tanks',
@@ -162,7 +162,7 @@ const PAGES = [
 },
 {
   name: 'Money',
-  colour: '#81c784',
+  color: '#81c784',
   blurb: 'The awkward one. All of this is a Dad decision, not yours — but you should know the argument.',
   cards: [
     ['number', 'You charge less than everyone else', '$250',
@@ -170,8 +170,8 @@ const PAGES = [
 
     ['debate', 'Should the price go up?',
      `You give people more than the $350 company does and charge $100 less. Going to $325 would earn thousands more a year and takes about a minute to do.`,
-     `Some people book you partly because they like supporting two kids. Those are exactly the people who would notice the price jumping by 40%.`,
-     `Put the price up <b>and</b> make what people get visibly better at the same time — so they are buying more, not just paying more. This one is Dad's call.`],
+     `Some people book you partly because they like supporting two kids. Those are exactly the people who would notice the price jumping by 30%.`,
+     `Raise the price <b>and</b> make what people get visibly better at the same time — so they are buying more, not just paying more. This one is Dad's call.`],
 
     ['plain', 'Why the price is not really about limes',
      `Almost everything it costs to do a party — the driving, the setting up, the taking down, the cleaning — costs the same whether 20 people come or 60. Only the mix and the cups change. So a more expensive party is not much more work. It is mostly just more money.`],
@@ -179,11 +179,11 @@ const PAGES = [
 },
 {
   name: 'The rules about grown-up drinks',
-  colour: '#e57373',
+  color: '#e57373',
   blurb: 'Everyone who looked at this ended up in the same place, from completely different directions.',
   cards: [
     ['plain', 'The rule everybody agreed on',
-     `You set the machine up in the daytime with ordinary non-alcoholic mix in it. You do the garnish, hand over the flavour card, and go home. If grown-ups put something in it afterwards, that is theirs and you are not there. <b>Nobody under 18 is around once there is alcohol in the tank.</b>`],
+     `You set the machine up in the daytime with ordinary non-alcoholic mix in it. You do the garnish, hand over the flavor card, and go home. If grown-ups put something in it afterwards, that is theirs and you are not there. <b>Nobody under 18 is around once there is alcohol in the tank.</b>`],
 
     ['plain', 'Some people said that limits you. It does not.',
      `One person argued this means the grown-up business happens in rooms you cannot be in, so what is the point. But the machine leaves your house with limeade in it, and that is the whole business. What happens later is somebody else's party.`],
@@ -197,26 +197,26 @@ const PAGES = [
 },
 {
   name: 'What happened to other kids who did this',
-  colour: '#64b5f6',
+  color: '#64b5f6',
   blurb: 'Five real kid-founded businesses, and what actually became of them.',
   cards: [
     ['plain', 'Mikaila Ulmer — Austin, started at 4',
-     `Me &amp; the Bees Lemonade. Now in around 600 shops including Whole Foods and H-E-B, wrote a book with a big publisher, and runs the company remotely while she studies economics at university. This is the one to aim at.`],
+     `Me &amp; the Bees Lemonade. Now in around 600 stores including Whole Foods and H-E-B, wrote a book with a big publisher, and runs the company remotely while she studies economics in college. This is the one to aim at.`],
 
     ['plain', 'Alina Morse — started at 7',
-     `Zolli Candy. Six million dollars of sales by the time she was 13. In more than 25,000 shops now.`],
+     `Zolli Candy. Six million dollars of sales by the time she was 13. In more than 25,000 stores now.`],
 
     ['plain', 'Moziah Bridges — started at 9',
      `Mo's Bows, selling bow ties. Sold in Neiman Marcus, did a deal with the NBA, and is still running it at 24.`],
 
     ['plain', 'Maddie Bradshaw — started at 10, and this one is a warning',
-     `M3 Girl Designs was in over 1,000 shops. Then the company sued some small competitors over a design it had never actually registered, lost, and shut down in 2015. <b>Do not sue people.</b>`],
+     `M3 Girl Designs was in over 1,000 stores. Then the company sued some small competitors over a design it had never actually registered, lost, and shut down in 2015. <b>Do not sue people.</b>`],
 
     ['plain', 'The pattern in all of them',
-     `Every single one that got big stopped doing a service and started selling a <b>thing</b> — something in a box that can be posted to someone. You are currently a service: hours of a machine in a van. Somebody in another state cannot rent your machine. They could buy a box of your garnish.`],
+     `Every single one that got big stopped doing a service and started selling a <b>thing</b> — something in a box that can be mailed to someone. You are currently a service: hours of a machine in a van. Somebody in another state cannot rent your machine. They could buy a box of your garnish.`],
 
     ['plain', 'And the honest bit',
-     `Loads of kids start businesses. Most of them stop. The most likely thing that happens here is that it winds down in a few years when other things get more interesting — and that is completely normal and not a failure. It is just worth knowing, so that carrying on is a choice you make instead of something you assume.`],
+     `Lots of kids start businesses. Most of them stop. The most likely thing that happens here is that it winds down in a few years when other things get more interesting — and that is completely normal and not a failure. It is just worth knowing, so that carrying on is a choice you make instead of something you assume.`],
   ],
 },
   ],
@@ -237,7 +237,7 @@ const PAGES = [
   groups: [
 {
   name: 'The worst thing we found',
-  colour: '#e57373',
+  color: '#e57373',
   blurb: 'Day one. This is why you check things instead of assuming they work.',
   cards: [
     ['plain', 'The booking form was lying to people',
@@ -247,12 +247,12 @@ const PAGES = [
      `The button did not send the form. It just hid itself and showed the thank-you message. It looked exactly like a working form and it was a picture of one.`],
 
     ['plain', 'What it does now',
-     `It only says thank you if the message genuinely got through. And if it is not switched on, it says so honestly instead of pretending. A form that says nothing is better than a form that lies.`],
+     `It only says thank you if the message genuinely got through. And if it is not turned on, it says so honestly instead of pretending. A form that says nothing is better than a form that lies.`],
   ],
 },
 {
   name: 'Other things that were quietly broken',
-  colour: '#ffb74d',
+  color: '#ffb74d',
   blurb: 'All of these looked completely fine from the outside.',
   cards: [
     ['plain', 'The Instagram link went to a stranger',
@@ -270,7 +270,7 @@ const PAGES = [
 },
 {
   name: 'The phone problem',
-  colour: '#4fc3f7',
+  color: '#4fc3f7',
   blurb: 'Almost everyone who visits your site is on a phone. The site was not really built for one.',
   cards: [
     ['number', 'The Book button was invisible on a phone', '0',
@@ -291,14 +291,14 @@ const PAGES = [
 },
 {
   name: 'Things that got added',
-  colour: '#81c784',
+  color: '#81c784',
   blurb: 'New bits of the site, and why each one exists.',
   cards: [
     ['plain', 'Six pages for six places',
      `Lakeway, Bee Cave, Lake Travis, Steiner Ranch, Lake Austin and Dripping Springs each got their own page, so somebody searching for their own town finds a page about their own town.`],
 
     ['plain', 'An Austin page for when the news finds you',
-     `If an Austin newspaper or TV station does a story about you, the whole city arrives at once. Every other page is either about one small town or written for grown-ups booking margaritas. The Austin page covers the whole area and answers "are they really kids" straight away.`],
+     `If an Austin newspaper or TV station does a story about you, the whole city arrives at once. Every other page is either about one small town or written for grown-ups booking margaritas. The Austin page covers the whole area and answers "are they really kids" right away.`],
 
     ['plain', 'The idea board',
      `The one you already use. Every idea anyone has had, on cards, so you can pick.`],
@@ -320,12 +320,12 @@ const PAGES = [
     ['Buy the thing that measures it. It costs about $30.',
      `A refractometer. Two drops on the glass, hold it to the light, read the line. Nobody has ever measured the mix that is already in your garage — so right now every number in this business is a guess. That is the first experiment and it takes ten minutes.`],
     ['Do not wreck the machine finding out.',
-     `Go from lots of sugar downwards, never the other way, one batch at a time. Record the motor on a phone. If the sound changes pitch, switch to chill mode straight away and let it thaw. A thawed tank costs an hour. A seized machine costs the business.`],
+     `Go from lots of sugar downwards, never the other way, one batch at a time. Record the motor on a phone. If the sound changes pitch, switch to chill mode right away and let it thaw. A thawed tank costs an hour. A seized machine costs the business.`],
   ],
   groups: [
 {
   name: 'The one idea everything rests on',
-  colour: '#4fc3f7',
+  color: '#4fc3f7',
   blurb: 'Sweet and frozen are two completely different jobs. Most people never notice.',
   cards: [
     ['plain', 'Sugar is not really the sweetener. It is the antifreeze.',
@@ -335,7 +335,7 @@ const PAGES = [
      `Small molecules lower the freezing point more, gram for gram. That is why two things can be equally sweet and behave completely differently in the tank. Sweetness and freezing are unrelated. They only travel together in ordinary sugar because that is what everyone is used to.`],
 
     ['sortable', 'Sort this table two ways',
-     `Tap "Freezing power," then tap "Sweetness." The order changes completely — and that is the whole point. Salt has no sweetness at all and nearly six times sugar's freezing power. Sucralose is hundreds of times sweeter than sugar and does almost nothing to the freezing point.`,
+     `Tap "Freezing power," then tap "Sweetness." The order changes completely — and that is the whole point. Salt has no sweetness at all and about twelve times sugar's freezing power — it is the strongest thing in the table, which is why it goes on icy roads. Sucralose is hundreds of times sweeter than sugar and does almost nothing to the freezing point.`,
      ['Sweetener', 'Freezing power', 'Sweetness'],
      [['Table sugar', 100, 100],
       ['Glucose', 190, 70],
@@ -343,7 +343,7 @@ const PAGES = [
       ['Allulose', 190, 70],
       ['Honey', 146, 94],
       ['Lactose', 100, 16],
-      ['Salt', 585, 0],
+      ['Salt', 1170, 0],
       ['Alcohol', 740, 0],
       ['Sucralose', 1, 60000]]],
 
@@ -356,7 +356,7 @@ const PAGES = [
 },
 {
   name: 'Try the freeze test before you run it',
-  colour: '#e57373',
+  color: '#e57373',
   blurb: 'Brix is just a number for how much sugar is dissolved in something.',
   cards: [
     ['brix', 'Drag the sugar up and down',
@@ -368,8 +368,8 @@ const PAGES = [
 },
 {
   name: 'Clever tricks',
-  colour: '#81c784',
-  blurb: 'Ways round problems that do not need any new equipment.',
+  color: '#81c784',
+  blurb: 'Ways around problems that do not need any new equipment.',
   cards: [
     ['plain', 'Make it taste less sweet without taking sugar out',
      `Sour and sweet cancel each other out. Add a bit more acid — lemon, lime, citric acid — and the same amount of sugar tastes less sweet. So you fix "too sweet" while keeping the sugar that makes it freeze properly. This is the single most useful trick on this page.`],
@@ -377,14 +377,14 @@ const PAGES = [
     ['plain', 'Put the sour on the rim instead',
      `Even better: put the sour powder on the <i>rim</i> of the cup rather than in the mix. Then it cannot affect the freezing at all, because it never goes in the tank.`],
 
-    ['plain', 'A drink that changes colour in the cup',
-     `Butterfly pea flower makes a deep blue tea. Add lemon and it turns pink-purple, in front of whoever is holding it. No artificial colour at all. It is also the answer to the hardest problem on the menu — blue raspberry is a flavour, not a fruit, so there is nothing naturally blue to make it out of.`],
+    ['plain', 'A drink that changes color in the cup',
+     `Butterfly pea flower makes a deep blue tea. Add lemon and it turns pink-purple, in front of whoever is holding it. No artificial color at all. It is also the answer to the hardest problem on the menu — blue raspberry is a flavor, not a fruit, so there is nothing naturally blue to make it out of.`],
 
-    ['plain', 'Which natural colours actually survive a party',
-     `Hibiscus, black carrot and purple sweet potato all like sour drinks and hold their colour. Beetroot does not — it wants a much less sour drink and fades in sunlight. Turmeric is fine in sour but fades in light too. Cold helps a lot: colour lasts almost twice as well in a cold drink as a warm one.`],
+    ['plain', 'Which natural colors actually survive a party',
+     `Hibiscus, black carrot and purple sweet potato all like sour drinks and hold their color. Beets do not — it wants a much less sour drink and fades in sunlight. Turmeric is fine in sour but fades in light too. Cold helps a lot: color lasts almost twice as well in a cold drink as a warm one.`],
 
     ['plain', 'Give the grown-ups a card that says how much to add',
-     `The most likely way a rental goes wrong is a dad tipping a whole bottle of tequila in, and then it never freezes. Alcohol is an even stronger antifreeze than salt. A little printed card saying how much per tank protects the machine and makes you look like you know exactly what you are doing. Which you would.`],
+     `The most likely way a rental goes wrong is a dad tipping a whole bottle of tequila in, and then it never freezes. Alcohol is a stronger antifreeze than sugar — about seven times stronger. A little printed card saying how much per tank protects the machine and makes you look like you know exactly what you are doing. Which you would.`],
   ],
 },
   ],
@@ -405,7 +405,7 @@ const PAGES = [
   groups: [
 {
   name: 'The most important thing they found',
-  colour: '#e57373',
+  color: '#e57373',
   blurb: 'Views and money are two separate things.',
   cards: [
     ['plain', 'Ashton, 11, cleans bins in Canada',
@@ -420,7 +420,7 @@ const PAGES = [
 },
 {
   name: 'The one about a numbered series',
-  colour: '#ffb74d',
+  color: '#ffb74d',
   blurb: 'Two kids did the same thing. One went up 245 times. One fell 99.7%. The difference is tiny.',
   cards: [
     ['plain', 'Ashton went UP',
@@ -437,13 +437,13 @@ const PAGES = [
 },
 {
   name: 'Things worth copying',
-  colour: '#81c784',
+  color: '#81c784',
   blurb: 'All four of these are free.',
   cards: [
     ['plain', 'Film the times people say no',
-     `The single best-performing thing in the whole study is a boy being politely turned down at a door. He cried the first time someone said no, and that is in the news stories about him. Getting rejected is the content. So is the party that got rained off and the batch that froze wrong.`],
+     `The single best-performing thing in the whole study is a boy being politely turned down at a door. He cried the first time someone said no, and that is in the news stories about him. Getting rejected is the content. So is the party that got rained out and the batch that froze wrong.`],
 
-    ['plain', 'Put "run by our mum" in the bio',
+    ['plain', 'Put "run by our mom" in the bio',
      `The most successful account in the study writes "parent-run account" right in the bio, twice, without being asked. It answers the awkward question before anyone can ask it — and it makes other accounts comfortable sharing your videos.`],
 
     ['plain', 'Put the story first, the shop second',
@@ -455,11 +455,11 @@ const PAGES = [
 },
 {
   name: 'Things to be careful about',
-  colour: '#ba68c8',
+  color: '#ba68c8',
   blurb: 'Two of these are genuinely worth knowing before anything gets big.',
   cards: [
     ['plain', 'A girl’s lemonade business got shut down for being too successful',
-     `Pretty Paws Lemonade grew from a stand outside her house to markets all over Las Vegas. Then somebody complained anonymously to the health department and it was closed down for not having a licence. She was allowed to give lemonade away free, just not sell it. <b>Getting popular is what put her on their desk.</b>`],
+     `Pretty Paws Lemonade grew from a stand outside her house to markets all over Las Vegas. Then somebody complained anonymously to the health department and it was closed down for not having a license. She was allowed to give lemonade away free, just not sell it. <b>Getting popular is what put her on their desk.</b>`],
 
     ['plain', 'Posting a lot is not the same as posting well',
      `One account posted 430 times and has 3,400 followers. Ashton got 117,500 followers from <b>27 posts</b>. Doing more is not the answer. Doing the same good thing repeatedly is.`],
@@ -468,12 +468,12 @@ const PAGES = [
      `A boy went viral for crochet at 11 in 2019. He now has 448,000 followers — and a recent post got 1,200 likes. The followers stayed and the interest went. He is going to the army, then college, then medical school. Being a talented kid stops being the interesting part, and that is fine, but it is worth planning for.`],
 
     ['plain', 'Every one that lasted did the same thing',
-     `Mikaila Ulmer, Alina Morse, Moziah Bridges, Zandra Cunningham. All started as kids, all still going. Every single one ended up with a <b>product in shops</b> — something in a box that gets sold whether or not they are standing there. None of them stayed "the kid business."`],
+     `Mikaila Ulmer, Alina Morse, Moziah Bridges, Zandra Cunningham. All started as kids, all still going. Every single one ended up with a <b>product in stores</b> — something in a box that gets sold whether or not they are standing there. None of them stayed "the kid business."`],
   ],
 },
 {
   name: 'What nobody knows yet',
-  colour: '#64b5f6',
+  color: '#64b5f6',
   blurb: 'Tick these off as you find them out. Every one is cheap.',
   cards: [
     ['unknown', 'What is actually in our mix?', 'Free · 20 minutes',
@@ -514,14 +514,14 @@ const PAGES = [
   groups: [
 {
   name: 'The thing everyone gets wrong',
-  colour: '#ba68c8',
+  color: '#ba68c8',
   blurb: 'This is the most important idea in the whole marketing plan.',
   cards: [
     ['plain', 'Nobody shares a video about a slushie',
      `They share videos about two kids running a real business. A nice drink gets a like and gets forgotten. Counting the money out loud, or working out what you still owe Dad for the machine, gets <b>sent to someone</b>.`],
 
     ['plain', 'So post the boring parts',
-     `Cleaning the machine. Loading the van. The setup that went wrong in the rain. The maths on whether a booking far away is even worth the drive. Those are the ones that travel.`],
+     `Cleaning the machine. Loading the van. The setup that went wrong in the rain. The math on whether a booking far away is even worth the drive. Those are the ones that travel.`],
 
     ['plain', 'About half of it should not be selling anything',
      `If everything you post is about the product, the only people who follow you are people who already want one. That is a very small group. The other half is just you two being interesting.`],
@@ -529,13 +529,14 @@ const PAGES = [
 },
 {
   name: 'Where the customers actually come from',
-  colour: '#4fc3f7',
+  color: '#4fc3f7',
   blurb: 'Not where you would guess.',
   cards: [
-    ['plain', 'Neighbourhood Facebook groups beat everything',
-     `For a kids' party rental, a post in a local neighbourhood group works better than Instagram and better than Google. It is a small, unglamorous thing that works far better than the exciting-sounding options.`],
+    ['plain', 'Neighborhood Facebook groups beat everything',
+     `For a kids' party rental, a post in a local neighborhood group works better than Instagram and better than Google. It is a small, unglamorous thing that works far better than the exciting-sounding options.`],
 
-    ['number', 'Searching is a smaller pond than it sounds', '90'],
+    ['number', 'Searching is a smaller pond than it sounds', '900',
+     `About 900 people a month type "margarita machine rental austin" into Google. That sounds like a lot until you remember it is the whole city, all year, split between everybody who rents these. Search is worth having and it is not the biggest pond you fish in — the neighborhood Facebook groups are.`],
 
     ['plain', 'But the internet is where the following lives',
      `The people who might follow you are all over the world. The people who can rent your machine live about twenty minutes away. Those are two completely different jobs and the website has to do both.`],
@@ -543,7 +544,7 @@ const PAGES = [
 },
 {
   name: 'Riding what is already happening',
-  colour: '#ffb74d',
+  color: '#ffb74d',
   blurb: 'You do not have to invent everything from scratch.',
   cards: [
     ['plain', 'Use the sound everyone is already using',
@@ -572,17 +573,17 @@ const PAGES = [
   groups: [
 {
   name: 'The idea',
-  colour: '#81c784',
+  color: '#81c784',
   blurb: 'Same machine, same van, different mix.',
   cards: [
     ['plain', 'Everyone uses the same syrup',
-     `Every margarita machine company in Austin uses the same bulk mix: corn syrup, citric acid, artificial colour, "natural and artificial flavour." It is fine. It is also exactly the ingredient list a lot of people around here read labels to avoid.`],
+     `Every margarita machine company in Austin uses the same bulk mix: corn syrup, citric acid, artificial color, "natural and artificial flavor." It is fine. It is also exactly the ingredient list a lot of people around here read labels to avoid.`],
 
     ['plain', 'So squeeze actual limes',
-     `Real citrus, real fruit, agave instead of syrup. It costs maybe $30 to $50 more per party, and it is worth a lot more than that — because what is being sold is not limes, it is <i>made this morning, by hand</i>.`],
+     `Real citrus, real fruit, agave instead of syrup. It costs maybe $20 to $40 more per party, and it is worth a lot more than that — because what is being sold is not limes, it is <i>made this morning, by hand</i>.`],
 
     ['plain', 'And a version with no dye at all',
-     `The thing that makes blue raspberry blue is exactly the thing plenty of parents avoid. Nobody in this business offers an alternative. Colour from real fruit only.`],
+     `The thing that makes blue raspberry blue is exactly the thing plenty of parents avoid. Nobody in this business offers an alternative. Color from real fruit only.`],
 
     ['plain', 'Why a big competitor cannot copy it',
      `Anyone can buy a machine. Squeezing limes is <b>work</b>, not equipment. A company with six machines and a warehouse cannot start doing it without changing everything about how they operate. Two sisters and a citrus press can start on Saturday.`],
@@ -590,10 +591,10 @@ const PAGES = [
 },
 {
   name: 'The filming is better than the drink',
-  colour: '#ba68c8',
+  color: '#ba68c8',
   blurb: 'Making it is far better content than serving it.',
   cards: [
-    ['plain', 'Read the other lot’s ingredients out loud',
+    ['plain', 'Read the other guys’ ingredients out loud',
      `Slowly. That one video is the entire argument and it makes itself.`],
 
     ['plain', 'Squeeze a hundred limes',
@@ -624,12 +625,12 @@ const PAGES = [
     ['None of this works until somebody measures the syrup.',
      `Every number on this page depends on knowing how sweet our syrup already is. Nobody has ever measured it. That is one afternoon with a refractometer and it unlocks the rest. It is also the reason the Fresh Press page says you cannot book it yet — we are not selling a recipe we have not tested, at any price.`],
     ['Why we said "not yet" on the website instead of just selling it.',
-     `A drink with too little sugar freezes into a block and the machine fights it. If that happened at somebody's party, they paid $375 for a broken machine in the corner of their kitchen. So the page says we are still testing, out loud, where customers can read it. Saying "we are checking this first" is a better advert than saying "trust us."`],
+     `A drink with too little sugar freezes into a block and the machine fights it. If that happened at somebody's party, they paid $375 for a broken machine in the corner of their kitchen. So the page says we are still testing, out loud, where customers can read it. Saying "we are checking this first" is a better ad than saying "trust us."`],
   ],
   groups: [
 {
   name: 'The number you are aiming at',
-  colour: '#4fc3f7',
+  color: '#4fc3f7',
   blurb: 'There is one right answer and a fairly narrow window around it.',
   cards: [
     ['number', 'How sweet the finished drink should be', '13.5',
@@ -647,14 +648,14 @@ const PAGES = [
 },
 {
   name: 'The thing that makes you better at this than a bar',
-  colour: '#81c784',
+  color: '#81c784',
   blurb: 'This is the best fact anyone found today.',
   cards: [
     ['plain', 'Measuring sugar in alcohol is really hard. You never have to.',
-     `A refractometer works by bending light through the liquid. Alcohol bends light differently than sugar does, so in an alcoholic mix the reading comes out wrong and you need correction tables or a second instrument to fix it. It is the fiddliest part of batching frozen cocktails. <b>You only ever handle the mix before the tequila goes in.</b> So there is no alcohol in what you measure. Your number is just the number. No correction, no tables, no guessing.`],
+     `A refractometer works by bending light through the liquid. Alcohol bends light differently than sugar does, so in an alcoholic mix the reading comes out wrong and you need correction tables or a second instrument to fix it. It is the trickiest part of mixing up frozen cocktails by the gallon. <b>You only ever handle the mix before the tequila goes in.</b> So there is no alcohol in what you measure. Your number is just the number. No correction, no tables, no guessing.`],
 
     ['plain', 'What a machine drink actually is',
-     `A blender margarita is ice plus liquid, whizzed up. A machine margarita is <b>a blender margarita with the ice already melted into it</b>. Everything that makes a blender drink go watery and grainy after twenty minutes is the ice melting. You do not have ice. That is why yours is still good an hour later, and it is worth saying out loud.`],
+     `A blender margarita is ice plus liquid, blended up. A machine margarita is <b>a blender margarita with the ice already melted into it</b>. Everything that makes a blender drink go watery and grainy after twenty minutes is the ice melting. You do not have ice. That is why yours is still good an hour later, and it is worth saying out loud.`],
 
     ['plain', 'The machine temperature matters as much as the recipe',
      `A mix that is perfect at one setting is soup at another. So a recipe is not finished when the ingredients are written down — it is finished when the machine setting is written down next to them. Any recipe we publish has to say both, or nobody can actually repeat it.`],
@@ -662,16 +663,16 @@ const PAGES = [
 },
 {
   name: 'What the fancy version costs',
-  colour: '#ffb74d',
+  color: '#ffb74d',
   blurb: 'Less than anyone guessed.',
   cards: [
     ['number', 'Extra ingredients, per party', '$20–40',
      `That is the whole difference between bulk syrup and real squeezed citrus. Not $200. Twenty to forty dollars. Which means whether to do it is a decision about what to charge, not a decision about whether it is affordable.`],
 
     ['number', 'Limes you have to squeeze, using the trick', '≈7',
-     `There is a bartender technique called <b>super juice</b>: you use the peels plus two acids you can buy in a tub, and you get the same sourness and the same lime smell out of about seven limes that would normally take fifty. Same drink. An eighth of the squeezing and an eighth of the grocery bill.`],
+     `There is a bartender technique called <b>super juice</b>: you use the peels plus two acids you can buy in a tub, and you get the same sourness and the same lime smell out of about seven limes that would normally take fifty. Same drink. About a seventh of the squeezing and a seventh of the grocery bill.`],
 
-    ['number', 'The sums told us something nobody had noticed', '2',
+    ['number', 'The math told us something nobody had noticed', '2',
      `Fresh Press needs <b>two</b> recipes, not one. The grown-ups' mix has to be built extra sweet, because the tequila waters it down. But nobody waters down the kids' tank — so that same mix stays too sweet, and too sweet means it never really freezes. It just slumps. Same limes, same agave, less agave in the kids' batch. Nobody spotted this until the calculator was built, which is the entire argument for building calculators.`],
 
     ['unknown', 'Measure the agave and the limes',
@@ -705,7 +706,7 @@ const PAGES = [
   groups: [
 {
   name: 'What everyone else is doing',
-  colour: '#e57373',
+  color: '#e57373',
   blurb: 'Two of these were a surprise and one of them is a bit worrying.',
   cards: [
     ['plain', 'Two tanks is not actually special',
@@ -730,11 +731,11 @@ const PAGES = [
 },
 {
   name: 'Two names went in. One came out.',
-  colour: '#ba68c8',
+  color: '#ba68c8',
   blurb: 'One was meant to describe the business. One was meant to be the bit a customer repeats. Only the second kind actually works.',
   cards: [
     ['plain', 'Killed: “the everybody bar”',
-     `The idea was one machine, one price, and nobody at your party stuck drinking something they did not want. It is a true sentence. It is also four words that need a whole other sentence to explain them, which is how you can tell it was a slogan pretending to be a name. Dad binned it the day it was written and that was the right call.`],
+     `The idea was one machine, one price, and nobody at your party stuck drinking something they did not want. It is a true sentence. It is also four words that need a whole other sentence to explain them, which is how you can tell it was a slogan pretending to be a name. Dad scrapped it the day it was written and that was the right call.`],
 
     ['plain', 'Kept: “the kids’ tank”',
      `This one is on the website now — on the flavors page, on the pricing page, and it is rule number one of the seven. Short, you can picture it, and it explains itself with no help at all. Notice that nobody had to tell you what it meant.`],
@@ -750,7 +751,7 @@ const PAGES = [
 },
 {
   name: 'Writing your rules down where everyone can see them',
-  colour: '#4fc3f7',
+  color: '#4fc3f7',
   blurb: 'Seven rules. Nine were written and two got cut, which is the interesting part.',
   cards: [
     ['plain', 'A rule only counts if copying it is hard',
@@ -831,8 +832,8 @@ const card = (c) => {
 </article>`;
   }
 
-  // A live colour direction: real header, real hero, real button, at real
-  // size, in the actual colours. Nobody can judge a palette from a swatch
+  // A live color direction: real header, real hero, real button, at real
+  // size, in the actual colors. Nobody can judge a palette from a swatch
   // row — you judge it by looking at the thing it will become.
   if (kind === 'palette') {
     const [, letter, name, thesis, gives, tok] = c;
@@ -901,7 +902,7 @@ const card = (c) => {
            aria-label="Sugar level in degrees Brix">
     <div class="scale"><span>6 — a block of ice</span><span>22 — never freezes</span></div>
     <p class="warn">Below about 11 the machine starts fighting it. If the motor pitch
-      changes on the real one, switch to chill mode straight away.</p>
+      changes on the real one, switch to chill mode right away.</p>
   </div>
 </article>`;
   }
@@ -1201,11 +1202,11 @@ for (const page of PAGES) {
   const groups = page.groups.map(g => {
     cardCount += g.cards.length;
     return `<section class="group">
-  <header class="group-head" style="--c:${g.colour}">
+  <header class="group-head" style="--c:${g.color}">
     <h2>${esc(g.name)}</h2>
     <p>${esc(g.blurb)}</p>
   </header>
-  <div class="grid" style="--c:${g.colour}">
+  <div class="grid" style="--c:${g.color}">
 ${g.cards.map(card).join('\n')}
   </div>
 </section>`;
@@ -1225,7 +1226,7 @@ ${g.cards.map(card).join('\n')}
 <div class="wrap">
 ${groups}
 
-  ${page.slug === 'pick-the-colours' ? '<p class="tally" id="voteOut">Pick one. You can change your mind.</p>' : ''}
+  ${page.slug === 'pick-the-colors' ? '<p class="tally" id="voteOut">Pick one. You can change your mind.</p>' : ''}
 
   <footer>
 ${page.close.map(([h, b]) => `    <div class="fi"><b>${esc(h)}</b><p>${esc(b)}</p></div>`).join('\n')}
@@ -1240,7 +1241,7 @@ ${page.close.map(([h, b]) => `    <div class="fi"><b>${esc(h)}</b><p>${esc(b)}</
 /* --------------------------------------------------------------- the hub */
 
 const tiles = PAGES.map(p => `<a class="tile" href="/read/${p.slug}">
-  <div class="slush" style="--c:${p.groups[0].colour}"></div>
+  <div class="slush" style="--c:${p.groups[0].color}"></div>
   <div class="body">
     <h3>${esc(p.title)}</h3>
     <p>${esc(p.lede.split('. ').slice(0, 2).join('. '))}${p.lede.split('. ').length > 2 ? '.' : ''}</p>

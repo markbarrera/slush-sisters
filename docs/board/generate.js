@@ -2,13 +2,13 @@ const fs = require('fs');
 const b64 = f => fs.readFileSync(f).toString('base64');
 const SOUR = b64('/root/.fonts/brand-1.ttf');
 
-// cat: colour key. cost: free | cheap | money. effort: easy | medium | big
+// cat: color key. cost: free | cheap | money. effort: easy | medium | big
 const IDEAS = [
   // POST THIS WEEK
   ['week','Count the money','Count the cash box after a party. Say the real number out loud.','free','easy'],
   ['week','What you still owe Dad','Update the machine loan balance. Do it every month, forever.','free','easy'],
-  ['week','Rank all six flavours','Worst to best. Disagree with each other. Do not agree for the camera.','free','easy'],
-  ['week','Invent a terrible flavour','Make one on purpose that is awful. Post it anyway. These always do well.','free','easy'],
+  ['week','Rank all six flavors','Worst to best. Disagree with each other. Do not agree for the camera.','free','easy'],
+  ['week','Invent a terrible flavor','Make one on purpose that is awful. Post it anyway. These always do well.','free','easy'],
   ['week','Set up, sped up','A whole party setup squeezed into ten seconds.','free','easy'],
   ['week','Squeeze a hundred limes','Satisfying, ridiculous, obviously real work.','cheap','easy'],
   ['week','Read the other guys ingredients','Read the label on the bulk mix everyone else uses. Out loud. Slowly.','free','easy'],
@@ -16,10 +16,10 @@ const IDEAS = [
 
   // SHOW THE MONEY
   ['money','Profit on one party','In, out, what is left. Work it out on camera.','free','easy'],
-  ['money','Is a booking worth the drive?','Do the Dripping Springs mileage maths out loud and decide.','free','easy'],
+  ['money','Is a booking worth the drive?','Do the Dripping Springs mileage math out loud and decide.','free','easy'],
   ['money','Show the LLC paperwork','Explain what an LLC even is, in your own words.','free','easy'],
   ['money','Should we buy a second machine?','Argue both sides properly. Let people vote. Do what they say.','free','medium'],
-  ['money','Why it costs $250','Explain the price and what is included. No apologising for it.','free','easy'],
+  ['money','Why it costs $250','Explain the price and what is included. No apologizing for it.','free','easy'],
   ['money','The Open Ledger','A page on the site: cups poured, money in, money out, loan left. Updated forever.','free','medium'],
   ['money','Cup Number','Number every cup ever poured. Tell hosts their range. Celebrate the 10,000th.','free','medium'],
 
@@ -34,23 +34,23 @@ const IDEAS = [
 
   // MAKE SOMETHING NEW
   ['make','Fresh Press','Real limes, real fruit, agave. A proper margarita mix, not syrup. Costs more, worth more.','money','big'],
-  ['make','No dye at all','Kid flavours coloured by fruit only. Loads of parents want exactly this.','cheap','medium'],
+  ['make','No dye at all','Kid flavors colored by fruit only. Lots of parents want exactly this.','cheap','medium'],
   ['make','The freeze test','Find out how low the sugar can go before the machine fights back. Real science.','cheap','medium'],
-  ['make','Syrup vs fresh, blind','Let people who do not know which is which pick a favourite. Post it honestly.','cheap','easy'],
-  ['make','Name a flavour with a local shop','Team up with a bakery or coffee place. Their name on it. Limited run.','cheap','medium'],
-  ['make','The Garnish Kit','A little box of the six candies, matched to the flavours, in your handwriting. Ships anywhere.','money','big'],
+  ['make','Syrup vs fresh, blind','Let people who do not know which is which pick a favorite. Post it honestly.','cheap','easy'],
+  ['make','Name a flavor with a local shop','Team up with a bakery or coffee place. Their name on it. Limited run.','cheap','medium'],
+  ['make','The Garnish Kit','A little box of the six candies, matched to the flavors, in your handwriting. Ships anywhere.','money','big'],
 
   // MORE TO POST
   ['week','Pour the first cup of the day','The very first one out of the tank. Slow motion.','free','easy'],
-  ['week','Layer two flavours','One cup, both tanks. See what happens.','free','easy'],
-  ['week','All six garnishes lined up','Every candy next to the flavour it belongs with.','free','easy'],
-  ['week','Blind taste test','Can you actually tell which flavour is which? Prove it.','free','easy'],
+  ['week','Layer two flavors','One cup, both tanks. See what happens.','free','easy'],
+  ['week','All six garnishes lined up','Every candy next to the flavor it belongs with.','free','easy'],
+  ['week','Blind taste test','Can you actually tell which flavor is which? Prove it.','free','easy'],
   ['week','Time-lapse the freeze','Watch liquid turn into slush. Oddly hypnotic.','free','easy'],
   ['week','What is in the setup kit','Empty the bag out. Explain every single thing.','free','easy'],
   ['week','Load the van','Everything that goes in, in order.','free','easy'],
   ['week','Pick up the next morning','The unglamorous half nobody sees.','free','easy'],
   ['week','A setup that went wrong','Rain, a spill, a forgotten lid. Post the bad one.','free','easy'],
-  ['week','Every flavour with Tajin','Rate them. Be honest about the bad ones.','cheap','easy'],
+  ['week','Every flavor with Tajin','Rate them. Be honest about the bad ones.','cheap','easy'],
 
   // MORE MONEY
   ['money','Open the business mail','Whatever came. Read it out.','free','easy'],
@@ -63,7 +63,7 @@ const IDEAS = [
   ['you','Swap jobs for a day',"Do each other's job. Find out which is harder.",'free','easy'],
   ['you','Make each other laugh, no talking','Sixty seconds. First to break loses.','free','easy'],
   ['you','Rate each others outfits','Out of ten. No mercy.','free','easy'],
-  ['you','Your favourite spot in Lakeway','Somewhere you actually go.','free','easy'],
+  ['you','Your favorite spot in Lakeway','Somewhere you actually go.','free','easy'],
   ['you','Something you were scared of','And did anyway. What happened.','free','easy'],
   ['you','Advice for a kid starting a business','What you wish someone had told you.','free','easy'],
 
@@ -77,18 +77,18 @@ const IDEAS = [
   ['grow','Be the overflow','When another company is double booked on a Saturday they lose that party. Offer to take their overflow. Free bookings.','free','medium'],
   ['grow','Weekday offices','Austin offices do summer parties on Tuesdays. Bigger budgets, and the machine is sitting idle anyway.','free','medium'],
   ['grow','PTA season tickets','Every school has a PTA with a budget and several events a year. Sell the year, not the party.','free','medium'],
-  ['grow','Keep a customer list','Names, dates, which flavours they picked, whether they had a good time. Boring. Worth more than any video.','free','easy'],
+  ['grow','Keep a customer list','Names, dates, which flavors they picked, whether they had a good time. Boring. Worth more than any video.','free','easy'],
   ['grow','Ask how they found you','Every single booking. Write it down. After twenty you will know exactly what works.','free','easy'],
-  ['grow','A second machine, on purpose','Two machines means two parties on one Saturday. Work out whether the maths actually works before buying.','money','big'],
+  ['grow','A second machine, on purpose','Two machines means two parties on one Saturday. Work out whether the math actually works before buying.','money','big'],
   ['grow','Raise the price on peak dates','Saturdays in June are worth more than Tuesdays in March. Most businesses charge the same anyway.','free','medium'],
 
   // BIG SWINGS
   ['big','Apprentice of the Day','The birthday kid gets a shirt, a title and the first fifteen minutes of the job. They keep the shirt.','cheap','easy'],
   ['big','The Annual Report','A real printed report from a 10-year-old CEO. Post forty copies to people who matter.','cheap','big'],
-  ['big','Kids Review Ads','Rate real billboards and adverts out of ten. Nothing to do with slushies. That is the point.','free','easy'],
+  ['big','Kids Review Ads','Rate real billboards and ads out of ten. Nothing to do with slushies. That is the point.','free','easy'],
   ['big','The Realtor Circuit','Frozen drinks at open houses on weekday afternoons. Dead time turned into money.','free','medium'],
   ['big','Hottest day of the year','When it hits 105°, give cups away somewhere public. Tell the news that morning.','cheap','medium'],
-  ['big','Now Hiring: Driver','Post a real job advert for Dad’s job. Reports to Harper, age 11. Interview people on camera.','free','easy'],
+  ['big','Now Hiring: Driver','Post a real job ad for Dad’s job. Reports to Harper, age 11. Interview people on camera.','free','easy'],
   ['big','The Rejection Wall','A public list of every no. Dated, unedited. Never name a customer.','free','easy'],
   ['big','Interview the old guy','Find the man who has rented margarita machines for twenty years. Ask him everything.','free','medium'],
   ['big','The Party Report Card','You grade the party. Crowd energy, best costume, did anyone say thank you.','free','easy'],
@@ -97,12 +97,12 @@ const IDEAS = [
   ['big','Chapters','Kids in other cities running their own Slush Sisters off a playbook you write.','free','big'],
   // REAL PLACES TO ENTER - every one of these was checked
   ['reach','Children\u2019s Business Fair, West Lake Hills',"A real market where kids run booths. Acton Academy West, 3423 Bee Caves Rd - about four miles away. Saturday 1 May 2027, applications open NOW. You do the selling, not a grown-up.",'free','medium'],
-  ['reach','Host your own Business Fair',"They hand you the playbook, the website and the prize money for free. You find the place. Being the organiser beats being a stall holder. Possibly the best single thing on this board.",'free','big'],
+  ['reach','Host your own Business Fair',"They hand you the playbook, the website and the prize money for free. You find the place. Being the organizer beats being a stall holder. Possibly the best single thing on this board.",'free','big'],
   ['reach','Kids Market at Volente Beach',"22 August, at a waterpark, in August. Ages 5 to 17. Check the food rules first - some markets only allow packaged food.",'cheap','medium'],
-  ['reach','Lake Travis Current: Meet Your Neighbour',"A local newsletter, 4,000+ readers every week, with a feature slot built exactly for this. Smallest ask, best match.",'free','easy'],
+  ['reach','Lake Travis Current: Meet Your Neighbor',"A local newsletter, 4,000+ readers every week, with a feature slot built exactly for this. Smallest ask, best match.",'free','easy'],
   ['reach','Lake Travis View',"The Statesman\u2019s Lake Travis section. Real local news, and the mayors of Lakeway and Bee Cave both write columns in it.",'free','medium'],
-  ['reach','Neighbours of Lakeway and Bee Cave',"A magazine posted to local homes whose whole job is featuring local families. They have a form to nominate someone.",'free','easy'],
-  ['reach','Steiner Ranch Ranch Record',"The Steiner Ranch newsletter goes to 5,000 homes and is paid for by local adverts. Small ad, exactly the right people.",'money','easy'],
+  ['reach','Neighbors of Lakeway and Bee Cave',"A magazine posted to local homes whose whole job is featuring local families. They have a form to nominate someone.",'free','easy'],
+  ['reach','Steiner Ranch Ranch Record',"The Steiner Ranch newsletter goes to 5,000 homes and is paid for by local ads. Small ad, exactly the right people.",'money','easy'],
   ['reach','Rough Hollow Rough Life Director',"Rough Hollow employs someone whose entire job is running community events all year. Kid events and grown-up events. Best phone call on this list.",'free','easy'],
   ['reach','Headwaters lifestyle team',"Headwaters in Dripping Springs has a lifestyle director and a farmers market every Saturday.",'free','easy'],
   ['reach','West Austin Moms group',"A Facebook group that literally says Lakeway, Bee Cave, Westlake and Spicewood in its description.",'free','easy'],
@@ -117,7 +117,7 @@ const IDEAS = [
   ['reach','Alina Morse, Zolli Candy',"Started at ten. Sells sweets. You put sweets on every single cup. Obvious person to talk to.",'free','medium'],
   ['reach','Backyard Bounce LT',"A bounce house company based in Lakeway that delivers to all the same places you do. Same party, same customer, no overlap. Start here.",'free','easy'],
   ['reach','Little Acorns Photography',"A kids party photographer based in Lakeway. You are both at the same parties.",'free','easy'],
-  ['reach','Lakeway city events',"July 4th parade, Trail of Lights, Movies at the Park, and Christmas in July at the swim centre. Some already take food vendors. events@lakeway-tx.gov",'free','medium'],
+  ['reach','Lakeway city events',"July 4th parade, Trail of Lights, Movies at the Park, and Christmas in July at the swim center. Some already take food vendors. events@lakeway-tx.gov",'free','medium'],
   ['reach','Dripping Springs Founders Day',"April, 37th year, 150+ vendor booths, a parade and a carnival. There is a vendor page on the city website.",'cheap','medium'],
   ['reach','Entrepreneur Kids Legacy Show',"A podcast hosted by two kids that is genuinely still going. Small, friendly, and they answer. Good first interview.",'free','easy'],
   ['reach','Million Bazillion',"A big national money podcast for kids from public radio. They use recorded questions from kids. Send one.",'free','easy'],
@@ -140,14 +140,14 @@ const EFFORT = { easy: 'Easy', medium: 'Takes a bit', big: 'Big job' };
 
 const card = (o, i) => {
   const [cat, title, body, cost, effort] = o;
-  const [costLabel, costColour] = COST[cost];
+  const [costLabel, costColor] = COST[cost];
   return `<article class="card" data-cat="${cat}" data-cost="${cost}" data-effort="${effort}">
   <div class="slush" style="--c:${CATS[cat][1]}"></div>
   <div class="body">
     <h3>${title}</h3>
     <p>${body}</p>
     <div class="chips">
-      <span class="chip" style="--c:${costColour}">${costLabel}</span>
+      <span class="chip" style="--c:${costColor}">${costLabel}</span>
       <span class="chip ghost">${EFFORT[effort]}</span>
     </div>
   </div>
@@ -157,10 +157,10 @@ const card = (o, i) => {
 </article>`;
 };
 
-const sections = Object.entries(CATS).map(([key, [name, colour, blurb]]) => {
+const sections = Object.entries(CATS).map(([key, [name, color, blurb]]) => {
   const cards = IDEAS.map((o, i) => [o, i]).filter(([o]) => o[0] === key);
   return `<section class="group" data-group="${key}">
-  <header class="group-head" style="--c:${colour}">
+  <header class="group-head" style="--c:${color}">
     <h2>${name}</h2>
     <p>${blurb}</p>
     <span class="count">${cards.length}</span>

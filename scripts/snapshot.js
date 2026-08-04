@@ -51,7 +51,7 @@ const PAGES = [
   ['our-rules', '/our-rules'],
   ['community-events', '/community-events'],
   ['read-hub', '/read'],
-  ['read-pick-colours', '/read/pick-the-colours'],
+  ['read-pick-colors', '/read/pick-the-colors'],
   ['read-freezes', '/read/why-it-freezes'],
   ['read-other-kids', '/read/other-kids-businesses'],
   ['read-as-good-as-a-bar', '/read/as-good-as-a-bar'],
