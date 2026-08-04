@@ -42,6 +42,18 @@ preview URL that does not touch production traffic.
 - The candy garnish on every cup is the differentiator. It appears on most
   pages on purpose.
 
+## Marketing and content
+
+`docs/marketing.md` is the working marketing plan — channels, campaigns, the
+seasonal calendar, and what has been tried. `docs/content-ideas.md` is the
+executable idea bank, written for Finley and Harper to read and act on
+themselves. Both are living documents: when something gets tried, record how it
+went rather than leaving the plan frozen.
+
+The strategy in one line: the rentals fund the operation, the girls are the
+brand, and neighbourhood Facebook groups convert better than either social or
+search.
+
 ## Before changing anything
 
 Read `docs/site-audit.md`. Several things that look intentional are broken —
