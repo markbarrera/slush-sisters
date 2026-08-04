@@ -134,32 +134,54 @@ constantly, have budget, and their open houses are full of exactly the target
 customer. One agent who likes you books monthly.
 **Free to pitch. Ten conversations. This one changes revenue, not just reach.**
 
-### Winter: sell to grown-ups, not to the cold
+### Winter: the machine does cold, not just frozen
 
-November to February is dead for kids' birthdays. It is the *busiest* month of
-the year for office and adult holiday parties.
+This is the one that changes the shape of the business, and it was hiding in
+plain sight. **The machine chills as well as freezes.** It is not a slushie
+machine, it is a drinks dispenser with two modes.
 
-Same machine, same frozen margaritas, no new equipment, completely different
-buyer. Office parties, HOA holiday events, neighbourhood progressive dinners,
-teacher appreciation lunches — all clustered in the exact weeks the birthday
-calendar goes quiet.
+That means a whole category of grown-up drinks that would be strange as a
+slushie work perfectly: a rocks margarita, sangria, a batched punch, cold brew.
+Served properly cold, not frozen.
 
-**Free to try. This is the winter business.**
+**The pitch writes itself.** A bartender for a three-hour holiday party costs
+more than a rental does, needs feeding, and pours one drink at a time. Two tanks
+of properly made cocktails pour themselves all night, taste the same at 9pm as
+at 6pm, and never have a queue. And the host gets to tell everyone they booked
+two kids who run their own company.
 
-### Hot cocoa — test it, do not build it
+Cheaper than a bartender, as good, and a better story. That is a strong pitch to
+an office manager, and November and December are the busiest weeks of the year
+for exactly those parties — the same weeks the kids' birthday calendar goes
+quiet.
 
-Worth knowing why this is smaller than it sounds: a frozen drink machine cannot
-make hot cocoa, so it means buying equipment. And Austin winters are mild —
-December highs average around 62°F, so demand is a short cold snap, not a
-season.
+**Free to try. No new equipment. This is the winter business.**
 
-Two venues make it worth *one cheap test*: **Bee Cave on Ice** (an outdoor rink
-behind City Hall, mid-November to mid-January — two months of people standing
-outside in the cold by choice) and the **Lakeway Trail of Lights**, which
-already takes food vendors.
+#### Two things to work out first
 
-Spend about $150 on urns and try one event. Buy equipment only if people
-actually queue.
+**Cold mode removes the alcohol ceiling.** In frozen mode there is a limit on
+how strong a drink can be, because alcohol stops the mix freezing — that is why
+frozen margaritas are relatively weak. Chilled, that constraint disappears. So
+drinks that simply cannot be made frozen can be made cold, at proper strength.
+Worth testing deliberately, because it is a genuine capability nobody else in
+this market is advertising.
+
+**Carbonation is the limit.** These machines are not built for fizzy liquids —
+a Moscow mule, a Paloma, a spritz will go flat in the tank and can foam badly on
+dispense. The workaround is easy and worth knowing: dispense the base from the
+machine and top the glass with the fizzy part. Test before promising it.
+
+### Hot cocoa — probably unnecessary now
+
+Worth recording why this dropped down the list. A frozen drink machine cannot
+make hot cocoa, so it meant buying equipment, and Austin Decembers average
+around 62°F — a cold snap, not a season.
+
+Cold cocktails at holiday parties do the same job with the machine already
+owned. If hot cocoa is still wanted, it is a $150 test at **Bee Cave on Ice**
+(an outdoor rink running mid-November to mid-January) or the **Lakeway Trail of
+Lights**, which already takes food vendors. One event, cheap urns, no
+commitment.
 
 ### The Candy Company Play
 You have been putting Sour Patch Watermelon on every cup since day one, unpaid,

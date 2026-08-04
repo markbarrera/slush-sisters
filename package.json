@@ -12,5 +12,8 @@
   "devDependencies": {
     "sharp": "^0.35.3",
     "wrangler": "^4.42.0"
+  },
+  "dependencies": {
+    "playwright": "^1.62.1"
   }
 }

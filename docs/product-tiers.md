@@ -1,5 +1,13 @@
 # Two products, not one
 
+> **Read this first: the machine chills as well as freezes.** It is a drinks
+> dispenser with two modes, not a slushie machine. Everything below is about
+> the frozen side, but the cold side opens a second market — grown-up cocktails
+> at holiday and corporate parties, cheaper than a bartender. See
+> `big-ideas.md`. Cold mode also removes the alcohol ceiling that frozen mode
+> imposes, so stronger drinks become possible. Carbonated drinks are the one
+> real limit: dispense the base, top the glass with the fizz.
+
 An idea worth taking seriously: adults and kids should not be drinking the same
 thing, and should not be paying the same price.
 

@@ -69,8 +69,11 @@ const IDEAS = [
 
   // GROW THE BUSINESS - the structural stuff
   ['grow','The birthday loop','Every customer has a birthday every year. Write to them in month eleven: same week next year? This is the biggest one on the whole board.','free','easy'],
-  ['grow','Winter business','Nov to Feb is dead. A hot cocoa bar rental is the same job, same neighbourhoods, opposite season. Doubles your year.','money','big'],
-  ['grow','Sell the garnish to competitors','Every other margarita company has a boring identical product. Sell them your garnish system. Two kids supplying the grown-ups.','free','big'],
+  ['grow','Cold drinks, not just frozen','The machine chills as well as freezes. Rocks margaritas, sangria, punch - grown-up drinks that would be odd as a slushie. A whole extra season and no new machine.','free','medium'],
+  ['grow','Cheaper than a bartender','A bartender for a holiday party costs more than we do and pours one drink at a time. Two tanks pour themselves all night. Say that out loud in the pitch.','free','easy'],
+  ['grow','Office holiday parties','Nov and Dec are dead for birthdays and the busiest weeks of the year for office parties. Same machine, different customer, and they book earlier.','free','medium'],
+  ['grow','Work out the cold recipes','Frozen mode limits how strong a drink can be, because alcohol stops it freezing. Cold mode does not. Find out which drinks that unlocks. Fizzy ones will not work in the tank.','cheap','medium'],
+  ['grow','Guard the recipe, not the sweets','Anyone can copy a sweet on a rim, so there is nothing to sell there. What nobody can copy quickly is knowing how low the sugar can go before the machine stalls. Work that out and write it down.','free','medium'],
   ['grow','Be the overflow','When another company is double booked on a Saturday they lose that party. Offer to take their overflow. Free bookings.','free','medium'],
   ['grow','Weekday offices','Austin offices do summer parties on Tuesdays. Bigger budgets, and the machine is sitting idle anyway.','free','medium'],
   ['grow','PTA season tickets','Every school has a PTA with a budget and several events a year. Sell the year, not the party.','free','medium'],
@@ -168,7 +171,17 @@ ${cards.map(([o, i]) => card(o, i)).join('\n')}
 </section>`;
 }).join('\n\n');
 
-const html = `<title>Slush Sisters — the idea board</title>
+const NOINDEX = process.argv[3] === '--noindex';
+
+const html = `${NOINDEX ? `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1a237e">
+` : ''}<title>Slush Sisters — the idea board</title>
 <style>
 /* swap, never block: with font-display:block the whole page stays invisible
    until the face resolves, so a slow or failed decode renders a blank screen. */
@@ -275,7 +288,9 @@ footer b{color:var(--ink);font-family:'Sour Gummy',sans-serif;font-weight:800;}
 
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;}}
 @media (max-width:520px){ .hero{padding:40px 0 28px;} .grid{grid-template-columns:1fr;} }
-</style>
+</style>${NOINDEX ? `
+</head>
+<body>` : ''}
 
 <div class="wrap top">
   <div class="hero">
@@ -357,7 +372,9 @@ ${sections}
     });
   });
 })();
-</script>`;
+</script>${NOINDEX ? `
+</body>
+</html>` : ''}`;
 
 fs.writeFileSync(process.argv[2], html);
 console.log('wrote', process.argv[2], (html.length/1024).toFixed(0)+'KB', '|', IDEAS.length, 'ideas');
