@@ -50,6 +50,7 @@ const PAGES = [
   ['fresh-press', '/fresh-press'],
   ['our-rules', '/our-rules'],
   ['community-events', '/community-events'],
+  ['inventory', '/inventory'],
   ['read-hub', '/read'],
   ['read-pick-colors', '/read/pick-the-colors'],
   ['read-freezes', '/read/why-it-freezes'],
@@ -132,9 +133,9 @@ function serve() {
             bookVisible,
             // /book is the booking form itself, and /read and /ideas are
             // orphan reading pages that deliberately carry no site chrome.
-            isOrphan: /^\/(read|ideas)/.test(location.pathname),
+            isOrphan: /^\/(read|ideas|inventory)/.test(location.pathname),
             isBookPage: location.pathname.replace(/\/$/, '') === '/book'
-                        || /^\/(read|ideas)/.test(location.pathname),
+                        || /^\/(read|ideas|inventory)/.test(location.pathname),
             sideScroll: document.documentElement.scrollWidth > window.innerWidth,
             brokenImages: broken,
           };
