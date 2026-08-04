@@ -15,7 +15,19 @@
  * absolute /img/... paths and every photo would come out broken.
  */
 
-const { chromium } = require('playwright');
+// Playwright is deliberately NOT in package.json. Every deploy runs `npm ci`,
+// and adding a browser-downloading dependency to that path costs time and
+// reliability for a tool only ever run by hand. Install it when you need it:
+//   npm i --no-save playwright
+let chromium;
+try {
+  ({ chromium } = require('playwright'));
+} catch {
+  console.error('This script needs Playwright, which is not installed.\n' +
+                'Run:  npm i --no-save playwright\n' +
+                'Then: npm run snapshot');
+  process.exit(1);
+}
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
