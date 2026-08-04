@@ -1,8 +1,6 @@
 const fs = require('fs');
 const b64 = f => fs.readFileSync(f).toString('base64');
 const SOUR = b64('/root/.fonts/brand-1.ttf');
-const DM_MED = b64('/root/.fonts/brand-2.ttf');
-const DM_BOLD = b64('/root/.fonts/brand-3.ttf');
 
 // cat: colour key. cost: free | cheap | money. effort: easy | medium | big
 const IDEAS = [
@@ -172,9 +170,9 @@ ${cards.map(([o, i]) => card(o, i)).join('\n')}
 
 const html = `<title>Slush Sisters — the idea board</title>
 <style>
-@font-face{font-family:'Sour Gummy';font-weight:800;font-display:block;src:url(data:font/ttf;base64,${SOUR}) format('truetype');}
-@font-face{font-family:'DM Sans';font-weight:500;font-display:block;src:url(data:font/ttf;base64,${DM_MED}) format('truetype');}
-@font-face{font-family:'DM Sans';font-weight:700;font-display:block;src:url(data:font/ttf;base64,${DM_BOLD}) format('truetype');}
+/* swap, never block: with font-display:block the whole page stays invisible
+   until the face resolves, so a slow or failed decode renders a blank screen. */
+@font-face{font-family:'Sour Gummy';font-weight:800;font-display:swap;src:url(data:font/ttf;base64,${SOUR}) format('truetype');}
 
 :root{
   --ground:#eef6fd; --panel:#ffffff; --ink:#16203f; --soft:#5d6b8c;
@@ -195,7 +193,7 @@ const html = `<title>Slush Sisters — the idea board</title>
 body{margin:0;background:var(--ground);color:var(--ink);
   font-family:'DM Sans',system-ui,sans-serif;font-weight:500;line-height:1.55;
 }
-h1,h2,h3{font-family:'Sour Gummy','DM Sans',sans-serif;font-weight:800;margin:0;text-wrap:balance;line-height:1.05;}
+h1,h2,h3{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;margin:0;text-wrap:balance;line-height:1.05;}
 p{margin:0;}
 
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px 88px;}
@@ -208,20 +206,20 @@ p{margin:0;}
 .hero .lede{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--soft);max-width:56ch;}
 .tally{display:inline-flex;align-items:center;gap:8px;margin-top:4px;align-self:flex-start;
   background:var(--panel);border:1.5px solid var(--line);border-radius:999px;padding:7px 16px 7px 9px;}
-.tally b{font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;color:var(--on-brand);
+.tally b{font-family:inherit;font-weight:700;font-size:.95rem;color:var(--on-brand);
   background:var(--ice);border-radius:999px;min-width:30px;padding:2px 9px;text-align:center;
   font-variant-numeric:tabular-nums;}
-.tally span{font-family:'DM Sans',sans-serif;font-weight:700;font-size:.86rem;color:var(--soft);}
+.tally span{font-family:inherit;font-weight:700;font-size:.86rem;color:var(--soft);}
 
 /* ---- filters ---- */
 .bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
   backdrop-filter:blur(10px);border-bottom:1.5px solid var(--line);
   padding:12px 0;margin-bottom:34px;}
 .bar-in{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.bar b{font-family:'DM Sans',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+.bar b{font-family:inherit;font-weight:700;font-size:.72rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--soft);margin-right:2px;}
 .f{appearance:none;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);
-  font-family:'DM Sans',sans-serif;font-weight:700;font-size:.82rem;
+  font-family:inherit;font-weight:700;font-size:.82rem;
   padding:7px 14px;border-radius:999px;cursor:pointer;transition:.14s;}
 .f:hover{border-color:var(--ice);}
 .f[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--on-brand);}
@@ -233,7 +231,7 @@ p{margin:0;}
   padding-bottom:12px;margin-bottom:20px;border-bottom:3px solid var(--c);}
 .group-head h2{font-size:clamp(1.4rem,3.4vw,2rem);color:var(--ink);}
 .group-head p{color:var(--soft);font-size:.92rem;flex:1 1 240px;}
-.count{font-family:'DM Sans',sans-serif;font-weight:700;font-size:.74rem;letter-spacing:.1em;
+.count{font-family:inherit;font-weight:700;font-size:.74rem;letter-spacing:.1em;
   color:#16203f;background:var(--c);padding:3px 10px;border-radius:999px;}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px;}
@@ -247,7 +245,7 @@ p{margin:0;}
   -webkit-mask:radial-gradient(9px at 9px 100%,#0000 98%,#000) repeat-x 0 100%/18px 12px;
   mask:radial-gradient(9px at 9px 100%,#0000 98%,#000) repeat-x 0 100%/18px 12px;}
 .body{padding:14px 16px 12px;display:flex;flex-direction:column;gap:7px;flex:1;}
-.card h3{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:-.01em;line-height:1.25;}
+.card h3{font-family:inherit;font-weight:700;font-size:1.02rem;letter-spacing:-.01em;line-height:1.25;}
 .card p{font-size:.86rem;color:var(--soft);line-height:1.5;}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px;}
 .chip{font-weight:700;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;
@@ -256,7 +254,7 @@ p{margin:0;}
 
 .pick{display:flex;align-items:center;gap:8px;width:100%;
   border:0;border-top:1.5px solid var(--line);background:transparent;color:var(--soft);
-  font-family:'DM Sans',sans-serif;font-weight:700;font-size:.8rem;
+  font-family:inherit;font-weight:700;font-size:.8rem;
   padding:11px 16px;cursor:pointer;transition:.14s;}
 .pick:hover{background:color-mix(in srgb,var(--ice) 12%,transparent);color:var(--ink);}
 .pick:focus-visible{outline:3px solid var(--ice);outline-offset:-3px;}

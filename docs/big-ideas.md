@@ -134,6 +134,33 @@ constantly, have budget, and their open houses are full of exactly the target
 customer. One agent who likes you books monthly.
 **Free to pitch. Ten conversations. This one changes revenue, not just reach.**
 
+### Winter: sell to grown-ups, not to the cold
+
+November to February is dead for kids' birthdays. It is the *busiest* month of
+the year for office and adult holiday parties.
+
+Same machine, same frozen margaritas, no new equipment, completely different
+buyer. Office parties, HOA holiday events, neighbourhood progressive dinners,
+teacher appreciation lunches — all clustered in the exact weeks the birthday
+calendar goes quiet.
+
+**Free to try. This is the winter business.**
+
+### Hot cocoa — test it, do not build it
+
+Worth knowing why this is smaller than it sounds: a frozen drink machine cannot
+make hot cocoa, so it means buying equipment. And Austin winters are mild —
+December highs average around 62°F, so demand is a short cold snap, not a
+season.
+
+Two venues make it worth *one cheap test*: **Bee Cave on Ice** (an outdoor rink
+behind City Hall, mid-November to mid-January — two months of people standing
+outside in the cold by choice) and the **Lakeway Trail of Lights**, which
+already takes food vendors.
+
+Spend about $150 on urns and try one event. Buy equipment only if people
+actually queue.
+
 ### The Candy Company Play
 You have been putting Sour Patch Watermelon on every cup since day one, unpaid,
 unprompted, and it is the stated differentiator of the whole business. Write
@@ -221,6 +248,40 @@ attached can trip franchise law, and other people's children working is its own
 question. Year two, not year one.**
 
 ---
+
+---
+
+## Retracted: licensing the garnish
+
+An earlier version of this list suggested selling the candy garnish system to
+competing rental companies. **That was wrong and it has been removed.**
+
+There is no IP in a sweet on a cup rim. Anyone can buy the same bag of Sour
+Patch Kids. No competitor would pay for something a shopping trip replicates,
+and pre-portioned kits is a thin commodity margin not worth the operational
+drag.
+
+The garnish is a **positioning and content asset** — it is why the cup gets
+photographed and why people remember the brand. That is genuinely valuable. It
+is simply not licensable, and the two things are easy to confuse.
+
+What actually is defensible here, roughly in order:
+
+1. The brand, and the girls themselves
+2. The content archive, once it is a few years deep
+3. The customer list and the rebooking relationship
+4. **The freeze-behaviour knowledge**, if the Fresh Press work gets done —
+   working out how low the sugar can go before a machine stalls takes a
+   competitor months of ruined batches to rediscover. That is the closest thing
+   to a trade secret this business could own, and a good reason to do that work
+   properly.
+
+The consumer **Garnish Kit** still stands, but for a different reason than
+first given: a fan in Ohio buys it because it is *from the Slush Sisters*, not
+because the sweets are special. Merchandise with a story, not intellectual
+property.
+
+The **overflow deal** also stands. It never depended on the garnish.
 
 ## If you only pick five
 
