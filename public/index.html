@@ -74,6 +74,14 @@ header.open nav{display:flex;}
 .hero-photo .hero-img{position:relative;right:auto;width:78%;max-width:300px;margin:24px auto 0;}
 }
 .hero-text{max-width:440px;position:relative;z-index:1;}
+/* The names sit with the photo, not above the headline. Pinned under the
+   image on desktop; on a phone the photo stacks, so it just follows it. */
+.hero-caption{position:absolute;right:36px;bottom:14px;width:40%;max-width:360px;text-align:center;
+  font-family:"Baloo 2",sans-serif;font-weight:800;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-ice);z-index:2;margin:0;}
+@media(max-width:700px){
+.hero-caption{position:static;width:auto;max-width:none;right:auto;bottom:auto;padding:10px 0 20px;}
+}
 .kicker{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:.78rem;letter-spacing:.14em;color:var(--ink-ice);text-transform:uppercase;margin-bottom:10px;}
 .hero-text h1{font-family:'Baloo 2',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:800;color:var(--brand);line-height:1.1;margin-bottom:12px;}
 .hero-text p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:24px;}
@@ -298,15 +306,15 @@ footer a{color:var(--ice);}
 
 <div class="hero-photo">
 <div class="hero-text">
-<p class="kicker">Harper, 11 &amp; Finley, 8 &middot; Lakeway, Texas</p>
 <h1>We are sisters and we rent out a frozen drink machine.</h1>
 <p>It makes two flavors at the same time, so the kids and the grown-ups both get something they actually want. We bring it, set it up, and come back the next morning to take it away. Our dad drives, because we cannot.</p>
 <a href="/book" class="btn">Check your date</a>
 </div>
 <picture>
 <source type="image/webp" srcset="/img/photos/sisters-cups-640.webp 640w, /img/photos/sisters-cups-1024.webp 1024w" sizes="(max-width:700px) 78vw, 360px">
-<img src="/img/photos/sisters-cups-1024.jpg" alt="Finley and Harper holding cups of bright red frozen strawberry slush" class="hero-img" fetchpriority="high" decoding="async">
+<img src="/img/photos/sisters-cups-1024.jpg" alt="Harper and Finley holding cups of bright red frozen strawberry slush" class="hero-img" fetchpriority="high" decoding="async">
 </picture>
+<p class="hero-caption">Harper, 11 &amp; Finley, 8 &middot; Lakeway, Texas</p>
 </div>
 
 <div class="marquee"><div class="marquee-inner">FROZEN DRINK RENTALS · LAKEWAY · BEE CAVE · LAKE TRAVIS · TWO FLAVORS · CANDY GARNISH ON EVERY CUP · DELIVERY + PICKUP INCLUDED · FROZEN DRINK RENTALS · LAKEWAY · BEE CAVE · LAKE TRAVIS · TWO FLAVORS · CANDY GARNISH ON EVERY CUP · DELIVERY + PICKUP INCLUDED · </div></div>
