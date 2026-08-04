@@ -47,6 +47,12 @@ preview URL that does not touch production traffic.
   figures at all — no `tnum` feature and a 93% digit-width spread — so
   `font-variant-numeric: tabular-nums` on it silently does nothing. The
   utility switches to Baloo 2, which has them.
+- **US English everywhere on the site.** color, neighborhood, flavor, favorite,
+  organizer, center, license, math. The site had drifted British — "colour"
+  appeared 123 times — and was converted 2026-08-04. Idiom counts too: "on the
+  weekend", not "at the weekend"; "candy", not "sweets"; "mom", not "mum".
+  This applies to `public/`, to `docs/board/*.js` which generate pages, and to
+  the `/read` slugs. Internal notes in `docs/*.md` are not held to it.
 - Copy is written plainly and in the sisters' own voice — first person, short
   sentences, no marketing throat-clearing. Match it.
 - The candy garnish on every cup is the differentiator. It appears on most
