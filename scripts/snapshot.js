@@ -44,6 +44,9 @@ const PAGES = [
   ['pricing', '/pricing'],
   ['flavors', '/flavors'],
   ['austin', '/austin'],
+  ['read-hub', '/read'],
+  ['read-freezes', '/read/why-it-freezes'],
+  ['read-other-kids', '/read/other-kids-businesses'],
   ['margarita-machine-rental-austin', '/margarita-machine-rental-austin'],
   ['service-area-lakeway', '/frozen-drink-machine-rental-lakeway'],
 ];
@@ -68,6 +71,10 @@ function serve() {
       let file = path.join(PUBLIC, p);
       // mirror the Worker's auto-trailing-slash handling
       if (!fs.existsSync(file) && fs.existsSync(file + '.html')) file += '.html';
+      // a directory serves its index.html, as the Worker does for /read
+      if (fs.existsSync(file) && fs.statSync(file).isDirectory()) {
+        file = path.join(file, 'index.html');
+      }
       if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) {
         res.writeHead(404); return res.end('not found');
       }
@@ -114,8 +121,10 @@ function serve() {
           const broken = [...document.images].filter(i => !i.complete || i.naturalWidth === 0).length;
           return {
             bookVisible,
-            // /book is the booking form itself; it needs no button to reach it
-            isBookPage: location.pathname.replace(/\/$/, '') === '/book',
+            // /book is the booking form itself, and /read and /ideas are
+            // orphan reading pages that deliberately carry no site chrome.
+            isBookPage: location.pathname.replace(/\/$/, '') === '/book'
+                        || /^\/(read|ideas)/.test(location.pathname),
             sideScroll: document.documentElement.scrollWidth > window.innerWidth,
             brokenImages: broken,
           };

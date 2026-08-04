@@ -254,7 +254,198 @@ const PAGES = [
   ],
 },
 
-/* ====================== 3. HOW PEOPLE FIND OUT ABOUT YOU ================= */
+/* ========================= 3. THE SCIENCE OF FREEZING ==================== */
+{
+  slug: 'why-it-freezes',
+  title: 'Why it freezes',
+  kicker: 'The recipe lab',
+  lede: `The real science of what is in the tank. This is the part you can own completely — nobody else renting a machine in Austin knows any of it, and it decides whether the fancy version of your mix is even possible.`,
+  close: [
+    ['Buy the thing that measures it. It costs about $30.',
+     `A refractometer. Two drops on the glass, hold it to the light, read the line. Nobody has ever measured the mix that is already in your garage — so right now every number in this business is a guess. That is the first experiment and it takes ten minutes.`],
+    ['Do not wreck the machine finding out.',
+     `Go from lots of sugar downwards, never the other way, one batch at a time. Record the motor on a phone. If the sound changes pitch, switch to chill mode straight away and let it thaw. A thawed tank costs an hour. A seized machine costs the business.`],
+  ],
+  groups: [
+{
+  name: 'The one idea everything rests on',
+  colour: '#4fc3f7',
+  blurb: 'Sweet and frozen are two completely different jobs. Most people never notice.',
+  cards: [
+    ['plain', 'Sugar is not really the sweetener. It is the antifreeze.',
+     `The reason a slushie is slushy instead of a solid lump is the sugar in it. Dissolved things lower the temperature water freezes at. Take the sugar out and you do not get a healthier slushie — you get an ice cube.`],
+
+    ['plain', 'Freezing power depends on the <i>size</i> of the molecule, not the taste',
+     `Small molecules lower the freezing point more, gram for gram. That is why two things can be equally sweet and behave completely differently in the tank. Sweetness and freezing are unrelated. They only travel together in ordinary sugar because that is what everyone is used to.`],
+
+    ['sortable', 'Sort this table two ways',
+     `Tap "Freezing power," then tap "Sweetness." The order changes completely — and that is the whole point. Salt has no sweetness at all and nearly six times sugar's freezing power. Sucralose is hundreds of times sweeter than sugar and does almost nothing to the freezing point.`,
+     ['Sweetener', 'Freezing power', 'Sweetness'],
+     [['Table sugar', 100, 100],
+      ['Glucose', 190, 70],
+      ['Fructose (agave)', 190, 170],
+      ['Allulose', 190, 70],
+      ['Honey', 146, 94],
+      ['Lactose', 100, 16],
+      ['Salt', 585, 0],
+      ['Alcohol', 740, 0],
+      ['Sucralose', 1, 60000]]],
+
+    ['plain', 'So the sugar-free one really would be a block',
+     `Stevia, monk fruit and sucralose are so sweet that you only use a tiny pinch. A tiny pinch of anything cannot lower the freezing point. It would taste sweet and freeze rock solid. That is a real prediction you can test — and filming it failing is better content than filming it working.`],
+
+    ['plain', 'But the agave one might be too <i>soft</i>, which nobody expected',
+     `Agave is mostly fructose, which has nearly twice sugar's freezing power. So you would use less of it <b>and</b> each gram does more. The grown-up documents have been warning for months that the fancy low-sugar version would freeze too hard. It might do the opposite. Nobody has checked.`],
+  ],
+},
+{
+  name: 'Try the freeze test before you run it',
+  colour: '#e57373',
+  blurb: 'Brix is just a number for how much sugar is dissolved in something.',
+  cards: [
+    ['brix', 'Drag the sugar up and down',
+     `This is what the real experiment will look like. Somewhere around 11 the machine stops making slush and starts making a brick — and that point is exactly what you are trying to find.`],
+
+    ['plain', 'Three different sources disagree about the right number',
+     `One says 13 to 15. A machine manual says 13 to 17. Another says 21 to 24. They cannot all be right about your machine. This is not a problem — it is the first experiment, and it is free once the refractometer arrives.`],
+  ],
+},
+{
+  name: 'Clever tricks',
+  colour: '#81c784',
+  blurb: 'Ways round problems that do not need any new equipment.',
+  cards: [
+    ['plain', 'Make it taste less sweet without taking sugar out',
+     `Sour and sweet cancel each other out. Add a bit more acid — lemon, lime, citric acid — and the same amount of sugar tastes less sweet. So you fix "too sweet" while keeping the sugar that makes it freeze properly. This is the single most useful trick on this page.`],
+
+    ['plain', 'Put the sour on the rim instead',
+     `Even better: put the sour powder on the <i>rim</i> of the cup rather than in the mix. Then it cannot affect the freezing at all, because it never goes in the tank.`],
+
+    ['plain', 'A drink that changes colour in the cup',
+     `Butterfly pea flower makes a deep blue tea. Add lemon and it turns pink-purple, in front of whoever is holding it. No artificial colour at all. It is also the answer to the hardest problem on the menu — blue raspberry is a flavour, not a fruit, so there is nothing naturally blue to make it out of.`],
+
+    ['plain', 'Which natural colours actually survive a party',
+     `Hibiscus, black carrot and purple sweet potato all like sour drinks and hold their colour. Beetroot does not — it wants a much less sour drink and fades in sunlight. Turmeric is fine in sour but fades in light too. Cold helps a lot: colour lasts almost twice as well in a cold drink as a warm one.`],
+
+    ['plain', 'Give the grown-ups a card that says how much to add',
+     `The most likely way a rental goes wrong is a dad tipping a whole bottle of tequila in, and then it never freezes. Alcohol is an even stronger antifreeze than salt. A little printed card saying how much per tank protects the machine and makes you look like you know exactly what you are doing. Which you would.`],
+  ],
+},
+  ],
+},
+
+/* =================== 4. WHAT OTHER KID BUSINESSES DID ==================== */
+{
+  slug: 'other-kids-businesses',
+  title: 'What happened to other kids',
+  kicker: 'The research',
+  lede: `Somebody went and studied real businesses run by kids — what they posted, what worked, what flopped, and what they actually earned. Some of it is encouraging. Some of it is not, and those are the useful bits.`,
+  close: [
+    ['The uncomfortable number',
+     `A boy in Canada made a video about cleaning bins that got 1.7 million likes. His business made about five hundred dollars. Those two facts are both true and they are not connected. Being famous online and making money are separate things, and one does not automatically turn into the other.`],
+    ['What that does not mean',
+     `It does not mean do not bother. It means be honest about what the videos are for. They are not a machine that turns views into parties. If a big audience is going to be worth something, there has to be something to sell them — and right now there is not one. That is a thing to build, not a thing to hope for.`],
+  ],
+  groups: [
+{
+  name: 'The most important thing they found',
+  colour: '#e57373',
+  blurb: 'Views and money are two separate things.',
+  cards: [
+    ['plain', 'Ashton, 11, cleans bins in Canada',
+     `He knocked on doors asking if people wanted their bins cleaned for $10. One video got <b>1,709,577 likes</b>. He has 117,500 followers. His business has earned around <b>$500</b>, from 30 to 40 customers.`],
+
+    ['plain', 'Milla, 11, sells 3D printed toys',
+     `More than 75,000 followers and a video with 1.3 million views. Her shop has sold 712 things in four months, mostly between $5 and $30. That is real and it is growing fast — and it is nowhere near what 75,000 followers sounds like it should be worth.`],
+
+    ['plain', 'Why this matters for you specifically',
+     `Someone in Ohio can watch every video you ever make and still never rent your machine, because your van does not go to Ohio. A huge audience is worth almost nothing to a business that only delivers within about thirty miles. Nobody knows yet how many of your followers live close enough to book.`],
+  ],
+},
+{
+  name: 'The one about a numbered series',
+  colour: '#ffb74d',
+  blurb: 'Two kids did the same thing. One went up 245 times. One fell 99.7%. The difference is tiny.',
+  cards: [
+    ['plain', 'Ashton went UP',
+     `"Day 2 of going door to door asking people if they want me to clean their garbage bins" got 6,959 likes. <b>"Day 7"</b> of exactly the same thing got <b>1,709,577</b>. Same words, same idea, just a bigger number in front.`],
+
+    ['plain', 'Milla went DOWN',
+     `Her "day in the life" series: part 9 got 1.3 million views. Part 14 got 41,000. <b>Part 16 got 4,500.</b> Almost everyone stopped watching.`],
+
+    ['debate', 'So what was different?',
+     `Ashton kept the exact same title every single time. Only the number changed. People knew instantly what they were getting and came back for the next one.`,
+     `Milla changed her title four times while the series was running — "a day in life", then "a day in the life", then "my routine", then "a summer day in the life". Maybe the titles had nothing to do with it and the videos just got less interesting.`,
+     `Nobody can prove the renaming caused it. But it is free to get right and expensive to get wrong. Pick the exact words for your series, write them down, and never change them. Change the number, nothing else.`],
+  ],
+},
+{
+  name: 'Things worth copying',
+  colour: '#81c784',
+  blurb: 'All four of these are free.',
+  cards: [
+    ['plain', 'Film the times people say no',
+     `The single best-performing thing in the whole study is a boy being politely turned down at a door. He cried the first time someone said no, and that is in the news stories about him. Getting rejected is the content. So is the party that got rained off and the batch that froze wrong.`],
+
+    ['plain', 'Put "run by our mum" in the bio',
+     `The most successful account in the study writes "parent-run account" right in the bio, twice, without being asked. It answers the awkward question before anyone can ask it — and it makes other accounts comfortable sharing your videos.`],
+
+    ['plain', 'Put the story first, the shop second',
+     `Milla's link list starts with "Our Full Story" and the shop is only second. People arrive curious about the person, not the product.`],
+
+    ['plain', 'Add the younger sister as the older one grows up',
+     `A hair-accessory business run by a 9-year-old added her little sister as she got older, so the business kept going as she stopped being the cute one. You already have that built in.`],
+  ],
+},
+{
+  name: 'Things to be careful about',
+  colour: '#ba68c8',
+  blurb: 'Two of these are genuinely worth knowing before anything gets big.',
+  cards: [
+    ['plain', 'A girl’s lemonade business got shut down for being too successful',
+     `Pretty Paws Lemonade grew from a stand outside her house to markets all over Las Vegas. Then somebody complained anonymously to the health department and it was closed down for not having a licence. She was allowed to give lemonade away free, just not sell it. <b>Getting popular is what put her on their desk.</b>`],
+
+    ['plain', 'Posting a lot is not the same as posting well',
+     `One account posted 430 times and has 3,400 followers. Ashton got 117,500 followers from <b>27 posts</b>. Doing more is not the answer. Doing the same good thing repeatedly is.`],
+
+    ['plain', 'The famous kid grew up',
+     `A boy went viral for crochet at 11 in 2019. He now has 448,000 followers — and a recent post got 1,200 likes. The followers stayed and the interest went. He is going to the army, then college, then medical school. Being a talented kid stops being the interesting part, and that is fine, but it is worth planning for.`],
+
+    ['plain', 'Every one that lasted did the same thing',
+     `Mikaila Ulmer, Alina Morse, Moziah Bridges, Zandra Cunningham. All started as kids, all still going. Every single one ended up with a <b>product in shops</b> — something in a box that gets sold whether or not they are standing there. None of them stayed "the kid business."`],
+  ],
+},
+{
+  name: 'What nobody knows yet',
+  colour: '#64b5f6',
+  blurb: 'Tick these off as you find them out. Every one is cheap.',
+  cards: [
+    ['unknown', 'What is actually in our mix?', 'Free · 20 minutes',
+     `Read the ingredients on the tub in the garage. There is an ingredient called glycerol that some slushie mixes use, and a food safety agency in Britain says drinks containing it are not suitable for children under 7. If ours does not have it, that is the best thing we could possibly put on the website. If it does, we need to know.`],
+
+    ['unknown', 'How many of our followers live near enough to book?', 'Free · 20 posts',
+     `The account can tell you where people are. That one number decides whether the videos are advertising or something else entirely.`],
+
+    ['unknown', 'Do customers even remember the candy?', 'Free · one evening',
+     `Text the last ten people who booked and ask what their guests talked about. Do not use the word candy — see if they say it themselves.`],
+
+    ['unknown', 'What is the Brix of the mix we already have?', '$30 · 10 minutes',
+     `Nobody has ever measured it. Every other number in the business depends on it.`],
+
+    ['unknown', 'How many cups does one party actually use?', 'Free · 6 parties',
+     `A tally sheet in the van. Nobody has counted, so nobody knows what a party really costs.`],
+
+    ['unknown', 'Does the money content really beat the drink content?', 'Free · 10 posts',
+     `Everyone keeps saying it does. Five of each, same two weeks, then compare. Until then it is just a thing people say.`],
+
+    ['unknown', 'Would anyone pay more for fresh-squeezed?', 'Free · 5 texts',
+     `Ask five people who have already booked. They are the only people whose opinion has been tested with actual money.`],
+  ],
+},
+  ],
+},
+
+/* ====================== 5. HOW PEOPLE FIND OUT ABOUT YOU ================= */
 {
   slug: 'how-people-find-us',
   title: 'How people find out about you',
@@ -370,17 +561,47 @@ const PAGES = [
 
 const esc = s => s.replace(/&(?!#?\w+;)/g, '&amp;');
 
+let uid = 0;
+
 const card = (c) => {
   const kind = c[0];
+
+  // Pick-first debate: you commit to a side before the answer is revealed.
+  // That ordering is the whole point — reading someone else's conclusion
+  // teaches nothing, choosing wrong and finding out teaches a lot.
   if (kind === 'debate') {
     const [, title, pro, con, land] = c;
-    return `<article class="card debate">
+    const id = 'd' + (++uid);
+    return `<article class="card debate" data-debate="${id}">
   <div class="slush"></div>
   <div class="body">
     <h3>${esc(title)}</h3>
-    <div class="side"><span class="tag yes">One side</span><p>${esc(pro)}</p></div>
-    <div class="side"><span class="tag no">Other side</span><p>${esc(con)}</p></div>
-    <div class="side land"><span class="tag mid">Where it lands</span><p>${esc(land)}</p></div>
+    <div class="side"><span class="tag">One side</span><p>${esc(pro)}</p></div>
+    <div class="side"><span class="tag">Other side</span><p>${esc(con)}</p></div>
+    <div class="choose">
+      <p class="ask">Which do you think is right?</p>
+      <button class="pick-side" data-side="one">The first one</button>
+      <button class="pick-side" data-side="two">The second one</button>
+      <button class="pick-side" data-side="both">Bit of both</button>
+    </div>
+    <div class="side land" hidden><span class="tag mid">Where it landed</span><p>${esc(land)}</p></div>
+  </div>
+</article>`;
+  }
+
+  // A thing nobody knows, what it costs to find out, and a box to tick.
+  if (kind === 'unknown') {
+    const [, title, cost, body] = c;
+    const id = 'u' + (++uid);
+    return `<article class="card unknown">
+  <div class="slush"></div>
+  <div class="body">
+    <label class="check">
+      <input type="checkbox" data-unknown="${id}">
+      <span class="box" aria-hidden="true"></span>
+      <span class="ct"><b>${esc(title)}</b><em>${esc(cost)}</em></span>
+    </label>
+    ${body ? `<p>${esc(body)}</p>` : ''}
   </div>
 </article>`;
   }
@@ -395,6 +616,50 @@ const card = (c) => {
   </div>
 </article>`;
   }
+  // Sortable table. Built for one job: sort the sweeteners by sweetness,
+  // then by freezing power, and watch the two orders refuse to match. That
+  // mismatch IS the science — no paragraph explains it as well as doing it.
+  if (kind === 'sortable') {
+    const [, title, note, cols, rows] = c;
+    return `<article class="card wide sortable">
+  <div class="slush"></div>
+  <div class="body">
+    <h3>${esc(title)}</h3>
+    <p>${esc(note)}</p>
+    <div class="tw"><table>
+      <thead><tr>${cols.map((h, i) =>
+        `<th${i ? ' class="num"' : ''}><button class="sort" data-col="${i}">${esc(h)}<span aria-hidden="true">↕</span></button></th>`
+      ).join('')}</tr></thead>
+      <tbody>${rows.map(r =>
+        `<tr>${r.map((v, i) => `<td${i ? ' class="num"' : ''} data-v="${esc(String(v))}">${esc(String(v))}</td>`).join('')}</tr>`
+      ).join('')}</tbody>
+    </table></div>
+  </div>
+</article>`;
+  }
+
+  // The freeze test, before you run it. Drag the sugar down and watch the
+  // texture change. The stop line is marked because the real machine has one.
+  if (kind === 'brix') {
+    const [, title, note] = c;
+    return `<article class="card wide brix">
+  <div class="slush"></div>
+  <div class="body">
+    <h3>${esc(title)}</h3>
+    <p>${esc(note)}</p>
+    <div class="brix-out">
+      <output id="brixVal">15</output><span class="unit">°Brix</span>
+      <p class="verdict" id="brixV">Smooth slush. This is the target.</p>
+    </div>
+    <input type="range" id="brixR" min="6" max="22" step="1" value="15"
+           aria-label="Sugar level in degrees Brix">
+    <div class="scale"><span>6 — a block of ice</span><span>22 — never freezes</span></div>
+    <p class="warn">Below about 11 the machine starts fighting it. If the motor pitch
+      changes on the real one, switch to chill mode straight away.</p>
+  </div>
+</article>`;
+  }
+
   const [, title, body] = c;
   return `<article class="card">
   <div class="slush"></div>
@@ -465,10 +730,64 @@ a{color:inherit;}
   font-variant-numeric:tabular-nums;}
 
 .debate .side{border-top:1.5px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:5px;}
+/* display:flex above beats the hidden attribute's UA display:none, which
+   would leak the answer before the reader has committed to a side. */
+.debate .side[hidden]{display:none;}
 .debate .side.land{border-top-width:3px;border-top-color:var(--ice);}
 .tag{font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
   align-self:flex-start;padding:3px 9px;border-radius:999px;border:1.5px solid var(--line);color:var(--soft);}
 .tag.mid{background:var(--ice);border-color:var(--ice);color:var(--on-brand);}
+
+/* ---- pick-a-side ---- */
+.choose{border-top:1.5px solid var(--line);padding-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+.choose .ask{flex:1 0 100%;font-weight:700;color:var(--ink);font-size:.88rem;}
+.pick-side{font-family:inherit;font-weight:700;font-size:.82rem;cursor:pointer;
+  border:1.5px solid var(--line);background:var(--panel);color:var(--ink);
+  border-radius:999px;padding:10px 15px;min-height:44px;transition:.14s;}
+.pick-side:hover{border-color:var(--ice);}
+.pick-side:focus-visible{outline:3px solid var(--ice);outline-offset:2px;}
+.pick-side[aria-pressed="true"]{background:var(--ice);border-color:var(--ice);color:var(--on-brand);}
+.card.answered .choose .ask{color:var(--soft);font-weight:500;}
+
+/* ---- unknowns checklist ---- */
+.check{display:flex;gap:11px;align-items:flex-start;cursor:pointer;}
+.check input{position:absolute;opacity:0;width:0;height:0;}
+.check .box{width:24px;height:24px;flex-shrink:0;margin-top:1px;border:2px solid var(--line);
+  border-radius:7px;display:grid;place-items:center;transition:.14s;}
+.check .box::after{content:"";width:10px;height:5.5px;border-left:2.5px solid var(--on-brand);
+  border-bottom:2.5px solid var(--on-brand);transform:rotate(-45deg) scale(0);transition:.14s;}
+.check input:checked + .box{background:var(--ice);border-color:var(--ice);}
+.check input:checked + .box::after{transform:rotate(-45deg) scale(1);}
+.check input:focus-visible + .box{outline:3px solid var(--ice);outline-offset:2px;}
+.check .ct{display:flex;flex-direction:column;gap:3px;}
+.check .ct b{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;font-size:1.02rem;line-height:1.25;}
+.check .ct em{font-style:normal;font-weight:700;font-size:.78rem;color:var(--ice);}
+.card.unknown input:checked ~ .ct b{text-decoration:line-through;color:var(--soft);}
+
+/* ---- sortable table ---- */
+.card.wide{grid-column:1/-1;}
+.tw{overflow-x:auto;margin-top:4px;}
+.sortable table{border-collapse:collapse;width:100%;font-size:.9rem;}
+.sortable th,.sortable td{text-align:left;padding:9px 12px;border-bottom:1.5px solid var(--line);white-space:nowrap;}
+.sortable td.num,.sortable th.num{text-align:right;font-variant-numeric:tabular-nums;}
+.sortable td{color:var(--soft);}
+.sortable td:first-child{color:var(--ink);font-weight:700;}
+.sort{font-family:inherit;font-weight:700;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;
+  background:none;border:0;color:var(--ink);cursor:pointer;padding:4px 0;display:inline-flex;gap:6px;min-height:44px;align-items:center;}
+.sort span{color:var(--soft);}
+.sort[aria-sort] span{color:var(--ice);}
+.sort:focus-visible{outline:3px solid var(--ice);outline-offset:2px;}
+
+/* ---- brix slider ---- */
+.brix-out{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.brix-out output{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;
+  font-size:clamp(2.4rem,7vw,3.2rem);color:var(--ice);line-height:1;font-variant-numeric:tabular-nums;}
+.brix-out .unit{font-weight:700;color:var(--soft);}
+.brix-out .verdict{flex:1 0 100%;font-weight:700;color:var(--ink);font-size:.98rem;margin-top:6px;}
+.brix input[type=range]{width:100%;margin:14px 0 6px;height:44px;accent-color:var(--ice);}
+.brix .scale{display:flex;justify-content:space-between;font-size:.76rem;color:var(--soft);font-weight:700;}
+.brix .warn{margin-top:12px;padding-top:12px;border-top:1.5px solid var(--line);font-size:.86rem;color:var(--soft);}
+.brix.danger .brix-out output{color:#e5734f;}
 
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:16px;margin-top:8px;}
 .tile{display:flex;flex-direction:column;background:var(--panel);border:1.5px solid var(--line);
@@ -500,6 +819,78 @@ ${STYLE}
 </head>
 <body>
 ${inner}
+<script>
+(function(){
+  var save=function(k,v){try{localStorage.setItem(k,v);}catch(e){}};
+  var load=function(k){try{return localStorage.getItem(k);}catch(e){return null;}};
+
+  // Pick a side, then the answer appears. Choices persist so a half-read
+  // page survives a closed tab.
+  document.querySelectorAll('[data-debate]').forEach(function(card){
+    var key='ss-debate-'+card.dataset.debate;
+    var land=card.querySelector('.land');
+    var btns=card.querySelectorAll('.pick-side');
+    function reveal(side){
+      btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.side===side));});
+      land.hidden=false; card.classList.add('answered');
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click',function(){ save(key,b.dataset.side); reveal(b.dataset.side); });
+    });
+    var prev=load(key); if(prev) reveal(prev);
+  });
+
+  // Unknowns checklist.
+  document.querySelectorAll('[data-unknown]').forEach(function(box){
+    var key='ss-unknown-'+box.dataset.unknown;
+    if(load(key)==='1') box.checked=true;
+    box.addEventListener('change',function(){ save(key, box.checked?'1':'0'); });
+  });
+
+  // Sortable tables. Numeric where the cell parses as a number, else text.
+  document.querySelectorAll('.sortable table').forEach(function(t){
+    var body=t.tBodies[0];
+    t.querySelectorAll('.sort').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var col=+btn.dataset.col;
+        var asc=btn.getAttribute('aria-sort')!=='ascending';
+        t.querySelectorAll('.sort').forEach(function(o){o.removeAttribute('aria-sort');});
+        btn.setAttribute('aria-sort', asc?'ascending':'descending');
+        var rows=[].slice.call(body.rows);
+        rows.sort(function(a,b){
+          var x=a.cells[col].dataset.v, y=b.cells[col].dataset.v;
+          var nx=parseFloat(x), ny=parseFloat(y);
+          var d=(!isNaN(nx)&&!isNaN(ny)) ? nx-ny : x.localeCompare(y);
+          return asc?d:-d;
+        });
+        rows.forEach(function(r){body.appendChild(r);});
+      });
+    });
+  });
+
+  // Brix slider. Bands follow the machine manual's working range, with the
+  // low end marked as the place the auger starts to struggle.
+  var r=document.getElementById('brixR');
+  if(r){
+    var out=document.getElementById('brixVal'), v=document.getElementById('brixV'),
+        cardEl=r.closest('.brix');
+    var say=function(n){
+      if(n<=9)  return ['A solid block. The machine cannot turn this.',1];
+      if(n<=11) return ['Too hard. The motor is working far too hard — stop.',1];
+      if(n<=12) return ['Gritty and chunky. Pours badly.',0];
+      if(n<=16) return ['Smooth slush. This is the target.',0];
+      if(n<=18) return ['Soft and a bit sloppy. Sweet, but barely frozen.',0];
+      return ['Never really freezes. Too much sugar.',0];
+    };
+    var upd=function(){
+      var n=+r.value, s=say(n);
+      out.textContent=n; v.textContent=s[0];
+      cardEl.classList.toggle('danger', !!s[1]);
+    };
+    r.addEventListener('input',upd); upd();
+  }
+})();
+</script>
 </body>
 </html>`;
 

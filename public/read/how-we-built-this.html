@@ -67,10 +67,64 @@ a{color:inherit;}
   font-variant-numeric:tabular-nums;}
 
 .debate .side{border-top:1.5px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:5px;}
+/* display:flex above beats the hidden attribute's UA display:none, which
+   would leak the answer before the reader has committed to a side. */
+.debate .side[hidden]{display:none;}
 .debate .side.land{border-top-width:3px;border-top-color:var(--ice);}
 .tag{font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
   align-self:flex-start;padding:3px 9px;border-radius:999px;border:1.5px solid var(--line);color:var(--soft);}
 .tag.mid{background:var(--ice);border-color:var(--ice);color:var(--on-brand);}
+
+/* ---- pick-a-side ---- */
+.choose{border-top:1.5px solid var(--line);padding-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+.choose .ask{flex:1 0 100%;font-weight:700;color:var(--ink);font-size:.88rem;}
+.pick-side{font-family:inherit;font-weight:700;font-size:.82rem;cursor:pointer;
+  border:1.5px solid var(--line);background:var(--panel);color:var(--ink);
+  border-radius:999px;padding:10px 15px;min-height:44px;transition:.14s;}
+.pick-side:hover{border-color:var(--ice);}
+.pick-side:focus-visible{outline:3px solid var(--ice);outline-offset:2px;}
+.pick-side[aria-pressed="true"]{background:var(--ice);border-color:var(--ice);color:var(--on-brand);}
+.card.answered .choose .ask{color:var(--soft);font-weight:500;}
+
+/* ---- unknowns checklist ---- */
+.check{display:flex;gap:11px;align-items:flex-start;cursor:pointer;}
+.check input{position:absolute;opacity:0;width:0;height:0;}
+.check .box{width:24px;height:24px;flex-shrink:0;margin-top:1px;border:2px solid var(--line);
+  border-radius:7px;display:grid;place-items:center;transition:.14s;}
+.check .box::after{content:"";width:10px;height:5.5px;border-left:2.5px solid var(--on-brand);
+  border-bottom:2.5px solid var(--on-brand);transform:rotate(-45deg) scale(0);transition:.14s;}
+.check input:checked + .box{background:var(--ice);border-color:var(--ice);}
+.check input:checked + .box::after{transform:rotate(-45deg) scale(1);}
+.check input:focus-visible + .box{outline:3px solid var(--ice);outline-offset:2px;}
+.check .ct{display:flex;flex-direction:column;gap:3px;}
+.check .ct b{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;font-size:1.02rem;line-height:1.25;}
+.check .ct em{font-style:normal;font-weight:700;font-size:.78rem;color:var(--ice);}
+.card.unknown input:checked ~ .ct b{text-decoration:line-through;color:var(--soft);}
+
+/* ---- sortable table ---- */
+.card.wide{grid-column:1/-1;}
+.tw{overflow-x:auto;margin-top:4px;}
+.sortable table{border-collapse:collapse;width:100%;font-size:.9rem;}
+.sortable th,.sortable td{text-align:left;padding:9px 12px;border-bottom:1.5px solid var(--line);white-space:nowrap;}
+.sortable td.num,.sortable th.num{text-align:right;font-variant-numeric:tabular-nums;}
+.sortable td{color:var(--soft);}
+.sortable td:first-child{color:var(--ink);font-weight:700;}
+.sort{font-family:inherit;font-weight:700;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;
+  background:none;border:0;color:var(--ink);cursor:pointer;padding:4px 0;display:inline-flex;gap:6px;min-height:44px;align-items:center;}
+.sort span{color:var(--soft);}
+.sort[aria-sort] span{color:var(--ice);}
+.sort:focus-visible{outline:3px solid var(--ice);outline-offset:2px;}
+
+/* ---- brix slider ---- */
+.brix-out{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.brix-out output{font-family:'Sour Gummy',system-ui,sans-serif;font-weight:800;
+  font-size:clamp(2.4rem,7vw,3.2rem);color:var(--ice);line-height:1;font-variant-numeric:tabular-nums;}
+.brix-out .unit{font-weight:700;color:var(--soft);}
+.brix-out .verdict{flex:1 0 100%;font-weight:700;color:var(--ink);font-size:.98rem;margin-top:6px;}
+.brix input[type=range]{width:100%;margin:14px 0 6px;height:44px;accent-color:var(--ice);}
+.brix .scale{display:flex;justify-content:space-between;font-size:.76rem;color:var(--soft);font-weight:700;}
+.brix .warn{margin-top:12px;padding-top:12px;border-top:1.5px solid var(--line);font-size:.86rem;color:var(--soft);}
+.brix.danger .brix-out output{color:#e5734f;}
 
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:16px;margin-top:8px;}
 .tile{display:flex;flex-direction:column;background:var(--panel);border:1.5px solid var(--line);
@@ -254,5 +308,77 @@ footer .fi p{color:var(--soft);font-size:.9rem;}
     <div class="fi"><b>The record starts the day you decide to keep one</b><p>There is no record of what this website looked like before August 2026, because nobody was keeping one. Everything before that is just gone. That is the first lesson.</p></div>
   </footer>
 </div>
+<script>
+(function(){
+  var save=function(k,v){try{localStorage.setItem(k,v);}catch(e){}};
+  var load=function(k){try{return localStorage.getItem(k);}catch(e){return null;}};
+
+  // Pick a side, then the answer appears. Choices persist so a half-read
+  // page survives a closed tab.
+  document.querySelectorAll('[data-debate]').forEach(function(card){
+    var key='ss-debate-'+card.dataset.debate;
+    var land=card.querySelector('.land');
+    var btns=card.querySelectorAll('.pick-side');
+    function reveal(side){
+      btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.side===side));});
+      land.hidden=false; card.classList.add('answered');
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click',function(){ save(key,b.dataset.side); reveal(b.dataset.side); });
+    });
+    var prev=load(key); if(prev) reveal(prev);
+  });
+
+  // Unknowns checklist.
+  document.querySelectorAll('[data-unknown]').forEach(function(box){
+    var key='ss-unknown-'+box.dataset.unknown;
+    if(load(key)==='1') box.checked=true;
+    box.addEventListener('change',function(){ save(key, box.checked?'1':'0'); });
+  });
+
+  // Sortable tables. Numeric where the cell parses as a number, else text.
+  document.querySelectorAll('.sortable table').forEach(function(t){
+    var body=t.tBodies[0];
+    t.querySelectorAll('.sort').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var col=+btn.dataset.col;
+        var asc=btn.getAttribute('aria-sort')!=='ascending';
+        t.querySelectorAll('.sort').forEach(function(o){o.removeAttribute('aria-sort');});
+        btn.setAttribute('aria-sort', asc?'ascending':'descending');
+        var rows=[].slice.call(body.rows);
+        rows.sort(function(a,b){
+          var x=a.cells[col].dataset.v, y=b.cells[col].dataset.v;
+          var nx=parseFloat(x), ny=parseFloat(y);
+          var d=(!isNaN(nx)&&!isNaN(ny)) ? nx-ny : x.localeCompare(y);
+          return asc?d:-d;
+        });
+        rows.forEach(function(r){body.appendChild(r);});
+      });
+    });
+  });
+
+  // Brix slider. Bands follow the machine manual's working range, with the
+  // low end marked as the place the auger starts to struggle.
+  var r=document.getElementById('brixR');
+  if(r){
+    var out=document.getElementById('brixVal'), v=document.getElementById('brixV'),
+        cardEl=r.closest('.brix');
+    var say=function(n){
+      if(n<=9)  return ['A solid block. The machine cannot turn this.',1];
+      if(n<=11) return ['Too hard. The motor is working far too hard — stop.',1];
+      if(n<=12) return ['Gritty and chunky. Pours badly.',0];
+      if(n<=16) return ['Smooth slush. This is the target.',0];
+      if(n<=18) return ['Soft and a bit sloppy. Sweet, but barely frozen.',0];
+      return ['Never really freezes. Too much sugar.',0];
+    };
+    var upd=function(){
+      var n=+r.value, s=say(n);
+      out.textContent=n; v.textContent=s[0];
+      cardEl.classList.toggle('danger', !!s[1]);
+    };
+    r.addEventListener('input',upd); upd();
+  }
+})();
+</script>
 </body>
 </html>
