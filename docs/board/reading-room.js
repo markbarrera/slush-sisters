@@ -622,7 +622,9 @@ const PAGES = [
     ['The lucky bit is not luck, it is the rule you already follow.',
      `Grown-ups add the tequila at the party, not you. That rule was there to keep you out of the alcohol. It also happens to hand you the cleanest measurement in the whole business — and most bars would love to have it.`],
     ['None of this works until somebody measures the syrup.',
-     `Every number on this page depends on knowing how sweet our syrup already is. Nobody has ever measured it. That is one afternoon with a refractometer and it unlocks the rest.`],
+     `Every number on this page depends on knowing how sweet our syrup already is. Nobody has ever measured it. That is one afternoon with a refractometer and it unlocks the rest. It is also the reason the Fresh Press page says you cannot book it yet — we are not selling a recipe we have not tested, at any price.`],
+    ['Why we said "not yet" on the website instead of just selling it.',
+     `A drink with too little sugar freezes into a block and the machine fights it. If that happened at somebody's party, they paid $375 for a broken machine in the corner of their kitchen. So the page says we are still testing, out loud, where customers can read it. Saying "we are checking this first" is a better advert than saying "trust us."`],
   ],
   groups: [
 {
@@ -669,6 +671,9 @@ const PAGES = [
     ['number', 'Limes you have to squeeze, using the trick', '≈7',
      `There is a bartender technique called <b>super juice</b>: you use the peels plus two acids you can buy in a tub, and you get the same sourness and the same lime smell out of about seven limes that would normally take fifty. Same drink. An eighth of the squeezing and an eighth of the grocery bill.`],
 
+    ['number', 'And here is what we are charging for it', '$375',
+     `Classic stays at $250. The fresh one is $375 — which is $125 more for something that costs about $30 more to make, and that is on purpose. You are not selling limes. You are selling <i>we got up and squeezed these this morning</i>, and nobody else within thirty miles will do that. The company down the road charges $350 for a two-tank machine full of the same syrup everybody uses. Being cheaper than them would say ours is the worse drink.`],
+
     ['debate', 'So should you squeeze fifty limes on camera anyway?',
      `Fifty limes in a bucket is the best thing you could possibly film. It looks like exactly what it is — obvious, ridiculous, real work — and it is the entire argument for the fancy version in one shot.`,
      `Seven limes makes the same drink for an eighth of the money. Squeezing fifty every single Saturday because it films well is doing hard work for a camera instead of for a customer.`,
@@ -683,12 +688,12 @@ const PAGES = [
   slug: 'what-do-we-call-it',
   title: 'What do we call it?',
   kicker: 'The name argument',
-  lede: `Someone whose whole job is naming things looked at whether you could invent a brand new kind of business. Their answer was no — and then they explained something better you can do instead. Nothing here is decided. Two of you have to be able to say it out loud first.`,
+  lede: `Someone whose whole job is naming things looked at whether you could invent a brand new kind of business. Their answer was no — and then they explained something better you can do instead. One of their two names got killed the same day. The other one is now on the website.`,
   close: [
-    ['You get to kill this one.',
-     `A name only works if the person saying it is you. If either of you feels silly saying "the everybody bar" to a grown-up in a driveway, it is the wrong name and we bin it. That is not being polite — that is genuinely how names fail.`],
-    ['And there is a rule for finding out.',
-     `After twenty parties, listen to how customers describe you to their friends. If they still say "the margarita machine people", the name did not take and we drop it. You can suggest what people call you. You cannot make them.`],
+    ['A name that has to be explained is already dead.',
+     `"The everybody bar" lasted about four hours. Your dad read it and said it would not work, and he was right — you can tell, because explaining it takes a whole sentence and "the kids' tank" takes none. That is the actual test, and it is worth remembering the next time somebody offers you a clever name.`],
+    ['And there is a rule for the one that survived.',
+     `After twenty parties, listen to how customers describe you to their friends. If they still say "the margarita machine people" and nobody has said "the kids' tank" back to you, it did not take and we drop that one too. You can suggest what people call you. You cannot make them.`],
   ],
   groups: [
 {
@@ -709,22 +714,23 @@ const PAGES = [
      'Tap a heading to sort. The one column where nobody else scores is the one worth building on.',
      ['Who', 'Price', 'Tanks', 'Kid flavors'],
      [
-       ['Slush Sisters', 250, 2, 'yes'],
+       ['Slush Sisters — Classic', 250, 2, 'yes'],
+       ['Slush Sisters — Fresh Press', 375, 2, 'yes'],
        ['ATX Marg Rentals', 350, 2, 'no'],
        ['Ninja SLUSHi (buy it)', 270, 1, 'yes'],
      ]],
   ],
 },
 {
-  name: 'The two names',
+  name: 'Two names went in. One came out.',
   colour: '#ba68c8',
-  blurb: 'One is what the business is. The other is what a customer repeats to a friend. They do different jobs.',
+  blurb: 'One was meant to describe the business. One was meant to be the bit a customer repeats. Only the second kind actually works.',
   cards: [
-    ['plain', 'The everybody bar',
-     `That is the whole thing in two words: one machine, one price, and nobody standing at your party drinking something they did not want. It says what is different without listing a single feature.`],
+    ['plain', 'Killed: “the everybody bar”',
+     `The idea was one machine, one price, and nobody at your party stuck drinking something they did not want. It is a true sentence. It is also four words that need a whole other sentence to explain them, which is how you can tell it was a slogan pretending to be a name. Dad binned it the day it was written and that was the right call.`],
 
-    ['plain', 'The kids’ tank',
-     `This is the bit somebody actually repeats. Short, you can picture it, and it explains itself with no help. If only one of these two survives, it should be this one.`],
+    ['plain', 'Kept: “the kids’ tank”',
+     `This one is on the website now — on the flavors page, on the pricing page, and it is rule number one of the nine. Short, you can picture it, and it explains itself with no help at all. Notice that nobody had to tell you what it meant.`],
 
     ['plain', 'The rule that protects the money',
      `Six of our pages exist only to be found by people typing "margarita machine rental" into Google — about 900 people a month. <b>Those pages never change.</b> A new name goes on the front page and the pages people read once they have already found us. Swap the words on the Google pages and we lose the 900 and gain a phrase nobody is searching for.`],

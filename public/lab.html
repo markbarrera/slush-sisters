@@ -5,13 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Lab — How We Test Our Frozen Drink Recipes | Slush Sisters</title>
 <meta name="description" content="Two sisters testing frozen drink recipes properly: Brix, freezing points, natural colour and the experiments that failed. Includes a working freeze-test and mix calculator.">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Frozen Drink Machine Rental in Austin, TX — Slush Sisters</title>
-<meta name="description" content="Two sisters rent out a frozen drink machine across the Austin area. Frozen or chilled, two flavors, delivery and setup included, $250. Lakeway, Bee Cave, Westlake, Lake Travis and beyond.">
 <style>
 /* ---- BRAND TOKENS ----------------------------------------------------
    Every brand colour on this page resolves through these. To change the
@@ -319,6 +312,45 @@ footer a{color:var(--ice);}
 </div>
 </section>
 
+<section class="bg-blush">
+<div class="contain">
+<h2>Will one machine be enough?</h2>
+<p class="lead">The question we get asked more than any other, and the one nobody will give you a straight answer to because a straight answer sometimes loses them a booking. Here is ours, with the arithmetic showing.</p>
+
+<div class="tool">
+<h3>Try it: the cups calculator</h3>
+<p class="why">Two tanks, about three gallons each. A twelve-ounce cup is 12 fluid ounces and a gallon is 128, so one full tank is around 32 cups &mdash; call it 30 once you account for what stays stuck to the sides.</p>
+<div class="field">
+<label for="guests">How many people are coming</label>
+<input type="number" id="guests" value="30" min="4" max="200" step="1">
+</div>
+<div class="field">
+<label for="hours">How long the party runs (hours)</label>
+<input type="number" id="hours" value="3" min="1" max="8" step="0.5">
+</div>
+<div class="field">
+<label for="weather">What the day is doing</label>
+<select id="weather">
+<option value="1.5">Over 95&deg;F and sunny &mdash; everyone drinks more</option>
+<option value="1.2" selected>Warm Texas afternoon</option>
+<option value="1">Mild, or mostly indoors</option>
+<option value="0.8">Cool, or a December party</option>
+</select>
+</div>
+<div class="rows">
+<div class="r"><span>Cups people will probably drink</span><span id="cCups">&mdash;</span></div>
+<div class="r"><span>What one machine pours (both tanks)</span><span id="cHave">&mdash;</span></div>
+<div class="r"><span>Refills we will need to bring mix for</span><span id="cRefill">&mdash;</span></div>
+</div>
+<div class="readout" id="cupBox" style="margin-top:14px;">
+<p class="verdict" id="cupV">&mdash;</p>
+<p class="detail" id="cupD">&mdash;</p>
+</div>
+<p class="why" style="margin-top:14px;"><b>Where these numbers come from.</b> We assume about one cup per person in the first hour and roughly half a cup each hour after that, because the first round is everyone at once and then it settles down. That is from counting at our own parties, not from a textbook, and it is the number most likely to be wrong. We are still counting.</p>
+</div>
+</div>
+</section>
+
 <section class="bg-light">
 <div class="contain">
 <h2>Why the sugar-free version is hard</h2>
@@ -437,6 +469,41 @@ footer a{color:var(--ice);}
   tank.addEventListener('input',mix); ratio.addEventListener('change',mix);
   syrupBx.addEventListener('input',mix); mix();
 
+  // --- cups calculator -------------------------------------------------
+  // One tank is ~3 gal = 32 twelve-oz cups on paper; 30 in practice, because
+  // the last of it clings to the auger and the walls and never pours.
+  var CUPS_PER_TANK=30, TANKS=2;
+  var guests=document.getElementById('guests'),hours=document.getElementById('hours'),
+      weather=document.getElementById('weather');
+  function cups(){
+    var g=parseFloat(guests.value)||0, h=parseFloat(hours.value)||0,
+        w=parseFloat(weather.value);
+    // First hour is everyone at once; after that it settles to about half a
+    // cup each per hour. Counted at our own parties, not looked up.
+    var want=Math.round(g*(1+Math.max(0,h-1)*0.5)*w);
+    var have=CUPS_PER_TANK*TANKS;
+    var refills=Math.max(0,Math.ceil((want-have)/CUPS_PER_TANK));
+    document.getElementById('cCups').textContent=want+' cups';
+    document.getElementById('cHave').textContent=have+' cups';
+    document.getElementById('cRefill').textContent=refills?refills+(refills>1?' refills':' refill'):'none';
+    var cb=document.getElementById('cupBox'),cv=document.getElementById('cupV'),cd=document.getElementById('cupD');
+    if(want<=have){
+      cv.textContent='One machine, no refills. You are fine.';
+      cd.textContent='Two full tanks cover this with room to spare. Nothing to add and nothing to decide.';
+      cb.classList.remove('warn');
+    }else if(refills<=2){
+      cv.textContent='One machine, and we bring '+refills+' extra batch'+(refills>1?'es':'')+'.';
+      cd.textContent='The machine refreezes a refill in about 20 minutes, so there is a gap but not a problem. Extra batches are $25 each.';
+      cb.classList.remove('warn');
+    }else{
+      cv.textContent='This is a two-machine party.';
+      cd.textContent='More than two refills means people queueing while a tank catches up, which is the thing that actually ruins a drinks machine at a party. A second machine for the same event is $225.';
+      cb.classList.add('warn');
+    }
+  }
+  guests.addEventListener('input',cups); hours.addEventListener('input',cups);
+  weather.addEventListener('change',cups); cups();
+
   // --- sortable sweetener table ---------------------------------------
   var tbl=document.getElementById('pac'),tb=tbl.tBodies[0];
   tbl.querySelectorAll('th button').forEach(function(btn){
@@ -458,6 +525,6 @@ footer a{color:var(--ice);}
 <footer>
 <div class="f-name"><span>Slush</span> Sisters</div>
 <p>Frozen drink rentals across the Austin area</p>
-<p>Lakeway, TX &middot; <a href="/book">Book a rental</a> &middot; <a href="/promise">Our promise</a></p>
+<p>Lakeway, TX &middot; <a href="/book">Book a rental</a> &middot; <a href="/promise">Our promise</a> &middot; <a href="/our-rules">Our rules</a></p>
 <p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
 </footer></body></html>

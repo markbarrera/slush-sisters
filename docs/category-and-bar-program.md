@@ -112,15 +112,25 @@ So the vacancy is not a *feature* vacancy. It is a **use** vacancy: everyone
 sells two tanks of grown-up drinks, and nobody has said the obvious thing —
 that the second tank should be the kids'.
 
-### The two names
+### The names
 
-- **Category: "the everybody bar."** What we are selling: one machine, one
-  price, and nobody at the party drinking something they didn't want.
-- **Retrieval cue: "the kids' tank."** The thing a person repeats to a friend.
-  Short, concrete, and it does the explaining by itself.
+The report proposed two: **"the everybody bar"** as the category name, and
+**"the kids' tank"** as the retrieval cue.
 
-**These are not adopted yet.** Two things have to be true first, and one of
-them is a hard rule:
+**"The everybody bar" was killed by Mark on 2026-08-04.** No long
+deliberation — it did not survive being read. That is the correct way for a
+name to die, and it is exactly the test the report itself specified: a name
+you have to explain is a slogan, and slogans do not survive a driveway.
+
+**"The kids' tank" is adopted**, and it was always the stronger of the two.
+The report said so itself — *if only one of these survives, it should be this
+one.* It is short, concrete, explains itself with no help, and it names the
+one gap in the market that is actually real: every competitor fills both tanks
+with adult drinks.
+
+It is now live on `/flavors`, `/pricing` and as rule 1 of `/our-rules`.
+
+**Two constraints still apply**, and one of them is a hard rule:
 
 > **Strict layering: never change the SEO pages' language.** The six
 > service-area pages and `/margarita-machine-rental-austin` exist to catch
@@ -136,6 +146,9 @@ And the report's own abandonment condition:
 > as "the margarita machine people," the name did not take. Drop it. The
 > retrieval cue is the customer's word, not ours — we can propose it, we
 > cannot assign it.
+
+This now applies to "the kids' tank." Listen for it. If nobody repeats it back
+by party twenty, it goes.
 
 ### The published standard
 
@@ -158,14 +171,68 @@ published standard under our own name is the right form, and it is free.
 
 ---
 
-## What has to happen before any of this goes on the site
+---
 
-1. **The standard and the name need to exist in the girls' language first.**
-   They are the ones who will have to say it out loud to a customer in a
-   driveway. If Finley cannot explain "the everybody bar" in one sentence
-   without reading it, it is the wrong name. → reading room.
-2. **Premium pricing is a Mark decision.** The $20–40 ingredient delta says a
-   premium tier is viable; it does not say what to charge.
-3. **The base Brix target (16.9) is untested.** Our syrup's Brix has never
-   been measured. That is experiment #1 in `/lab`, and it gates the recipe
-   card.
+## Part 3 — What shipped, 2026-08-04
+
+Mark's instruction was *"you don't need my answer to just build. I can walk you
+back later if needed."* So the open decisions were made rather than parked.
+Each one below is reversible, and each says what it would cost to reverse.
+
+### Fresh Press is priced at $375
+
+Classic stays at $250. Fresh Press is $375 — a **$125 premium on a $20–40
+ingredient cost**, which is deliberate and is exactly what the tiers doc
+argued for: the price gap should be much larger than the cost gap, because
+what is being sold is *made this morning by hand*, not limes.
+
+Two reference points made $375 the number rather than $325:
+
+- ATX Marg Rentals sells a **dual-chamber machine with bulk syrup at $350**.
+  Pricing Fresh Press below that would say it is a lesser product than a
+  syrup rental, which is the opposite of true.
+- Ninja's countertop machine at **$269.99** is compressing everything near
+  $250 from below. The answer to a rising floor is a taller ceiling, not a
+  discount.
+
+**To reverse:** two numbers on `/pricing` and `/fresh-press`. Five minutes.
+
+### The no-dye kids' version is not an upcharge
+
+It is included in Fresh Press at the same price, and this is now rule 5 of the
+published standard. Charging a parent extra to remove Red 40 from a
+six-year-old's drink is a bad thing to do and it would read as one.
+
+**To reverse:** don't. If the tier needs more margin, raise the tier.
+
+### Fresh Press ships as a page, not as a bookable product
+
+The freeze test has not been run. Selling a $375 recipe that can seize the
+machine is precisely the failure `product-tiers.md` warns about, so
+`/fresh-press` carries an explicit **"in testing — you cannot book this yet,
+and here is why"** status block, and `/pricing` marks the tier the same way.
+
+This is not hedging. A page that says *we are testing this before we sell it
+to you* is a stronger proof of the standard than a page that just claims a
+drink is good.
+
+**To flip it live:** delete the status block, change one button. The page is
+already written as a product page.
+
+### Nine rules published at `/our-rules`
+
+Each carries a visible **"costs us:"** line — half the machine at every party,
+an hour of every Sunday, the money everybody else makes on a heatwave. That
+line is the whole mechanism: a rule a competitor can match with a sentence is
+worth nothing, so each one had to cost something real to qualify.
+
+### Still open, still Mark's
+
+1. **The base Brix target (16.9) is untested.** Our syrup's Brix has never been
+   measured. That is experiment #1 in `/lab`, and it gates the recipe card and
+   therefore the Fresh Press launch.
+2. **Split tiers across the two tanks** — one Classic, one Fresh Press. The
+   machine does not care; the pricing does. `/fresh-press` currently answers
+   this with "ask us," which is honest and does not scale.
+3. **Whether $375 survives contact with a customer.** Nobody has been quoted
+   it yet.

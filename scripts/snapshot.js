@@ -47,6 +47,8 @@ const PAGES = [
   ['grown-ups', '/grown-ups'],
   ['promise', '/promise'],
   ['lab', '/lab'],
+  ['fresh-press', '/fresh-press'],
+  ['our-rules', '/our-rules'],
   ['read-hub', '/read'],
   ['read-pick-colours', '/read/pick-the-colours'],
   ['read-freezes', '/read/why-it-freezes'],
@@ -129,6 +131,7 @@ function serve() {
             bookVisible,
             // /book is the booking form itself, and /read and /ideas are
             // orphan reading pages that deliberately carry no site chrome.
+            isOrphan: /^\/(read|ideas)/.test(location.pathname),
             isBookPage: location.pathname.replace(/\/$/, '') === '/book'
                         || /^\/(read|ideas)/.test(location.pathname),
             sideScroll: document.documentElement.scrollWidth > window.innerWidth,
@@ -140,6 +143,33 @@ function serve() {
         }
         if (checks.sideScroll) problems.push(`${route}: scrolls sideways at 390px`);
         if (checks.brokenImages) problems.push(`${route}: ${checks.brokenImages} broken image(s)`);
+
+        // Head integrity. /lab shipped for days with two <head> blocks — it was
+        // built by copying another page and the copied head was never removed,
+        // so it carried that page's canonical URL. Browsers silently recover,
+        // which is exactly why nothing above would ever have caught it, and a
+        // wrong canonical tells Google the page is a duplicate of another one.
+        const head = await page.evaluate(() => ({
+          titles: document.querySelectorAll('title').length,
+          canonicals: [...document.querySelectorAll('link[rel="canonical"]')]
+            .map(l => l.getAttribute('href')),
+          ogUrls: [...document.querySelectorAll('meta[property="og:url"]')]
+            .map(m => m.getAttribute('content')),
+        }));
+        const want = 'https://slushsisters.com' + (route === '/' ? '/' : route);
+        if (head.titles !== 1) problems.push(`${route}: ${head.titles} <title> tags, expected 1`);
+        // /read and /ideas are noindex orphans and carry no canonical on
+        // purpose — a canonical would be an invitation to index them.
+        if (!checks.isOrphan) {
+          if (head.canonicals.length !== 1) {
+            problems.push(`${route}: ${head.canonicals.length} canonical tags, expected 1`);
+          } else if (head.canonicals[0] !== want) {
+            problems.push(`${route}: canonical is ${head.canonicals[0]}, expected ${want}`);
+          }
+        }
+        if (head.ogUrls.length > 1) {
+          problems.push(`${route}: ${head.ogUrls.length} og:url tags, expected at most 1`);
+        }
       }
 
       await page.screenshot({

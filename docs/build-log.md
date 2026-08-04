@@ -30,6 +30,81 @@ Two audiences, on purpose:
 
 ---
 
+## 2026-08-04 — A second product, nine rules, and a name that died in four hours
+
+Mark's instruction was blunt and useful: *"you don't need my answer to just
+build. I can walk you back later if needed."* So every open decision got made
+instead of parked, and each one in `docs/category-and-bar-program.md` now
+carries a line saying what reversing it costs.
+
+**"The everybody bar" is dead.** It was the category name proposed by the
+naming work that morning. Mark read it and said it would not work. He was
+right, and the reason is the same test the report itself specified: explaining
+"the everybody bar" takes a whole sentence, and "the kids' tank" takes none. A
+name that needs an explanation is a slogan wearing a name's clothes.
+
+**"The kids' tank" shipped** — on `/flavors`, on `/pricing`, and as rule 1 of
+`/our-rules`. It carries the same abandonment condition: if nobody repeats it
+back by party twenty, it goes too.
+
+**Fresh Press is priced at $375 and is deliberately not bookable.** The
+ingredient delta is only $20–40, so the $125 premium is selling the morning
+spent squeezing, not the limes. But the freeze test has not been run, and
+selling a $375 recipe that can seize the machine is exactly the failure
+`product-tiers.md` warns about. So the page carries a visible *"in testing —
+here is why you cannot book this yet"* block. Flipping it live is deleting one
+`<div>`.
+
+That was a real choice, not a hedge. A page that says *we are checking this
+before we sell it to you* argues the standard better than a page claiming the
+drink is good.
+
+**`/our-rules` publishes nine rules, each with a visible "costs us:" line** —
+half the machine at every party, an hour of every Sunday, the money everybody
+else makes on a heatwave. That line is the entire mechanism. A rule a
+competitor can match by adding a sentence to their website is worth nothing, so
+the test for the list was *does this cost us something real*, not *does it
+sound good*.
+
+One rule was cut for being illegal rather than weak: a certification badge
+other companies could earn. Under 15 U.S.C. §1064(5) whoever hands out a
+certification mark may not sell the thing it certifies — Slush Sisters would
+have had to stop renting machines to hand out margarita badges.
+
+### What was got wrong
+
+**`/lab` shipped with two `<head>` blocks.** It was built by copying
+`/austin.html` as a shell, and the copied `<!DOCTYPE>`, `<head>` and
+`<title>` were never removed — so the page carried `/austin`'s title and
+description immediately after its own. Browsers recover from that silently,
+which is why it looked right in every screenshot and passed the snapshot check
+for days.
+
+Found by accident, while adding a footer link with a script that reported the
+file already contained the string it was looking for.
+
+**A correction to the first version of this entry.** It claimed the stray
+block also carried `/austin`'s canonical URL, which would have told Google
+`/lab` was a duplicate and should not be indexed. That was wrong, and it was
+wrong in the direction of making the bug sound worse. Checking the old file in
+a real browser found two `<title>` tags and exactly one canonical — the right
+one. The damage was a duplicate title, not a deindexed page.
+
+Worth leaving in, because the mistake is the ordinary kind: the bug was real,
+the reasoning about what it broke ran ahead of what was actually checked.
+
+**What came out of it:** the snapshot script now checks `<head>` as well as
+layout — exactly one `<title>`, exactly one canonical, and the canonical
+matching the route it was served from. `/read` and `/ideas` are exempt, since
+they are noindex orphans that carry no canonical on purpose. Verified against
+the broken version of the file: it fires.
+
+The lesson is narrow and worth keeping: **the snapshot script was checking what
+a page looked like, not what it claimed to be.** Nothing in the build was
+watching `<head>` until something in `<head>` broke.
+
+---
+
 ## 2026-08-04 — Mobile first, and an Austin page
 
 **What changed**

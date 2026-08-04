@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Rules — The Nine Things We Promise, Slush Sisters</title>
+<meta name="description" content="Nine rules we hold ourselves to, published so you can check them. Written by two sisters who rent frozen drink machines in Lakeway, Bee Cave and Lake Travis.">
+<style>
+:root{
+  --brand:#1a237e;
+  --ice:#4fc3f7;
+  --ice-deep:#29b6f6;
+  --wash:#e8f4fd;
+  --blush:#fff5f7;
+  --on-brand:#fff;
+  --ink-ice:#0165a8;    /* 6.13:1 on white, 5.48:1 on --wash */
+  --pop:#ff4081;        /* 3.33:1 — fills, big type, shapes ONLY */
+  --ink-pink:#c2185b;   /* 5.87:1 — body text, links, small labels */
+  --pink-pale:#ffd6e7;
+  --cta:#0277bd;        /* 4.80:1 with white text */
+  --cta-deep:#01579b;
+  --line-strong:#767b85;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:var(--cta);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--cta-deep);}
+.cta-m{display:none;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;padding:10px 6px;line-height:1;}
+.cta-m{display:inline-block;background:var(--cta);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+}
+
+section{padding:56px 24px;}
+.contain{max-width:760px;margin:0 auto;}
+section h1{font-family:'Baloo 2',sans-serif;font-size:clamp(1.9rem,7vw,2.6rem);font-weight:800;margin-bottom:10px;color:var(--brand);line-height:1.1;}
+section h2{font-family:'Baloo 2',sans-serif;font-size:1.45rem;font-weight:800;margin-bottom:8px;color:var(--brand);}
+section .lead{color:#555;font-size:1rem;line-height:1.65;margin-bottom:28px;}
+section p{line-height:1.65;}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-ice);margin-bottom:10px;}
+.btn{display:inline-block;background:var(--cta);color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;}
+.btn:hover{background:var(--cta-deep);}
+.bg-light{background:#f8fbff;}
+.bg-wash{background:var(--wash);}
+
+/* THE RULES — numbered because they are a numbered, citable list. That is
+   the point of publishing a standard: somebody can say "rule 4" back to us. */
+ol.rules{list-style:none;counter-reset:r;padding:0;margin-top:8px;}
+ol.rules li{counter-increment:r;position:relative;padding:20px 0 20px 56px;border-bottom:1px solid #eaeff5;}
+ol.rules li:last-child{border-bottom:none;}
+ol.rules li::before{content:counter(r);position:absolute;left:0;top:20px;width:38px;height:38px;border-radius:50%;
+  background:var(--wash);color:var(--brand);font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.05rem;
+  display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums lining;}
+ol.rules h3{font-family:'Baloo 2',sans-serif;font-size:1.06rem;font-weight:700;margin-bottom:6px;line-height:1.25;}
+ol.rules p{font-size:.89rem;color:#555;}
+ol.rules p + p{margin-top:8px;}
+ol.rules .cost{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--ink-pink);background:var(--blush);border-radius:99px;padding:5px 12px;}
+
+.note{border-left:3px solid var(--ink-ice);padding:2px 0 2px 16px;margin-top:22px;}
+.note p{font-size:.88rem;color:#555;}
+.note p + p{margin-top:8px;}
+
+footer{background:var(--brand);color:#fff;padding:40px 24px;text-align:center;}
+footer .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
+footer .f-name span{color:var(--ice);}
+footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
+footer a{color:var(--ice);}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://slushsisters.com/our-rules">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:url" content="https://slushsisters.com/our-rules">
+<meta property="og:title" content="Our Rules — The Nine Things We Promise">
+<meta property="og:description" content="Nine rules we hold ourselves to, published so you can check them.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/grown-ups">For Grown-Ups</a>
+<a href="/flavors">Flavors</a>
+<a href="/lab">The Lab</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<a href="/book" class="cta-m">Book</a>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<section>
+<div class="contain">
+<p class="kicker">Written down so you can check</p>
+<h1>Our nine rules</h1>
+<p class="lead">Anyone can say their drinks are good. We wanted to write down things you can actually hold us to &mdash; the kind you would notice if we stopped doing them. Every one of these costs us something. That is how we picked them.</p>
+<p style="font-size:.9rem;color:#666;">If we break one, tell us. <a href="/book" style="color:var(--ink-ice);font-weight:600;">There is a form</a>, and it comes straight to us.</p>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<ol class="rules">
+
+<li>
+<h3>One tank is always a drink with no alcohol in it.</h3>
+<p>The machine has two tanks. Everybody who rents one of these in Austin fills both of them with grown-up drinks, so the kids end up with juice boxes at a party built around a machine they are not allowed to touch.</p>
+<p>Not here. One tank is the kids&rsquo; tank, every single time, unless you specifically tell us otherwise. It is the whole reason we started doing this.</p>
+<span class="cost">Costs us: half the machine, at every party</span>
+</li>
+
+<li>
+<h3>We publish the sugar reading for every recipe we sell.</h3>
+<p>Sugar is what makes a slush a slush instead of a block of ice or a cold puddle. It is measured in Brix with a refractometer, and it is the single number that decides whether the drink works.</p>
+<p>Ours will be on the website next to the recipe. Nobody else in this business publishes it, because measuring it means owning the instrument and doing the work.</p>
+<span class="cost">Costs us: nowhere to hide a bad batch</span>
+</li>
+
+<li>
+<h3>We publish the machine temperature it was set for.</h3>
+<p>A recipe that is perfect at one setting is soup at another. So an ingredient list on its own is not a recipe &mdash; it is half of one. We write down the setting too, which means anybody can check our work, including a competitor.</p>
+<span class="cost">Costs us: the recipe stops being a secret</span>
+</li>
+
+<li>
+<h3>We publish the whole ingredient list. All of it.</h3>
+<p>Not &ldquo;natural and artificial flavours.&rdquo; The actual list, including the boring parts and the parts that are just bought syrup on our Classic mix. If we are using the same bulk base as everyone else on a rental, we say so on that page.</p>
+<span class="cost">Costs us: we cannot pretend the Classic is handmade</span>
+</li>
+
+<li>
+<h3>Every kids&rsquo; flavor gets a version with no artificial dye.</h3>
+<p>No Red 40, no Blue 1, no Yellow 5. The colour comes from the fruit, which means it is duller than the bright blue you are picturing &mdash; and we will show you a photo before you book rather than surprise you on the day.</p>
+<p>It is not an upcharge. Asking a parent to pay extra to take dye out of a six-year-old&rsquo;s drink is not a business we want to run.</p>
+<span class="cost">Costs us: a second mix to make, at no extra price</span>
+</li>
+
+<li>
+<h3>The people who make the mix never touch the alcohol.</h3>
+<p>Finley is 11 and Harper is 8. They make the frozen base, which has no alcohol in it. A grown-up adds their own spirits at setup, from their own bottle, in their own house.</p>
+<p>We wrote this one down <a href="/promise">before anybody asked us about it</a>, which is the only time a rule like this counts for anything.</p>
+<span class="cost">Costs us: we will turn down work over this</span>
+</li>
+
+<li>
+<h3>One price, whatever the guest count, whatever the weather.</h3>
+<p>Almost everything a party costs us is the driving, the setting up and the cleaning, and that is the same for twenty guests or sixty. So we do not charge per head, and we do not raise the price because it is 104&deg; and you are stuck.</p>
+<span class="cost">Costs us: the money everybody else makes on a heatwave</span>
+</li>
+
+<li>
+<h3>We come back the next morning and clean it ourselves.</h3>
+<p>You do not rinse anything, scrub anything, or drive anywhere. The machine goes home dirty with us and comes back clean to the next party. Cleaning a frozen drink machine properly takes about an hour and it is the least fun part of this whole business.</p>
+<span class="cost">Costs us: an hour of a Sunday, every rental</span>
+</li>
+
+<li>
+<h3>When we get something wrong, we write it down in public.</h3>
+<p>We are eight and eleven and we are learning this as we go. Recipes fail. We have already got one badly wrong on purpose in front of a camera, and one of our own numbers on this website was wrong for a week before somebody caught it.</p>
+<p>Those go in <a href="/lab">the Lab</a> and stay there. A business that only publishes its wins is not showing you its work.</p>
+<span class="cost">Costs us: looking perfect</span>
+</li>
+
+</ol>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>Why we wrote these down at all</h2>
+<p style="font-size:.92rem;color:#444;margin-bottom:14px;">Because a rule that is easy to copy is worth nothing. Any rental company in Austin could add &ldquo;we care about quality&rdquo; to their website in about ten seconds, and several of them have.</p>
+<p style="font-size:.92rem;color:#444;margin-bottom:14px;">So the test for getting on this list was not &ldquo;does it sound good.&rdquo; It was <b>does it cost us something real</b> &mdash; an instrument we had to buy, an hour we have to spend, money we have to not make. Every rule above has a line under it saying what it costs. If a competitor wants to match one, they have to actually do it, or they visibly do not.</p>
+<div class="note">
+<p><b>One thing we are not doing.</b> We thought about turning this into a badge other companies could earn. It turns out there is a law about that &mdash; whoever hands out that kind of badge is not allowed to sell the thing the badge is for. We would have to stop renting machines to hand out margarita badges.</p>
+<p>So these are our rules, under our name, and anybody is welcome to copy them.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-wash" style="text-align:center;">
+<div class="contain">
+<h2>That is the whole list.</h2>
+<p class="lead">Nine rules, one price, two tanks, and a candy on every cup.</p>
+<a href="/book" class="btn">Check your date</a>
+</div>
+</section>
+
+<footer>
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
+<p>Lakeway, TX · <a href="/book">Book a rental</a> · <a href="/promise">Our promise</a> · <a href="/our-rules">Our rules</a></p>
+<p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
+</footer></body></html>

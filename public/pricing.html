@@ -40,6 +40,11 @@
 
   /* Form control borders need 3:1 as non-text UI. #ddd was 1.36:1. */
   --line-strong:#767b85; /* 4.20:1 on white */
+
+  /* Fresh Press accent. Green because the whole claim is "real fruit", and
+     because it has to sit next to the blue without competing with it. */
+  --citrus:#2e7d32;     /* 4.90:1 on white */
+  --citrus-pale:#eef7ee;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -112,6 +117,31 @@ section .lead{color:#666;font-size:.95rem;line-height:1.6;margin-bottom:32px;}
 .fl-item h3{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:2px;}
 .fl-item p{font-size:.82rem;color:#666;line-height:1.45;}
 .fl-item .fl-candy{font-size:.72rem;color:var(--ink-pink);font-weight:600;margin-top:4px;}
+
+/* TIERS — mobile first. One column is the base; two only when there is
+   genuinely room, because two 160px-wide price cards side by side on a
+   phone is worse than scrolling. */
+.tiers{display:grid;grid-template-columns:1fr;gap:18px;}
+@media(min-width:680px){.tiers{grid-template-columns:1fr 1fr;align-items:start;}}
+.tier{border:2px solid #e4ebf2;border-radius:14px;padding:26px 24px;background:#fff;}
+.tier.now{border-color:var(--brand);}
+.tier.soon{border-color:var(--citrus);background:var(--citrus-pale);}
+.tier .tname{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;color:var(--brand);}
+.tier.soon .tname{color:var(--citrus);}
+.tier .amount{font-family:'Baloo 2',sans-serif;font-size:2.7rem;font-weight:800;color:var(--brand);line-height:1.05;margin-top:6px;font-variant-numeric:tabular-nums lining;}
+.tier.soon .amount{color:var(--citrus);}
+.tier .per{color:#888;font-size:.82rem;margin-bottom:14px;}
+.tier .sub{font-size:.85rem;color:#555;line-height:1.55;margin-bottom:14px;}
+.tier ul{list-style:none;padding:0;}
+.tier li{padding:8px 0;font-size:.86rem;color:#444;border-bottom:1px solid rgba(0,0,0,.06);line-height:1.5;}
+.tier li:last-child{border:none;}
+.tier .flag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;
+  padding:5px 11px;border-radius:99px;background:var(--citrus);color:#fff;margin-bottom:10px;}
+.tier .tbtn{display:block;text-align:center;margin-top:18px;padding:13px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;
+  background:var(--cta);color:#fff;}
+.tier .tbtn:hover{background:var(--cta-deep);}
+.tier .tbtn.ghost{background:none;border:2px solid var(--citrus);color:var(--citrus);padding:11px;}
+.tier .tbtn.ghost:hover{background:var(--citrus);color:#fff;}
 
 /* PRICING — simple box, not fancy */
 .price-simple{border:2px solid var(--brand);border-radius:12px;padding:32px;max-width:460px;margin:0 auto;text-align:center;}
@@ -221,14 +251,19 @@ section h1{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:800;ma
 
 <section>
 <div class="contain">
-<h1>One price: $250</h1>
-<p class="lead">One price. Everything included. No surprises.</p>
-<div class="price-simple">
+<h1>Two recipes, one machine</h1>
+<p class="lead">Everything is included in both &mdash; delivery, setup, cups, the candy garnish, and us coming back the next morning to clean it. The only thing that changes is what goes in the tank.</p>
+
+<div class="tiers">
+
+<div class="tier now">
+<div class="tname">Classic</div>
 <div class="amount">$250</div>
-<div class="per">per rental</div>
+<div class="per">per rental &mdash; book it today</div>
+<p class="sub">The same base every frozen drink company around here uses, done properly. Six flavors, two at a time, and it is what most of our parties are.</p>
 <ul>
-<li>Dual-tank frozen drink machine (2 flavors at once)</li>
-<li>Your choice of any 2 flavors</li>
+<li>Dual-tank machine &mdash; 2 flavors at once</li>
+<li>One tank is always the kids&rsquo; tank</li>
 <li>Professional rolling cart and full setup</li>
 <li>Delivery and next-morning pickup</li>
 <li>Cups, straws, and napkins</li>
@@ -236,8 +271,29 @@ section h1{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:800;ma
 <li>Printed instructions for your guests</li>
 <li>Free delivery within 15 miles of Lakeway</li>
 </ul>
+<a href="/book" class="tbtn">Check your date</a>
 </div>
-<p class="extras" style="margin-bottom:10px;"><b>Why it is one price whatever the guest count.</b> Almost everything a party costs us is the driving, the setting up and the cleaning &mdash; and that is the same whether twenty people come or sixty. So we do not charge per guest, and we never put the price up on a hot weekend.</p>
+
+<div class="tier soon">
+<span class="flag">In testing</span>
+<div class="tname">Fresh Press</div>
+<div class="amount">$375</div>
+<div class="per">per rental &mdash; not bookable yet</div>
+<p class="sub">The one where we squeeze the limes. Real citrus, agave instead of corn syrup, and no artificial dye anywhere in it.</p>
+<ul>
+<li>Everything in Classic, plus:</li>
+<li>Citrus squeezed the morning of your party</li>
+<li><b>No Red 40, Blue 1 or Yellow 5</b> &mdash; colour from the fruit</li>
+<li>The no-dye kids&rsquo; version costs the same, not extra</li>
+<li>We publish the sugar reading and machine temperature</li>
+<li>Five days&rsquo; notice &mdash; there is a shopping trip attached</li>
+</ul>
+<a href="/fresh-press" class="tbtn ghost">Why you cannot book it yet</a>
+</div>
+
+</div>
+
+<p class="extras" style="margin-bottom:10px;margin-top:26px;"><b>Why it is one price whatever the guest count.</b> Almost everything a party costs us is the driving, the setting up and the cleaning &mdash; and that is the same whether twenty people come or sixty. So we do not charge per guest, and we never put the price up on a hot weekend.</p>
 <p class="extras">Add-ons: Extra flavor batch $25 · Second machine same event $225 · Beyond 15 mi $1/mile</p>
 <p class="extras" style="margin-top:18px;"><b>It does cold drinks too.</b> The same machine will chill a drink instead of freezing it, so it works in December as well as July. <a href="/grown-ups">How that works</a>.</p>
 </div>
@@ -246,7 +302,9 @@ section h1{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:800;ma
 <section class="bg-light">
 <div class="contain">
 <h2>Common questions</h2>
-<details><summary>How far in advance should I book?</summary><p>At least 1-2 weeks. Weekends in summer fill up fast. Earlier is always better.</p></details>
+<details><summary>What is the difference between Classic and Fresh Press?</summary><p>Classic uses the same bulk mix every frozen drink company around here uses. Fresh Press is citrus squeezed the morning of your party, agave instead of corn syrup, and no artificial dye in any of it. Same machine, same delivery, same next-morning pickup.</p><p>Fresh Press is not bookable yet, and <a href="/fresh-press">we explain exactly why on its own page</a> — the short version is that taking sugar out of a mix can make it freeze into a block, and we are testing that on our own machine before anyone pays for it.</p></details>
+<details><summary>Why is Fresh Press $125 more when limes are cheap?</summary><p>Because you are not buying limes. The ingredient difference is only about $20 to $40 a party. The rest is the morning spent squeezing, the shopping trip, mix that cannot sit in a garage for a week, and the recipe testing that had to happen first. If that is not worth it to you, book the Classic — it is a good drink and it is most of our parties.</p></details>
+<details><summary>How far in advance should I book?</summary><p>At least 1-2 weeks. Weekends in summer fill up fast. Earlier is always better. Fresh Press needs five days minimum because there is a shopping trip attached.</p></details>
 <details><summary>How many drinks does the machine make?</summary><p>Each tank makes about 35-40 twelve-ounce drinks. Both tanks full = 70-80 drinks. Plenty for parties of 20-50 people with refills.</p></details>
 <details><summary>Do you provide alcohol?</summary><p>No. We provide the frozen mixer base. Adults add their own spirits. No liquor license needed.</p></details>
 <details><summary>Where do you deliver?</summary><p>Free within 15 miles of Lakeway. That covers Bee Cave, Westlake, Steiner Ranch, and most of the Lake Travis area.</p></details>
@@ -265,6 +323,6 @@ section h1{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:800;ma
 <footer>
 <div class="f-name"><span>Slush</span> Sisters</div>
 <p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
-<p>Lakeway, TX · <a href="/book">Book a rental</a> · <a href="/promise">Our promise</a></p>
+<p>Lakeway, TX · <a href="/book">Book a rental</a> · <a href="/promise">Our promise</a> · <a href="/our-rules">Our rules</a></p>
 <p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
 </footer></body></html>
