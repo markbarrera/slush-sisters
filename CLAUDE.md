@@ -1,7 +1,7 @@
 # Slush Sisters
 
 The site for slushsisters.com — frozen drink machine rentals in Lakeway, Bee
-Cave, and Lake Travis, TX. Run by two sisters, ages 8 and 10. Registered as
+Cave, and Lake Travis, TX. Run by two sisters, ages 8 and 11. Registered as
 Slush Sisters LLC. $250 per rental, delivery and pickup included.
 
 ## Stack
@@ -98,7 +98,15 @@ the Lake Austin market, plus a no-artificial-dye version for kids' parties. Read
 the freeze-test warning before building anything on it — low-sugar mixes can
 freeze too hard for the machine.
 
-`docs/board/generate.js` builds the visual idea board the girls actually use.
+`docs/board/generate.js` builds the visual idea board the girls actually use,
+and `docs/board/reading-room.js` builds `/read` — every document in `docs/`
+rewritten as cards they can read, in their language rather than a grown-up's.
+
+**Every deliverable gets a version in the reading room.** A strategy document
+that only exists in Markdown, written for an adult, has not been delivered to
+the people who own this business. Write the grown-up version, then add it to
+`reading-room.js` and regenerate. Rewrite, do not simplify — leave the hard
+numbers and the arguments in, including both sides of each one.
 
 ## Before changing anything
 
@@ -109,7 +117,7 @@ submitting anything anywhere.
 ## Who you are talking to
 
 Mark owns this repo but is not a web developer, and the business is run by his
-two daughters, ages 8 and 10. Any of the three may be the one asking.
+two daughters, ages 8 and 11. Any of the three may be the one asking.
 
 Explain things accordingly, every time — this is a standing instruction, not a
 one-off request:

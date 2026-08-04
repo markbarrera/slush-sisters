@@ -121,7 +121,7 @@ being pushed onto a brand fronted by children.
 ### Keeping "margarita" and the kid brand apart
 
 The commercial term is an adult, alcohol-adjacent one. The brand is two girls
-aged 8 and 10. Both facts are true and they should not be blended on the same
+aged 8 and 11. Both facts are true and they should not be blended on the same
 page.
 
 The clean split: `/margarita-machine-rental-austin` is a straightforward local

@@ -13,7 +13,7 @@ edits is a plan nobody is using.
 
 The rentals pay for themselves and fund everything. They are not the point.
 
-**The asset is the girls.** Two sisters, 8 and 10, running a registered LLC with
+**The asset is the girls.** Two sisters, 8 and 11, running a registered LLC with
 real customers, real costs and real money. That story travels a very long way,
 and no competitor can copy it with a bigger machine or a lower price.
 
@@ -304,7 +304,7 @@ This is what gets you invited to speak at schools.
 - **Real beats perfect.** A spill you laugh about does better than a flawless
   shot. People can tell, and they prefer the real one.
 - **One idea per video.**
-- **Talk like yourselves.** You are 10 and 8 and that is the entire appeal. Do
+- **Talk like yourselves.** You are 11 and 8 and that is the entire appeal. Do
   not try to sound like an advert.
 
 ---
@@ -360,7 +360,7 @@ whose recommendation carries weight.
 
 **Deliberate version:** pick three to five households who actually post. Offer
 the first rental free or half price. The only ask is one tagged story. It works
-because posting *"two sisters, 8 and 10, run this whole business"* makes the
+because posting *"two sisters, 8 and 11, run this whole business"* makes the
 poster look good — a discovery, not an advert.
 
 > **Constraint:** these households are privacy-sensitive. Photos of their house,

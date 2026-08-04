@@ -469,7 +469,7 @@ something goes wrong and it's traceable to her vendor choice. Alcohol is
 already the highest-liability line item on any work party — every risk guide in
 the category tells her to get a COI naming the company as additional insured,
 verify licensing, and stipulate alcohol-awareness-trained staff. A vendor whose
-principals are 8 and 10 makes that conversation weird. And there's an HR
+principals are 8 and 11 makes that conversation weird. And there's an HR
 dimension nobody wants to litigate on Monday: children present at an event where
 employees are drinking. Even at zero legal exposure, the optics land on the
 person who booked it.
