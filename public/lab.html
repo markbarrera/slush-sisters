@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Lab — How We Test Our Frozen Drink Recipes | Slush Sisters</title>
-<meta name="description" content="Two sisters testing frozen drink recipes properly: Brix, freezing points, natural colour and the experiments that failed. Includes a working freeze-test and mix calculator.">
+<meta name="description" content="Two sisters working out how a frozen drink machine actually works — why sugar stops it freezing, how to get colour from plants instead of dye, and the tests that went wrong. With calculators you can play with.">
 <style>
 /* ---- BRAND TOKENS ----------------------------------------------------
    Every brand colour on this page resolves through these. To change the
@@ -221,14 +221,14 @@ footer a{color:var(--ice);}
 <meta property="og:site_name" content="Slush Sisters">
 <meta property="og:url" content="https://slushsisters.com/lab">
 <meta property="og:title" content="The Lab — How We Test Our Frozen Drink Recipes | Slush Sisters">
-<meta property="og:description" content="Two sisters testing frozen drink recipes properly: Brix, freezing points, natural colour and the experiments that failed. Includes a working freeze-test and mix calculator.">
+<meta property="og:description" content="Two sisters working out how a frozen drink machine actually works — why sugar stops it freezing, how to get colour from plants instead of dye, and the tests that went wrong. With calculators you can play with.">
 <meta property="og:image" content="https://slushsisters.com/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Lab — How We Test Our Frozen Drink Recipes | Slush Sisters">
-<meta name="twitter:description" content="Two sisters testing frozen drink recipes properly: Brix, freezing points, natural colour and the experiments that failed. Includes a working freeze-test and mix calculator.">
+<meta name="twitter:description" content="Two sisters working out how a frozen drink machine actually works — why sugar stops it freezing, how to get colour from plants instead of dye, and the tests that went wrong. With calculators you can play with.">
 <meta name="twitter:image" content="https://slushsisters.com/img/og.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LearningResource","name":"The Slush Sisters Lab","description":"Two sisters testing frozen drink recipes properly: Brix, freezing points, natural colour and the experiments that failed. Includes a working freeze-test and mix calculator.","learningResourceType":"Interactive activity","educationalLevel":"Elementary and middle school","about":[{"@type":"Thing","name":"Freezing point depression"},{"@type":"Thing","name":"Brix"},{"@type":"Thing","name":"Food science"}],"isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"Slush Sisters","@id":"https://slushsisters.com/#business"}}
+{"@context":"https://schema.org","@type":"LearningResource","name":"The Slush Sisters Lab","description":"Two sisters working out how a frozen drink machine actually works — why sugar stops it freezing, how to get colour from plants instead of dye, and the tests that went wrong. With calculators you can play with.","learningResourceType":"Interactive activity","educationalLevel":"Elementary and middle school","about":[{"@type":"Thing","name":"Freezing point depression"},{"@type":"Thing","name":"Brix"},{"@type":"Thing","name":"Food science"}],"isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"Slush Sisters","@id":"https://slushsisters.com/#business"}}
 </script>
 </head>
 <body><header id="hdr">
@@ -248,22 +248,23 @@ footer a{color:var(--ice);}
 <section class="hero-photo" style="min-height:auto;">
 <div class="hero-text" style="max-width:600px;">
 <p class="kicker">The lab</p>
-<h1>We test our recipes like scientists, because you have to.</h1>
-<p>A frozen drink machine is a physics problem wearing a party hat. Too little sugar and you get a brick. Too much and it never freezes at all. So we measure things, write them down, and keep the results &mdash; including the ones that went wrong.</p>
+<h1>We keep testing this stuff until it works.</h1>
+<p>We thought you just poured syrup in and it turned into a slushie. It does not. Put in too little sugar and you get a big lump of ice that the machine cannot even turn. Put in too much and it stays a puddle. So now we measure everything, write it down, and keep it &mdash; even the times we got it completely wrong. Especially those, actually.</p>
 <a href="/book" class="btn">Check your date</a>
 </div>
 </section>
 
-<div class="marquee"><div class="marquee-inner">MEASURED, NOT GUESSED &middot; BRIX &middot; FREEZING POINT &middot; REAL FRUIT COLOUR &middot; THE TESTS THAT FAILED &middot; MEASURED, NOT GUESSED &middot; BRIX &middot; FREEZING POINT &middot; REAL FRUIT COLOUR &middot; THE TESTS THAT FAILED &middot; </div></div>
+<div class="marquee"><div class="marquee-inner">WE MEASURE IT, WE DO NOT GUESS &middot; SUGAR IS THE ANTIFREEZE &middot; COLOUR FROM REAL PLANTS &middot; THE TESTS THAT FAILED &middot; WE MEASURE IT, WE DO NOT GUESS &middot; SUGAR IS THE ANTIFREEZE &middot; COLOUR FROM REAL PLANTS &middot; THE TESTS THAT FAILED &middot; </div></div>
 
 <section>
 <div class="contain">
-<h2>The one thing that decides everything</h2>
-<p class="lead">Sugar is not just the sweetener in a slushie. <b>It is the antifreeze.</b> Dissolved sugar lowers the temperature at which water freezes, which is the only reason a slush is slushy instead of solid. Take the sugar out and you do not get a healthier drink &mdash; you get an ice cube.</p>
+<h2>Sugar is not there to make it sweet</h2>
+<p class="lead">Well &mdash; it is. But that is not its main job. <b>Sugar is what stops the drink freezing solid.</b> Plain water turns into a rock at 32&deg;F. Stir enough sugar into it and it will not freeze until it gets colder than that, so instead of a rock you get a slush.</p>
+<p class="lead" style="margin-top:-18px;">Which means the &ldquo;healthy&rdquo; version of a slushie with the sugar taken out is not a healthy slushie. It is an ice cube. We know because we made one.</p>
 
 <div class="tool">
 <h3>Try it: the freeze test</h3>
-<p class="why">Brix is just a number for how much sugar is dissolved in a liquid. Drag it and watch what the machine would do.</p>
+<p class="why">Slide it and see what our machine would do. The number is called <b>Brix</b>, which is just a fancy word for how much sugar is in there. 15 means 15 out of every 100 bits of the drink are sugar.</p>
 <div class="field">
 <label for="bx">Sugar level &mdash; degrees Brix</label>
 <input type="range" id="bx" min="6" max="22" step="0.5" value="15" aria-describedby="bxOut">
@@ -274,13 +275,13 @@ footer a{color:var(--ice);}
 <p class="verdict" id="bxV">Smooth slush. This is what we aim for.</p>
 <p class="detail" id="bxD">The machine turns easily, the drink pours, and it holds its texture for the whole party.</p>
 </div>
-<p class="note">Our machine's manual asks for 13&ndash;17% sugar and recommends 15%. We check every batch with a refractometer &mdash; a little glass tool you hold up to the light &mdash; before it goes in the van.</p>
+<p class="note">The book that came with our machine says use between 13 and 17, and that 15 is best. We check every batch before it goes in the van with a little glass thing you hold up to the light called a refractometer. One drop on it, look through, and it tells you the number.</p>
 </div>
 
 <div class="tool">
 <h3>Try it: the mix calculator</h3>
-<p class="why">This is the actual arithmetic we do before every party. Change the numbers and see what happens.</p>
-<p class="why" style="background:var(--blush);border-radius:10px;padding:12px 14px;"><b>Honest note.</b> The third box is the one we have not measured yet. Syrups differ, and the only way to know ours is to check it with a refractometer &mdash; which is literally the first experiment on our list. The number in there now is an estimate that makes our normal 5-to-1 mix land where the machine is happy. When we measure it for real, we will change it here.</p>
+<p class="why">This is the actual maths we do before every party. Change the numbers and watch what happens.</p>
+<p class="why" style="background:var(--blush);border-radius:10px;padding:12px 14px;"><b>Be careful with the third box.</b> That is the one we have never actually measured. Different syrups are different, and the only way to know ours is to test it &mdash; which is the very first thing on our list. The number sitting in there is a guess that makes our normal mix come out about right. When we measure it properly we will come back and fix it.</p>
 <div class="field">
 <label for="tank">Tank size (gallons, one side)</label>
 <input type="number" id="tank" value="3" min="0.5" max="6" step="0.5">
@@ -315,11 +316,11 @@ footer a{color:var(--ice);}
 <section class="bg-blush">
 <div class="contain">
 <h2>Will one machine be enough?</h2>
-<p class="lead">The question we get asked more than any other, and the one nobody will give you a straight answer to because a straight answer sometimes loses them a booking. Here is ours, with the arithmetic showing.</p>
+<p class="lead">People ask us this more than anything else. A lot of rental companies go vague on it, because saying &ldquo;yes, one is plenty&rdquo; means they sell you one thing instead of two. Here is our answer with the maths showing, so you can check it yourself.</p>
 
 <div class="tool">
 <h3>Try it: the cups calculator</h3>
-<p class="why">Two tanks, about three gallons each. A twelve-ounce cup is 12 fluid ounces and a gallon is 128, so one full tank is around 32 cups &mdash; call it 30 once you account for what stays stuck to the sides.</p>
+<p class="why">Our machine has two tanks and each one holds about three gallons. A gallon is 128 ounces and a cup is 12, so one full tank is about 32 cups. We say 30, because some of it always sticks to the sides and never comes out.</p>
 <div class="field">
 <label for="guests">How many people are coming</label>
 <input type="number" id="guests" value="30" min="4" max="200" step="1">
@@ -358,7 +359,7 @@ footer a{color:var(--ice);}
 
 <div class="tool">
 <h3>Sort this table two ways</h3>
-<p class="why">Tap <b>Freezing power</b>, then tap <b>Sweetness</b>. The order changes completely &mdash; and that is the whole point. Sugar is the reference at 100.</p>
+<p class="why">Tap <b>Freezing power</b>. Then tap <b>Sweetness</b>. The order jumps around completely, and that is the whole point &mdash; how sweet something tastes has almost nothing to do with how much it stops things freezing. Sugar is 100 in both columns, and everything else is compared to it.</p>
 <div class="tw">
 <table class="sci-table" id="pac">
 <thead><tr>
@@ -377,31 +378,54 @@ footer a{color:var(--ice);}
 </tbody>
 </table>
 </div>
-<p class="note">Read it sideways. <b>Salt has no sweetness at all and nearly six times sugar's freezing power.</b> Sucralose is hundreds of times sweeter than sugar and does almost nothing to the freezing point &mdash; which is exactly why a drink sweetened only with it would taste sweet and freeze into a brick. That is a real prediction, and we are going to film it failing.</p>
+<p class="note">Look at the two weird ones. <b>Salt is not sweet at all, and it is nearly six times better than sugar at stopping things freezing</b> &mdash; that is why people put salt on icy roads. And sucralose, the sweetener in diet drinks, is <i>hundreds</i> of times sweeter than sugar but does basically nothing to the freezing.</p>
+<p class="note" style="margin-top:8px;">So a slushie sweetened only with sucralose would taste sweet and then freeze into a solid brick. We have not tried it yet. We think we know exactly what will happen, and we are going to film it happening.</p>
 </div>
 </div>
 </section>
 
 <section>
 <div class="contain">
-<h2>Colour without dye</h2>
-<p class="lead">A lot of parents would rather skip Red 40 and Blue 1. The honest answer is that natural colour is harder, not impossible &mdash; and which plant you pick depends on how sour the drink is.</p>
+<h2>Making colours without dye</h2>
+<p class="lead">Lots of parents would rather their kid did not drink Red 40 or Blue 1. Fair enough. You can get colour out of actual plants instead &mdash; it is just harder, and some plants are much better at it than others. Here is what we have found out so far.</p>
 <div class="three-up">
-<div><h3>Sour drinks like anthocyanins</h3><p>Hibiscus, black carrot and purple sweet potato hold their colour in an acidic drink. Slush is acidic, so these are the right family.</p></div>
-<div><h3>Beetroot is the wrong one</h3><p>It wants a much less sour drink and it fades in sunlight. It looks perfect in the jug and disappointing an hour into a party in the sun.</p></div>
-<div><h3>Cold helps a lot</h3><p>Natural colour lasts almost twice as well cold as it does warm. A frozen tank is a good place for it. A sunny table is not.</p></div>
+<div><h3>Sour drinks need tough colours</h3><p>Hibiscus flowers, black carrots and purple sweet potatoes keep their colour even in a really sour drink. Slushies are sour, so these are the ones that work.</p></div>
+<div><h3>Beetroot lets you down</h3><p>It looks amazing in the jug. Then it fades in the sun and goes a sad brownish colour about an hour into the party. We would rather tell you that than find out at yours.</p></div>
+<div><h3>Cold makes colours last</h3><p>Plant colours last about twice as long cold as they do warm. Good news: a frozen tank is cold. Bad news: a cup sitting on a sunny table is not.</p></div>
 </div>
 <div class="byo" style="margin-top:26px;">
-<h3>The hard one: blue raspberry</h3>
-<p>Blue raspberry is a <i>flavour</i>, not a fruit &mdash; there is nothing naturally blue to make it from. The one real answer is butterfly pea flower, which steeps deep blue and then turns pink-purple the moment you add lemon. In the cup. In front of whoever is holding it. We are testing it.</p>
+<h3>The really hard one: blue raspberry</h3>
+<p>Here is a thing we did not know. <b>Blue raspberry is not a fruit.</b> Somebody made it up. There is no blue raspberry growing anywhere, so there is nothing blue to squeeze.</p>
+<p style="margin-top:8px;">The only real answer we have found is a flower called butterfly pea. You soak it and the water goes deep blue &mdash; and then if you add lemon it turns pink and purple <i>right in the cup, while you are holding it</i>. We are testing it. If it works it is going to be the best thing at the party.</p>
 </div>
 </div>
 </section>
 
 <section class="bg-blush">
 <div class="contain">
+<h2>Things we got wrong</h2>
+<p class="lead">These stay up. If we only showed you the parts that worked, this would not be a lab, it would be an advert.</p>
+<div class="byo" style="margin-bottom:18px;">
+<h3>We guessed instead of measuring, and the calculator called us liars</h3>
+<p>The mix calculator further up this page used to have the syrup number built in, so you could not see it or change it. We had guessed that number. It was wrong &mdash; so the calculator confidently told people that our normal recipe, the one we have made dozens of times and which works fine, would come out as a solid block of ice.</p>
+<p style="margin-top:8px;">It sat there like that for a week. Now the number is a box you can see and change, with a note saying we have not measured ours yet. <b>The lesson: a guess hidden inside a machine still looks like a fact.</b></p>
+</div>
+<div class="byo" style="margin-bottom:18px;">
+<h3>We said a video did well, from a screenshot</h3>
+<p>We were looking at another kid&rsquo;s business account to learn from it, and we said one type of their video was their best kind. We were going off a screenshot, not the numbers.</p>
+<p style="margin-top:8px;">Then we actually counted the views. That kind of video was one of their <i>worst</i> &mdash; about 3,900 views, when their best one had over a million. We had it backwards by about three hundred times. <b>The lesson: looking at something is not the same as counting it.</b></p>
+</div>
+<div class="byo">
+<h3>We made a slushie with no sugar in it</h3>
+<p>It froze into a lump the machine could not turn. We could hear the motor straining. That is the whole reason there is a freeze test at the top of this page &mdash; so nobody else has to learn it the way we did, with the noise.</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="contain">
 <h2>What we are testing next</h2>
-<p class="lead">Written down before we know the answer, which is the only honest way to do it.</p>
+<p class="lead">We write these down <i>before</i> we know the answers. That is the only way it counts &mdash; otherwise you just quietly forget the tests that did not go your way.</p>
 <div class="rows" style="gap:0;">
 <div class="r"><span>How low the sugar can go before the machine gives up</span><span>Running</span></div>
 <div class="r"><span>Whether agave freezes softer than sugar, not harder</span><span>Next</span></div>
@@ -409,15 +433,18 @@ footer a{color:var(--ice);}
 <div class="r"><span>Which natural colour survives four hours on a Texas patio</span><span>Planned</span></div>
 <div class="r"><span>Whether kids can even tell a no-dye version apart</span><span>Planned</span></div>
 <div class="r"><span>How many cups one tank really pours</span><span>Counting</span></div>
+<div class="r"><span>How sweet our own syrup actually is, with the refractometer</span><span>First up</span></div>
+<div class="r"><span>Whether a drink sweetened only with sucralose freezes solid</span><span>Planned</span></div>
+<div class="r"><span>Whether butterfly pea flower really turns pink in the cup</span><span>Planned</span></div>
 </div>
-<p class="note">We will publish the results either way. A test you only report when it works is not a test.</p>
+<p class="note">We will put the answers up either way, even the boring ones and the ones where we were wrong. A test you only tell people about when it works is not a test.</p>
 </div>
 </section>
 
 <section>
 <div class="contain" style="text-align:center;">
 <h2>Want the machine at your party?</h2>
-<p class="lead">Same science, same machine, and a candy on the rim of every cup.</p>
+<p class="lead">Same machine, same measuring, and a candy on the rim of every cup.</p>
 <a href="/book" class="btn">Check your date</a>
 </div>
 </section>

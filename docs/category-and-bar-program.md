@@ -152,14 +152,29 @@ by party twenty, it goes.
 
 ### The published standard
 
-Nine items, weighted toward **cost-to-imitate** — the point of publishing is
-that a competitor reading it either has to do the work or visibly not do it.
-Anything on the list that a rival can match with a sentence on their website
-is worth nothing.
+The report recommended nine items, weighted toward **cost-to-imitate** — the
+point of publishing is that a competitor reading it either has to do the work
+or visibly not do it. Anything a rival can match with a sentence on their
+website is worth nothing.
 
-The strongest items are the ones that cost something real: a measured Brix
-per recipe, a named machine temperature, a dye-free option, an ingredient
-list published in full.
+**Seven shipped. Two were cut after Mark read them**, and the cuts are more
+instructive than the list:
+
+- **"Half the machine is always for kids" is a bad business rule.** It sounds
+  generous and it commits us to wasting a tank at every adult-only party —
+  which is the *entire* winter cold-drink market this business is also chasing.
+  Rewritten as what was actually meant: the kids' option is always available
+  and never costs extra. That is keepable and it is still something no
+  competitor offers.
+- **"Every kids' flavor has a no-dye version" was not true yet.** Publishing an
+  aspiration in the present tense on a page whose whole premise is *you can
+  check these* would have made the page the thing it argues against. It lives
+  on `/fresh-press` as work in progress instead.
+
+Both failures are the same failure: a rule that costs nothing because you
+cannot actually be caught breaking it. The count going 9 → 7 is on the page
+itself, with the reasoning, because a standard that quietly shrinks is worse
+than one that explains why.
 
 ### One legal correction
 
@@ -219,7 +234,7 @@ drink is good.
 **To flip it live:** delete the status block, change one button. The page is
 already written as a product page.
 
-### Nine rules published at `/our-rules`
+### Seven rules published at `/our-rules`
 
 Each carries a visible **"costs us:"** line — half the machine at every party,
 an hour of every Sunday, the money everybody else makes on a heatwave. That

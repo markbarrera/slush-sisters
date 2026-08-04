@@ -730,7 +730,7 @@ const PAGES = [
      `The idea was one machine, one price, and nobody at your party stuck drinking something they did not want. It is a true sentence. It is also four words that need a whole other sentence to explain them, which is how you can tell it was a slogan pretending to be a name. Dad binned it the day it was written and that was the right call.`],
 
     ['plain', 'Kept: “the kids’ tank”',
-     `This one is on the website now — on the flavors page, on the pricing page, and it is rule number one of the nine. Short, you can picture it, and it explains itself with no help at all. Notice that nobody had to tell you what it meant.`],
+     `This one is on the website now — on the flavors page, on the pricing page, and it is rule number one of the seven. Short, you can picture it, and it explains itself with no help at all. Notice that nobody had to tell you what it meant.`],
 
     ['plain', 'The rule that protects the money',
      `Six of our pages exist only to be found by people typing "margarita machine rental" into Google — about 900 people a month. <b>Those pages never change.</b> A new name goes on the front page and the pages people read once they have already found us. Swap the words on the Google pages and we lose the 900 and gain a phrase nobody is searching for.`],
@@ -744,7 +744,7 @@ const PAGES = [
 {
   name: 'Writing your rules down where everyone can see them',
   colour: '#4fc3f7',
-  blurb: 'Nine rules. The test for whether a rule belongs on the list is unusual.',
+  blurb: 'Seven rules. Nine were written and two got cut, which is the interesting part.',
   cards: [
     ['plain', 'A rule only counts if copying it is hard',
      `Anyone can add a sentence to their website. So a rule like "we care about quality" is worth nothing — a competitor matches it in ten seconds. A rule like "we publish the sugar reading and the machine temperature for every recipe" costs them real work to match, or they visibly do not match it. Every rule on the list has to cost something.`],
@@ -842,7 +842,7 @@ const card = (c) => {
         <span class="demo-btn">Book</span>
       </div>
       <div class="demo-hero">
-        <p class="demo-kicker">Finley, 11 &amp; Harper, 8</p>
+        <p class="demo-kicker">Harper, 11 &amp; Finley, 8</p>
         <p class="demo-h1">Frozen drinks for your party.</p>
         <p class="demo-body">Two flavors, a candy on every cup, and we come back the next morning.</p>
         <span class="demo-cta">Check your date</span>

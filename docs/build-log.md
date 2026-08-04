@@ -30,7 +30,7 @@ Two audiences, on purpose:
 
 ---
 
-## 2026-08-04 — A second product, nine rules, and a name that died in four hours
+## 2026-08-04 — A second product, seven rules, and a name that died in four hours
 
 Mark's instruction was blunt and useful: *"you don't need my answer to just
 build. I can walk you back later if needed."* So every open decision got made
@@ -59,17 +59,64 @@ That was a real choice, not a hedge. A page that says *we are checking this
 before we sell it to you* argues the standard better than a page claiming the
 drink is good.
 
-**`/our-rules` publishes nine rules, each with a visible "costs us:" line** —
-half the machine at every party, an hour of every Sunday, the money everybody
-else makes on a heatwave. That line is the entire mechanism. A rule a
+**`/our-rules` publishes seven rules, each with a visible "costs us:" line** —
+a second mix made for no extra money, an hour of every Sunday, the money
+everybody else makes on a heatwave. That line is the entire mechanism. A rule a
 competitor can match by adding a sentence to their website is worth nothing, so
 the test for the list was *does this cost us something real*, not *does it
 sound good*.
 
-One rule was cut for being illegal rather than weak: a certification badge
-other companies could earn. Under 15 U.S.C. §1064(5) whoever hands out a
+**It was nine, and Mark cut two.** The first said half the machine is always
+reserved for kids — which sounds generous and is a bad way to run a business,
+because plenty of parties are all adults and promising to waste a tank at those
+serves nobody. Rewritten as what it actually meant: the kids’ option is always
+there, and it is always free. The second promised a no-dye version of every
+flavor, which is not true yet; publishing it in the present tense would have
+made the page the exact thing it argues against.
+
+Both were the same failure — a rule that costs nothing because you cannot be
+caught breaking it. The page now explains its own 9 → 7 out loud, because a
+standard that quietly shrinks is worse than one that says why.
+
+A third was cut earlier for being illegal rather than weak: a certification
+badge other companies could earn. Under 15 U.S.C. §1064(5) whoever hands out a
 certification mark may not sell the thing it certifies — Slush Sisters would
 have had to stop renting machines to hand out margarita badges.
+
+### Later the same day — Mark reviewed it
+
+Three things came back, and all three were right.
+
+**The girls' ages were published backwards on every page.** Harper is 11 and
+Finley is 8; the site said the reverse — in the homepage kicker, the FAQ on
+`/austin`, all six service-area pages, `/promise`, `/our-rules`, and the
+reading room. Fixed in sixteen files, and the correct pairing is now written
+into `CLAUDE.md` so the next session cannot get it wrong from a summary.
+
+Worth naming plainly: of everything built in this session, the detail that was
+wrong the longest was the one fact about the two people who own the company.
+
+**`/lab` was written for an adult.** "A frozen drink machine is a physics
+problem wearing a party hat" is a good sentence and it is not one an
+eleven-year-old wrote. Rewritten throughout: Brix explained as *how much sugar
+is in there*, the refractometer as *a little glass thing you hold up to the
+light*, anthocyanins gone entirely, and blue raspberry now leads with the
+genuinely surprising bit — that it is not a fruit and somebody made it up.
+
+It was also thin where it mattered. `/our-rules` claimed mistakes get written
+down in the Lab, and the Lab had no mistakes on it — so the rule was
+technically a lie the moment it was published. There is now a **Things we got
+wrong** section with three real ones, including the calculator that told people
+their working recipe made a block of ice, and the view-count error from earlier
+in this same log.
+
+**The homepage felt forced**, and it did. The hero had a competitive claim
+bolded inside the girls' own first-person voice — *"Every other rental in
+Austin only serves half your party"* — which is a marketing line in a child's
+mouth. The three doors carried eyebrows nobody says out loud ("I am planning
+something for adults"). Both rewritten shorter and plainer; the competitive
+point still exists on `/flavors` and `/pricing`, where a grown-up is doing the
+talking.
 
 ### What was got wrong
 

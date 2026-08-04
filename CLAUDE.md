@@ -1,7 +1,8 @@
 # Slush Sisters
 
 The site for slushsisters.com — frozen drink machine rentals in Lakeway, Bee
-Cave, and Lake Travis, TX. Run by two sisters, ages 8 and 11. Registered as
+Cave, and Lake Travis, TX. Run by two sisters: **Harper is 11, Finley is 8** — get this the right way round, it was
+published backwards across the whole site once. Registered as
 Slush Sisters LLC. $250 per rental, delivery and pickup included.
 
 ## Stack
@@ -126,7 +127,7 @@ submitting anything anywhere.
 ## Who you are talking to
 
 Mark owns this repo but is not a web developer, and the business is run by his
-two daughters, ages 8 and 11. Any of the three may be the one asking.
+two daughters, Harper (11) and Finley (8). Any of the three may be the one asking.
 
 Explain things accordingly, every time — this is a standing instruction, not a
 one-off request:

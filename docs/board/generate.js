@@ -88,7 +88,7 @@ const IDEAS = [
   ['big','Kids Review Ads','Rate real billboards and adverts out of ten. Nothing to do with slushies. That is the point.','free','easy'],
   ['big','The Realtor Circuit','Frozen drinks at open houses on weekday afternoons. Dead time turned into money.','free','medium'],
   ['big','Hottest day of the year','When it hits 105°, give cups away somewhere public. Tell the news that morning.','cheap','medium'],
-  ['big','Now Hiring: Driver','Post a real job advert for Dad’s job. Reports to Finley, age 10. Interview people on camera.','free','easy'],
+  ['big','Now Hiring: Driver','Post a real job advert for Dad’s job. Reports to Harper, age 11. Interview people on camera.','free','easy'],
   ['big','The Rejection Wall','A public list of every no. Dated, unedited. Never name a customer.','free','easy'],
   ['big','Interview the old guy','Find the man who has rented margarita machines for twenty years. Ask him everything.','free','medium'],
   ['big','The Party Report Card','You grade the party. Crowd energy, best costume, did anyone say thank you.','free','easy'],

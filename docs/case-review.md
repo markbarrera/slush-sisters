@@ -933,7 +933,7 @@ By month 36 the audience will have said which of these it pulls on. Pick
 
 | Outcome over ten years | Probability |
 |---|---|
-| Quietly winds down when Finley is 14–16 | **40–50%** |
+| Quietly winds down when Harper is 14–16 | **40–50%** |
 | A real $150–250K/year family business, regional brand, transformative on a college application | **25–40%** |
 | $500K–$1M+, multiple markets or a product line, a genuine small company | **8–15%** |
 | Mikaila Ulmer tier — national brand, book, speaking, retail distribution | **2–4%** |
