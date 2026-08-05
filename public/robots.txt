@@ -11,6 +11,11 @@
 
 User-agent: *
 Allow: /
+# Content signals — how AI systems may use this content. Consistent with the
+# deliberate allow-everything stance above: this is public marketing copy for a
+# business that wants to be found and cited. Change ai-train to "no" to opt the
+# content out of model training while still allowing AI search and answers.
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 # Named explicitly so a future blanket block does not quietly cut them off.
 # Search

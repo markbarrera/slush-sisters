@@ -171,7 +171,9 @@ ${cards.map(([o, i]) => card(o, i)).join('\n')}
 </section>`;
 }).join('\n\n');
 
-const NOINDEX = process.argv[3] === '--noindex';
+// The idea board is for Harper and Finley, not the public, so it is noindex by
+// default. Pass --index only if it should ever be made publicly indexable.
+const NOINDEX = process.argv[3] !== '--index';
 
 const html = `${NOINDEX ? `<!DOCTYPE html>
 <html lang="en">

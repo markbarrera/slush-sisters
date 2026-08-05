@@ -36,10 +36,10 @@
   - We never call identify(); no one logs in, so no personal profiles are built.
   - "Do Not Track" is honored.
 
-  TO ACTIVATE: replace __POSTHOG_PROJECT_KEY__ below with the Slush Sisters
-  PostHog project key (starts with "phc_"). That key is public by design — it
-  ships in the page source of every PostHog site — so it is safe to commit.
-  Until it is filled in, this file does nothing.
+  The POSTHOG_KEY below is the Slush Sisters project key (set 2026-08-05). It is
+  public by design — it ships in the page source of every PostHog site — so it is
+  safe to commit. To PAUSE all tracking, blank it out; the guard below then makes
+  this file do nothing.
 */
 (function () {
   "use strict";
@@ -61,7 +61,7 @@
     if (path === BLOCKED[i] || path === BLOCKED[i] + ".html") return;
   }
 
-  var POSTHOG_KEY = "__POSTHOG_PROJECT_KEY__";
+  var POSTHOG_KEY = "phc_yN1IDp6NIx4uANHzmtjlrFFbohdZdC8mZIbQ6hnKWZH";
   var POSTHOG_HOST = "https://us.i.posthog.com";
 
   // Not filled in yet (or blanked out to pause tracking) — do nothing.
