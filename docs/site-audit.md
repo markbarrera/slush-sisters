@@ -6,10 +6,16 @@ Findings from the live site at the time it was recovered into this repo.
 this branch and ship on the next deploy. Item 1 is half-fixed — the form no
 longer lies, but it is not yet delivering anywhere. Items 2, 6, 7 and 9 are open.
 
+**Update 2026-08-05.** Item 1 is now fully wired: the form delivers via a
+Cloudflare Worker that emails each booking to the business inbox
+(`docs/booking-worker.md`). Item 2 is largely addressed — Cloudflare Email
+Routing is set up, so `hello@slushsisters.com` in the footer now reaches a real
+inbox; the correct social handles are still outstanding.
+
 | # | Finding | Status |
 | --- | --- | --- |
-| 1 | Booking form submits nowhere | Form rewritten; no longer shows false success. Needs a destination — see `docs/booking-form.md` |
-| 2 | No way to contact the business | **Open** — needs a real phone/email and the correct social handles |
+| 1 | Booking form submits nowhere | **Fixed** — Worker emails each booking to the inbox. See `docs/booking-worker.md` |
+| 2 | No way to contact the business | **Mostly fixed** — email works via Email Routing; social handles still open |
 | 3 | Broken hero image | Fixed — `public/img/hero.svg` |
 | 4 | Unknown URLs return homepage with 200 | Fixed — `not_found_handling: 404-page` |
 | 5 | No robots.txt or sitemap.xml | Fixed — both added, robots explicitly allows all crawlers |

@@ -7,14 +7,38 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "drop-b4ff8c50-e5c",
   "compatibility_date": "2026-08-01",
+  // The booking endpoint. src/index.js runs ONLY for the paths listed in
+  // run_worker_first below (/api/*); every other request is served straight
+  // from public/ as before, so the static site is untouched. See
+  // docs/booking-worker.md.
+  "main": "src/index.js",
   "assets": {
     "directory": "./public",
+    // Lets src/index.js hand a request back to the static site if one ever
+    // reaches the Worker that is not a /api/* path.
+    "binding": "ASSETS",
     // Serves /about for public/about.html and 307s /about.html -> /about.
     // This matches what production does today.
     "html_handling": "auto-trailing-slash",
     // Production currently returns index.html with a 200 for every unknown
     // path, which makes typos and dead links look like real pages to Google.
     // "404-page" serves public/404.html with a real 404 status instead.
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+    // Only /api/* invokes the Worker; everything else is served as a static
+    // asset without running any code. This keeps the 404 handling above intact
+    // for real pages and sends only the booking POST to src/index.js.
+    "run_worker_first": ["/api/*"]
+  },
+  // Lets the Worker email booking requests to the business inbox through
+  // Cloudflare Email Routing. destination_address locks it to exactly one
+  // verified address — the Worker cannot email anywhere else. This inbox must
+  // be verified in Email Routing before a deploy will succeed; the deploy fails
+  // loudly (it does not silently misconfigure) if it is not. See
+  // docs/booking-worker.md.
+  "send_email": [
+    {
+      "name": "BOOKING_EMAIL",
+      "destination_address": "mark@markbarrera.com"
+    }
+  ]
 }
