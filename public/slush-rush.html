@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Slush Rush — a Slush Sisters game</title>
+<style>
+/* ---------------------------------------------------------------------------
+   SLUSH RUSH — first playable.
+   Orphaned on purpose: noindex, not in the nav, footer, sitemap or snapshot
+   set. No analytics, no cookies, nothing collected — so a game a kid plays is
+   just a page, which keeps it on the safe side of COPPA. The only thing stored
+   is the high score, in the browser, on the device.
+   All DOM + CSS + requestAnimationFrame — no canvas, no libraries, no images.
+   Every touch target is big because it is for a thumb on an iPad.
+--------------------------------------------------------------------------- */
+:root{
+  --brand:#1a237e; --ice:#4fc3f7; --ice-deep:#29b6f6; --wash:#e8f4fd;
+  --pop:#ff4081; --ink-pink:#c2185b; --good:#2e7d32; --bad:#c62828;
+  --watermelon:#ff5c72; --strawberry:#ff8fa0; --blue:#3fb9ef;
+  --mango:#ffc23d; --lime:#7ec97e; --pina:#ffcf6b;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;
+  background:linear-gradient(180deg,#dff1fb 0%,#e8f4fd 60%,#fff5f7 100%);
+  color:var(--brand);user-select:none;-webkit-user-select:none;
+  display:flex;flex-direction:column;align-items:center;
+  touch-action:manipulation;}
+.stage{width:100%;max-width:460px;height:100%;max-height:900px;
+  display:flex;flex-direction:column;position:relative;padding:0 14px;}
+
+/* TOP BAR — score, lives, round timer */
+.bar{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 4px 6px;font-weight:800;}
+.bar .wm{font-size:1.05rem;letter-spacing:.3px;}
+.bar .wm span{color:var(--ice-deep);}
+.bar .stat{font-size:.95rem;font-variant-numeric:tabular-nums;}
+.lives{font-size:1.05rem;letter-spacing:1px;}
+.timer{height:7px;border-radius:99px;background:#cfe6f5;overflow:hidden;margin:2px 4px 0;}
+.timer i{display:block;height:100%;width:100%;background:var(--ice-deep);
+  border-radius:99px;transform-origin:left;}
+.timer.low i{background:var(--pop);}
+
+/* ORDER — the customer and what they want */
+.order{background:#fff;border-radius:20px;padding:14px 16px;margin-top:8px;
+  box-shadow:0 6px 18px rgba(26,35,126,.10);display:flex;align-items:center;gap:14px;
+  min-height:92px;}
+.face{font-size:3rem;line-height:1;transition:transform .15s;}
+.face.happy{animation:pop .4s;}
+.face.sad{animation:shake .4s;}
+.want{flex:1;}
+.want .lbl{font-size:.72rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--ink-pink);opacity:.85;}
+.want .row{display:flex;align-items:center;gap:8px;margin-top:3px;flex-wrap:wrap;}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--wash);
+  border-radius:99px;padding:5px 11px;font-weight:800;font-size:.92rem;}
+.chip .dot{width:14px;height:14px;border-radius:50%;}
+
+/* THE CUP being built */
+.build{flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-end;padding-bottom:6px;position:relative;}
+.cup{position:relative;width:132px;height:168px;margin-bottom:8px;
+  transition:transform .12s;}
+.cup.squish{animation:squish .32s;}
+.cup .glass{position:absolute;inset:0;border:4px solid #bcd6e8;border-top:none;
+  border-radius:10px 10px 22px 22px / 8px 8px 30px 30px;background:rgba(255,255,255,.45);
+  overflow:hidden;}
+.cup .fill{position:absolute;left:0;right:0;bottom:0;height:0%;
+  background:var(--ice);transition:none;}
+.cup .fill::after{content:"";position:absolute;top:-6px;left:0;right:0;height:12px;
+  background:inherit;border-radius:50%;filter:brightness(1.08);}
+.cup .band{position:absolute;left:-4px;right:-4px;height:24px;bottom:56%;
+  border-top:2px dashed rgba(46,125,50,.55);border-bottom:2px dashed rgba(46,125,50,.55);
+  background:rgba(46,125,50,.08);pointer-events:none;}
+.cup .candy{position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  font-size:1.7rem;opacity:0;}
+.cup .candy.on{animation:drop .45s forwards;}
+.cup .straw{position:absolute;top:-30px;left:64%;width:7px;height:52px;
+  background:var(--pop);border-radius:4px;transform:rotate(12deg);}
+
+/* CONTROLS */
+.controls{display:flex;flex-direction:column;gap:9px;padding:4px 0 14px;}
+.tanks{display:flex;gap:9px;}
+.tank{flex:1;border:none;border-radius:16px;padding:15px 8px;font-family:inherit;
+  font-weight:800;font-size:1rem;color:#fff;cursor:pointer;position:relative;
+  box-shadow:0 5px 0 rgba(0,0,0,.14);transition:transform .06s,box-shadow .06s;
+  display:flex;flex-direction:column;align-items:center;gap:5px;min-height:62px;}
+.tank:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.14);}
+.tank .em{font-size:1.5rem;}
+.tank[disabled]{opacity:.4;}
+.candies{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.cbtn{border:none;background:#fff;border-radius:14px;padding:12px 4px;font-size:1.7rem;
+  cursor:pointer;box-shadow:0 4px 0 rgba(26,35,126,.12);transition:transform .06s,box-shadow .06s;}
+.cbtn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(26,35,126,.12);}
+.cbtn[disabled]{opacity:.35;}
+.big{border:none;border-radius:16px;padding:16px;font-family:inherit;font-weight:800;
+  font-size:1.15rem;color:#fff;background:var(--ice-deep);cursor:pointer;
+  box-shadow:0 5px 0 rgba(0,0,0,.16);transition:transform .06s,box-shadow .06s;}
+.big:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.16);}
+.big.stop{background:var(--pop);}
+.big.serve{background:var(--good);}
+.big[disabled]{opacity:.4;background:#9fb0c4;box-shadow:0 5px 0 rgba(0,0,0,.1);}
+.hint{text-align:center;font-size:.82rem;font-weight:700;color:var(--ink-pink);
+  min-height:20px;}
+
+/* SCREENS — start & game over sit on top */
+.screen{position:absolute;inset:0;background:linear-gradient(180deg,#eaf5fd,#fff5f7);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:28px;z-index:20;gap:8px;}
+.screen.hide{display:none;}
+.screen h1{font-size:2.7rem;font-weight:800;line-height:1;color:var(--brand);}
+.screen h1 span{color:var(--ice-deep);}
+.screen .sub{font-size:1rem;font-weight:600;color:var(--ink-pink);margin-bottom:6px;max-width:300px;}
+.screen .em{font-size:3.4rem;margin-bottom:4px;}
+.screen .final{font-size:1.05rem;font-weight:700;color:var(--brand);margin:2px 0;}
+.screen .best{font-size:.9rem;color:#6a7690;font-weight:700;}
+.screen .go{border:none;border-radius:99px;padding:16px 38px;font-family:inherit;
+  font-weight:800;font-size:1.2rem;color:#fff;background:var(--good);cursor:pointer;
+  box-shadow:0 6px 0 #1b5e20;margin-top:12px;}
+.screen .go:active{transform:translateY(3px);box-shadow:0 3px 0 #1b5e20;}
+.screen .rules{font-size:.84rem;color:#5a6580;font-weight:600;line-height:1.5;max-width:290px;}
+.screen .foot{position:absolute;bottom:16px;font-size:.72rem;color:#8a95ad;font-weight:600;}
+.screen .foot a{color:var(--ice-deep);}
+.float{animation:float 2.6s ease-in-out infinite;}
+
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.28) rotate(-4deg)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+@keyframes squish{0%{transform:scale(1,1)}30%{transform:scale(1.16,.84)}60%{transform:scale(.92,1.1)}100%{transform:scale(1,1)}}
+@keyframes drop{0%{opacity:0;top:-52px;transform:translateX(-50%) scale(.4)}
+  70%{opacity:1;top:-8px;transform:translateX(-50%) scale(1.25)}
+  100%{opacity:1;top:-14px;transform:translateX(-50%) scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+@media(min-height:760px){ .cup{width:150px;height:190px;} }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="stage">
+
+  <div class="bar">
+    <div class="wm">Slush<span> Rush</span></div>
+    <div class="stat">Score <b id="score">0</b></div>
+    <div class="lives" id="lives">❤️❤️❤️</div>
+  </div>
+  <div class="timer" id="timerWrap"><i id="timer"></i></div>
+
+  <div class="order">
+    <div class="face" id="face">🙂</div>
+    <div class="want">
+      <div class="lbl">Order</div>
+      <div class="row" id="wantRow"></div>
+    </div>
+  </div>
+
+  <div class="build">
+    <div class="cup" id="cup">
+      <div class="straw"></div>
+      <div class="candy" id="candy"></div>
+      <div class="glass">
+        <div class="band"></div>
+        <div class="fill" id="fill"></div>
+      </div>
+    </div>
+    <div class="hint" id="hint">Tap the flavor they asked for</div>
+  </div>
+
+  <div class="controls">
+    <div class="tanks" id="tanks"></div>
+    <button class="big stop" id="stopBtn" disabled>Fill first ↑</button>
+    <div class="candies" id="candies"></div>
+    <button class="big serve" id="serveBtn" disabled>Serve 🥤</button>
+  </div>
+
+  <!-- START -->
+  <div class="screen" id="startScreen">
+    <div class="em float">🥤</div>
+    <h1>Slush<span> Rush</span></h1>
+    <p class="sub">Two sisters, one machine, a party that will not slow down.</p>
+    <p class="rules">Read the order. Tap the right flavor and stop the pour in the green line. Add the candy they wanted. Serve before the timer runs out. Miss and you lose a heart.</p>
+    <button class="go" id="startBtn">Start the party</button>
+    <div class="foot"><a href="/play">‹ Arcade</a> · a <a href="/">Slush Sisters</a> game · made by Harper &amp; Finley</div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div class="screen hide" id="overScreen">
+    <div class="em" id="overEm">😅</div>
+    <h1 id="overTitle">Party over!</h1>
+    <p class="final" id="overFinal">You served 0 cups</p>
+    <p class="best" id="overBest">Best: 0</p>
+    <p class="rules" id="overMsg"></p>
+    <button class="go" id="againBtn">Play again</button>
+    <div class="foot"><a href="/play">‹ Arcade</a> · want the real thing? <a href="/book">Book a party</a></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---- content: the real flavors and their candy pairings -----------------
+  var FLAVORS = [
+    {id:'watermelon', name:'Watermelon',  em:'🍉', css:'--watermelon'},
+    {id:'strawberry', name:'Strawberry',  em:'🍓', css:'--strawberry'},
+    {id:'blue',       name:'Blue Rasp',   em:'🫐', css:'--blue'},
+    {id:'mango',      name:'Mango',       em:'🥭', css:'--mango'},
+    {id:'lime',       name:'Lime',        em:'🍈', css:'--lime'},
+    {id:'pina',       name:'Piña Colada', em:'🍍', css:'--pina'}
+  ];
+  var CANDIES = ['🐻','🪱','⭐','🍬','🍭','🌈']; // gummy bear, worm, star, candy, lollipop, rainbow
+
+  var $ = function(id){ return document.getElementById(id); };
+  var cssVar = function(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+
+  // ---- tiny Web Audio blips (no files, so nothing to download) -------------
+  var AC = null;
+  function beep(freq, dur, type){
+    try{
+      if(!AC){ AC = new (window.AudioContext||window.webkitAudioContext)(); }
+      var o = AC.createOscillator(), g = AC.createGain();
+      o.type = type||'sine'; o.frequency.value = freq;
+      g.gain.value = .06; o.connect(g); g.connect(AC.destination);
+      var t = AC.currentTime; o.start(t);
+      g.gain.exponentialRampToValueAtTime(.0001, t + (dur||.12));
+      o.stop(t + (dur||.12));
+    }catch(e){}
+  }
+
+  // ---- state --------------------------------------------------------------
+  var S = {
+    score:0, lives:3, round:0,
+    order:null, tanks:[], picked:null, fillPct:0, rising:false,
+    candyPicked:null, raf:0, timeLeft:0, timeMax:0, timerRaf:0, running:false
+  };
+  var BEST = parseInt(localStorage.getItem('slushrush_best')||'0', 10) || 0;
+
+  // ---- build the two tank buttons for this round --------------------------
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+
+  function newRound(){
+    S.round++;
+    // two different flavors in the tanks this round
+    var two = shuffle(FLAVORS).slice(0,2);
+    S.tanks = two;
+    // the customer wants one of the two tanks + one candy
+    var wantFlav = pick(two);
+    var wantCandy = pick(CANDIES);
+    S.order = {flavor:wantFlav, candy:wantCandy};
+    S.picked = null; S.candyPicked = null; S.fillPct = 0; S.rising = false;
+
+    // render order
+    $('face').className = 'face'; $('face').textContent = pick(['🙂','😄','😃','🥳','😊']);
+    var row = $('wantRow'); row.innerHTML = '';
+    var c1 = document.createElement('span'); c1.className='chip';
+    c1.innerHTML = '<span class="dot" style="background:'+cssVar(wantFlav.css)+'"></span>'+wantFlav.name;
+    var c2 = document.createElement('span'); c2.className='chip'; c2.textContent = wantCandy+' candy';
+    row.appendChild(c1); row.appendChild(c2);
+
+    // render cup
+    $('fill').style.height = '0%';
+    $('candy').className = 'candy'; $('candy').textContent = '';
+
+    // render tanks
+    var tanksEl = $('tanks'); tanksEl.innerHTML = '';
+    two.forEach(function(f){
+      var b = document.createElement('button');
+      b.className = 'tank'; b.style.background = cssVar(f.css);
+      b.innerHTML = '<span class="em">'+f.em+'</span>'+f.name;
+      b.addEventListener('click', function(){ onTank(f, b); });
+      tanksEl.appendChild(b);
+    });
+
+    // render candy tray — the wanted one plus 3 decoys
+    var tray = shuffle([wantCandy].concat(shuffle(CANDIES.filter(function(c){return c!==wantCandy;})).slice(0,3)));
+    var candiesEl = $('candies'); candiesEl.innerHTML = '';
+    tray.forEach(function(c){
+      var b = document.createElement('button');
+      b.className='cbtn'; b.textContent = c;
+      b.addEventListener('click', function(){ onCandy(c, b); });
+      candiesEl.appendChild(b);
+    });
+
+    setHint('Tap the flavor they asked for');
+    $('stopBtn').disabled = true; $('stopBtn').textContent = 'Fill first ↑';
+    $('serveBtn').disabled = true;
+    setTanksDisabled(false); setCandiesDisabled(true);
+
+    // timer: starts at 9s, shrinks toward ~3.5s as rounds climb
+    S.timeMax = Math.max(3.5, 9 - S.round*0.28);
+    S.timeLeft = S.timeMax;
+    runTimer();
+  }
+
+  function setHint(t){ $('hint').textContent = t; }
+  function setTanksDisabled(d){ Array.prototype.forEach.call($('tanks').children,function(b){ b.disabled=d; }); }
+  function setCandiesDisabled(d){ Array.prototype.forEach.call($('candies').children,function(b){ b.disabled=d; }); }
+
+  // ---- filling ------------------------------------------------------------
+  function onTank(f, btn){
+    if(S.picked) return;
+    S.picked = f;
+    $('fill').style.background = cssVar(f.css);
+    setTanksDisabled(true);
+    beep(330,.08,'triangle');
+    // start the fill rising
+    S.rising = true; S.fillPct = 0;
+    var start = null;
+    function step(ts){
+      if(!S.rising) return;
+      if(start===null) start = ts;
+      var dt = (ts-start)/1000; start = ts;
+      S.fillPct += dt*62;            // rise speed (% per second)
+      if(S.fillPct >= 100){ S.fillPct = 100; S.rising = false; lockFill(); }
+      $('fill').style.height = S.fillPct.toFixed(1)+'%';
+      if(S.rising) S.raf = requestAnimationFrame(step);
+    }
+    S.raf = requestAnimationFrame(step);
+    $('stopBtn').disabled = false; $('stopBtn').textContent = 'STOP in the green!';
+    setHint('Stop the pour in the green line');
+  }
+
+  function lockFill(){
+    S.rising = false; cancelAnimationFrame(S.raf);
+    $('stopBtn').disabled = true; $('stopBtn').textContent = 'Filled ✓';
+    // green band sits at 44%–68% of cup height (see .band CSS)
+    var good = S.fillPct >= 44 && S.fillPct <= 68;
+    S.fillGood = good;
+    beep(good?520:200,.1, good?'sine':'sawtooth');
+    setCandiesDisabled(false);
+    setHint(good ? 'Nice pour! Now the candy 🍬' : (S.fillPct>68?'A bit much — add the candy':'A little short — add the candy'));
+  }
+
+  function onCandy(c, btn){
+    if(!S.picked || S.rising) return;      // must have filled first
+    if(S.candyPicked) return;
+    S.candyPicked = c;
+    setCandiesDisabled(true);
+    var el = $('candy'); el.textContent = c; el.className = 'candy on';
+    beep(660,.1,'triangle');
+    $('serveBtn').disabled = false;
+    setHint('Serve it! 🥤');
+  }
+
+  // ---- serving & scoring --------------------------------------------------
+  function serve(){
+    if(!S.picked || !S.candyPicked || S.rising) return;
+    stopTimer();
+    var cup = $('cup'); cup.classList.remove('squish'); void cup.offsetWidth; cup.classList.add('squish');
+
+    var flavorRight = S.picked.id === S.order.flavor.id;
+    var candyRight  = S.candyPicked === S.order.candy;
+    var fillRight   = !!S.fillGood;
+
+    if(flavorRight && candyRight){
+      // right drink. full marks if the pour was clean, half if not.
+      var pts = 100 + S.round*10 + (fillRight?50:0);
+      S.score += pts;
+      happy(fillRight);
+    } else {
+      wrong(flavorRight, candyRight);
+    }
+    $('score').textContent = S.score;
+  }
+
+  function happy(clean){
+    beep(720,.09); setTimeout(function(){beep(910,.12);},90);
+    var f=$('face'); f.className='face happy'; f.textContent = clean?'🥳':'😄';
+    setHint(clean?'Perfect cup! +bonus':'Good — a cleaner pour scores more');
+    setTimeout(newRound, 620);
+  }
+
+  function wrong(flavorRight, candyRight){
+    beep(180,.22,'sawtooth');
+    var f=$('face'); f.className='face sad'; f.textContent='😝';
+    setHint(!flavorRight?'Wrong flavor!':'Wrong candy!');
+    loseLife();
+    if(S.running) setTimeout(newRound, 720);
+  }
+
+  function loseLife(){
+    S.lives--;
+    $('lives').textContent = ['','❤️','❤️❤️','❤️❤️❤️'][Math.max(0,S.lives)] || '';
+    if(S.lives<=0) gameOver();
+  }
+
+  // ---- round timer --------------------------------------------------------
+  function runTimer(){
+    stopTimer();
+    var last = null;
+    function tick(ts){
+      if(!S.running) return;
+      if(last===null) last=ts;
+      var dt=(ts-last)/1000; last=ts;
+      S.timeLeft -= dt;
+      var frac = Math.max(0, S.timeLeft/S.timeMax);
+      $('timer').style.transform = 'scaleX('+frac+')';
+      $('timerWrap').classList.toggle('low', frac < .3);
+      if(S.timeLeft<=0){ timeUp(); return; }
+      S.timerRaf = requestAnimationFrame(tick);
+    }
+    S.timerRaf = requestAnimationFrame(tick);
+  }
+  function stopTimer(){ cancelAnimationFrame(S.timerRaf); }
+  function timeUp(){
+    stopTimer(); S.rising=false; cancelAnimationFrame(S.raf);
+    var f=$('face'); f.className='face sad'; f.textContent='😴';
+    setHint('Too slow! They left.');
+    beep(140,.3,'sawtooth');
+    loseLife();
+    if(S.running) setTimeout(newRound, 720);
+  }
+
+  // ---- start / over -------------------------------------------------------
+  function start(){
+    S.score=0; S.lives=3; S.round=0; S.running=true;
+    $('score').textContent='0'; $('lives').textContent='❤️❤️❤️';
+    $('startScreen').classList.add('hide'); $('overScreen').classList.add('hide');
+    try{ if(AC && AC.state==='suspended') AC.resume(); }catch(e){}
+    newRound();
+  }
+
+  function gameOver(){
+    S.running=false; stopTimer(); cancelAnimationFrame(S.raf);
+    if(S.score>BEST){ BEST=S.score; localStorage.setItem('slushrush_best', String(BEST)); }
+    var cups = Math.max(0, Math.round(S.score/100));
+    $('overFinal').textContent = 'You scored '+S.score;
+    $('overBest').textContent = 'Best ever: '+BEST;
+    var newBest = S.score>=BEST && S.score>0;
+    $('overTitle').textContent = newBest?'New best!':'Party over!';
+    $('overEm').textContent = newBest?'🏆':(S.round>10?'😎':'😅');
+    $('overMsg').textContent = S.round<5
+      ? 'Warm-up round. The orders get faster — go again.'
+      : (S.round<12 ? 'Solid shift. Can you beat it?' : 'You ran that party like a pro.');
+    $('overScreen').classList.remove('hide');
+  }
+
+  // ---- wire buttons -------------------------------------------------------
+  $('startBtn').addEventListener('click', start);
+  $('againBtn').addEventListener('click', start);
+  $('stopBtn').addEventListener('click', function(){ if(S.rising) lockFill(); });
+  $('serveBtn').addEventListener('click', serve);
+
+  // expose a couple of hooks so an automated check can drive a full order
+  window.__slush = { state:S, start:start,
+    tapTank:function(i){ $('tanks').children[i].click(); },
+    tapStop:function(){ $('stopBtn').click(); },
+    tapCandyMatch:function(){
+      var want=S.order.candy;
+      Array.prototype.forEach.call($('candies').children,function(b){ if(b.textContent===want) b.click(); });
+    },
+    serve:function(){ $('serveBtn').click(); } };
+})();
+</script>
+</body>
+</html>

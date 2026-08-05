@@ -162,3 +162,34 @@ running service in Mark's life permanently.
    as a standing rule?
 3. Tier 3 rooms: is "Mark owns a running service" acceptable *in principle*,
    so it can be designed for from the start?
+
+---
+
+## What actually got built (2026-08-05)
+
+Both greenlit and live. The arcade is orphaned as planned (noindex, no nav, no
+analytics, nothing collected).
+
+- **Slush Rush** — the tier-1 solo game above, at **`/slush-rush`**. Shipped.
+- **Slushie Street** — a slushie-stand **tycoon**, at **`/slushie-street`**, added
+  as the deliberately-different second game (slow and building, where Slush Rush
+  is fast and reflex). Mark's call, 2026-08-05: game 2 = tycoon; multiplayer =
+  same-device now.
+  - **1 Player:** tap to serve, seven upgrades (bigger cups → candy-garnish ×2
+    multiplier → cooler/bike/second stand/truck/franchise passive earners),
+    milestones, and **offline earnings** (pays up to 8h of passive income on
+    return). Progress saved to `localStorage` (`slushstreet_save`).
+    Notes on the door for a later pass: numbers aren't deeply balanced yet, and
+    there's no prestige/reset loop — both fine for a first playtest.
+  - **2 Players (tier 2, same iPad):** a 60-second **race**, split screen, the
+    top panel rotated 180° so two kids facing each other across the table both
+    read right-side-up. Each player taps their own stand and buys bigger
+    cups / helpers; most money at zero wins. Rematch button. No backend — this
+    is the "same room" feel with zero infrastructure.
+- **`/play`** became the **arcade hub** pointing at both games (it used to *be*
+  Slush Rush).
+
+**Still not built: tier 3** — friends joining a shared room from different
+houses. That is the "same realm from anywhere" ask, it needs the Durable-Objects
+backend in Part 2, and it stays a **dad decision** (a running service Mark owns,
+plus the hardened no-accounts/no-chat/no-names line) before it's designed in.

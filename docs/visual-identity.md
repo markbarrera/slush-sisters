@@ -124,3 +124,24 @@ Steps 1–3 I can do now. Step 4 is the girls' afternoon.
    agreed?
 4. Green-light me to build the `/fresh-press` hero and a first "Slushie" pass
    for the girls to draw over?
+
+---
+
+## Decided & built (2026-08-05)
+
+Mark's answers: **1 yes, 2 yes, 3 hold off (fruit-and-cup; maybe revisit
+photoreal later), 4 yes.**
+
+- **`public/img/slushie.svg`** — the first "Slushie" pass. Lime-green cup, thick
+  deep-blue outlines, a face, pink straw, lime garnish. A cup, not a child.
+- **`/fresh-press` hero** — the character on a citrus panel with two lime halves
+  and sparkles. The image gap Mark pointed at is filled on that page.
+- Slushie now also appears on the **arcade** (`/play`) and as the tap-target
+  **stand in Slushie Street**.
+- The palette/type/imagery rules moved into **`docs/brand.md`** as the
+  system's single source of truth; `CLAUDE.md` points at both files.
+
+**Still open (steps 3–4 in "What I would build"):** a motif kit for the
+text-heavy pages (`/lab`, `/our-rules`, `/community-events`), and the real-photo
+shot list for the girls' afternoon. And the girls still get to **draw over
+Slushie** — the first pass is deliberately a starting point, not the final mark.
