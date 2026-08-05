@@ -193,6 +193,17 @@ When you add a game: build it, keep it one self-contained file, hold the COPPA
 line above, add a card to `/play`, note it in `docs/game.md`, and run
 `npm run inventory`.
 
+**How the arcade is reached — a standing decision (2026-08-05).** The arcade is
+**deliberately not in the site nav or footer.** Prominently linking games for
+8–12s from every page is a signal a site is "directed to children," which would
+change the whole site's COPPA footing — and the booking form collects a home
+address and phone number, so that footing matters. Instead the arcade is reached
+**adult-mediated**: a link on the booking confirmation (`/book`), and
+**`/party-play`** — a printable table card with a QR to `/play` the girls set
+out at the party. That reaches the right kids through the party, not by
+broadcasting site-wide. Do not add the arcade to the nav, footer or sitemap
+without Mark deciding to accept that tradeoff.
+
 ## Before changing anything
 
 Read `docs/site-audit.md`. Several things that look intentional are broken —
