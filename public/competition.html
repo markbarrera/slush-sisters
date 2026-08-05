@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who else rents these? — Slush Sisters</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A look at the other companies that rent margarita and frozen drink machines near us, and what makes Slush Sisters different.">
+<style>
+:root{
+  --brand:#1a237e; --ice:#4fc3f7; --ice-deep:#29b6f6; --wash:#e8f4fd;
+  --ink-ice:#0165a8; --pop:#ff4081; --ink-pink:#c2185b; --pink-pale:#ffd6e7;
+  --citrus:#2e7d32; --citrus-pale:#eef7ee; --line:#e4ebf2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;line-height:1.6;}
+img{max-width:100%;display:block;}
+a{color:var(--ink-ice);}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px;}
+
+header{background:linear-gradient(180deg,var(--wash),#f4fbff);padding:16px 20px;border-bottom:1px solid var(--line);}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:0;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.2rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
+header a.back{font-size:.85rem;font-weight:600;color:var(--ink-ice);text-decoration:none;}
+
+.hero{background:linear-gradient(180deg,var(--wash),#f4fbff);padding:26px 20px 34px;text-align:center;}
+.hero h1{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(1.7rem,6vw,2.4rem);color:var(--brand);line-height:1.15;margin-bottom:10px;}
+.hero p{max-width:620px;margin:0 auto;color:#444;font-size:1rem;}
+.tagx{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--ink-pink);background:var(--pink-pale);border-radius:99px;padding:5px 13px;margin-bottom:12px;}
+
+section{padding:34px 0;}
+h2{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.4rem;color:var(--brand);margin-bottom:6px;}
+h2 + .sub{color:#666;font-size:.95rem;margin-bottom:20px;}
+
+/* scoreboard */
+.board{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;}
+.board .row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);font-size:.92rem;}
+.board .row:last-child{border-bottom:none;}
+.board .row.us{background:var(--wash);}
+.board .who{flex:1;font-weight:600;}
+.board .price{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);}
+.board .note{flex-basis:100%;font-size:.8rem;color:#777;padding-left:0;}
+@media(min-width:560px){.board .note{flex-basis:auto;width:46%;text-align:right;font-size:.82rem;}}
+
+/* competitor cards */
+.grid{display:grid;grid-template-columns:1fr;gap:18px;}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr;}}
+.card{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;display:flex;flex-direction:column;}
+.card .shot{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;border-bottom:1.5px solid var(--line);background:#f4f7fb;}
+.card .body{padding:14px 16px 16px;}
+.card h3{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.05rem;color:var(--brand);margin-bottom:2px;}
+.card .price-chip{font-size:.75rem;font-weight:700;color:#555;margin-bottom:10px;}
+.card .line{font-size:.86rem;margin:6px 0;padding-left:22px;position:relative;color:#333;}
+.card .line::before{position:absolute;left:0;top:0;font-size:.95rem;}
+.line.good::before{content:"\2705";}
+.line.watch::before{content:"\26A0\FE0F";}
+.line.us{color:var(--ink-pink);font-weight:600;}
+.line.us::before{content:"\1F9CA";}
+
+/* us box */
+.us-box{background:var(--citrus-pale);border:2px solid var(--citrus);border-radius:16px;padding:22px;}
+.us-box h2{color:var(--citrus);}
+.us-list{list-style:none;margin-top:8px;}
+.us-list li{padding:10px 0;border-bottom:1px dashed #cfe3cf;font-size:.95rem;}
+.us-list li:last-child{border-bottom:none;}
+.us-list b{color:var(--brand);}
+
+.borrow{background:var(--wash);border-radius:16px;padding:22px;}
+.borrow h2{color:var(--brand);}
+.borrow ul{margin:8px 0 0 20px;}
+.borrow li{margin:8px 0;font-size:.94rem;color:#333;}
+
+footer{background:var(--brand);color:#fff;text-align:center;padding:26px 20px;margin-top:20px;}
+footer .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.1rem;}
+footer .f-name span{color:var(--ice);}
+footer p{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:6px;}
+footer a{color:var(--ice);}
+.disclaimer{font-size:.75rem;color:#999;text-align:center;padding:0 20px 10px;max-width:700px;margin:0 auto;}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header>
+<div class="wrap">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<a href="/" class="back">&larr; Back to our site</a>
+</div>
+</header>
+
+<div class="hero">
+<div class="wrap">
+<span class="tagx">Just for us &mdash; not on the real site</span>
+<h1>Who else rents these machines?</h1>
+<p>We looked at every company near us that rents margarita and frozen drink machines. Here is what their websites look like, what they are good at, and what makes <b>us</b> different. Look at the pictures and see which ones you like!</p>
+</div>
+</div>
+
+<div class="wrap">
+
+<section>
+<h2>The price scoreboard</h2>
+<p class="sub">What everybody charges for one machine for a day. We are right in the middle &mdash; not the cheapest, not the most expensive.</p>
+<div class="board">
+<div class="row"><span class="who">Leander Party Rentals</span><span class="price">$175</span><span class="note">just a plain machine, no flavors</span></div>
+<div class="row"><span class="who">TK Margarita</span><span class="price">$200</span><span class="note">single machine</span></div>
+<div class="row"><span class="who">River City</span><span class="price">$224</span><span class="note">the most flavors</span></div>
+<div class="row"><span class="who">Woolf's Ritas</span><span class="price">$230</span><span class="note">a small family, like us</span></div>
+<div class="row us"><span class="who">Slush Sisters (us!)</span><span class="price">$250</span><span class="note">candy on every cup + the kids' tank</span></div>
+<div class="row"><span class="who">Margaritas of Austin</span><span class="price">$250</span><span class="note">very old website</span></div>
+<div class="row"><span class="who">Margaritas To Go</span><span class="price">$149&ndash;349</span><span class="note">the biggest one</span></div>
+<div class="row"><span class="who">ATX Marg Rentals</span><span class="price">$350</span><span class="note">grown-ups only</span></div>
+</div>
+</section>
+
+<section>
+<h2>Everybody's websites</h2>
+<p class="sub">Tap to look. Some look great, some look really old. Which would you trust?</p>
+<div class="grid">
+
+<div class="card">
+<img class="shot" src="/img/competitors/hillcountrymargaritas.jpg" alt="Hill Country Margaritas website">
+<div class="body">
+<h3>Hill Country Margaritas</h3>
+<div class="price-chip">The best-looking one</div>
+<p class="line good">One big pretty photo and one button. Very clean.</p>
+<p class="line watch">Only for grown-ups &mdash; no kids, no candy, feels like a bar.</p>
+<p class="line us">We can look this nice AND be for kids too.</p>
+</div>
+</div>
+
+<div class="card">
+<img class="shot" src="/img/competitors/margaritastogo.jpg" alt="Margaritas To Go website">
+<div class="body">
+<h3>Margaritas To Go</h3>
+<div class="price-chip">The biggest &amp; oldest</div>
+<p class="line good">Tons of flavors, real sugar (not corn syrup), lots of reviews.</p>
+<p class="line watch">It's a big franchise, not a family. Website looks like a template.</p>
+<p class="line us">We squeeze real limes the morning of &mdash; and we're actually two kids.</p>
+</div>
+</div>
+
+<div class="card">
+<img class="shot" src="/img/competitors/margaritasofaustin.jpg" alt="Margaritas of Austin website">
+<div class="body">
+<h3>Margaritas of Austin</h3>
+<div class="price-chip">Been around forever</div>
+<p class="line good">20 flavors, and even a kids' slushee package.</p>
+<p class="line watch">The website looks SUPER old and doesn't work well on a phone.</p>
+<p class="line us">Ours works great on a phone, where almost everyone looks.</p>
+</div>
+</div>
+
+<div class="card">
+<img class="shot" src="/img/competitors/tkmargaritarental.jpg" alt="TK Margarita Rental website">
+<div class="body">
+<h3>TK Margarita</h3>
+<div class="price-chip">Cheapest single machine</div>
+<p class="line good">Good price, and it has a "for the kids" section.</p>
+<p class="line watch">Plain website, and you can't book online.</p>
+<p class="line us">We put candy on every cup and lead with the kids.</p>
+</div>
+</div>
+
+<div class="card">
+<img class="shot" src="/img/competitors/margaritaequipment.jpg" alt="River City Frozen Beverages website">
+<div class="body">
+<h3>River City</h3>
+<div class="price-chip">Cheapest &amp; most flavors</div>
+<p class="line good">Lowest price, the most flavors, and lots of gold-star reviews.</p>
+<p class="line watch">Covers a huge area (even Waco) &mdash; not really local. Sells salt, not candy.</p>
+<p class="line us">We're right here in Lakeway, and candy beats salt!</p>
+</div>
+</div>
+
+<div class="card">
+<img class="shot" src="/img/competitors/woolfsritas.jpg" alt="Woolf's Ritas website">
+<div class="body">
+<h3>Woolf's Ritas</h3>
+<div class="price-chip">A small family, like us</div>
+<p class="line good">On Instagram, and you can pay online really easily.</p>
+<p class="line watch">Just one machine, and the website is plain black.</p>
+<p class="line us">We have two tanks and a whole colorful world with Slushie.</p>
+</div>
+</div>
+
+<div class="card">
+<img class="shot" src="/img/competitors/atxmargrentals.jpg" alt="ATX Marg Rentals website">
+<div class="body">
+<h3>ATX Marg Rentals</h3>
+<div class="price-chip">Most like us (but grown-up)</div>
+<p class="line good">Two tanks, and local since 2015.</p>
+<p class="line watch">All grown-up drinks, and the most expensive ($350).</p>
+<p class="line us">Same two tanks, $100 cheaper, and one is the kids' tank.</p>
+</div>
+</div>
+
+<div class="card">
+<img class="shot" src="/img/competitors/leanderpartyrentals.jpg" alt="Leander Party Rentals website">
+<div class="body">
+<h3>Leander Party Rentals</h3>
+<div class="price-chip">They rent everything</div>
+<p class="line good">Bounce houses, tents, everything &mdash; and you can book with a calendar.</p>
+<p class="line watch">Their margarita machine is just a plain box with no flavors or candy.</p>
+<p class="line us">We only do frozen drinks, so we do them really, really well.</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="us-box">
+<h2>What makes us different</h2>
+<p style="font-size:.95rem;color:#333;">Lots of them are fine. But nobody has all four of these at once &mdash; that's us:</p>
+<ul class="us-list">
+<li><b>Candy on every single cup.</b> Nobody else does this. (One company sells salt for the rim &mdash; not the same!)</li>
+<li><b>The kids' tank is just normal here.</b> Some others have a kids option hidden as an extra you have to find. For us it's the whole point, and it never costs more.</li>
+<li><b>Fresh Press: we squeeze real limes the morning of your party</b>, with no fake coloring. Others say "good mix," but nobody actually squeezes.</li>
+<li><b>It's really run by two sisters</b> &mdash; Harper (11) and Finley (8). No big company can copy that.</li>
+</ul>
+</div>
+</section>
+
+<section>
+<div class="borrow">
+<h2>Nice ideas we could borrow (the fair way)</h2>
+<ul>
+<li><b>Ask for reviews after every party.</b> River City has a huge wall of happy reviews and it makes them look great. We're new, so let's start collecting ours from party one.</li>
+<li><b>Say exactly what you get for $250</b> &mdash; like "the machine, two flavors, cups, candy, delivery, and pickup." Woolf's lists it out and it builds trust.</li>
+<li><b>Make booking actually work online.</b> Several of them let you pick a date and pay right there. (That one's a grown-up job for Dad.)</li>
+</ul>
+</div>
+</section>
+
+</div>
+
+<p class="disclaimer">These screenshots are pictures of other companies' public websites, saved so we can compare and learn. This page is just for us &mdash; it isn't linked anywhere on our real site.</p>
+
+<footer>
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Our own homework on everybody else &middot; <a href="/">back to our site</a></p>
+</footer>
+</body>
+</html>
