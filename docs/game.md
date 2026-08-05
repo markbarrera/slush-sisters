@@ -218,3 +218,23 @@ added the same night, all built around the mascot moving and reacting:
 So the arcade is now five: Playhouse, Catch, Style, Slush Rush, Slushie Street.
 The pattern for the next one is in `CLAUDE.md` (“The arcade”). Direction to keep
 pulling on: **interactive and character-first over score-first.**
+
+### How it gets reached (decided 2026-08-05)
+
+Mark asked about linking the arcade prominently — nav, footer, or both. The
+tradeoff (from Part 2 above): a set of kids' games linked from every page is a
+"directed to children" signal, and the booking form collects a home address and
+phone, so the site's COPPA footing is worth protecting. Mark's call: **not
+site-wide.** Keep it orphaned; reach it **adult-mediated** instead:
+
+- A link on the **booking confirmation** (`/book` success state) — the parent
+  who just booked sees "we made an arcade for the kids at your party."
+- **`/party-play`** — a printable table card (orphaned, `noindex`) with a QR
+  code to `/play` and short copy. The girls print it and set it on the party
+  table. The QR is real (encodes `https://slushsisters.com/play`, verified
+  by decode); the SVG is inline, no external image.
+
+This is exactly the "local and social, not viral to kids everywhere"
+distribution Part 3 argued for. Revisit only if Mark decides to accept the
+site-wide tradeoff (a footer link was the most I'd have recommended, never the
+top nav).
