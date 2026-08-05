@@ -202,6 +202,10 @@ anyone); the public `phc_` key is the only one that lives in the repo.
    **Still to come — the dashboard phase:** the kids'-language page that reads
    this log plus GSC and PostHog. Needs the three read-only credentials in
    "How the future dashboard gets its data" above.
+   **Also in this one Worker:** the booking-email handler (`POST /api/book`),
+   merged in from the booking-form work so the site keeps a single `main`
+   Worker. It is paused the same way (the `send_email` binding is commented
+   until Email Routing is verified) — see `docs/booking-worker.md`.
 2. **Instrument `/ideas`** — intentionally **not** done; it is a kids' page, so
    it stays beacon-free by design. Listed only so no one "fixes" its absence.
 3. **DNS records** (approved 2026-08-05; Mark applies these in Cloudflare — this
