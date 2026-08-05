@@ -180,6 +180,13 @@ for the full scope, the tier plan, and the COPPA reasoning.
   screen, 60 seconds, most money wins). This is game tier 2 (same iPad); tier 3
   (friends in a shared room from different houses) needs a real-time backend and
   **is a dad decision** — it puts a running service in Mark's life. Not built.
+- **`/slushie-guys`** — the big one the girls asked for: a Stumble-Guys-style
+  **obstacle-course race** (canvas platformer — run, jump, dodge swinging
+  hammers / spinners / gaps, ride moving platforms, beat AI rival slushies to
+  the finish). Three courses, best time per course on the device. Single-player
+  vs AI; **real online-with-friends multiplayer is the tier-3 backend / dad
+  decision** above, not built. This is the most in-depth game — heavier than the
+  others by design.
 
 Each game is one self-contained HTML file, same as a page. **They are orphaned
 like `/read`: `noindex`, not in the nav, footer, sitemap or `scripts/snapshot.js`

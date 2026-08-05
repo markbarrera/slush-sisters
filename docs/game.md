@@ -238,3 +238,29 @@ This is exactly the "local and social, not viral to kids everywhere"
 distribution Part 3 argued for. Revisit only if Mark decides to accept the
 site-wide tradeoff (a footer link was the most I'd have recommended, never the
 top nav).
+
+## Slushie Guys — the obstacle-course race (2026-08-05, later)
+
+The girls asked for this one specifically: the game they play with friends is
+**Stumble Guys**, and they wanted a "Slushie Guys" obstacle course like it. It
+is at **`/slushie-guys`** and is the most in-depth game in the arcade — a real
+2D **canvas platformer**, not a DOM toy:
+
+- Run (◀ ▶) and jump through a scrolling course; dodge swinging hammers,
+  spinners and gaps; ride moving platforms; hit bounce pads. Get knocked into a
+  hammer and Slushie **tumbles** (the Stumble signature) then pops back up; fall
+  in a pit and you respawn at the last checkpoint.
+- **AI rival slushies** race alongside so it feels like Fall Guys / Stumble
+  Guys — you're beating other "guys" to the finish, and it shows your placement.
+- Three courses of rising difficulty; best time per course saved on the device.
+- Fixed-timestep engine with test hooks (`window.__guys`), verified headless:
+  movement, jump/land, rivals advancing, hazard tumble, finish + placement +
+  best-time save all pass, no JS errors, no page side-scroll.
+
+**The honest gap:** what makes Stumble Guys *Stumble Guys* is racing live against
+friends from other houses. That is **tier 3** — a real-time multiplayer backend
+(Durable Objects), a running service Mark owns, and the hardened
+no-accounts/no-chat/no-names line. It stays a **dad decision** and is not built.
+The AI-rival race delivers the single-device feel now; if the girls love it and
+Mark green-lights the service, the rivals become real players. Same-device
+2-player (split screen or shared-keyboard) is a smaller middle step if wanted.
