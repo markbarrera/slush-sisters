@@ -209,11 +209,33 @@ The whole original plan shipped the same day:
 
 ## The dashboard — `/dashboard`
 
-An orphaned, `noindex` kids'-language page ("Our Numbers"): who visited, who is
-crawling us, what people googled. It reads through Worker routes (`/api/stats/*`)
-so **no API token ever reaches the browser**. Each source degrades gracefully —
-a card shows real data when its credential is set, and a friendly "waiting for
-the key" / "coming soon" state otherwise, so it never breaks.
+An orphaned, `noindex` kids'-language page ("Our Numbers") designed to teach
+Harper and Finley what marketing analytics actually looks like — real data about
+real people deciding whether to hire them. It reads through Worker routes
+(`/api/stats/*`) so **no API token ever reaches the browser**. Each source
+degrades gracefully — a card shows real data when its credential is set, and a
+friendly "waiting for the key" state otherwise, so it never breaks.
+
+**What the dashboard shows** (all last 7 days):
+
+- **Stat tiles** — unique visitors, total page views, visit count (sessions).
+  These count only real browsers, not bots.
+- **Bot vs human split** — a visual breakdown of all page traffic by category
+  (real people, search engines, AI helpers, social previews, scrapers). The
+  Worker classifies each request by user agent and reports the proportions.
+- **Where people came from** — referrer domains (PostHog `$referring_domain`).
+- **Where visitors are** — city + region (PostHog `$geoip_city_name`).
+- **Devices** — phone / desktop / tablet split.
+- **Most-read pages** — page views by path.
+- **Booking funnel** — the three-step conversion: all sessions → viewed `/book`
+  → `booking_submitted`. This is the number that matters most.
+- **Most-clicked things** — top elements people click (PostHog autocapture).
+- **How far people scroll** — average scroll depth per page (`$pageleave` +
+  `$prev_pageview_max_scroll_percentage`). Low numbers mean people leave before
+  the important content.
+- **Where people leave** — exit pages (last page before closing the tab).
+- **Crawlers** — named search / AI / social / scraper bots, from AE.
+- **Search terms** — what people typed into Google (GSC, when configured).
 
 Like `/read` and `/ideas` it is orphaned: `noindex`, not in the nav, footer,
 sitemap, or `scripts/snapshot.js` set, and — being a family page — it carries
