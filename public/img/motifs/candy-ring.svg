@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" role="img" aria-label="Candy ring">
+  <!-- Motif kit — see docs/imagery-kit.md. Deep-blue outline (#1a237e),
+       candy-bright fill, sugar-sparkle dots. 60x60 viewBox like the rest. -->
+  <circle cx="30" cy="30" r="24" fill="#ff7aa8" stroke="#1a237e" stroke-width="4.5"/>
+  <circle cx="30" cy="30" r="9" fill="#ffffff" stroke="#1a237e" stroke-width="3.5"/>
+  <g fill="#ffffff">
+    <circle cx="19" cy="20" r="1.8"/>
+    <circle cx="41" cy="22" r="1.8"/>
+    <circle cx="22" cy="42" r="1.8"/>
+    <circle cx="42" cy="40" r="1.8"/>
+    <circle cx="30" cy="14.5" r="1.6"/>
+  </g>
+</svg>

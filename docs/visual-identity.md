@@ -8,6 +8,14 @@ He's right — it's the biggest gap on the site. The pages are well-written and
 visually bare. Here is the honest map of what's possible, what I can build, and
 one real brand trap to avoid.
 
+> **Update, 2026-08-05.** The plan below is now partly built. The "Slushie"
+> character exists (`/img/slushie.svg`), the `/fresh-press` hero proved the
+> approach, and there is now a **reusable motif kit** and a step-by-step
+> playbook so this stops being a one-off and becomes something any page (or any
+> future session) can pull from. The how-to lives in
+> [`imagery-kit.md`](imagery-kit.md). This doc stays the *why*; that one is the
+> *how*. Progress is tracked in the checklist at the end of it.
+
 ---
 
 ## What I can and cannot make, plainly
@@ -102,17 +110,20 @@ cocktail menu.
 
 1. **A hero illustration for `/fresh-press`** — the fruit-and-cup direction
    above, filling the gap Mark pointed at, so we prove the approach on the page
-   that needs it most.
+   that needs it most. — **Done.**
 2. **The "Slushie" character, v1** — one SVG, a few poses, in the brand colors.
-   Ship it small (a corner of the homepage) and let the girls react.
+   Ship it small (a corner of the homepage) and let the girls react. — **Done**
+   (`/img/slushie.svg`); still theirs to draw over.
 3. **A motif kit** — candy, fruit, and slush-drip SVGs to break up text-heavy
    pages (`/lab`, `/our-rules`, `/community-events`) that are currently walls of
-   words.
+   words. — **Kit built** (`/img/motifs/`, documented in `imagery-kit.md`) and
+   first used on `/flavors`; the text-heavy pages are the next place to apply it.
 4. **A real-photo shot list** for the girls' phone: limes halved, a squeeze, the
    candy rims, the machine pouring, the two of them mid-setup. Ten shots,
-   stripped of EXIF/GPS as always, that slot into the illustrated frame.
+   stripped of EXIF/GPS as always, that slot into the illustrated frame. — Still
+   the girls' afternoon.
 
-Steps 1–3 I can do now. Step 4 is the girls' afternoon.
+Steps 1–3 are done or in hand. Step 4 is the girls' afternoon.
 
 ---
 

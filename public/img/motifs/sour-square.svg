@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" role="img" aria-label="Sour candy square">
+  <!-- Motif kit — see docs/imagery-kit.md. Sugar-coated sour square, watermelon green. -->
+  <rect x="12" y="12" width="36" height="36" rx="10" fill="#86cf7a" stroke="#1a237e" stroke-width="4.5"/>
+  <g fill="#ffffff">
+    <circle cx="20" cy="20" r="1.6"/><circle cx="30" cy="18" r="1.6"/><circle cx="40" cy="21" r="1.6"/>
+    <circle cx="22" cy="30" r="1.6"/><circle cx="38" cy="31" r="1.6"/>
+    <circle cx="20" cy="40" r="1.6"/><circle cx="31" cy="41" r="1.6"/><circle cx="41" cy="39" r="1.6"/>
+  </g>
+</svg>

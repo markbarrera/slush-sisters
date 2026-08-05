@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Six Slushie & Margarita Flavors, Candy Garnish on Every Cup</title>
-<meta name="description" content="Choose from 6 frozen drink flavors. Watermelon, Strawberry Lemonade, Blue Raspberry, Mango, Margarita Lime, Piña Colada. Every cup gets a candy garnish.">
+<meta name="description" content="Six frozen drink flavors — watermelon, strawberry lemonade, blue raspberry, mango, margarita lime, piña colada — plus Fresh Press, our hand-squeezed premium tier. Candy garnish on every cup.">
 <style>
 /* ---- BRAND TOKENS ----------------------------------------------------
    Every brand color on this page resolves through these. To change the
@@ -40,6 +40,11 @@
 
   /* Form control borders need 3:1 as non-text UI. #ddd was 1.36:1. */
   --line-strong:#767b85; /* 4.20:1 on white */
+
+  /* Fresh Press accent — the premium tier. Same values as /fresh-press so the
+     two pages agree on what "the fresh one" looks like. */
+  --citrus:#2e7d32;     /* 4.90:1 on white */
+  --citrus-pale:#eef7ee;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -161,6 +166,57 @@ section h1{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:800;ma
   font-variant-numeric:tabular-nums lining;font-feature-settings:'tnum' 1;
   letter-spacing:0;text-align:right;}
 
+/* HERO ART — the illustrated identity, matching /fresh-press. This page had no
+   imagery at all; the band brings the character and the candy (our whole
+   differentiator) up top. Reuses the shared motif kit in /img/motifs — see
+   docs/imagery-kit.md. Mobile-first: full-width band, art centered, candy
+   tucked to the sides, then it all grows at 620px. */
+.hero-art{background:linear-gradient(180deg,var(--wash),#f4fbff);padding:36px 24px 30px;}
+.hero-art .panel{max-width:800px;margin:0 auto;position:relative;display:flex;justify-content:center;min-height:210px;}
+.hero-art .char{width:172px;height:auto;filter:drop-shadow(0 14px 22px rgba(26,35,126,.16));position:relative;z-index:2;}
+.hero-art .candy{position:absolute;width:56px;height:56px;z-index:1;filter:drop-shadow(0 6px 10px rgba(26,35,126,.12));}
+.hero-art .candy.l{left:5%;bottom:2px;transform:rotate(-12deg);}
+.hero-art .candy.r{right:6%;top:8px;transform:rotate(14deg);}
+.hero-art .spark{position:absolute;color:var(--ice);opacity:.6;font-size:1.1rem;z-index:1;}
+.hero-art .spark.s1{top:6px;left:34%;}
+.hero-art .spark.s2{bottom:24px;right:30%;font-size:.8rem;}
+.hero-art .spark.s3{top:40%;left:12%;font-size:.9rem;}
+@media(min-width:620px){
+  .hero-art .char{width:210px;}
+  .hero-art .candy{width:74px;height:74px;}
+  .hero-art .candy.l{left:13%;}
+  .hero-art .candy.r{right:13%;}
+}
+
+/* KICKER — small eyebrow above a heading, same as /fresh-press. */
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-ice);margin-bottom:8px;}
+.kicker.citrus{color:var(--citrus);}
+
+/* PREMIUM FEATURE — Fresh Press leads. The page sells the premium tier first,
+   then the classic six. Citrus accent matches /fresh-press. */
+.feature{border:2px solid var(--citrus);border-radius:16px;overflow:hidden;background:#fff;}
+.feature .feat-body{padding:24px 22px;}
+.feature h2{margin-bottom:4px;}
+.feature .feat-sub{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.05rem;color:var(--citrus);margin-bottom:12px;}
+.feature p{font-size:.9rem;color:#555;line-height:1.6;}
+.feature p + p{margin-top:10px;}
+.feature .feat-price{display:inline-block;background:var(--citrus);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.9rem;padding:3px 12px;border-radius:99px;margin-left:8px;vertical-align:middle;}
+.feature .feat-tag{display:inline-block;background:var(--citrus-pale);color:var(--citrus);font-size:.68rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;padding:5px 11px;border-radius:99px;margin-top:14px;}
+.feature .feat-link{display:inline-block;margin-top:16px;font-weight:700;font-size:.9rem;color:var(--citrus);text-decoration:none;min-height:44px;line-height:44px;}
+.feature .feat-link:hover{text-decoration:underline;}
+
+/* TIER HEADING — the $250 badge on the classic six. */
+.tier-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+.price-badge{display:inline-block;background:var(--brand);color:#fff;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.85rem;padding:3px 12px;border-radius:99px;}
+
+/* CANDY BAND — the differentiator, made visible. A row of the motif candies
+   over the photo pair. */
+.candy-row{display:flex;justify-content:center;gap:18px;margin:6px 0 22px;}
+.candy-row img{width:52px;height:52px;filter:drop-shadow(0 6px 10px rgba(26,35,126,.12));}
+.candy-row img:nth-child(1){transform:rotate(-8deg);}
+.candy-row img:nth-child(3){transform:rotate(9deg);}
+.photo-cap{text-align:center;font-size:.78rem;color:#888;margin-top:10px;}
+
 /* FOOTER — real internal linking. Mobile-first: one column, then two at
    560px, then four at 900px. Every link is a 44px-tall tap target. */
 footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left;}
@@ -192,14 +248,14 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://slushsisters.com/flavors">
 <meta property="og:title" content="Six Slushie & Margarita Flavors, Candy Garnish on Every Cup">
-<meta property="og:description" content="Choose from 6 frozen drink flavors. Watermelon, Strawberry Lemonade, Blue Raspberry, Mango, Margarita Lime, Piña Colada. Every cup gets a candy garnish.">
+<meta property="og:description" content="Six frozen drink flavors — watermelon, strawberry lemonade, blue raspberry, mango, margarita lime, piña colada — plus Fresh Press, our hand-squeezed premium tier. Candy garnish on every cup.">
 <meta property="og:image" content="https://slushsisters.com/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Slush Sisters — frozen drink machine rentals in Lakeway, Bee Cave and Lake Travis. $250 all-in.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Six Slushie & Margarita Flavors, Candy Garnish on Every Cup">
-<meta name="twitter:description" content="Choose from 6 frozen drink flavors. Watermelon, Strawberry Lemonade, Blue Raspberry, Mango, Margarita Lime, Piña Colada. Every cup gets a candy garnish.">
+<meta name="twitter:description" content="Six frozen drink flavors — watermelon, strawberry lemonade, blue raspberry, mango, margarita lime, piña colada — plus Fresh Press, our hand-squeezed premium tier. Candy garnish on every cup.">
 <meta name="twitter:image" content="https://slushsisters.com/img/og.png">
 <script type="application/ld+json">
 {
@@ -233,11 +289,43 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
 </header>
 
+<section class="hero-art">
+<div class="panel">
+<img class="candy l" src="/img/motifs/candy-ring.svg" alt="" aria-hidden="true">
+<img class="char" src="/img/slushie.svg" alt="Slushie, the Slush Sisters cup character, with a candy garnish and a lime slice on the rim" width="210" height="284" fetchpriority="high">
+<img class="candy r" src="/img/motifs/gummy-drop.svg" alt="" aria-hidden="true">
+<span class="spark s1">&#10022;</span><span class="spark s2">&#10022;</span><span class="spark s3">&#10022;</span>
+</div>
+</section>
+
+<div class="marquee"><div class="marquee-inner">SIX FLAVORS &middot; TWO AT A TIME &middot; CANDY GARNISH ON EVERY CUP &middot; FRESH PRESS &mdash; THE ONE WHERE WE SQUEEZE THE LIMES &middot; NO ARTIFICIAL DYE &middot; SIX FLAVORS &middot; TWO AT A TIME &middot; CANDY GARNISH ON EVERY CUP &middot; FRESH PRESS &mdash; THE ONE WHERE WE SQUEEZE THE LIMES &middot; NO ARTIFICIAL DYE &middot; </div></div>
+
 <section>
 <div class="contain">
-<h1>Our six flavors</h1>
-<p class="lead">Pick any 2 for your rental. Every single cup gets a piece of candy on it that matches the flavor. That is our thing and nobody else does it.</p>
-<p class="lead" style="margin-top:-18px;"><b>One tank is the kids&rsquo; tank.</b> The machine holds two flavors at once, and unless you tell us otherwise one of them is always a drink with no alcohol in it. Everybody else who rents these fills both tanks with grown-up drinks, and the kids end up with juice boxes at a party built around a machine they cannot touch.</p>
+<h1>Our flavors</h1>
+<p class="lead">The machine holds two flavors at once. Pick from six classic ones, or step up to Fresh Press &mdash; the one where we squeeze the limes ourselves. Either way, every cup gets a candy garnish that matches the flavor. That is our thing, and nobody else around here does it.</p>
+
+<div class="feature">
+<div class="feat-body">
+<p class="kicker citrus">Start here &mdash; the one we are proudest of</p>
+<h2>Fresh Press <span class="feat-price tabular">$375</span></h2>
+<p class="feat-sub">Agave Lime &mdash; the skinny margarita, made the way a good bar makes it</p>
+<p>The one where we squeeze the limes. Fresh lime and agave &mdash; no triple sec, no sour mix, no corn syrup, and <b>no artificial dye at all.</b> Bartenders call this a Tommy&rsquo;s. A grown-up adds their own tequila, same as always.</p>
+<p>Because there is no artificial color in it, it is also our no-dye version for kids&rsquo; parties &mdash; the color comes from the fruit instead, so it looks a little duller than the bright one in your head, and we would rather show you than surprise you. The kids&rsquo; tank costs the same as the grown-up one.</p>
+<span class="feat-tag">Five days&rsquo; notice &mdash; we squeeze it the morning of your party</span>
+<br><a href="/fresh-press" class="feat-link">See the whole recipe, and the sugar numbers we publish &rarr;</a>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<div class="tier-head">
+<h2>The six classic flavors</h2>
+<span class="price-badge tabular">$250</span>
+</div>
+<p class="lead">Pick any two. This is the same great frozen mix people know, six flavors deep &mdash; and every cup still gets its candy garnish.</p>
 <div class="flavor-list">
 <div class="fl-item"><div class="fl-dot" style="background:#FF6B6B;"></div><div><h3>Watermelon</h3><p>Sweet, refreshing, and the prettiest pink you have ever seen in a cup. Photographs unbelievably well.</p><div class="fl-candy">Sour Patch Watermelon on the rim</div></div></div>
 <div class="fl-item"><div class="fl-dot" style="background:#FF9AA2;"></div><div><h3>Strawberry Lemonade</h3><p>The crowd-pleaser. Kids love it. Adults love it. Nobody has ever said no to this one.</p><div class="fl-candy">Strawberry gummy on the rim</div></div></div>
@@ -246,22 +334,58 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <div class="fl-item"><div class="fl-dot" style="background:#81C784;"></div><div><h3>Margarita Lime</h3><p>THE classic margarita base. We make it frozen, adults add their own tequila.</p><div class="fl-candy">Lime wedge gummy on the rim</div></div></div>
 <div class="fl-item"><div class="fl-dot" style="background:#FFB74D;"></div><div><h3>Piña Colada</h3><p>Coconut + pineapple. Tastes like a vacation in a cup. Pool party perfection.</p><div class="fl-candy">Pineapple ring on the rim</div></div></div>
 </div>
-<div style="margin-top:34px;border:2px solid #2e7d32;background:#eef7ee;border-radius:12px;padding:22px;">
-<p style="font-size:.7rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:#2e7d32;margin-bottom:6px;">Fresh Press &mdash; $375</p>
-<h3 style="font-family:'Baloo 2',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:6px;">Agave Lime</h3>
-<p style="font-size:.88rem;color:#555;line-height:1.6;">The skinny margarita, made the way a good bar makes it: fresh lime and agave, no triple sec, no sour mix and no corn syrup. Bartenders call it a Tommy&rsquo;s. A grown-up adds their own tequila, same as always.</p>
-<p style="font-size:.88rem;color:#555;line-height:1.6;margin-top:8px;">It needs five days&rsquo; notice because we squeeze it the morning of your party. <a href="/fresh-press" style="color:#2e7d32;font-weight:600;">The whole recipe &rarr;</a></p>
+<p style="margin-top:26px;font-size:.88rem;color:#888;">Want something we do not have? Ask us. We can probably get it.</p>
 </div>
+</section>
 
-<p style="margin-top:32px;font-size:.88rem;color:#888;">Want something we do not have? Ask us. We can probably get it.</p>
-
-<div style="margin-top:28px;border-left:3px solid var(--ink-pink);padding:2px 0 2px 16px;">
-<p style="font-size:.88rem;color:#555;line-height:1.6;"><b style="color:var(--ink-pink);">Worried about the dye?</b> Fair. The thing that makes blue raspberry blue is Blue 1, and plenty of parents here read labels to avoid exactly that. We are building a version of every kids&rsquo; flavor with no artificial color in it at all &mdash; the color comes from the fruit instead, which means it looks duller than the picture in your head, and we would rather show you a photo than surprise you. <a href="/fresh-press" style="color:var(--ink-pink);font-weight:600;">That is Fresh Press &rarr;</a></p>
+<section>
+<div class="contain">
+<p class="kicker">Our one thing</p>
+<h2>A candy garnish on every single cup</h2>
+<p class="lead">The candy on the rim matches the flavor in the cup. It is a small thing that turns a drink into a treat, and it is the part kids remember. Every other rental company hands you a plain cup.</p>
+<div class="candy-row">
+<img src="/img/motifs/sour-square.svg" alt="" aria-hidden="true">
+<img src="/img/motifs/candy-ring.svg" alt="" aria-hidden="true">
+<img src="/img/motifs/gummy-drop.svg" alt="" aria-hidden="true">
 </div>
+<div class="photo-pair">
+<picture>
+<source type="image/webp" srcset="/img/photos/sisters-cheers-640.webp 640w, /img/photos/sisters-cheers-1024.webp 1024w" sizes="(max-width:540px) 92vw, 380px">
+<img src="/img/photos/sisters-cheers-1024.jpg" alt="Harper and Finley drinking bright red frozen slush from clear cups with straws" loading="lazy" decoding="async">
+</picture>
+<picture>
+<source type="image/webp" srcset="/img/photos/sisters-cups-640.webp 640w, /img/photos/sisters-cups-1024.webp 1024w" sizes="(max-width:540px) 92vw, 380px">
+<img src="/img/photos/sisters-cups-1024.jpg" alt="Harper and Finley holding cups of bright red frozen strawberry slush" loading="lazy" decoding="async">
+</picture>
+</div>
+<p class="photo-cap">Harper, 11 &amp; Finley, 8 &middot; Lakeway, Texas</p>
+</div>
+</section>
 
-<p style="margin-top:24px;font-size:.88rem;color:#666;line-height:1.6;"><b>It does cold drinks too.</b> The same machine will chill a drink instead of freezing it, so it works in December as well as July. <a href="/grown-ups" style="color:var(--ink-ice);">How that works</a>.</p>
+<section class="bg-blush">
+<div class="contain">
+<h2>One tank is always the kids&rsquo; tank</h2>
+<p class="lead" style="margin-bottom:0;">The machine makes two flavors at once, and unless you tell us otherwise one of them is always a drink with no alcohol in it. Everybody else who rents these fills both tanks with grown-up drinks, and the kids end up with juice boxes at a party built around a machine they cannot touch. We think that is backwards.</p>
+</div>
+</section>
 
-<div style="margin-top:24px;"><a href="/book" class="btn">Book your flavors</a></div>
+<section>
+<div class="contain">
+<h2>Questions</h2>
+<details><summary>How many flavors do we get?</summary><p>Two &mdash; that is what the machine holds, one in each tank. If you want more variety across a long party, ask us. The two tanks are independent, so we can do one classic flavor and one Fresh Press if you like.</p></details>
+<details><summary>Can both tanks be grown-up drinks?</summary><p>Yes, if that is what you want. Our default keeps one tank alcohol-free so the kids are not left out, but it is your party &mdash; just tell us on the booking form.</p></details>
+<details><summary>What is the candy on the cup?</summary><p>A piece of candy on the rim that matches the flavor &mdash; a strawberry gummy on the strawberry lemonade, a blue raspberry ring on the blue raspberry, and so on. It is on every cup, every time, at no extra cost.</p></details>
+<details><summary>Worried about the artificial dye?</summary><p>Fair &mdash; the thing that makes blue raspberry blue is Blue 1, and plenty of parents here read labels to avoid exactly that. Our Fresh Press tier has no artificial color at all; the color comes from the fruit instead. <a href="/fresh-press" style="color:var(--ink-ice);">That is what Fresh Press is for.</a></p></details>
+<details><summary>Does it do cold drinks too?</summary><p>Yes. The same machine will chill a drink instead of freezing it, so it works in December as well as July. <a href="/grown-ups" style="color:var(--ink-ice);">Here is how that works.</a></p></details>
+</div>
+</section>
+
+<section class="bg-light" style="text-align:center;">
+<div class="contain">
+<h2>Book your flavors</h2>
+<p class="lead">Pick your date and your two flavors on the form. If you want the fresh one, choose Fresh Press and give us five days.</p>
+<a href="/book" class="btn">Check your date</a>
+<p style="margin-top:18px;font-size:.85rem;color:#888;">Not sure yet? See <a href="/pricing" style="color:var(--ink-ice);">what &lsquo;$250, all in&rsquo; covers</a>.</p>
 </div>
 </section>
 
