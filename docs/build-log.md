@@ -30,6 +30,66 @@ Two audiences, on purpose:
 
 ---
 
+## 2026-08-05 — Analytics, a real booking form, and a domain that finally works
+
+The day the site got eyes. By the end of it we could see who visits, who crawls,
+and what people google to find us — and a booking form that had been quietly
+lying for weeks finally delivered a real email. Six things shipped, and three of
+them taught us something by going wrong first.
+
+**What shipped.** Google Search Console verified (a DNS TXT record — the only
+method a "Domain" property accepts). PostHog on the 22 marketing pages, never on
+a game or kids' page. An edge Worker (`src/worker.js`) that logs every request to
+Analytics Engine for crawler and traffic visibility. The booking form wired to a
+real inbox. Email hardened (SPF, DKIM, DMARC set to reject). And `www` finally
+redirecting to the bare domain. Then a `/dashboard` page to read it all back in
+the girls' language.
+
+**Mistake #1 — "masked" recordings that showed nothing.** PostHog session
+recording went out with `maskAllInputs: true` *and* `maskTextSelector: "*"` —
+which blacks out every field and every word on the page. The booking form's
+address and phone were also tagged `ph-no-capture`, so the *intent* was "hide the
+private stuff, keep the rest watchable." But a global mask-everything overrides
+the per-field tags, so recordings were useless gray boxes. Fix: `maskAllInputs:
+false`, drop the mask-all-text, and let the three `ph-no-capture` fields (name,
+address, phone) do the protecting. Lesson: tagging individual fields does nothing
+while a blanket mask is on.
+
+**Mistake #2 — building the same thing twice.** Two agents worked this branch at
+once. Booking-email and request-logging got built in parallel (a separate PR
+#37) *and* here (#38/#39), and the second one hit a merge conflict against the
+first. Nothing was lost — the duplicate booking/logging commits were dropped and
+this branch kept only its unique piece (the `www` redirect) — but it was wasted
+effort. Lesson: check what `main` and the branch already contain before
+building, not after.
+
+**Mistake #3 — the toggles nobody tells you about.** Two Cloudflare features are
+off by default and each blocks `wrangler deploy` with an opaque error until
+enabled once on the account: Analytics Engine (error 10089) and Email Routing.
+The safe way through was the PR preview deploy — it runs against the real account,
+so it fails *there* (not in production) if Analytics Engine isn't on or the email
+destination isn't verified. Every risky binding got merged only after its preview
+went green. Related: you don't need to create an Analytics Engine dataset by hand
+— the binding makes it on first write. The `site_requests` dataset created during
+setup is unused; the code writes to `slush_traffic`.
+
+**Smaller notes.** Email Routing adds its own MX + SPF records, and its DMARC
+starts at `p=none` (watch-only); we bumped it to `p=reject` by hand for real
+spoofing protection. BIMI (your logo in inboxes) was skipped on purpose — it
+needs a paid certificate and only matters for mail you *send*, which we don't.
+And `www`: this plan's dashboard had no "Redirect Rules" menu, so instead of a
+rule the redirect lives in the Worker, with `www` added as a Worker **route**
+(the "Add Domain" flow refused because a `www` DNS record already existed — a
+"Add Route" was the way through).
+
+**Still open.** The dashboard's live data needs read-only credentials Mark adds
+as Worker secrets (Cloudflare Analytics token, PostHog read key); GSC search
+terms stay a placeholder until a service account is wired. Until then the page
+shows friendly "waiting for the key" states — it never breaks. Full detail in
+`docs/analytics.md`.
+
+---
+
 ## 2026-08-04 — A second product, seven rules, and a name that died in four hours
 
 Mark's instruction was blunt and useful: *"you don't need my answer to just

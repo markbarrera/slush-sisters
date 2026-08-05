@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Our Numbers — Slush Sisters</title>
+<meta name="description" content="Who visited Slush Sisters, who is reading about us on the internet, and how people found us. A private page for Harper and Finley.">
+<style>
+:root{
+  --brand:#1a237e; --ice:#4fc3f7; --ice-deep:#29b6f6; --wash:#e8f4fd;
+  --blush:#fff5f7; --pop:#ff4081; --ink-ice:#0165a8; --ink-pink:#c2185b;
+  --line:#e6ecf5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:var(--wash);line-height:1.5;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 18px 64px;}
+a{color:var(--ink-ice);}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;}
+.wordmark{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;color:var(--brand);text-decoration:none;}
+.wordmark span{color:var(--ice);}
+.back{font-size:.85rem;font-weight:600;text-decoration:none;}
+
+h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.1;margin-bottom:6px;}
+.intro{color:#555;font-size:.95rem;margin-bottom:22px;}
+.tabular{font-family:'Baloo 2',sans-serif;font-variant-numeric:tabular-nums;}
+
+/* big number */
+.big{background:var(--brand);color:#fff;border-radius:18px;padding:26px 24px;margin-bottom:16px;text-align:center;}
+.big .n{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(2.6rem,14vw,4rem);line-height:1;}
+.big .label{font-weight:700;font-size:1rem;margin-top:4px;}
+.big .sub{opacity:.8;font-size:.82rem;margin-top:6px;}
+
+.grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr;}}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;}
+.card h2{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.05rem;color:var(--brand);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.card .hint{color:#888;font-size:.8rem;margin-bottom:14px;}
+
+.rows{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.rows li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #f2f5fa;font-size:.9rem;}
+.rows li:last-child{border-bottom:none;}
+.rows .k{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rows .v{font-family:'Baloo 2',sans-serif;font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink-ice);flex:none;}
+.group-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9aa4b2;margin:12px 0 2px;}
+.group-label:first-child{margin-top:0;}
+
+.state{font-size:.88rem;color:#777;padding:10px 0;}
+.state.wait{color:var(--ink-pink);}
+.pill{display:inline-block;background:var(--wash);color:var(--ink-ice);border-radius:999px;padding:2px 10px;font-size:.7rem;font-weight:700;margin-left:6px;}
+.foot{margin-top:24px;color:#888;font-size:.8rem;text-align:center;}
+code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="wordmark" href="/">Slush<span>Sisters</span></a>
+  <a class="back" href="/">‹ Back to the site</a>
+</header>
+
+<h1>Our Numbers</h1>
+<p class="intro">Who came to see us, who's reading about us on the internet, and how people found us — for the last 7 days. This page is just for us; it isn't in the menu and Google can't see it.</p>
+
+<div class="big" id="big">
+  <div class="n tabular" id="big-n">…</div>
+  <div class="label">page views this week</div>
+  <div class="sub">real people looking at our pages — robots not counted</div>
+</div>
+
+<div class="grid">
+  <div class="card" id="card-crawlers">
+    <h2>🔎 Who's reading about us</h2>
+    <p class="hint">Search engines and AI helpers that came to read the site.</p>
+    <div class="body"><div class="state">Loading…</div></div>
+  </div>
+
+  <div class="card" id="card-pages">
+    <h2>⭐ Most-read pages</h2>
+    <p class="hint">The pages people spent time on.</p>
+    <div class="body"><div class="state">Loading…</div></div>
+  </div>
+
+  <div class="card" id="card-sources">
+    <h2>🚪 How people found us</h2>
+    <p class="hint">Where visitors came from before landing on the site.</p>
+    <div class="body"><div class="state">Loading…</div></div>
+  </div>
+
+  <div class="card" id="card-search">
+    <h2>🔤 What people googled</h2>
+    <p class="hint">The words people typed into Google to find us.</p>
+    <div class="body"><div class="state wait">Coming soon — we're still connecting this to Google Search Console.</div></div>
+  </div>
+</div>
+
+<p class="foot">Numbers cover the last 7 days and update when you reload. Nothing here is a secret about any customer — just totals.</p>
+</div>
+
+<script>
+(function () {
+  var KIND = {
+    search: { label: "Search engines", emoji: "🔍" },
+    ai:     { label: "AI assistants",  emoji: "🤖" },
+    social: { label: "Social & chat apps", emoji: "💬" }
+  };
+
+  function el(id){ return document.getElementById(id); }
+  function body(cardId){ return el(cardId).querySelector(".body"); }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){
+    return ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" })[c]; }); }
+  function prettyPath(p){ if(!p || p === "/") return "Home page"; return esc(p); }
+  function n(x){ return Number(x || 0).toLocaleString(); }
+
+  function rowsHtml(items, keyFn, valFn){
+    return '<ul class="rows">' + items.map(function(it){
+      return '<li><span class="k">' + keyFn(it) + '</span><span class="v">' + valFn(it) + '</span></li>';
+    }).join("") + '</ul>';
+  }
+
+  function waiting(secretName){
+    return '<div class="state wait">Waiting for a key. Add <code>' + esc(secretName) +
+      '</code> as a Worker secret and this fills in automatically — nothing else changes.</div>';
+  }
+  function oops(){ return '<div class="state">Couldn\'t load this right now. Try reloading in a minute.</div>'; }
+  function empty(){ return '<div class="state">No visitors recorded yet — check back once the site has some traffic.</div>'; }
+
+  function handle(res, ok, needName){
+    if (!res || res.status === "error") return oops();
+    if (res.status === "not_configured") return waiting(needName);
+    return ok(res);
+  }
+
+  // --- Traffic (Cloudflare Analytics Engine) ---
+  fetch("/api/stats/traffic").then(function(r){ return r.json(); }).then(function(res){
+    // Big number
+    if (res && res.status === "ok") {
+      el("big-n").textContent = n(res.page_views);
+    } else {
+      el("big-n").textContent = "—";
+    }
+
+    // Crawlers card
+    body("card-crawlers").innerHTML = handle(res, function(d){
+      if (!d.crawlers || !d.crawlers.length) return empty();
+      var byKind = { search: [], ai: [], social: [] };
+      d.crawlers.forEach(function(c){ (byKind[c.kind] || (byKind[c.kind]=[])).push(c); });
+      var html = "";
+      ["search","ai","social"].forEach(function(k){
+        if (!byKind[k] || !byKind[k].length) return;
+        html += '<div class="group-label">' + KIND[k].emoji + " " + KIND[k].label + '</div>';
+        html += rowsHtml(byKind[k], function(c){ return esc(c.name); }, function(c){ return n(c.hits); });
+      });
+      return html || empty();
+    }, "CF_ANALYTICS_TOKEN");
+  }).catch(function(){
+    el("big-n").textContent = "—";
+    body("card-crawlers").innerHTML = oops();
+  });
+
+  // --- Content (PostHog): most-read pages + how people found us ---
+  fetch("/api/stats/content").then(function(r){ return r.json(); }).then(function(res){
+    body("card-pages").innerHTML = handle(res, function(d){
+      if (!d.top_pages || !d.top_pages.length) return empty();
+      return rowsHtml(d.top_pages, function(p){ return prettyPath(p.path); }, function(p){ return n(p.views); });
+    }, "POSTHOG_API_KEY");
+
+    body("card-sources").innerHTML = handle(res, function(d){
+      if (!d.sources || !d.sources.length) return empty();
+      return rowsHtml(d.sources, function(s){ return esc(s.source); }, function(s){ return n(s.views); });
+    }, "POSTHOG_API_KEY");
+  }).catch(function(){
+    body("card-pages").innerHTML = oops();
+    body("card-sources").innerHTML = oops();
+  });
+})();
+</script>
+</body>
+</html>

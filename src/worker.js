@@ -120,6 +120,11 @@ export default {
       return handleBooking(request, env);
     }
 
+    // Job 4: dashboard data for /dashboard. Server-side so API tokens never
+    // reach the browser; each returns a placeholder when its secret is unset.
+    if (url.pathname === "/api/stats/traffic") return handleTrafficStats(env);
+    if (url.pathname === "/api/stats/content") return handleContentStats(env);
+
     // Job 2: markdown negotiation for agents.
     if (wantsMarkdown(request, url) && isPagePath(url.pathname)) {
       try {
@@ -276,6 +281,88 @@ async function logRequest(request, url, env) {
   } catch (_) {
     // logging must never affect the response
   }
+}
+
+// --- Job 4: dashboard data -------------------------------------------------
+// Read-only summaries for /dashboard. Tokens live as Worker secrets and never
+// reach the browser. Every path returns 200 with a { status } field: a missing
+// secret gives { status: "not_configured" }, an upstream failure gives
+// { status: "error" } — never a thrown 500 — so the page degrades gracefully.
+// The data is aggregate and non-personal (path counts, crawler names, referrer
+// domains); if it should ever be private, gate these two routes behind a token.
+
+const CF_ACCOUNT_ID_FALLBACK = "e1c0408b82c4364eb726c9c040aa85dd";
+
+async function aeQuery(env, sql) {
+  const account = env.CF_ACCOUNT_ID || CF_ACCOUNT_ID_FALLBACK;
+  const res = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${account}/analytics_engine/sql`,
+    { method: "POST", headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` }, body: sql }
+  );
+  if (!res.ok) throw new Error(`AE HTTP ${res.status}`);
+  return (await res.json()).data || [];
+}
+
+async function handleTrafficStats(env) {
+  if (!env.CF_ANALYTICS_TOKEN) {
+    return json({ status: "not_configured", need: "CF_ANALYTICS_TOKEN" });
+  }
+  // Human page requests only (exclude bots, assets, and API posts).
+  const PAGE = "blob3 = 'human' AND blob6 = 'GET' AND blob1 NOT LIKE '%.%' AND blob1 NOT LIKE '/api/%'";
+  const WIN = "timestamp > NOW() - INTERVAL '7' DAY";
+  try {
+    const [visits, crawlers, pages] = await Promise.all([
+      aeQuery(env, `SELECT sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE}`),
+      aeQuery(env, `SELECT blob2 AS crawler, blob3 AS kind, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND blob3 IN ('search','ai','social') GROUP BY crawler, kind ORDER BY n DESC LIMIT 12`),
+      aeQuery(env, `SELECT blob1 AS path, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE} GROUP BY path ORDER BY n DESC LIMIT 10`),
+    ]);
+    return json({
+      status: "ok",
+      window_days: 7,
+      page_views: num(visits[0] && visits[0].n),
+      crawlers: crawlers.map((r) => ({ name: r.crawler, kind: r.kind, hits: num(r.n) })),
+      top_pages: pages.map((r) => ({ path: r.path, hits: num(r.n) })),
+    });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+async function handleContentStats(env) {
+  if (!env.POSTHOG_API_KEY || !env.POSTHOG_PROJECT_ID) {
+    return json({ status: "not_configured", need: "POSTHOG_API_KEY + POSTHOG_PROJECT_ID" });
+  }
+  const host = env.POSTHOG_HOST || "https://us.posthog.com";
+  async function hog(q) {
+    const res = await fetch(`${host}/api/projects/${env.POSTHOG_PROJECT_ID}/query/`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${env.POSTHOG_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ query: { kind: "HogQLQuery", query: q } }),
+    });
+    if (!res.ok) throw new Error(`PostHog HTTP ${res.status}`);
+    return (await res.json()).results || [];
+  }
+  try {
+    const [views, pages, refs] = await Promise.all([
+      hog(`SELECT count() FROM events WHERE event = '$pageview' AND timestamp > now() - INTERVAL 7 DAY`),
+      hog(`SELECT properties.$pathname AS path, count() AS n FROM events WHERE event = '$pageview' AND timestamp > now() - INTERVAL 7 DAY GROUP BY path ORDER BY n DESC LIMIT 10`),
+      hog(`SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE event = '$pageview' AND timestamp > now() - INTERVAL 7 DAY GROUP BY src ORDER BY n DESC LIMIT 8`),
+    ]);
+    return json({
+      status: "ok",
+      window_days: 7,
+      pageviews: num(views[0] && views[0][0]),
+      top_pages: pages.map((r) => ({ path: r[0], views: num(r[1]) })),
+      sources: refs.map((r) => ({ source: r[0], views: num(r[1]) })),
+    });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+function num(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? Math.round(n) : 0;
 }
 
 // --- Job 2: minimal HTML -> Markdown ---------------------------------------
