@@ -50,6 +50,8 @@ const PAGES = [
   ['fresh-press', '/fresh-press'],
   ['our-rules', '/our-rules'],
   ['community-events', '/community-events'],
+  ['office-parties', '/office-parties'],
+  ['ledger', '/ledger'],
   ['press', '/press'],
   ['inventory', '/inventory'],
   ['read-hub', '/read'],
@@ -177,6 +179,28 @@ function serve() {
         }
         if (head.ogUrls.length > 1) {
           problems.push(`${route}: ${head.ogUrls.length} og:url tags, expected at most 1`);
+        }
+      }
+
+
+      // Desktop alignment. The site is built mobile-first, which is right —
+      // but the hero band carried a flat 32px gutter at every width while the
+      // sections below centred an 800px column, so on a 1440px screen the
+      // headline sat 288px left of its own body copy. Nothing was watching
+      // desktop at all; this is the downstream cost of mobile-first, checked.
+      if (label === 'desktop') {
+        const align = await page.evaluate(() => {
+          const vis = e => e && e.offsetHeight > 40;
+          const hero = document.querySelector('.hero-text');
+          const body = [...document.querySelectorAll('section .contain')].find(vis);
+          const L = e => e ? Math.round(e.getBoundingClientRect().left) : null;
+          return { hero: L(hero), body: L(body) };
+        });
+        if (align.hero != null && align.body != null) {
+          const gap = Math.abs(align.hero - align.body);
+          if (gap > 24) {
+            problems.push(`${route}: hero and body misalign by ${gap}px at 1280px`);
+          }
         }
       }
 
