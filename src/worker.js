@@ -59,6 +59,19 @@ const BOTS = [
   ["WhatsApp", "social", /WhatsApp/i],
   ["TelegramBot", "social", /TelegramBot/i],
   ["Discordbot", "social", /Discordbot/i],
+  ["AhrefsBot", "scraper", /AhrefsBot/i],
+  ["SEMrushBot", "scraper", /SemrushBot/i],
+  ["MJ12bot", "scraper", /MJ12bot/i],
+  ["DotBot", "scraper", /DotBot/i],
+  ["YandexBot", "search", /YandexBot/i],
+  ["Baiduspider", "search", /Baiduspider/i],
+  ["python-requests", "scraper", /python-requests/i],
+  ["curl", "scraper", /\bcurl\//i],
+  ["Go-http-client", "scraper", /Go-http-client/i],
+  ["wget", "scraper", /\bWget\//i],
+  ["Scrapy", "scraper", /Scrapy/i],
+  ["Java", "scraper", /\bJava\/\d/i],
+  ["Headless browser", "scraper", /HeadlessChrome|PhantomJS|Puppeteer/i],
 ];
 
 function classify(ua) {
@@ -336,21 +349,22 @@ async function handleTrafficStats(env) {
   if (!env.CF_ANALYTICS_TOKEN) {
     return json({ status: "not_configured", need: "CF_ANALYTICS_TOKEN" });
   }
-  // Human page requests only (exclude bots, assets, and API posts).
-  const PAGE = "blob3 = 'human' AND blob6 = 'GET' AND blob1 NOT LIKE '%.%' AND blob1 NOT LIKE '/api/%'";
+  const PAGE = "blob6 = 'GET' AND blob1 NOT LIKE '%.%' AND blob1 NOT LIKE '/api/%'";
   const WIN = "timestamp > NOW() - INTERVAL '7' DAY";
   try {
-    const [visits, crawlers, pages] = await Promise.all([
+    const [humanViews, allReqs, crawlers, split] = await Promise.all([
+      aeQuery(env, `SELECT sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE} AND blob3 = 'human'`),
       aeQuery(env, `SELECT sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE}`),
-      aeQuery(env, `SELECT blob2 AS crawler, blob3 AS kind, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND blob3 IN ('search','ai','social') GROUP BY crawler, kind ORDER BY n DESC LIMIT 12`),
-      aeQuery(env, `SELECT blob1 AS path, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE} GROUP BY path ORDER BY n DESC LIMIT 10`),
+      aeQuery(env, `SELECT blob2 AS crawler, blob3 AS kind, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND blob3 IN ('search','ai','social','scraper') GROUP BY crawler, kind ORDER BY n DESC LIMIT 20`),
+      aeQuery(env, `SELECT blob3 AS category, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE} GROUP BY category ORDER BY n DESC`),
     ]);
     return json({
       status: "ok",
       window_days: 7,
-      page_views: num(visits[0] && visits[0].n),
+      page_views: num(humanViews[0] && humanViews[0].n),
+      total_page_requests: num(allReqs[0] && allReqs[0].n),
       crawlers: crawlers.map((r) => ({ name: r.crawler, kind: r.kind, hits: num(r.n) })),
-      top_pages: pages.map((r) => ({ path: r.path, hits: num(r.n) })),
+      traffic_split: split.map((r) => ({ category: r.category, requests: num(r.n) })),
     });
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
@@ -371,18 +385,40 @@ async function handleContentStats(env) {
     if (!res.ok) throw new Error(`PostHog HTTP ${res.status}`);
     return (await res.json()).results || [];
   }
+  const WIN = "timestamp > now() - INTERVAL 7 DAY";
+  const PV = "event = '$pageview' AND " + WIN;
   try {
-    const [views, pages, refs] = await Promise.all([
-      hog(`SELECT count() FROM events WHERE event = '$pageview' AND timestamp > now() - INTERVAL 7 DAY`),
-      hog(`SELECT properties.$pathname AS path, count() AS n FROM events WHERE event = '$pageview' AND timestamp > now() - INTERVAL 7 DAY GROUP BY path ORDER BY n DESC LIMIT 10`),
-      hog(`SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE event = '$pageview' AND timestamp > now() - INTERVAL 7 DAY GROUP BY src ORDER BY n DESC LIMIT 8`),
+    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits] = await Promise.all([
+      hog("SELECT count() AS pv, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV),
+      hog("SELECT properties.$pathname AS p, count() AS n FROM events WHERE " + PV + " GROUP BY p ORDER BY n DESC LIMIT 10"),
+      hog("SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE " + PV + " GROUP BY src ORDER BY n DESC LIMIT 8"),
+      hog("SELECT properties.$device_type AS d, count(DISTINCT distinct_id) AS n FROM events WHERE " + PV + " GROUP BY d ORDER BY n DESC"),
+      hog("SELECT properties.$el_text AS t, count() AS n FROM events WHERE event = '$autocapture' AND properties.$event_type = 'click' AND " + WIN + " AND properties.$el_text != '' AND length(properties.$el_text) > 1 GROUP BY t ORDER BY n DESC LIMIT 10"),
+      hog("SELECT properties.$prev_pageview_pathname AS p, avg(toFloat64OrNull(toString(properties.$prev_pageview_max_scroll_percentage))) AS s FROM events WHERE event = '$pageleave' AND " + WIN + " AND properties.$prev_pageview_pathname IS NOT NULL GROUP BY p ORDER BY s ASC LIMIT 10"),
+      hog("SELECT count(DISTINCT \"$session_id\") AS n FROM events WHERE " + PV + " AND properties.$pathname IN ('/book', '/book.html')"),
+      hog("SELECT count() AS n FROM events WHERE event = 'booking_submitted' AND " + WIN),
+      hog("SELECT properties.$geoip_city_name AS city, properties.$geoip_subdivision_1_name AS region, count(DISTINCT distinct_id) AS n FROM events WHERE " + PV + " AND properties.$geoip_city_name IS NOT NULL AND properties.$geoip_city_name != '' GROUP BY city, region ORDER BY n DESC LIMIT 10"),
+      hog("SELECT properties.$prev_pageview_pathname AS p, count() AS n FROM events WHERE event = '$pageleave' AND " + WIN + " AND properties.$prev_pageview_pathname IS NOT NULL GROUP BY p ORDER BY n DESC LIMIT 8"),
     ]);
+    const scrollPct = (v) => { const n = Number(v) || 0; return n <= 1 ? Math.round(n * 100) : Math.round(n); };
     return json({
       status: "ok",
       window_days: 7,
-      pageviews: num(views[0] && views[0][0]),
+      visitors: num(overview[0] && overview[0][1]),
+      pageviews: num(overview[0] && overview[0][0]),
+      sessions: num(overview[0] && overview[0][2]),
       top_pages: pages.map((r) => ({ path: r[0], views: num(r[1]) })),
       sources: refs.map((r) => ({ source: r[0], views: num(r[1]) })),
+      devices: devices.map((r) => ({ type: r[0] || "Unknown", visitors: num(r[1]) })),
+      clicks: clicks.map((r) => ({ label: r[0], count: num(r[1]) })),
+      scroll: scroll.map((r) => ({ path: r[0], pct: scrollPct(r[1]) })),
+      funnel: {
+        all_sessions: num(overview[0] && overview[0][2]),
+        viewed_book: num(funnelBook[0] && funnelBook[0][0]),
+        submitted: num(funnelSubmit[0] && funnelSubmit[0][0]),
+      },
+      geo: geo.map((r) => ({ city: r[0], region: r[1], visitors: num(r[2]) })),
+      exits: exits.map((r) => ({ path: r[0], count: num(r[1]) })),
     });
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
