@@ -124,6 +124,7 @@ export default {
     // reach the browser; each returns a placeholder when its secret is unset.
     if (url.pathname === "/api/stats/traffic") return handleTrafficStats(env);
     if (url.pathname === "/api/stats/content") return handleContentStats(env);
+    if (url.pathname === "/api/stats/search") return handleSearchStats(env);
 
     // Job 2: markdown negotiation for agents.
     if (wantsMarkdown(request, url) && isPagePath(url.pathname)) {
@@ -363,6 +364,98 @@ async function handleContentStats(env) {
 function num(v) {
   const n = Number(v);
   return Number.isFinite(n) ? Math.round(n) : 0;
+}
+
+// Search Console (top queries) via a service account. Needs GSC_SA_EMAIL +
+// GSC_SA_KEY (the PEM private key) as Worker secrets, and the service account
+// added as a read-only user on the property. GSC_SITE defaults to the domain.
+async function handleSearchStats(env) {
+  if (!env.GSC_SA_EMAIL || !env.GSC_SA_KEY) {
+    return json({ status: "not_configured", need: "GSC_SA_EMAIL + GSC_SA_KEY" });
+  }
+  try {
+    const token = await gscAccessToken(env);
+    const site = env.GSC_SITE || "sc-domain:slushsisters.com";
+    const res = await fetch(
+      `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(site)}/searchAnalytics/query`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          startDate: isoDaysAgo(28),
+          endDate: isoDaysAgo(1),
+          dimensions: ["query"],
+          rowLimit: 12,
+        }),
+      }
+    );
+    if (!res.ok) throw new Error(`GSC HTTP ${res.status}`);
+    const out = await res.json();
+    const queries = (out.rows || []).map((r) => ({
+      query: (r.keys && r.keys[0]) || "",
+      clicks: num(r.clicks),
+      impressions: num(r.impressions),
+    }));
+    return json({ status: "ok", window_days: 28, queries });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+async function gscAccessToken(env) {
+  const now = Math.floor(Date.now() / 1000);
+  const enc = (o) => gscB64url(new TextEncoder().encode(JSON.stringify(o)));
+  const signingInput =
+    enc({ alg: "RS256", typ: "JWT" }) +
+    "." +
+    enc({
+      iss: env.GSC_SA_EMAIL,
+      scope: "https://www.googleapis.com/auth/webmasters.readonly",
+      aud: "https://oauth2.googleapis.com/token",
+      iat: now,
+      exp: now + 3600,
+    });
+  const key = await importPkcs8(env.GSC_SA_KEY);
+  const sig = await crypto.subtle.sign(
+    { name: "RSASSA-PKCS1-v1_5" },
+    key,
+    new TextEncoder().encode(signingInput)
+  );
+  const jwt = signingInput + "." + gscB64url(new Uint8Array(sig));
+  const res = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body:
+      "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=" +
+      encodeURIComponent(jwt),
+  });
+  if (!res.ok) throw new Error(`GSC token HTTP ${res.status}`);
+  return (await res.json()).access_token;
+}
+
+function gscB64url(bytes) {
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+async function importPkcs8(pem) {
+  const body = pem
+    .replace(/-----BEGIN[^-]+-----/, "")
+    .replace(/-----END[^-]+-----/, "")
+    .replace(/\s+/g, "");
+  const der = Uint8Array.from(atob(body), (c) => c.charCodeAt(0));
+  return crypto.subtle.importKey(
+    "pkcs8",
+    der.buffer,
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+}
+
+function isoDaysAgo(n) {
+  return new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
 }
 
 // --- Job 2: minimal HTML -> Markdown ---------------------------------------

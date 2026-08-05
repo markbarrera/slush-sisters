@@ -91,8 +91,8 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
 
   <div class="card" id="card-search">
     <h2>🔤 What people googled</h2>
-    <p class="hint">The words people typed into Google to find us.</p>
-    <div class="body"><div class="state wait">Coming soon — we're still connecting this to Google Search Console.</div></div>
+    <p class="hint">The words people typed into Google, and how many times we showed up.</p>
+    <div class="body"><div class="state">Loading…</div></div>
   </div>
 </div>
 
@@ -174,6 +174,17 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
   }).catch(function(){
     body("card-pages").innerHTML = oops();
     body("card-sources").innerHTML = oops();
+  });
+
+  // --- Search terms (Google Search Console) ---
+  fetch("/api/stats/search").then(function(r){ return r.json(); }).then(function(res){
+    body("card-search").innerHTML = handle(res, function(d){
+      if (!d.queries || !d.queries.length)
+        return '<div class="state">No search words yet — Google needs a few days of data after a site is verified. Check back this week.</div>';
+      return rowsHtml(d.queries, function(q){ return esc(q.query); }, function(q){ return n(q.impressions); });
+    }, "GSC_SA_EMAIL");
+  }).catch(function(){
+    body("card-search").innerHTML = oops();
   });
 })();
 </script>
