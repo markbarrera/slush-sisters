@@ -154,9 +154,13 @@ a storefront — none of which applies here): MCP server cards, A2A agent cards,
 `.well-known/ai-catalog.json`, `api-catalog`, WebMCP, OAuth resource metadata,
 commerce protocols. Adding them would be maintenance with no payoff.
 
-Worth folding into the Worker when it is built: **markdown content negotiation**
-— serve a small `.md` version of a page when an agent sends `Accept:
-text/markdown`, cutting payload several-fold. Only useful once the Worker exists.
+- **Markdown for agents** — live in the edge Worker (`src/worker.js`). When an
+  agent sends `Accept: text/markdown` (or adds `?format=md`) to a page URL, it
+  gets a compact markdown version instead of styled HTML — title, description,
+  headings, links, and body text, several times smaller. Marked `noindex` and
+  `Vary: Accept` so it never reaches a browser or a search index. Assets (JS,
+  CSS, images) are never converted. Every HTML page also carries a `Link:
+  </llms.txt>; rel="describedby"` header pointing agents at the site map.
 
 ## How the future dashboard gets its data
 
@@ -181,12 +185,19 @@ anyone); the public `phc_` key is the only one that lives in the repo.
 
 ## Deferred — follow-ups
 
-1. **Edge-logging Worker + custom dashboard.** Approved 2026-08-05 to pull
-   forward. A small Cloudflare Worker in front of the static site that logs every
-   request (path, bot, status, country) to Workers Analytics Engine — free tier,
-   no cookies, no page code, COPPA-safe. The only clean way to get per-path
-   traffic, real crawler logs, and **orphaned-page leak monitoring**, and the
-   data backend for the kids'-language dashboard. Next build.
+1. **Edge Worker — logging phase built** (2026-08-05, `src/worker.js` +
+   `wrangler.jsonc`). It runs in front of the static site, logs every request
+   (path, crawler, status, coarse country — no cookies, no IP, no PII) to the
+   `slush_traffic` Analytics Engine dataset, and serves markdown to agents. It
+   hands normal requests straight back to the assets, so serving is unchanged
+   (verified: trailing-slash 307, 404 page, and the no-beacon game pages all
+   still work). Query the log with the Analytics Engine SQL API, e.g.
+   `SELECT blob1 AS path, blob2 AS crawler, sum(_sample_interval) AS hits FROM
+   slush_traffic WHERE timestamp > NOW() - INTERVAL '7' DAY GROUP BY path,
+   crawler ORDER BY hits DESC`.
+   **Still to come — the dashboard phase:** the kids'-language page that reads
+   this log plus GSC and PostHog. Needs the three read-only credentials in
+   "How the future dashboard gets its data" above.
 2. **Instrument `/ideas`** — intentionally **not** done; it is a kids' page, so
    it stays beacon-free by design. Listed only so no one "fixes" its absence.
 3. **DNS records** (approved 2026-08-05; Mark applies these in Cloudflare — this
