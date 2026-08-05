@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="A newspaper with a headline and photo, next to a camera">
+  <!-- Press kit: for reporters, producers and partners. A newspaper + a camera. -->
+
+  <!-- newspaper -->
+  <rect x="60" y="42" width="120" height="112" rx="6" fill="#fff" stroke="#1a237e" stroke-width="5"/>
+  <rect x="52" y="48" width="120" height="112" rx="6" fill="#fff" stroke="#1a237e" stroke-width="5"/>
+  <!-- masthead -->
+  <rect x="64" y="60" width="96" height="13" rx="3" fill="#1a237e"/>
+  <path d="M64,80 H160" stroke="#1a237e" stroke-width="2.5"/>
+  <!-- photo box -->
+  <rect x="64" y="88" width="42" height="34" rx="4" fill="#4fc3f7" stroke="#1a237e" stroke-width="3"/>
+  <circle cx="79" cy="102" r="6" fill="#ffd24d" stroke="#1a237e" stroke-width="2.4"/>
+  <path d="M68,120 l10,-9 8,6 6,-5 6,8" fill="none" stroke="#1a237e" stroke-width="2.4" stroke-linejoin="round"/>
+  <!-- text lines beside photo -->
+  <g stroke="#c7d2de" stroke-width="4" stroke-linecap="round">
+    <path d="M114,92 h44"/><path d="M114,102 h44"/><path d="M114,112 h36"/>
+  </g>
+  <!-- text lines below -->
+  <g stroke="#c7d2de" stroke-width="4" stroke-linecap="round">
+    <path d="M64,134 h96"/><path d="M64,144 h80"/>
+  </g>
+
+  <!-- camera -->
+  <rect x="206" y="98" width="78" height="52" rx="11" fill="#eaf6ff" stroke="#1a237e" stroke-width="5"/>
+  <rect x="220" y="86" width="26" height="16" rx="4" fill="#eaf6ff" stroke="#1a237e" stroke-width="5"/>
+  <circle cx="245" cy="124" r="16" fill="#4fc3f7" stroke="#1a237e" stroke-width="5"/>
+  <circle cx="245" cy="124" r="6.5" fill="#fff"/>
+  <circle cx="270" cy="110" r="4" fill="#ffd24d" stroke="#1a237e" stroke-width="2.4"/>
+
+  <g fill="#4fc3f7"><path d="M196,64 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/></g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="An open ledger book with a money-in column and a money-out column, and a stack of coins">
+  <!-- The Open Ledger: every dollar, both directions. Open book with a plus
+       column and a minus column, plus a coin stack. -->
+
+  <!-- left page (money out, minus) -->
+  <path d="M62,58 Q110,46 158,58 V138 Q110,126 62,138 Z" fill="#fff" stroke="#1a237e" stroke-width="5" stroke-linejoin="round"/>
+  <!-- right page (money in, plus) -->
+  <path d="M158,58 Q206,46 256,58 V138 Q206,126 158,138 Z" fill="#fff" stroke="#1a237e" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M158,58 V138" stroke="#1a237e" stroke-width="4"/>
+
+  <!-- left rows with minus -->
+  <g>
+    <circle cx="80" cy="76" r="6" fill="#ff8fa0" stroke="#1a237e" stroke-width="2.6"/><path d="M76,76 h8" stroke="#1a237e" stroke-width="2.6" stroke-linecap="round"/>
+    <rect x="92" y="72" width="52" height="7" rx="3.5" fill="#ffe0e6" stroke="#1a237e" stroke-width="2.2"/>
+    <circle cx="80" cy="96" r="6" fill="#ff8fa0" stroke="#1a237e" stroke-width="2.6"/><path d="M76,96 h8" stroke="#1a237e" stroke-width="2.6" stroke-linecap="round"/>
+    <rect x="92" y="92" width="52" height="7" rx="3.5" fill="#ffe0e6" stroke="#1a237e" stroke-width="2.2"/>
+    <circle cx="80" cy="116" r="6" fill="#ff8fa0" stroke="#1a237e" stroke-width="2.6"/><path d="M76,116 h8" stroke="#1a237e" stroke-width="2.6" stroke-linecap="round"/>
+    <rect x="92" y="112" width="40" height="7" rx="3.5" fill="#ffe0e6" stroke="#1a237e" stroke-width="2.2"/>
+  </g>
+  <!-- right rows with plus -->
+  <g>
+    <circle cx="176" cy="76" r="6" fill="#86cf7a" stroke="#1a237e" stroke-width="2.6"/><path d="M172,76 h8 M176,72 v8" stroke="#1a237e" stroke-width="2.6" stroke-linecap="round"/>
+    <rect x="188" y="72" width="52" height="7" rx="3.5" fill="#e4f5dd" stroke="#1a237e" stroke-width="2.2"/>
+    <circle cx="176" cy="96" r="6" fill="#86cf7a" stroke="#1a237e" stroke-width="2.6"/><path d="M172,96 h8 M176,92 v8" stroke="#1a237e" stroke-width="2.6" stroke-linecap="round"/>
+    <rect x="188" y="92" width="44" height="7" rx="3.5" fill="#e4f5dd" stroke="#1a237e" stroke-width="2.2"/>
+  </g>
+
+  <!-- coin stack (right) -->
+  <g stroke="#1a237e" stroke-width="4">
+    <ellipse cx="276" cy="140" rx="20" ry="8" fill="#ffd24d"/>
+    <ellipse cx="276" cy="130" rx="20" ry="8" fill="#ffe083"/>
+    <ellipse cx="276" cy="120" rx="20" ry="8" fill="#ffd24d"/>
+  </g>
+  <text x="276" y="120" text-anchor="middle" dominant-baseline="central" font-family="'Baloo 2', system-ui, sans-serif" font-weight="800" font-size="12" fill="#1a237e">$</text>
+
+  <g fill="#4fc3f7"><path d="M160,40 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/></g>
+</svg>
