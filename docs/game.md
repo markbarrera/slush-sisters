@@ -235,9 +235,16 @@ site-wide.** Keep it orphaned; reach it **adult-mediated** instead:
   by decode); the SVG is inline, no external image.
 
 This is exactly the "local and social, not viral to kids everywhere"
-distribution Part 3 argued for. Revisit only if Mark decides to accept the
-site-wide tradeoff (a footer link was the most I'd have recommended, never the
-top nav).
+distribution Part 3 argued for.
+
+**Update, later 2026-08-05: Mark chose to add the arcade to the main site nav**
+("Arcade", on every page, before Book), accepting the "directed to children"
+COPPA tradeoff after it was laid out in full. So the arcade is now reached both
+site-wide (nav) *and* through the party (booking confirmation + `/party-play`
+card). The game pages themselves stay `noindex` and out of the sitemap — only
+the human nav link was added. Flagged for a lawyer's COPPA review at some point,
+given the booking form collects a home address and phone. The nav link is the
+current intended state; do not revert it to orphaned-only.
 
 ## Slushie Guys — the obstacle-course race (2026-08-05, later)
 
