@@ -185,13 +185,17 @@ anyone); the public `phc_` key is the only one that lives in the repo.
 
 ## Deferred — follow-ups
 
-1. **Edge Worker — logging phase built** (2026-08-05, `src/worker.js` +
-   `wrangler.jsonc`). It runs in front of the static site, logs every request
-   (path, crawler, status, coarse country — no cookies, no IP, no PII) to the
-   `slush_traffic` Analytics Engine dataset, and serves markdown to agents. It
-   hands normal requests straight back to the assets, so serving is unchanged
-   (verified: trailing-slash 307, 404 page, and the no-beacon game pages all
-   still work). Query the log with the Analytics Engine SQL API, e.g.
+1. **Edge Worker — built; logging paused on one dashboard click.** The Worker
+   (`src/worker.js`) runs in front of the static site, serves markdown to
+   agents, and is *ready* to log every request (path, crawler, status, coarse
+   country — no cookies, no IP, no PII) to the `slush_traffic` Analytics Engine
+   dataset. **The Analytics Engine binding is temporarily commented out in
+   `wrangler.jsonc`** because it blocks `wrangler deploy` (error 10089) until
+   Analytics Engine is enabled once on the account:
+   **Cloudflare dashboard → Workers & Pages → Analytics Engine → Enable.** Once
+   enabled, un-comment the `analytics_engine_datasets` block and logging turns
+   on (the Worker no-ops logging until then, so serving and markdown are
+   unaffected). Query the log with the Analytics Engine SQL API, e.g.
    `SELECT blob1 AS path, blob2 AS crawler, sum(_sample_interval) AS hits FROM
    slush_traffic WHERE timestamp > NOW() - INTERVAL '7' DAY GROUP BY path,
    crawler ORDER BY hits DESC`.

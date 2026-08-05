@@ -25,11 +25,15 @@
     // path, which makes typos and dead links look like real pages to Google.
     // "404-page" serves public/404.html with a real 404 status instead.
     "not_found_handling": "404-page"
-  },
-  // Server-side request log. No cookies, no IP, no personal data — see the
-  // COPPA note at the top of src/worker.js. Query it with the Analytics Engine
-  // SQL API once there is data.
-  "analytics_engine_datasets": [
-    { "binding": "TRAFFIC", "dataset": "slush_traffic" }
-  ]
+  }
+  // Server-side request log (crawler/traffic/leak visibility) — TEMPORARILY OFF.
+  // Adding the TRAFFIC binding below blocks `wrangler deploy` with error 10089
+  // until Analytics Engine is enabled once on the account:
+  //   Cloudflare dashboard -> Workers & Pages -> Analytics Engine -> Enable
+  //   (https://dash.cloudflare.com/e1c0408b82c4364eb726c9c040aa85dd/workers/analytics-engine)
+  // src/worker.js already no-ops its logging when this binding is absent, so
+  // serving and markdown-for-agents are unaffected. Re-add to turn logging on:
+  //   "analytics_engine_datasets": [
+  //     { "binding": "TRAFFIC", "dataset": "slush_traffic" }
+  //   ]
 }
