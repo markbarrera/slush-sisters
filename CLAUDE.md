@@ -35,8 +35,19 @@ preview URL that does not touch production traffic.
 - CSS stays inline per page. The pages share a visual system but not a
   stylesheet; when you change the header, footer, or button styles, change them
   in every page that has them.
-- Brand colors: `#1a237e` deep blue, `#4fc3f7` light blue, `#e8f4fd` pale blue
-  background.
+- **The visual system lives in `docs/brand.md`** — the full color tokens, the
+  type rules, the voice, and the imagery direction, in one place (there is no
+  shared stylesheet, so that doc is where the system exists as a whole). Read it
+  before changing anything visual. The load-bearing basics: `--brand` `#1a237e`
+  deep blue, `--ice` `#4fc3f7` light blue, `--wash` `#e8f4fd` pale blue
+  background, `--pop` `#ff4081` pink.
+- **The brand character is "Slushie"** (`public/img/slushie.svg`) — a slushie
+  *cup* with a face, **never a child**, so every asset stays about the product.
+  It is a first pass the girls are meant to redraw in their own style, the way
+  they chose the colors. The identity is **illustration-led, not stock photos**,
+  and there is **no glossy alcohol-cocktail imagery** (it makes a kids' business
+  read like a liquor ad) — go fruit-and-cup instead. Full reasoning in
+  `docs/visual-identity.md`.
 - Fonts: **Baloo 2** for headings and the wordmark, DM Sans for body. Baloo 2
   runs 400–800 — never ask for 900, it triggers faux-bold synthesis, which
   thickens strokes unevenly and is exactly what an embroiderer cannot use.
@@ -63,6 +74,14 @@ preview URL that does not touch production traffic.
   and analytics already covers the generic referrer. Never force a customer
   into a bucket that does not fit. This is a standing form rule, not just the
   booking page.
+- **Serve both markets — grown-ups, kids, and mixed parties — without swaying.**
+  The machine holds two flavors; which two is always the customer's call: two
+  grown-up drinks, two with no alcohol, or one of each. The no-alcohol / kids'
+  tank is an option we are glad to offer at no extra cost (it is rule one of the
+  seven on `/our-rules`), **never a default we assume or push**. Do not frame
+  the site — or any single page — as kid-first or adult-first. `/our-rules`
+  rule 1 is the balanced model; `about` and `flavors` were rebalanced to match
+  it 2026-08-05 after they leaned too far toward kids.
 
 ## Mobile first — this is the default, not a checkbox
 
@@ -136,6 +155,31 @@ can be reviewed from one place. **Run `npm run inventory` after adding or
 removing a page or a doc.** It reads titles, descriptions, word counts and
 dates off the files and out of git, so nothing is typed by hand and it cannot
 quietly go out of date — but it does have to be re-run to pick up new files.
+
+## The arcade (games)
+
+There are two little games, built to be shown to the girls' friends and put on
+the party table as a QR code — local and social, not "viral to kids
+everywhere." See `docs/game.md` for the full scope, the tier plan, and the
+COPPA reasoning.
+
+- **`/play`** is the arcade hub — a menu that points at the two games.
+- **`/slush-rush`** — the fast one. Read the order, build the cup against a
+  clock, serve. Solo, high score on the device.
+- **`/slushie-street`** — a slushie-stand tycoon (the drastically-different
+  second game): a solo idle/builder with saved progress and offline earnings,
+  plus a same-device **2-player race** (split screen, 60 seconds, most money
+  wins). This is game tier 2 (same iPad); tier 3 (friends in a shared room from
+  different houses) needs a real-time backend and **is a dad decision** — it
+  puts a running service in Mark's life. Not built.
+
+Each game is one self-contained HTML file, same as a page. **They are orphaned
+like `/read`: `noindex`, not in the nav, footer, sitemap or `scripts/snapshot.js`
+set.** The COPPA line is load-bearing: **no analytics, no cookies, no capture,
+no accounts, no chat, no names on any game page — ever.** That is what keeps a
+page a kid plays from making the site "directed to children." The only thing
+stored is a high score / save game, in the browser, on the device. Honor this
+before any promotion, not after.
 
 ## Before changing anything
 
