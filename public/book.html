@@ -278,16 +278,18 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 
 <label for="f-heard">How did you first hear about us?</label>
 <select id="f-heard" name="heard_from" required>
-<option value="">Pick one</option>
+<option value="">Pick the closest one</option>
 <option>A friend or neighbor told me</option>
 <option>A neighborhood Facebook group</option>
 <option>Instagram or TikTok</option>
 <option>Google or another search</option>
 <option>Saw the machine at a party</option>
 <option>A school or team event</option>
-<option>Somewhere else</option>
+<option>Something else — I will say below</option>
 </select>
-<p class="hint">This one genuinely helps us — it is the only way we find out what is working.</p>
+<label for="f-heard-more" style="margin-top:10px;">… and tell us exactly, in your own words</label>
+<input type="text" id="f-heard-more" name="heard_from_detail" placeholder="e.g. Sarah at the Belterra pool, or the Steiner newsletter">
+<p class="hint">The box above is the one that really helps — a dropdown never fits everyone, and the specific answer is the useful one. It is how we find out what is actually working.</p>
 
 <label for="f-notes">Anything else?</label>
 <textarea id="f-notes" name="notes" placeholder="Type of event, special requests, questions..."></textarea>

@@ -141,9 +141,9 @@ function serve() {
             bookVisible,
             // /book is the booking form itself, and /read and /ideas are
             // orphan reading pages that deliberately carry no site chrome.
-            isOrphan: /^\/(read|ideas|inventory)/.test(location.pathname),
+            isOrphan: /^\/(read|ideas|inventory|play)/.test(location.pathname),
             isBookPage: location.pathname.replace(/\/$/, '') === '/book'
-                        || /^\/(read|ideas|inventory)/.test(location.pathname),
+                        || /^\/(read|ideas|inventory|play)/.test(location.pathname),
             sideScroll: document.documentElement.scrollWidth > window.innerWidth,
             brokenImages: broken,
           };
