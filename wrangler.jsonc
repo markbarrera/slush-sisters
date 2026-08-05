@@ -25,17 +25,14 @@
     // path, which makes typos and dead links look like real pages to Google.
     // "404-page" serves public/404.html with a real 404 status instead.
     "not_found_handling": "404-page"
-  }
-  // Server-side request log (crawler/traffic/leak visibility) — TEMPORARILY OFF.
-  // Adding the TRAFFIC binding below blocks `wrangler deploy` with error 10089
-  // until Analytics Engine is enabled once on the account:
-  //   Cloudflare dashboard -> Workers & Pages -> Analytics Engine -> Enable
-  //   (https://dash.cloudflare.com/e1c0408b82c4364eb726c9c040aa85dd/workers/analytics-engine)
-  // src/worker.js already no-ops its logging when this binding is absent, so
-  // serving and markdown-for-agents are unaffected. Re-add to turn logging on:
-  //   "analytics_engine_datasets": [
-  //     { "binding": "TRAFFIC", "dataset": "slush_traffic" }
-  //   ]
+  },
+  // Server-side request log (crawler / traffic / leak visibility). Turned on
+  // 2026-08-05 once Analytics Engine was enabled for the account. src/worker.js
+  // writes one row per request to env.TRAFFIC; it no-ops if this binding is ever
+  // removed, so serving and markdown-for-agents are unaffected either way.
+  "analytics_engine_datasets": [
+    { "binding": "TRAFFIC", "dataset": "slush_traffic" }
+  ]
   //
   // Booking email (POST /api/book -> business inbox via Email Routing) —
   // TEMPORARILY OFF. Adding the send_email binding below blocks `wrangler
