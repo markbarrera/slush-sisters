@@ -515,6 +515,19 @@ var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026
     delete data.website;
     data.submitted_at = new Date().toISOString();
 
+    // Attribution — how this visit reached us. First-party, no cookie, no IP.
+    var j = null;
+    try { j = JSON.parse(sessionStorage.getItem('ss_journey') || 'null'); } catch (e) {}
+    if (j) data._source = j;
+    // Link the booking to its (masked) PostHog session recording.
+    try {
+      if (window.posthog && posthog.get_session_id) data._ph_session = posthog.get_session_id();
+      // Also mark the conversion in PostHog for the funnel (no PII).
+      if (window.posthog && posthog.capture) posthog.capture('booking_submitted', {
+        landing: j && j.landing, referrer: j && j.referrer, utm_source: j && j.utm_source,
+      });
+    } catch (e) {}
+
     btn.disabled = true;
     btn.textContent = 'Sending…';
 

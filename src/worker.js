@@ -186,7 +186,7 @@ async function handleBooking(request, env) {
     to: RECIPIENT,
     replyTo: contact.includes("@") ? contact : "",
     subject: subjectLine(data),
-    body: renderBooking(data),
+    body: renderBooking(data, request, env),
   });
 
   try {
@@ -216,14 +216,42 @@ function subjectLine(data) {
   return `New booking — ${name}${date ? " — " + date : ""}`;
 }
 
-function renderBooking(data) {
+function renderBooking(data, request, env) {
   const lines = ["New booking request from slushsisters.com", ""];
   for (const [key, label] of FIELDS) {
     const val = field(data, key);
     if (val) lines.push(`${label}: ${val}`);
   }
-  lines.push("", `Submitted: ${field(data, "submitted_at") || "(time not recorded)"}`, "");
-  lines.push("Reply to this email to answer the customer, if they left an email address.");
+  lines.push("", `Submitted: ${field(data, "submitted_at") || "(time not recorded)"}`);
+
+  // --- How this booking reached us (attribution) ---------------------------
+  // First-party marketing context, plus coarse location Cloudflare derives from
+  // the IP. The raw IP is NOT included or stored — only city/region/country.
+  const attr = [];
+  const src = (data && typeof data._source === "object" && data._source) || {};
+  const cap = (v, n) => String(v == null ? "" : v).slice(0, n);
+  if (src.referrer) attr.push(`Came from: ${cap(src.referrer, 300)}`);
+  const utm = [src.utm_source, src.utm_medium, src.utm_campaign].filter(Boolean).map((s) => cap(s, 120));
+  if (utm.length) attr.push(`Campaign: ${utm.join(" / ")}`);
+  if (src.landing) attr.push(`Landed on: ${cap(src.landing, 200)}`);
+  if (Array.isArray(src.pages) && src.pages.length) {
+    attr.push(`Pages this visit (${src.pages.length}): ${src.pages.map((p) => cap(p, 80)).join(" -> ").slice(0, 1200)}`);
+  }
+  if (src.started) attr.push(`Visit started: ${cap(src.started, 40)}`);
+  const cf = (request && request.cf) || {};
+  const loc = [cf.city, cf.region, cf.country].filter(Boolean).join(", ");
+  if (loc) attr.push(`Approx. location (from Cloudflare, no IP stored): ${cap(loc, 120)}`);
+  if (cf.timezone) attr.push(`Timezone: ${cap(cf.timezone, 60)}`);
+  const ua = request && request.headers && request.headers.get("user-agent");
+  if (ua) attr.push(`Device: ${cap(ua, 256)}`);
+  const sid = field(data, "_ph_session");
+  const pid = env && env.POSTHOG_PROJECT_ID;
+  if (sid && pid) {
+    attr.push(`Watch their visit (masked recording): https://us.posthog.com/project/${pid}/replay/${cap(sid, 80)}`);
+  }
+  if (attr.length) lines.push("", "— How this booking reached us —", ...attr);
+
+  lines.push("", "Reply to this email to answer the customer, if they left an email address.");
   return lines.join("\n");
 }
 
