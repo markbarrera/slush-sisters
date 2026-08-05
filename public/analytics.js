@@ -61,6 +61,30 @@
     if (path === BLOCKED[i] || path === BLOCKED[i] + ".html") return;
   }
 
+  // --- First-party visit journey (sessionStorage, NO cookie, NO IP) ---------
+  // Records where this visit came from and the pages seen this session, so a
+  // booking can be attributed to a source and path. Marketing pages only (the
+  // game/kids guard above already returned). Cleared when the browser closes.
+  try {
+    var JKEY = "ss_journey";
+    var j = JSON.parse(sessionStorage.getItem(JKEY) || "null");
+    if (!j) {
+      var qs = new URLSearchParams(location.search);
+      j = {
+        landing: path,
+        referrer: (document.referrer || "").slice(0, 300),
+        utm_source: (qs.get("utm_source") || "").slice(0, 120),
+        utm_medium: (qs.get("utm_medium") || "").slice(0, 120),
+        utm_campaign: (qs.get("utm_campaign") || "").slice(0, 120),
+        started: new Date().toISOString(),
+        pages: [],
+      };
+    }
+    if (j.pages[j.pages.length - 1] !== path) j.pages.push(path);
+    if (j.pages.length > 40) j.pages = j.pages.slice(-40);
+    sessionStorage.setItem(JKEY, JSON.stringify(j));
+  } catch (e) {}
+
   var POSTHOG_KEY = "phc_yN1IDp6NIx4uANHzmtjlrFFbohdZdC8mZIbQ6hnKWZH";
   var POSTHOG_HOST = "https://us.i.posthog.com";
 

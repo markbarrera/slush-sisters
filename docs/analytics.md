@@ -240,6 +240,27 @@ put`). Until then the dashboard shows placeholders — nothing breaks.
 - **GSC live feed into the dashboard** — see above; placeholder until a service
   account is added.
 
+## Booking attribution — the marketing-learning layer
+
+Each booking email now carries **how that visit reached us**, so a booking can be
+tied to a channel and a path (for marketing learning and the case study):
+
+- **Source** — referrer + any UTM tags on the landing link.
+- **Landing page** and the **ordered list of pages** seen that visit.
+- **Approx. location** — city / region / country that Cloudflare derives from the
+  IP. **The raw IP is never included or stored** — only the coarse location.
+- **Device** (user-agent) and a **link to the masked PostHog session recording**
+  of that exact visit, so you can watch what they did (address/phone stay masked).
+- Plus their own **"how did you hear about us"** words, as always.
+
+How it's captured, and the line it holds: the visit journey is recorded
+**first-party in `sessionStorage`** (no cookie, cleared when the browser closes)
+by `public/analytics.js` — marketing pages only, never a game/kids page — and
+sent with the booking POST. A `booking_submitted` event also fires into PostHog
+for the funnel. Deliberately **not** done: storing raw IPs, third-party
+IP-geolocation, or any persistent cross-site identity. Identified data
+(name/address) lives only in the booking email; PostHog stays pseudonymous.
+
 ## Access model
 
 Every credential stays with Mark; code ships through pull requests.
