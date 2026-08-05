@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="A checklist of rules next to an award rosette with the number seven">
+  <!-- Our seven rules: a checklist we hold ourselves to, and a seal. -->
+
+  <!-- clipboard -->
+  <rect x="66" y="34" width="122" height="124" rx="12" fill="#fff" stroke="#1a237e" stroke-width="5"/>
+  <rect x="106" y="26" width="42" height="17" rx="7" fill="#4fc3f7" stroke="#1a237e" stroke-width="5"/>
+
+  <!-- four checklist rows (the list is seven; the seal says 7) -->
+  <g>
+    <circle cx="90" cy="66" r="8.5" fill="#86cf7a" stroke="#1a237e" stroke-width="3"/>
+    <path d="M85.5,66 l3,3 5.5,-6.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="106" y="61" width="66" height="9" rx="4.5" fill="#e8f4fd" stroke="#1a237e" stroke-width="2.6"/>
+  </g>
+  <g>
+    <circle cx="90" cy="92" r="8.5" fill="#86cf7a" stroke="#1a237e" stroke-width="3"/>
+    <path d="M85.5,92 l3,3 5.5,-6.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="106" y="87" width="66" height="9" rx="4.5" fill="#e8f4fd" stroke="#1a237e" stroke-width="2.6"/>
+  </g>
+  <g>
+    <circle cx="90" cy="118" r="8.5" fill="#86cf7a" stroke="#1a237e" stroke-width="3"/>
+    <path d="M85.5,118 l3,3 5.5,-6.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="106" y="113" width="66" height="9" rx="4.5" fill="#e8f4fd" stroke="#1a237e" stroke-width="2.6"/>
+  </g>
+  <g>
+    <circle cx="90" cy="144" r="8.5" fill="#86cf7a" stroke="#1a237e" stroke-width="3"/>
+    <path d="M85.5,144 l3,3 5.5,-6.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="106" y="139" width="52" height="9" rx="4.5" fill="#e8f4fd" stroke="#1a237e" stroke-width="2.6"/>
+  </g>
+
+  <!-- award rosette (right) -->
+  <path d="M238,118 l-9,44 15,-11 15,11 -9,-44 Z" fill="#ff4081" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="250" cy="104" r="32" fill="#ffd24d" stroke="#1a237e" stroke-width="5"/>
+  <circle cx="250" cy="104" r="21" fill="#fff" stroke="#1a237e" stroke-width="3"/>
+  <text x="250" y="105" text-anchor="middle" dominant-baseline="central" font-family="'Baloo 2', system-ui, sans-serif" font-weight="800" font-size="30" fill="#1a237e">7</text>
+
+  <!-- sparkles -->
+  <g fill="#4fc3f7">
+    <path d="M206,44 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/>
+  </g>
+</svg>

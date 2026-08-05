@@ -40,6 +40,7 @@ Most pages want **both**: an illustrated band up top, a real photo further down.
 | --- | --- |
 | `public/img/slushie.svg` | **Slushie**, the brand character. A cup with a face. Never redraw them as a child. |
 | `public/img/motifs/` | The **motif kit** — reusable candy and fruit SVGs. Add new ones here. |
+| `public/img/scenes/` | **Per-page hero scenes** — one bespoke illustration per page (lab, our-rules, community-events, office-parties). Not reused; each says what its page is about. |
 | `public/img/hero.svg` | The two-cup homepage hero illustration. |
 | `public/img/photos/` | Real photos, each as `<name>-640/1024/1600.webp` + a `<name>-1024.jpg` fallback. |
 
@@ -144,6 +145,15 @@ whichever fit the page):
 It is mobile-first (`min-width` query), needs no photo, and weighs almost
 nothing.
 
+> **A hero should be about its page.** The hero-art band is a *layout*, not a
+> stamp. The character + candy is right for a product or flavors page. But for a
+> page about something specific — the science, the rules, events, offices — draw
+> a **scene that shows that**: a flask, a checklist, a neighborhood, the machine.
+> Put those in `/img/scenes/` and reference one per page. Reskinning the same
+> character across every page reads as lazy — it was the first thing we got told
+> off for. When you build a new scene, follow the same recipe (deep-blue outline,
+> candy-bright fill, squishy) so it still belongs to the family.
+
 ---
 
 ## The photo pipeline
@@ -208,13 +218,17 @@ Never hand-resize a photo or point a phone at a big file. The script does it.
   wrote down the kit itself. `/fresh-press` already carried the first hero-art
   proof from the visual-identity work.
 
-- **2026-08-05** — Applied the hero-art band to the four text-heavy pages that
-  were walls of words: **`/lab`, `/our-rules`, `/community-events`,
-  `/office-parties`**. Each got the Slushie character plus two flavor-fitting
-  motifs (lab: lime + sour-square; rules: candy-ring + gummy-drop; community:
-  sour-square + candy-ring; office: gummy-drop + candy-ring). This is the kit
-  doing exactly what it is for — same CSS block, same character, different candy,
-  no new decisions. Verified all four at 390px: no sideways scroll, art loads.
+- **2026-08-05** — Gave the four text-heavy pages (**`/lab`, `/our-rules`,
+  `/community-events`, `/office-parties`**) a **bespoke hero illustration each**,
+  stored in `/img/scenes/`. The first attempt reused the Slushie character on all
+  four with only the candy swapped; Mark's note: *don't put basically the same
+  character on every page &mdash; make each unique and contextually relevant.*
+  Right call. So each page now has its own scene: `/lab` a flask of slush + a
+  thermometer + a measuring dial; `/our-rules` a checklist with a "7" award
+  rosette; `/community-events` a neighborhood under party bunting;
+  `/office-parties` the dual-tank machine under holiday lights. Same house style
+  (deep-blue outlines, candy-bright fills, squishy), different subject each time.
+  Verified all four at 390px.
 
 - **Next up**: `/about` and `/pricing` could each take one real photo. The
   real-photo shot list (limes halved, a hand squeezing one, the candy rims, the
@@ -236,10 +250,10 @@ The full, always-current list is `/inventory`. This is just the imagery view.
 | `/fresh-press` | Hero-art band (inline limes) | A fruit-and-making photo would lift it |
 | `/grown-ups` | Hero photo | A motif or two in the text |
 | `/about` | Photos of the girls | Good |
-| `/lab` | Hero-art band + motifs, text hero, marquee | Good |
-| `/our-rules` | Hero-art band + motifs | Good |
-| `/community-events` | Hero-art band + motifs | Good |
-| `/office-parties` | Hero-art band + motifs | Good |
+| `/lab` | Bespoke scene (flask + thermometer + dial), text hero, marquee | Good |
+| `/our-rules` | Bespoke scene (checklist + "7" rosette) | Good |
+| `/community-events` | Bespoke scene (neighborhood + bunting) | Good |
+| `/office-parties` | Bespoke scene (the dual-tank machine + lights) | Good |
 | `/pricing` | None | One photo, or a motif accent |
 
 Keep this table honest as pages change.
