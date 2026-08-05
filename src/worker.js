@@ -99,6 +99,7 @@ const FIELDS = [
   ["heard_from", "Heard about us"],
   ["heard_from_detail", "…in their words"],
   ["notes", "Notes"],
+  ["booking_ref", "Booking ref"],
 ];
 
 export default {

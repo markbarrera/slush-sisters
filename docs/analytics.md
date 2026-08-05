@@ -71,19 +71,40 @@ cannot quietly drift on one page out of two dozen. The file also refuses to
 initialize on a game path even if it were ever included there by mistake — two
 layers, not one.
 
-**Privacy posture (deliberate):**
+**Tracking posture (changed 2026-08-05, decided by Mark).** The marketing and
+booking pages were previously cookieless, DNT-respecting, and profile-free. Mark
+asked to track visitors as granularly as possible, with cookies, to power the
+business dashboard's per-customer funnel. The posture on those pages is now:
 
-- **Cookieless.** The anonymous visitor id lives in `localStorage`, not a cookie,
-  so funnels still work across pages without a tracking cookie.
-- **No identify().** No one logs in, so no personal profiles are ever built.
-- **"Do Not Track" honored.**
-- **Session recording is on and watchable, but the booking form's sensitive
-  fields are masked at the source.** The name, event address, and phone/email
-  inputs on `/book` carry the class `ph-no-capture`, so a replay never shows the
-  home address or phone a customer types. Every other field — date, guests,
-  recipe, flavors, the "how did you hear about us" box, notes — is visible,
-  which is what makes the recording worth watching. **If a new sensitive field is
-  ever added to any form, give it `ph-no-capture` too.**
+- **Cookies ON.** Durable identity that survives across sessions, so a returning
+  visitor is recognized as the same person (`persistence: "localStorage+cookie"`).
+- **"Do Not Track" is no longer honored** — DNT browsers are tracked too.
+- **A person profile is built for every visitor** (`person_profiles: "always"`),
+  so anonymous browsing can be stitched to a booking.
+- **identify() on booking.** When the form is submitted, `public/book.html` calls
+  `posthog.identify()` with the booking's reference id and its attribution + party
+  details — but **not** the name, address, or phone. Raw contact PII stays in the
+  booking email and the business database; it is never sent to PostHog.
+- **Heatmaps, dead-click and web-vitals capture on.**
+- **Session recording on**, inputs visible — **except** the three sensitive
+  inputs on `/book` (name, event address, phone/email), which keep the
+  `ph-no-capture` class so a customer's home address and phone are not duplicated
+  into a third-party replay. **If a new sensitive field is added to any form, give
+  it `ph-no-capture` too.**
+
+**The COPPA line did NOT move.** Every game and kid-facing page still carries no
+analytics, no cookies, no capture — the route guard in `public/analytics.js`
+still refuses to initialize on those paths. Turning cookies on for the rest of
+the site makes that separation *more* load-bearing: the site now sets tracking
+cookies AND collects a child's home address on `/book` AND links the arcade from
+every page. **Two follow-ups this raises, both open:**
+
+- **Legal review is now worth doing, not just "at some point."** The COPPA
+  posture and a written privacy/cookie notice (there is none today) should get a
+  lawyer's eyes before this is leaned on hard. Instrumenting the *game* pages
+  themselves would be a further, separate decision — deliberately not done here.
+- **A visible privacy notice** describing the cookies and tracking is the normal
+  companion to this posture and does not exist yet.
 
 **What it answers, once data flows:**
 

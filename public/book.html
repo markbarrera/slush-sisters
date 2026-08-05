@@ -515,6 +515,14 @@ var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026
     delete data.website;
     data.submitted_at = new Date().toISOString();
 
+    // A stable reference for this booking. It travels with the request (so the
+    // email and, later, the database carry the same id) AND is used below to
+    // stitch this booking to the visitor's browsing history in PostHog — that
+    // is what turns "someone visited" into "this person heard about us here,
+    // read these pages, then booked."
+    data.booking_ref = 'bk_' + Date.now().toString(36) +
+      Math.random().toString(36).slice(2, 8);
+
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
@@ -525,6 +533,36 @@ var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026
     })
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        // Stitch this booking to the visitor's whole prior history in PostHog.
+        // We identify by the booking_ref (NOT by name/email) and attach the
+        // attribution + party details that power the funnel — but deliberately
+        // NOT the name, address, or phone. Those live in the booking email and
+        // the business database, never in the third-party analytics tool.
+        try {
+          if (window.posthog && typeof posthog.identify === 'function') {
+            var month = (data.event_date || '').slice(0, 7); // YYYY-MM
+            posthog.identify(data.booking_ref, {
+              heard_from: data.heard_from,
+              heard_from_detail: data.heard_from_detail,
+              tier: data.tier,
+              flavor_1: data.flavor_1,
+              flavor_2: data.flavor_2,
+              guest_count: data.guest_count,
+              event_date: data.event_date,
+              event_month: month,
+              first_booking_ref: data.booking_ref
+            });
+            posthog.capture('booking_submitted', {
+              booking_ref: data.booking_ref,
+              heard_from: data.heard_from,
+              tier: data.tier,
+              guest_count: data.guest_count,
+              event_month: month
+            });
+          }
+        } catch (_) { /* analytics must never block a booking */ }
+
         form.hidden = true;
         thx.hidden = false;
         thx.scrollIntoView({ behavior: 'smooth', block: 'center' });
