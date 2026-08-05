@@ -80,17 +80,14 @@ Interim option: a shared family passphrase checked by the Worker.
 
 ## Provisioning (Mark's account — done once)
 
-The database is a real resource in the Cloudflare account. Two ways to create it:
+**Done, 2026-08-05.** The `slush_business` database was created (ID
+`5a330fb8-e392-4f5b-92ee-3f52313c0663`) and the schema from
+`migrations/0001_business.sql` was applied — all 6 tables exist and settings are
+seeded. The D1 binding in `wrangler.jsonc` is un-commented and live.
 
-- **Dashboard:** dash.cloudflare.com → *Workers & Pages* → *D1* → *Create
-  database*, name it `slush_business`. Then this session (or `wrangler`) applies
-  `migrations/0001_business.sql`.
-- **CLI:** `npx wrangler d1 create slush_business`, then
-  `npx wrangler d1 execute slush_business --file=migrations/0001_business.sql`.
-
-Then un-comment the `d1_databases` binding in `wrangler.jsonc` (added, commented,
-same pattern as the email + analytics bindings) and the Worker can read/write it.
-Until then the site is unaffected — the binding no-ops.
+The Worker (`src/worker.js`) now writes each booking to D1 alongside the email
+it already sends, and serves a Cockpit/Ledger API at `/api/bookings`,
+`/api/costs`, `/api/learnings`, `/api/ledger`, and `/api/settings`.
 
 ## Open items (carried from the analytics work)
 

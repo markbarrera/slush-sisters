@@ -36,9 +36,18 @@ see which games are popular. Both are deliberate. The practical rule is now:
 **The honest consequence of the change:** the site now sets tracking cookies on
 pages children use directly *and* collects a child's home address on `/book`
 *and* links the arcade from every page. That makes the COPPA posture a real open
-question. **Two follow-ups are outstanding and now matter:** a lawyer's review of
-the posture, and a visible privacy/cookie notice (there is none today). See the
-PostHog section for the specifics.
+question. **One follow-up is outstanding:** a lawyer's review of the posture.
+
+**Cookie consent banner — added 2026-08-05.** A lightweight, self-built consent
+notice is now baked into `public/analytics.js` itself. On first visit a banner
+at the bottom of the page says what the cookies are for and offers two buttons:
+OK or No thanks. The answer is saved in localStorage (not a cookie). If they
+decline, PostHog never loads and no cookie is set. If they accept, tracking
+works normally. Returning visitors who already chose are never asked again. A
+"Cookie settings" link in the footer can re-open the choice via
+`window.slushResetConsent()`. This is the visible privacy notice that was
+flagged as outstanding — it doesn't replace a lawyer's COPPA review, but it's
+the companion a lawyer would want to see.
 
 ## What is set up
 

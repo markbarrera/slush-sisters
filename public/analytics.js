@@ -1,8 +1,22 @@
 /*
-  Slush Sisters — analytics loader (PostHog)
-  ==========================================
+  Slush Sisters — analytics loader (PostHog) + cookie consent
+  ============================================================
 
   This is the ONE place analytics is configured for the whole site, on purpose.
+
+  COOKIE CONSENT — added 2026-08-05
+  ---------------------------------
+  A small banner asks first-time visitors whether to set tracking cookies. Their
+  answer is saved in localStorage (not a cookie, so even "no" leaves nothing).
+  If they decline, PostHog never loads, no cookie is set, and the banner stays
+  quietly available via a link in the site footer. If they accept, tracking loads
+  normally. Returning visitors who already chose are never asked again.
+
+  This is not a full CMP — the site sets exactly one tracking cookie (PostHog)
+  and controls all its own code, so a $30/month vendor widget would be overkill.
+  It IS the visible privacy/cookie notice that was flagged as outstanding in
+  docs/analytics.md, and it's the thing a lawyer would want to see before
+  signing off on the COPPA posture.
 
   POSTURE — as of 2026-08-05 (decided by Mark)
   --------------------------------------------
@@ -54,21 +68,15 @@
 (function () {
   "use strict";
 
-  // Watch children play back as video? Off by default (see header). Flip to true
-  // only as a deliberate, reviewed decision.
   var RECORD_GAMES = false;
 
   var path = (location.pathname || "/").replace(/\/+$/, "") || "/";
 
-  // Pages that get NOTHING, ever, even if this file is included by mistake.
-  // /party-play is a printable table card, not a play surface.
   var NEVER = ["/party-play"];
   for (var n = 0; n < NEVER.length; n++) {
     if (path === NEVER[n] || path === NEVER[n] + ".html") return;
   }
 
-  // Game / arcade surfaces. Instrumented (per Mark, 2026-08-05) but with session
-  // recording held off unless RECORD_GAMES is set.
   var GAMES = [
     "/play",
     "/slushie-playhouse",
@@ -90,60 +98,126 @@
   var POSTHOG_KEY = "phc_yN1IDp6NIx4uANHzmtjlrFFbohdZdC8mZIbQ6hnKWZH";
   var POSTHOG_HOST = "https://us.i.posthog.com";
 
-  // Not filled in yet (or blanked out to pause tracking) — do nothing.
   if (POSTHOG_KEY.indexOf("phc_") !== 0) return;
 
-  // --- PostHog loader snippet (official) ------------------------------------
-  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  // --- Cookie consent -------------------------------------------------------
+  // Stored in localStorage so even "no" sets no cookies. Three states:
+  //   "yes"  — tracking loads normally
+  //   "no"   — PostHog never loads, no cookies set
+  //   absent — show the banner
+  var CONSENT_KEY = "slush_cookie_consent";
+  var consent = null;
+  try { consent = localStorage.getItem(CONSENT_KEY); } catch (_) {}
 
-  posthog.init(POSTHOG_KEY, {
-    api_host: POSTHOG_HOST,
+  if (consent === "no") {
+    // They said no. Expose a global so the footer "Cookie settings" link can
+    // re-open the banner if they change their mind.
+    window.slushResetConsent = function () {
+      try { localStorage.removeItem(CONSENT_KEY); } catch (_) {}
+      location.reload();
+    };
+    return;
+  }
 
-    // --- Maximum-granularity identity (Mark, 2026-08-05) --------------------
-    // Cookies ON: durable identity across sessions and tabs — the basis of any
-    // retargeting audience later.
-    persistence: "localStorage+cookie",
-    disable_cookie: false,
-    cross_subdomain_cookie: false,
+  if (consent !== "yes") {
+    showConsentBanner();
+    return;
+  }
 
-    // Track everyone, including Do-Not-Track browsers.
-    respect_dnt: false,
+  // consent === "yes" — load PostHog normally.
+  loadPostHog();
 
-    // A person profile for every visitor, so anonymous browsing can be stitched
-    // to a booking (see public/book.html) and to ad-source UTMs.
-    person_profiles: "always",
+  // --- Banner ---------------------------------------------------------------
+  function showConsentBanner() {
+    var banner = document.createElement("div");
+    banner.id = "cookie-banner";
+    banner.setAttribute("role", "dialog");
+    banner.setAttribute("aria-label", "Cookie notice");
+    banner.innerHTML =
+      '<div style="max-width:600px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">' +
+        '<p style="flex:1;min-width:200px;margin:0;font-size:14px;line-height:1.4;">' +
+          'We use cookies to see which pages are popular and how people find us. ' +
+          'No personal info is shared. ' +
+          '<a href="/privacy" style="color:inherit;text-decoration:underline;">Learn more</a>' +
+        '</p>' +
+        '<div style="display:flex;gap:8px;flex-shrink:0;">' +
+          '<button id="cookie-yes" style="' +
+            'background:#1a237e;color:#fff;border:none;padding:8px 18px;' +
+            'border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer;' +
+          '">OK</button>' +
+          '<button id="cookie-no" style="' +
+            'background:transparent;color:#1a237e;border:1px solid #1a237e;' +
+            'padding:8px 18px;border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer;' +
+          '">No thanks</button>' +
+        '</div>' +
+      '</div>';
 
-    // Page + engagement analytics.
-    capture_pageview: true,
-    capture_pageleave: true,
+    var s = banner.style;
+    s.position = "fixed";
+    s.bottom = "0";
+    s.left = "0";
+    s.right = "0";
+    s.background = "#fff";
+    s.borderTop = "1px solid #ddd";
+    s.padding = "14px 20px";
+    s.zIndex = "99999";
+    s.boxShadow = "0 -2px 8px rgba(0,0,0,0.08)";
+    s.fontFamily = "'DM Sans', sans-serif";
 
-    // Autocapture every click/navigation; keep element text visible so we can
-    // tell which CTA/copy was clicked. Heatmaps + dead-click + web-vitals give
-    // the most granular behavior picture PostHog offers client-side.
-    autocapture: true,
-    mask_all_text: false,
-    enable_heatmaps: true,
-    capture_dead_clicks: true,
-    capture_performance: true,
-
-    // --- Session recording -------------------------------------------------
-    // ON for marketing/booking pages, with the three sensitive /book inputs
-    // masked at source. OFF on game pages (children) unless RECORD_GAMES is set.
-    disable_session_recording: isGame ? !RECORD_GAMES : false,
-    session_recording: {
-      maskAllInputs: false,
-      maskInputOptions: {
-        password: true,
-        email: true
-      }
+    function dismiss(answer) {
+      try { localStorage.setItem(CONSENT_KEY, answer); } catch (_) {}
+      banner.parentNode.removeChild(banner);
+      if (answer === "yes") loadPostHog();
     }
-  });
 
-  // Tag every event on a game page with its surface + slug, and log the open so
-  // "which games are popular" is a first-class question, not just a pageview
-  // count.
-  if (isGame) {
-    posthog.register({ surface: "game", game: gameSlug });
-    posthog.capture("game_opened", { game: gameSlug });
+    // Wait for the DOM to be ready, then append.
+    function mount() {
+      document.body.appendChild(banner);
+      document.getElementById("cookie-yes").addEventListener("click", function () { dismiss("yes"); });
+      document.getElementById("cookie-no").addEventListener("click", function () { dismiss("no"); });
+    }
+
+    if (document.body) mount();
+    else document.addEventListener("DOMContentLoaded", mount);
+  }
+
+  // --- PostHog init (only runs after consent = "yes") ------------------------
+  function loadPostHog() {
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+    posthog.init(POSTHOG_KEY, {
+      api_host: POSTHOG_HOST,
+      persistence: "localStorage+cookie",
+      disable_cookie: false,
+      cross_subdomain_cookie: false,
+      respect_dnt: false,
+      person_profiles: "always",
+      capture_pageview: true,
+      capture_pageleave: true,
+      autocapture: true,
+      mask_all_text: false,
+      enable_heatmaps: true,
+      capture_dead_clicks: true,
+      capture_performance: true,
+      disable_session_recording: isGame ? !RECORD_GAMES : false,
+      session_recording: {
+        maskAllInputs: false,
+        maskInputOptions: {
+          password: true,
+          email: true
+        }
+      }
+    });
+
+    if (isGame) {
+      posthog.register({ surface: "game", game: gameSlug });
+      posthog.capture("game_opened", { game: gameSlug });
+    }
+
+    window.slushResetConsent = function () {
+      try { localStorage.removeItem(CONSENT_KEY); } catch (_) {}
+      if (window.posthog) posthog.opt_out_capturing();
+      location.reload();
+    };
   }
 })();

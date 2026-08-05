@@ -43,20 +43,18 @@
   // Paired with BOOKING_ENDPOINT = '/api/book' in public/book.html.
   "send_email": [
     { "name": "BOOKING_EMAIL", "destination_address": "mark@markbarrera.com" }
-  ]
+  ],
 
   // Business database (Cloudflare D1) — the Cockpit + Open Ledger source of
-  // truth. COMMENTED until the database is created once in Mark's account,
-  // because deploying a binding to a database that does not exist fails the
-  // deploy. To turn on: create it and apply the schema (see
-  // docs/business-dashboard.md), then un-comment this block and fill in the id
-  // that `wrangler d1 create` prints.
-  //
-  // "d1_databases": [
-  //   {
-  //     "binding": "DB",
-  //     "database_name": "slush_business",
-  //     "database_id": "PASTE-THE-ID-FROM-wrangler-d1-create"
-  //   }
-  // ]
+  // truth. Created 2026-08-05 via `wrangler d1 create slush_business`; schema
+  // applied from migrations/0001_business.sql. The Worker writes each booking
+  // to D1 alongside the email it already sends, and the Cockpit + /ledger read
+  // from it.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "slush_business",
+      "database_id": "5a330fb8-e392-4f5b-92ee-3f52313c0663"
+    }
+  ]
 }
