@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Slushie Catch — a Slush Sisters game</title>
+<style>
+/* ---------------------------------------------------------------------------
+   SLUSHIE CATCH — move Slushie side to side and catch the falling fruit and
+   candy in the cup. Dodge the sour lemons and the ice cubes. A moving,
+   reacting character, not a button. Orphaned arcade page: noindex, no
+   analytics, nothing collected. High score in localStorage, on the device.
+   All DOM + CSS + requestAnimationFrame — no canvas, no libraries, no images.
+--------------------------------------------------------------------------- */
+:root{
+  --brand:#1a237e; --ice:#4fc3f7; --ice-deep:#0277bd; --wash:#e8f4fd;
+  --pop:#ff4081; --ink-pink:#c2185b; --good:#2e7d32; --bad:#c62828;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;color:var(--brand);
+  background:linear-gradient(180deg,#cfeafd 0%,#e3f2fd 55%,#f5e6ef 100%);
+  user-select:none;-webkit-user-select:none;touch-action:none;}
+.stage{width:100%;max-width:520px;height:100%;margin:0 auto;position:relative;overflow:hidden;}
+
+.bar{position:absolute;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;
+  justify-content:space-between;padding:11px 14px;font-weight:800;}
+.bar a{color:var(--ice-deep);text-decoration:none;font-size:.86rem;}
+.bar .sc{font-size:1rem;font-variant-numeric:tabular-nums;}
+.bar .lv{font-size:1rem;letter-spacing:1px;}
+
+.field{position:absolute;inset:0;overflow:hidden;}
+.item{position:absolute;font-size:2rem;will-change:transform;z-index:2;line-height:1;}
+.item.pop{animation:pop .3s forwards;}
+
+.player{position:absolute;bottom:14px;width:96px;height:104px;z-index:4;
+  transition:transform .04s linear;will-change:left;}
+.player .cup{position:absolute;inset:0;}
+.player .glass{position:absolute;inset:0 8px;border:5px solid var(--brand);border-top:none;
+  background:rgba(255,255,255,.55);border-radius:10px 10px 22px 22px;overflow:hidden;}
+.player .cf{position:absolute;left:0;right:0;bottom:0;height:38%;background:var(--ice);transition:height .25s;}
+.player .cf::after{content:"";position:absolute;top:-5px;left:0;right:0;height:10px;background:inherit;border-radius:50%;filter:brightness(1.08);}
+.player .eyes{position:absolute;top:44%;left:0;right:0;display:flex;justify-content:center;gap:14px;z-index:3;}
+.player .eye{width:18px;height:21px;background:#fff;border:3px solid var(--brand);border-radius:50%;position:relative;}
+.player .eye::after{content:"";position:absolute;width:8px;height:8px;background:var(--brand);border-radius:50%;left:50%;top:55%;transform:translate(-50%,-50%);}
+.player .mouth{position:absolute;top:64%;left:50%;transform:translateX(-50%);width:22px;height:11px;
+  border:0 solid var(--brand);border-bottom-width:4px;border-radius:0 0 30px 30px;z-index:3;}
+.player.happy{animation:squish .28s;}
+.player.happy .mouth{height:14px;}
+.player.ow{animation:shake .32s;}
+.player.ow .mouth{width:16px;height:16px;border:4px solid var(--brand);border-radius:50%;top:60%;}
+.player .straw{position:absolute;top:-16px;left:60%;width:7px;height:40px;background:var(--pop);border-radius:4px;transform:rotate(12deg);}
+
+.splash{position:absolute;font-weight:800;font-size:1.1rem;z-index:5;pointer-events:none;
+  animation:rise .7s ease-out forwards;text-shadow:0 1px 0 #fff;}
+
+.screen{position:absolute;inset:0;background:linear-gradient(180deg,#dceffd,#f5e6ef);z-index:10;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;gap:7px;}
+.screen.hide{display:none;}
+.screen .em{font-size:3.4rem;}
+.screen h1{font-size:2.5rem;font-weight:800;line-height:1;}
+.screen h1 span{color:var(--ice-deep);}
+.screen .sub{font-size:1rem;font-weight:600;color:var(--ink-pink);max-width:300px;}
+.screen .rules{font-size:.86rem;color:#5a6580;font-weight:600;line-height:1.5;max-width:300px;}
+.screen .final{font-size:1.05rem;font-weight:700;margin:2px;}
+.screen .best{font-size:.9rem;color:#6a7690;font-weight:700;}
+.go{border:none;border-radius:99px;padding:15px 36px;font-family:inherit;font-weight:800;font-size:1.2rem;
+  color:#fff;background:var(--good);box-shadow:0 6px 0 #1b5e20;margin-top:10px;}
+.go:active{transform:translateY(3px);box-shadow:0 3px 0 #1b5e20;}
+.foot{position:absolute;bottom:16px;font-size:.74rem;color:#8a95ad;font-weight:600;}
+.foot a{color:var(--ice-deep);text-decoration:none;}
+.float{animation:bob 2.6s ease-in-out infinite;}
+
+@keyframes pop{0%{transform:scale(1)}100%{transform:scale(1.8);opacity:0}}
+@keyframes squish{0%{transform:scale(1,1)}30%{transform:scale(1.16,.84)}60%{transform:scale(.92,1.1)}100%{transform:scale(1,1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes rise{0%{opacity:0;transform:translateY(0) scale(.6)}25%{opacity:1;transform:translateY(-8px) scale(1.1)}100%{opacity:0;transform:translateY(-46px)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@media(prefers-reduced-motion:reduce){.float{animation:none;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="bar">
+    <a href="/play">‹ Arcade</a>
+    <div class="sc">Score <b id="score">0</b></div>
+    <div class="lv" id="lives">❤️❤️❤️</div>
+  </div>
+
+  <div class="field" id="field"></div>
+
+  <div class="player" id="player">
+    <div class="cup">
+      <div class="straw"></div>
+      <div class="glass"><div class="cf" id="cf"></div></div>
+      <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+      <div class="mouth"></div>
+    </div>
+  </div>
+
+  <div class="screen" id="startScreen">
+    <div class="em float">🥤</div>
+    <h1>Slushie <span>Catch</span></h1>
+    <p class="sub">Catch the good stuff. Dodge the sour lemons.</p>
+    <p class="rules">Slide your finger to move Slushie. Catch fruit and candy in the cup — but a sour lemon 🍋 or an ice cube 🧊 costs a heart!</p>
+    <button class="go" id="startBtn">Start catching</button>
+    <div class="foot"><a href="/play">‹ Arcade</a> · made by Harper &amp; Finley</div>
+  </div>
+
+  <div class="screen hide" id="overScreen">
+    <div class="em" id="overEm">🥤</div>
+    <h1 id="overTitle">Nice catch!</h1>
+    <p class="final" id="overFinal">Score: 0</p>
+    <p class="best" id="overBest">Best: 0</p>
+    <p class="rules" id="overMsg"></p>
+    <button class="go" id="againBtn">Play again</button>
+    <div class="foot"><a href="/play">‹ Arcade</a> · want the real thing? <a href="/book">Book a party</a></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  var AC=null;
+  function beep(f,d,t,v){try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
+    var o=AC.createOscillator(),g=AC.createGain();o.type=t||'sine';o.frequency.value=f;g.gain.value=v||.05;
+    o.connect(g);g.connect(AC.destination);var x=AC.currentTime;o.start(x);
+    g.gain.exponentialRampToValueAtTime(.0001,x+(d||.1));o.stop(x+(d||.1));}catch(e){}}
+
+  var GOOD=['🍉','🍓','🫐','🥭','🍈','🍒','🍬','⭐','🌈','🍭'];
+  var BAD=['🍋','🧊'];
+  var stage=$('stage'), field=$('field'), player=$('player');
+  var W=0,H=0,px=0,targetX=0;
+  var S={running:false,score:0,lives:3,items:[],raf:0,spawnT:0,speed:1,last:0};
+  var BEST=parseInt(localStorage.getItem('slushcatch_best')||'0',10)||0;
+
+  function measure(){ W=stage.clientWidth; H=stage.clientHeight; }
+  window.addEventListener('resize', function(){ measure(); clampPlayer(); });
+
+  function clampPlayer(){
+    var half=player.offsetWidth/2;
+    px=Math.max(half, Math.min(W-half, px));
+    player.style.left=(px-half)+'px';
+  }
+  function moveTo(x){ targetX=x; }
+
+  stage.addEventListener('pointermove', function(e){ if(S.running) moveTo(e.clientX - stage.getBoundingClientRect().left); });
+  stage.addEventListener('pointerdown', function(e){ if(S.running) moveTo(e.clientX - stage.getBoundingClientRect().left); });
+  document.addEventListener('keydown', function(e){
+    if(!S.running) return;
+    if(e.key==='ArrowLeft') moveTo(targetX-40);
+    if(e.key==='ArrowRight') moveTo(targetX+40);
+  });
+
+  function spawn(){
+    var bad = Math.random() < 0.22;
+    var emoji = bad ? BAD[Math.floor(Math.random()*BAD.length)] : GOOD[Math.floor(Math.random()*GOOD.length)];
+    var el=document.createElement('div'); el.className='item'; el.textContent=emoji;
+    var x=30+Math.random()*(W-60);
+    el.style.left=(x-16)+'px'; el.style.top='-40px';
+    field.appendChild(el);
+    S.items.push({el:el,x:x,y:-40,vy:(120+Math.random()*60)*S.speed,bad:bad,ice:emoji==='🧊',dead:false});
+  }
+
+  function splash(text,x,y,color){
+    var s=document.createElement('div'); s.className='splash'; s.textContent=text;
+    s.style.color=color; s.style.left=(x-14)+'px'; s.style.top=y+'px';
+    field.appendChild(s); setTimeout(function(){s.remove();},720);
+  }
+
+  function loop(ts){
+    if(!S.running) return;
+    if(!S.last) S.last=ts;
+    var dt=Math.min(0.05,(ts-S.last)/1000); S.last=ts;
+
+    // ease player toward target
+    px += (targetX-px)*Math.min(1,dt*14);
+    clampPlayer();
+
+    // spawn
+    S.spawnT-=dt;
+    if(S.spawnT<=0){ spawn(); S.spawnT=Math.max(0.42, 1.05 - S.score*0.006); }
+
+    var catchY=H-90, half=player.offsetWidth/2;
+    for(var i=S.items.length-1;i>=0;i--){
+      var it=S.items[i];
+      it.y += it.vy*dt;
+      it.el.style.transform='translateY('+ (it.y - (-40)) +'px)';
+      if(!it.dead && it.y>=catchY && it.y<=catchY+70 && Math.abs(it.x-px)<half+14){
+        it.dead=true;
+        if(it.bad){ hurt(it.ice); splash('✖',it.x,catchY-10,'#c62828'); }
+        else { good(it.x); splash('+10',it.x,catchY-10,'#2e7d32'); }
+        it.el.classList.add('pop'); (function(el){ setTimeout(function(){el.remove();},280); })(it.el);
+        S.items.splice(i,1); continue;
+      }
+      if(it.y>H+50){ it.el.remove(); S.items.splice(i,1); }
+    }
+    S.raf=requestAnimationFrame(loop);
+  }
+
+  function good(x){
+    S.score+=10; $('score').textContent=S.score;
+    S.speed=1+S.score*0.004;
+    beep(560+Math.random()*120,.07,'triangle');
+    player.classList.remove('happy'); void player.offsetWidth; player.classList.add('happy');
+    var cf=$('cf'); var h=parseFloat(cf.style.height)||38; cf.style.height=Math.min(80,h+4)+'%';
+  }
+  function hurt(ice){
+    S.lives--; $('lives').textContent=['','❤️','❤️❤️','❤️❤️❤️'][Math.max(0,S.lives)]||'';
+    beep(ice?150:190,.22,'sawtooth');
+    player.classList.remove('ow'); void player.offsetWidth; player.classList.add('ow');
+    if(S.lives<=0) over();
+  }
+
+  function start(){
+    measure();
+    S.running=true; S.score=0; S.lives=3; S.items=[]; S.speed=1; S.spawnT=0; S.last=0;
+    field.innerHTML=''; $('score').textContent='0'; $('lives').textContent='❤️❤️❤️';
+    $('cf').style.height='38%';
+    px=W/2; targetX=W/2; clampPlayer();
+    $('startScreen').classList.add('hide'); $('overScreen').classList.add('hide');
+    try{ if(AC&&AC.state==='suspended')AC.resume(); }catch(e){}
+    cancelAnimationFrame(S.raf); S.raf=requestAnimationFrame(loop);
+  }
+  function over(){
+    S.running=false; cancelAnimationFrame(S.raf);
+    if(S.score>BEST){ BEST=S.score; localStorage.setItem('slushcatch_best',String(BEST)); }
+    var nb=S.score>=BEST&&S.score>0;
+    $('overTitle').textContent=nb?'New best!':'Nice catch!';
+    $('overEm').textContent=nb?'🏆':(S.score>150?'😎':'🥤');
+    $('overFinal').textContent='Score: '+S.score;
+    $('overBest').textContent='Best ever: '+BEST;
+    $('overMsg').textContent=S.score<60?'Warm-up. Slide faster and stay under the fruit.':(S.score<180?'Good hands! Go again.':'Whoa — pro catcher.');
+    $('overScreen').classList.remove('hide');
+  }
+
+  $('startBtn').addEventListener('click', start);
+  $('againBtn').addEventListener('click', start);
+  measure();
+
+  window.__catch={ state:S, start:start, moveTo:moveTo,
+    spawnAt:function(bad,x){ var e=document.createElement('div');e.className='item';e.textContent=bad?'🍋':'🍓';
+      e.style.left=(x-16)+'px';e.style.top='-40px';field.appendChild(e);
+      S.items.push({el:e,x:x,y:H-92,vy:200,bad:!!bad,ice:false,dead:false}); },
+    playerX:function(){ return px; } };
+})();
+</script>
+</body>
+</html>

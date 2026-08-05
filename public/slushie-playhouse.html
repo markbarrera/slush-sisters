@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Slushie's Playhouse — a Slush Sisters toy</title>
+<style>
+/* ---------------------------------------------------------------------------
+   SLUSHIE'S PLAYHOUSE — a toy, not a game (the Toca Boca kind). No score, no
+   timer, no winning. You make a slushie — pour flavors that mix, drop candy,
+   add a straw — then hand it to Slushie, who drinks it and REACTS to what you
+   made. Poke Slushie and it giggles; drag it and it wobbles.
+   Orphaned like the rest of the arcade: noindex, no analytics, no cookies,
+   nothing collected. All DOM + CSS + JS — no canvas, no libraries, no images.
+--------------------------------------------------------------------------- */
+:root{
+  --brand:#1a237e; --ice:#4fc3f7; --ice-deep:#0277bd; --wash:#e8f4fd;
+  --pop:#ff4081; --ink-pink:#c2185b; --good:#2e7d32; --cream:#fff7fb;
+  --watermelon:#ff5c72; --strawberry:#ff8fa0; --blue:#3fb9ef;
+  --mango:#ffc23d; --lime:#7ed957; --grape:#b06cf0;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;color:var(--brand);
+  background:linear-gradient(180deg,#e7f5fe 0%,#eaf4fd 46%,#fdeef5 100%);
+  user-select:none;-webkit-user-select:none;touch-action:manipulation;}
+.stage{width:100%;max-width:480px;height:100%;margin:0 auto;position:relative;
+  display:flex;flex-direction:column;padding:0 12px;}
+button{font-family:inherit;cursor:pointer;}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;padding:11px 4px 2px;}
+.bar .wm{font-weight:800;font-size:1.05rem;}
+.bar .wm span{color:var(--ice-deep);}
+.bar a{color:var(--ice-deep);text-decoration:none;font-weight:800;font-size:.86rem;}
+
+/* ---- THE SCENE: Slushie on the counter ---- */
+.scene{flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;
+  min-height:0;padding-bottom:4px;}
+.counter{position:absolute;left:-12px;right:-12px;bottom:0;height:34px;
+  background:linear-gradient(180deg,#ffd9ea,#ffc6df);border-top:4px solid #f49ec0;border-radius:8px;}
+.speech{position:absolute;top:6px;left:50%;transform:translateX(-50%) scale(.6);opacity:0;
+  background:#fff;border:3px solid var(--brand);border-radius:16px;padding:7px 14px;
+  font-weight:800;font-size:1rem;white-space:nowrap;box-shadow:0 5px 14px rgba(26,35,126,.16);z-index:9;}
+.speech.show{animation:say 1.9s ease forwards;}
+.speech::after{content:"";position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);
+  border:8px solid transparent;border-top-color:var(--brand);}
+
+/* Slushie the character (built from DOM so the face can move) */
+.char{position:relative;width:150px;height:186px;margin-bottom:26px;z-index:5;
+  touch-action:none;cursor:grab;transition:transform .18s cubic-bezier(.3,1.6,.5,1);}
+.char.grab{cursor:grabbing;transition:none;}
+.char .shadow{position:absolute;left:50%;bottom:-8px;width:110px;height:16px;transform:translateX(-50%);
+  background:rgba(26,35,126,.16);border-radius:50%;filter:blur(2px);z-index:0;}
+.char .bob{position:absolute;inset:0;animation:bob 3s ease-in-out infinite;}
+.char.react .bob{animation:none;}
+.body{position:absolute;left:8px;right:8px;top:22px;bottom:0;background:rgba(255,255,255,.5);
+  border:5px solid var(--brand);border-radius:14px 14px 30px 30px;overflow:hidden;z-index:2;}
+.slush{position:absolute;left:0;right:0;bottom:0;height:70%;background:var(--lime);
+  transition:background .5s ease,height .4s ease;}
+.slush::before{content:"";position:absolute;top:-7px;left:0;right:0;height:14px;background:inherit;
+  border-radius:50%;filter:brightness(1.07);}
+.dome{position:absolute;top:6px;left:14px;right:14px;height:34px;background:var(--lime);
+  border:5px solid var(--brand);border-radius:50% 50% 46% 46%;z-index:3;transition:background .5s ease;}
+.straw2{position:absolute;top:-20px;right:38px;width:9px;height:60px;background:var(--pop);
+  border-radius:5px;transform:rotate(13deg);z-index:1;}
+/* face sits on the body */
+.face{position:absolute;left:0;right:0;top:64px;z-index:4;}
+.eyes{display:flex;justify-content:center;gap:20px;}
+.eye{width:26px;height:30px;background:#fff;border:3px solid var(--brand);border-radius:50%;
+  position:relative;overflow:hidden;}
+.eye .pupil{position:absolute;width:12px;height:12px;background:var(--brand);border-radius:50%;
+  left:50%;top:52%;transform:translate(-50%,-50%);transition:transform .15s;}
+.char.blink .eye{animation:blink .18s;}
+.cheeks{display:flex;justify-content:center;gap:52px;margin-top:2px;}
+.cheek{width:15px;height:11px;background:var(--strawberry);border-radius:50%;opacity:.6;}
+.mouth{width:34px;height:17px;margin:5px auto 0;border:0 solid var(--brand);
+  border-bottom-width:5px;border-radius:0 0 40px 40px;transition:all .18s;}
+/* expressions */
+.char[data-face="happy"] .mouth{width:38px;height:20px;border-bottom-width:6px;}
+.char[data-face="slurp"] .mouth{width:20px;height:20px;border:5px solid var(--brand);border-radius:50%;}
+.char[data-face="freeze"] .mouth{width:24px;height:24px;border:5px solid var(--brand);border-radius:50%;}
+.char[data-face="rush"] .mouth{width:40px;height:22px;border-bottom-width:6px;border-radius:40px;}
+.char[data-face="giggle"] .mouth{width:40px;height:8px;border-bottom-width:6px;border-radius:0 0 30px 30px;}
+.char[data-face="confused"] .mouth{width:20px;height:10px;border-bottom-width:5px;border-radius:40px;transform:rotate(-12deg);}
+.char[data-face="rush"] .eye .pupil,.char[data-face="giggle"] .eye .pupil{animation:spin .5s linear infinite;}
+.char[data-face="freeze"] .eye .pupil{transform:translate(-50%,-70%);}
+/* motion states */
+.char.squish .bob{animation:squish .34s;}
+.char.shiver{animation:shiver .12s linear 0s 12;}
+.char.rushmove{animation:rushmove .28s ease-in-out 0s 7;}
+.char.hop .bob{animation:hop .5s ease;}
+.react-em{position:absolute;top:-30px;left:50%;transform:translateX(-50%) scale(0);
+  font-size:2.4rem;z-index:8;}
+.react-em.show{animation:pop-em 1.9s ease forwards;}
+
+/* ---- THE CUP you build ---- */
+.maker{flex-shrink:0;display:flex;align-items:flex-end;gap:14px;padding:2px 6px 6px;justify-content:center;}
+.cupwrap{position:relative;width:96px;height:118px;flex-shrink:0;}
+.cup{position:absolute;inset:0;transition:transform .3s;}
+.cup.give{animation:give 1s ease forwards;}
+.cup .glass{position:absolute;inset:0;border:4px solid #bcd6e8;border-top:none;background:rgba(255,255,255,.5);
+  border-radius:8px 8px 18px 18px;overflow:hidden;}
+.cup .cfill{position:absolute;left:0;right:0;bottom:0;height:0%;background:var(--lime);transition:height .25s,background .3s;}
+.cup .cfill.pour{animation:jiggle .5s;}
+.cup .cfill::after{content:"";position:absolute;top:-5px;left:0;right:0;height:10px;background:inherit;border-radius:50%;filter:brightness(1.08);}
+.cup .tops{position:absolute;left:0;right:0;top:-6px;height:34px;pointer-events:none;}
+.cup .top{position:absolute;font-size:1.15rem;bottom:0;}
+.cup .top.drop{animation:plop .4s;}
+.cup .straw{position:absolute;top:-22px;left:58%;width:7px;height:46px;background:var(--pop);
+  border-radius:4px;transform:rotate(12deg);display:none;}
+.cup .straw.on{display:block;}
+.stream{position:absolute;top:-40px;width:8px;height:0;border-radius:4px;opacity:0;left:50%;transform:translateX(-50%);}
+.stream.on{animation:stream .35s;}
+
+/* ---- TOOLS ---- */
+.tools{flex-shrink:0;padding:2px 2px 12px;}
+.row{display:flex;gap:7px;margin-bottom:7px;}
+.flav{flex:1;border:none;border-radius:14px;height:52px;color:#fff;font-weight:800;font-size:.8rem;
+  box-shadow:0 4px 0 rgba(0,0,0,.16);transition:transform .06s,box-shadow .06s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1;}
+.flav .e{font-size:1.15rem;}
+.flav:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.16);}
+.cbtn{flex:1;border:none;border-radius:13px;height:46px;background:#fff;font-size:1.5rem;
+  box-shadow:0 4px 0 rgba(26,35,126,.12);transition:transform .06s,box-shadow .06s;}
+.cbtn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(26,35,126,.12);}
+.acts{display:flex;gap:8px;}
+.act{flex:1;border:none;border-radius:14px;height:50px;font-weight:800;font-size:.98rem;color:#fff;
+  box-shadow:0 4px 0 rgba(0,0,0,.18);transition:transform .06s,box-shadow .06s;
+  display:flex;align-items:center;justify-content:center;gap:6px;}
+.act:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.18);}
+.act.give{flex:2.2;background:var(--good);box-shadow:0 4px 0 #1b5e20;}
+.act.straw{background:var(--ice-deep);box-shadow:0 4px 0 #01517f;}
+.act.trash{background:#90a4bd;box-shadow:0 4px 0 #6c7d97;flex:.9;font-size:1.3rem;}
+.hintbar{text-align:center;font-size:.8rem;font-weight:700;color:var(--ink-pink);min-height:18px;margin:1px 0 6px;}
+
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes blink{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.1)}}
+@keyframes squish{0%{transform:scale(1,1)}30%{transform:scale(1.16,.84)}60%{transform:scale(.9,1.12)}100%{transform:scale(1,1)}}
+@keyframes shiver{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-4px) rotate(-2deg)}75%{transform:translateX(4px) rotate(2deg)}}
+@keyframes rushmove{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(4deg)}}
+@keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-30px)}}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes pop-em{0%{opacity:0;transform:translateX(-50%) scale(0)}18%{opacity:1;transform:translateX(-50%) scale(1.3)}80%{opacity:1;transform:translateX(-50%) scale(1) translateY(-6px)}100%{opacity:0;transform:translateX(-50%) scale(1) translateY(-16px)}}
+@keyframes say{0%{opacity:0;transform:translateX(-50%) scale(.6)}16%{opacity:1;transform:translateX(-50%) scale(1)}82%{opacity:1}100%{opacity:0;transform:translateX(-50%) scale(1)}}
+@keyframes jiggle{0%,100%{transform:scaleX(1)}30%{transform:scaleX(1.08) skewX(-3deg)}60%{transform:scaleX(.96)}}
+@keyframes plop{0%{transform:translateY(-22px) scale(.5)}60%{transform:translateY(2px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@keyframes stream{0%{opacity:1;height:0}60%{opacity:1;height:48px}100%{opacity:0;height:48px}}
+@keyframes give{0%{transform:translate(0,0) rotate(0)}55%{transform:translate(-6px,-120px) rotate(-8deg) scale(.9)}100%{opacity:0;transform:translate(-6px,-150px) rotate(-14deg) scale(.7)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;}}
+@media(max-height:680px){.char{width:128px;height:160px;}.cupwrap{height:104px;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="stage">
+
+  <div class="bar">
+    <a href="/play">‹ Arcade</a>
+    <div class="wm">Slushie's <span>Playhouse</span></div>
+    <a href="/" style="visibility:hidden">.</a>
+  </div>
+
+  <div class="scene" id="scene">
+    <div class="counter"></div>
+    <div class="speech" id="speech">Hi!</div>
+    <div class="char" id="char" data-face="happy">
+      <div class="shadow"></div>
+      <div class="react-em" id="reactEm"></div>
+      <div class="bob">
+        <div class="straw2"></div>
+        <div class="dome" id="charDome"></div>
+        <div class="body"><div class="slush" id="charSlush"></div></div>
+        <div class="face">
+          <div class="eyes">
+            <div class="eye"><div class="pupil"></div></div>
+            <div class="eye"><div class="pupil"></div></div>
+          </div>
+          <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+          <div class="mouth"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="maker">
+    <div class="cupwrap">
+      <div class="stream" id="stream"></div>
+      <div class="cup" id="cup">
+        <div class="glass"><div class="cfill" id="cfill"></div></div>
+        <div class="tops" id="tops"></div>
+        <div class="straw" id="cupStraw"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hintbar" id="hint">Pour a flavor, add some candy, then give it to Slushie!</div>
+
+  <div class="tools">
+    <div class="row" id="flavRow"></div>
+    <div class="row" id="candyRow"></div>
+    <div class="acts">
+      <button class="act straw" id="strawBtn">🥤 Straw</button>
+      <button class="act give" id="giveBtn">Give to Slushie</button>
+      <button class="act trash" id="trashBtn">🗑️</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+
+  /* ---- audio (no files) ---- */
+  var AC=null;
+  function tone(freq,dur,type,vol){
+    try{ if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
+      var o=AC.createOscillator(),g=AC.createGain();
+      o.type=type||'sine';o.frequency.value=freq;g.gain.value=vol||.05;
+      o.connect(g);g.connect(AC.destination);var t=AC.currentTime;o.start(t);
+      g.gain.exponentialRampToValueAtTime(.0001,t+(dur||.1));o.stop(t+(dur||.1));
+    }catch(e){}
+  }
+  function slide(f1,f2,dur){
+    try{ if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();
+      var o=AC.createOscillator(),g=AC.createGain();o.type='sine';
+      var t=AC.currentTime;o.frequency.setValueAtTime(f1,t);o.frequency.linearRampToValueAtTime(f2,t+dur);
+      g.gain.value=.05;o.connect(g);g.connect(AC.destination);o.start(t);
+      g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.stop(t+dur);
+    }catch(e){}
+  }
+  function resume(){ try{ if(AC&&AC.state==='suspended')AC.resume(); }catch(e){} }
+
+  /* ---- content ---- */
+  var FLAVORS=[
+    {id:'watermelon',name:'Watermelon',e:'🍉',hex:'#ff5c72'},
+    {id:'strawberry',name:'Strawberry',e:'🍓',hex:'#ff8fa0'},
+    {id:'blue',      name:'Blue Rasp', e:'🫐',hex:'#3fb9ef',icy:true},
+    {id:'mango',     name:'Mango',     e:'🥭',hex:'#ffc23d'},
+    {id:'lime',      name:'Lime',      e:'🍈',hex:'#7ed957'},
+    {id:'grape',     name:'Grape',     e:'🍇',hex:'#b06cf0'}
+  ];
+  var CANDIES=['🐻','🪱','⭐','🍬','🌈','🍒'];
+
+  /* ---- state ---- */
+  var cup={fill:0, colors:[], candy:0, icy:0, straw:false, dominant:null};
+  var busy=false;
+
+  function mixHex(hexes){
+    if(!hexes.length) return '#7ed957';
+    var r=0,g=0,b=0;
+    hexes.forEach(function(h){ r+=parseInt(h.substr(1,2),16); g+=parseInt(h.substr(3,2),16); b+=parseInt(h.substr(5,2),16); });
+    var n=hexes.length;
+    function h2(x){ x=Math.round(x/n).toString(16); return x.length<2?'0'+x:x; }
+    return '#'+h2(r)+h2(g)+h2(b);
+  }
+
+  /* ---- build the tool buttons ---- */
+  FLAVORS.forEach(function(f){
+    var b=document.createElement('button');
+    b.className='flav'; b.style.background=f.hex;
+    b.innerHTML='<span class="e">'+f.e+'</span>'+f.name;
+    b.addEventListener('click',function(){ pour(f); });
+    $('flavRow').appendChild(b);
+  });
+  CANDIES.forEach(function(c){
+    var b=document.createElement('button');
+    b.className='cbtn'; b.textContent=c;
+    b.addEventListener('click',function(){ addCandy(c); });
+    $('candyRow').appendChild(b);
+  });
+
+  /* ---- pour ---- */
+  function pour(f){
+    resume();
+    if(cup.fill>=100){ setHint("That cup is full! Give it to Slushie."); return; }
+    cup.fill=Math.min(100, cup.fill+20);
+    cup.colors.push(f.hex);
+    if(f.icy) cup.icy++;
+    cup.dominant=f;
+    var col=mixHex(cup.colors);
+    var cf=$('cfill'); cf.style.background=col; cf.style.height=cup.fill+'%';
+    cf.classList.remove('pour'); void cf.offsetWidth; cf.classList.add('pour');
+    var s=$('stream'); s.style.background=f.hex; s.classList.remove('on'); void s.offsetWidth; s.classList.add('on');
+    slide(300,520,.3);
+    setHint(cup.fill>=100?"Full! Add candy or give it over.":"Mmm, "+f.name.toLowerCase()+". Add more, or candy!");
+  }
+
+  /* ---- candy ---- */
+  function addCandy(c){
+    resume();
+    if(cup.candy>=6){ setHint("That is a LOT of candy already 😄"); return; }
+    cup.candy++;
+    var t=document.createElement('span'); t.className='top drop'; t.textContent=c;
+    t.style.left=(8+Math.random()*66)+'%'; t.style.bottom=(Math.random()*10)+'px';
+    $('tops').appendChild(t);
+    tone(660+Math.random()*120,.09,'triangle'); tone(880,.08,'sine',.03);
+    setHint(cup.candy>=4?"Candy overload! Slushie is gonna be wired 🤪":"Nice. More candy? A straw? Then give it over.");
+  }
+
+  /* ---- straw toggle ---- */
+  $('strawBtn').addEventListener('click',function(){
+    resume(); cup.straw=!cup.straw;
+    $('cupStraw').classList.toggle('on',cup.straw);
+    tone(cup.straw?520:300,.08,'square',.04);
+  });
+
+  /* ---- give to Slushie: the payoff ---- */
+  function give(){
+    if(busy) return;
+    resume();
+    if(cup.fill<=0){ react('confused'); return; }
+    busy=true;
+    var col=mixHex(cup.colors);
+    $('cup').classList.add('give');
+    setHint('Here you go, Slushie...');
+    setTimeout(function(){
+      // Slushie drinks: body fills with the color, slurp face
+      var ch=$('char'); ch.setAttribute('data-face','slurp');
+      $('charSlush').style.background=col; $('charDome').style.background=col;
+      $('charSlush').style.height='86%';
+      slide(500,240,.5); tone(240,.12,'sawtooth',.03);
+      setTimeout(decideReaction, 650);
+    }, 620);
+  }
+
+  function decideReaction(){
+    var r;
+    if(cup.icy>=2 || (cup.icy>=1 && cup.fill>=80)) r='freeze';
+    else if(cup.candy>=4) r='rush';
+    else if(cup.candy>=1 || cup.colors.length) r='happy';
+    else r='confused';
+    react(r);
+  }
+
+  var LINES={
+    freeze:['Brrr! Brain freeze!','So COLD! 🥶','Ow ow ow, my head!'],
+    rush:['WOO! So much candy!','I can see SOUNDS!','Zoooom! 🤪'],
+    happy:['Mmmm, so good!','Yummy! Make another?','That hit the spot 😋'],
+    confused:['Um... the cup is empty!','There is nothing in here 🤨','You forgot the slushie!'],
+    giggle:['Hehe! That tickles!','Boop! 😄','Hee hee!']
+  };
+
+  function react(kind){
+    var ch=$('char');
+    ch.classList.add('react');
+    ch.setAttribute('data-face', kind==='confused'?'confused':(kind==='giggle'?'giggle':kind));
+    var em={freeze:'🥶',rush:'🤪',happy:'😋',confused:'🤨',giggle:'😆'}[kind]||'😋';
+    showEm(em); say(pick(LINES[kind]||LINES.happy));
+
+    if(kind==='freeze'){ ch.classList.add('shiver'); tone(180,.15,'square',.04); setTimeout(function(){tone(150,.2,'square',.03);},160); }
+    else if(kind==='rush'){ ch.classList.add('rushmove'); tone(700,.07); setTimeout(function(){tone(900,.07);},90); setTimeout(function(){tone(1150,.09);},180); }
+    else if(kind==='happy'){ ch.classList.add('hop'); tone(620,.1); setTimeout(function(){tone(820,.12);},110); }
+    else if(kind==='giggle'){ ch.classList.add('squish'); tone(760,.06,'triangle'); setTimeout(function(){tone(980,.07,'triangle');},80); }
+    else { tone(300,.12,'sine'); }
+
+    setTimeout(function(){
+      ch.classList.remove('shiver','rushmove','hop','squish','react');
+      ch.setAttribute('data-face','happy');
+      if(kind!=='giggle' && kind!=='confused') resetCup();
+      busy=false;
+    }, 2000);
+  }
+
+  function resetCup(){
+    cup={fill:0,colors:[],candy:0,icy:0,straw:false,dominant:null};
+    $('cfill').style.height='0%';
+    $('tops').innerHTML=''; $('cupStraw').classList.remove('on');
+    var c=$('cup'); c.classList.remove('give'); c.style.opacity='1';
+    setHint('Make another one! Pour, add candy, give it over.');
+  }
+
+  /* ---- poke + drag Slushie directly ---- */
+  var drag={on:false,sx:0,sy:0,moved:false};
+  var charEl=$('char');
+  charEl.addEventListener('pointerdown',function(e){
+    if(busy) return;
+    drag.on=true; drag.moved=false; drag.sx=e.clientX; drag.sy=e.clientY;
+    charEl.classList.add('grab'); try{charEl.setPointerCapture(e.pointerId);}catch(_){}
+  });
+  charEl.addEventListener('pointermove',function(e){
+    if(!drag.on) return;
+    var dx=e.clientX-drag.sx, dy=e.clientY-drag.sy;
+    if(Math.abs(dx)+Math.abs(dy)>6) drag.moved=true;
+    var tilt=Math.max(-14,Math.min(14,dx/6));
+    charEl.style.transform='translate('+dx+'px,'+dy+'px) rotate('+tilt+'deg)';
+  });
+  function endDrag(e){
+    if(!drag.on) return;
+    drag.on=false; charEl.classList.remove('grab');
+    charEl.style.transform='';                 // boings back (CSS transition)
+    if(!drag.moved){ poke(); } else { tone(300+Math.random()*200,.09,'sine'); }
+  }
+  charEl.addEventListener('pointerup',endDrag);
+  charEl.addEventListener('pointercancel',endDrag);
+
+  function poke(){ if(busy) return; resume(); react('giggle'); }
+
+  /* ---- little helpers ---- */
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function setHint(t){ $('hint').textContent=t; }
+  function showEm(em){ var el=$('reactEm'); el.textContent=em; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+  function say(t){ var s=$('speech'); s.textContent=t; s.classList.remove('show'); void s.offsetWidth; s.classList.add('show'); }
+
+  /* idle blink */
+  setInterval(function(){
+    if(busy) return;
+    charEl.classList.remove('blink'); void charEl.offsetWidth; charEl.classList.add('blink');
+  }, 3200);
+
+  /* wire acts */
+  $('giveBtn').addEventListener('click',give);
+  $('trashBtn').addEventListener('click',function(){ if(busy)return; resetCup(); tone(240,.1,'square',.04); });
+
+  /* test hooks */
+  window.__toy={
+    cup:cup, char:charEl,
+    pour:function(id){ pour(FLAVORS.filter(function(f){return f.id===id;})[0]); },
+    addCandy:addCandy, give:give, poke:poke, reset:resetCup,
+    face:function(){ return charEl.getAttribute('data-face'); },
+    isBusy:function(){ return busy; }
+  };
+})();
+</script>
+</body>
+</html>

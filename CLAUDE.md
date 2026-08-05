@@ -158,20 +158,28 @@ quietly go out of date — but it does have to be re-run to pick up new files.
 
 ## The arcade (games)
 
-There are two little games, built to be shown to the girls' friends and put on
-the party table as a QR code — local and social, not "viral to kids
-everywhere." See `docs/game.md` for the full scope, the tier plan, and the
-COPPA reasoning.
+A small, **growing** collection of little games and toys, built to be shown to
+the girls' friends and put on the party table as a QR code — local and social,
+not "viral to kids everywhere." Mark's steer (2026-08-05): the arcade grows over
+time, and he most likes the **interactive, character-driven, Toca-Boca kind** —
+a character that moves and reacts, not a button you press. See `docs/game.md`
+for the full scope, the tier plan, and the COPPA reasoning.
 
-- **`/play`** is the arcade hub — a menu that points at the two games.
+- **`/play`** is the arcade hub — a menu that points at every game.
+- **`/slushie-playhouse`** — a *toy* (no score, no timer): make a slushie (pour
+  flavors that mix, drop candy, add a straw), hand it to **Slushie**, who drinks
+  it and reacts — brain freeze, sugar rush, turns the flavor's color. Poke it and
+  it giggles; drag it and it wobbles.
+- **`/slushie-catch`** — move Slushie side to side to catch falling fruit and
+  candy, dodge the sour lemons. Solo, high score on the device.
+- **`/slushie-style`** — a dress-up *toy*: hats, glasses, colors, bows, poses.
 - **`/slush-rush`** — the fast one. Read the order, build the cup against a
   clock, serve. Solo, high score on the device.
-- **`/slushie-street`** — a slushie-stand tycoon (the drastically-different
-  second game): a solo idle/builder with saved progress and offline earnings,
-  plus a same-device **2-player race** (split screen, 60 seconds, most money
-  wins). This is game tier 2 (same iPad); tier 3 (friends in a shared room from
-  different houses) needs a real-time backend and **is a dad decision** — it
-  puts a running service in Mark's life. Not built.
+- **`/slushie-street`** — a slushie-stand tycoon: a solo idle/builder with saved
+  progress and offline earnings, plus a same-device **2-player race** (split
+  screen, 60 seconds, most money wins). This is game tier 2 (same iPad); tier 3
+  (friends in a shared room from different houses) needs a real-time backend and
+  **is a dad decision** — it puts a running service in Mark's life. Not built.
 
 Each game is one self-contained HTML file, same as a page. **They are orphaned
 like `/read`: `noindex`, not in the nav, footer, sitemap or `scripts/snapshot.js`
@@ -180,6 +188,10 @@ no accounts, no chat, no names on any game page — ever.** That is what keeps a
 page a kid plays from making the site "directed to children." The only thing
 stored is a high score / save game, in the browser, on the device. Honor this
 before any promotion, not after.
+
+When you add a game: build it, keep it one self-contained file, hold the COPPA
+line above, add a card to `/play`, note it in `docs/game.md`, and run
+`npm run inventory`.
 
 ## Before changing anything
 
