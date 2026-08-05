@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Open Ledger — Slush Sisters, Real Numbers</title>
+<meta name="description" content="Every dollar this business has spent and made, published. Right now that is easy: we have spent about $1,600 and made $0, because we have not done a single party yet.">
+<style>
+:root{
+  --brand:#1a237e;
+  --ice:#4fc3f7;
+  --ice-deep:#29b6f6;
+  --wash:#e8f4fd;
+  --blush:#fff5f7;
+  --on-brand:#fff;
+  --ink-ice:#0165a8;    /* 6.13:1 on white, 5.48:1 on --wash */
+  --pop:#ff4081;        /* 3.33:1 — fills, big type, shapes ONLY */
+  --ink-pink:#c2185b;   /* 5.87:1 — body text, links, small labels */
+  --pink-pale:#ffd6e7;
+  --cta:#0277bd;        /* 4.80:1 with white text */
+  --cta-deep:#01579b;
+  --line-strong:#767b85;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:var(--cta);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--cta-deep);}
+.cta-m{display:none;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;padding:10px 6px;line-height:1;}
+.cta-m{display:inline-block;background:var(--cta);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+}
+
+section{padding:52px 24px;}
+.contain{max-width:760px;margin:0 auto;}
+section h1{font-family:'Baloo 2',sans-serif;font-size:clamp(1.9rem,7vw,2.5rem);font-weight:800;margin-bottom:10px;color:var(--brand);line-height:1.1;}
+section h2{font-family:'Baloo 2',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:8px;color:var(--brand);}
+section h3{font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;margin-bottom:5px;}
+section .lead{color:#555;font-size:1rem;line-height:1.65;margin-bottom:24px;}
+section p{line-height:1.65;}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-ice);margin-bottom:10px;}
+.btn{display:inline-block;background:var(--cta);color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;}
+.btn:hover{background:var(--cta-deep);}
+.bg-light{background:#f8fbff;}
+.bg-wash{background:var(--wash);}
+
+/* SCOREBOARD — the three numbers that are the whole page */
+.score{display:grid;grid-template-columns:1fr;gap:14px;margin-top:20px;}
+@media(min-width:560px){.score{grid-template-columns:repeat(3,1fr);}}
+.score .cell{border:2px solid var(--brand);border-radius:14px;padding:20px;text-align:center;background:#fff;}
+.score .n{font-family:'Baloo 2',sans-serif;font-size:2.3rem;font-weight:800;color:var(--brand);
+  line-height:1;font-variant-numeric:tabular-nums lining;}
+.score .n.zero{color:var(--ink-pink);}
+.score .l{font-size:.78rem;font-weight:700;margin-top:8px;color:#555;}
+
+/* LEDGER TABLE — tabular figures, right-aligned money, the .tabular utility */
+.tabular{font-family:'Baloo 2',system-ui,sans-serif;font-weight:600;
+  font-variant-numeric:tabular-nums lining;font-feature-settings:'tnum' 1;
+  letter-spacing:0;text-align:right;}
+.ledger{width:100%;border-collapse:collapse;margin-top:16px;}
+.ledger th{font-family:'Baloo 2',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-ice);text-align:left;padding:10px 8px;border-bottom:2px solid var(--brand);}
+.ledger th:last-child{text-align:right;}
+.ledger td{padding:12px 8px;font-size:.89rem;color:#333;border-bottom:1px solid #eaeff5;vertical-align:top;}
+.ledger td .why{display:block;font-size:.78rem;color:#888;margin-top:3px;line-height:1.5;}
+.ledger td:last-child{white-space:nowrap;}
+.ledger tr.total td{border-top:2px solid var(--brand);border-bottom:none;font-weight:700;color:var(--brand);}
+.est{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--ink-pink);background:var(--blush);border-radius:99px;padding:2px 8px;margin-left:6px;vertical-align:middle;}
+
+.note{border-left:3px solid var(--ink-ice);padding:2px 0 2px 16px;margin-top:22px;}
+.note p{font-size:.88rem;color:#555;}
+.note p + p{margin-top:8px;}
+.note.warn{border-left-color:var(--ink-pink);}
+.note.warn b{color:var(--ink-pink);}
+
+.byo{background:var(--wash);border-radius:12px;padding:22px;margin-top:22px;}
+.byo h3{color:var(--brand);margin-bottom:6px;}
+.byo p{font-size:.88rem;color:#555;}
+.byo p + p{margin-top:8px;}
+
+/* FOOTER — real internal linking. Mobile-first: one column, then two at
+   560px, then four at 900px. Every link is a 44px-tall tap target. */
+footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left;}
+.f-wrap{max-width:800px;margin:0 auto;}
+.f-top{display:grid;grid-template-columns:1fr;gap:26px;}
+@media(min-width:560px){.f-top{grid-template-columns:1fr 1fr;gap:28px 32px;}}
+@media(min-width:900px){.f-top{grid-template-columns:repeat(4,1fr);}}
+.f-col h4{font-family:'Baloo 2',sans-serif;font-size:.74rem;font-weight:800;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ice);margin-bottom:6px;}
+.f-col ul{list-style:none;padding:0;margin:0;}
+.f-col li a{display:block;padding:9px 0;font-size:.86rem;color:rgba(255,255,255,.82);
+  text-decoration:none;line-height:1.35;}
+.f-col li a:hover{color:#fff;text-decoration:underline;}
+.f-bottom{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);}
+.f-bottom .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:6px;}
+.f-bottom .f-name span{color:var(--ice);}
+.f-bottom p{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:5px;}
+.f-bottom a{color:var(--ice);}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://slushsisters.com/ledger">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:url" content="https://slushsisters.com/ledger">
+<meta property="og:title" content="The Open Ledger — Slush Sisters, Real Numbers">
+<meta property="og:description" content="Every dollar this business has spent and made, published. So far: about $1,600 out, $0 in. We have not done a party yet.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/grown-ups">For Grown-Ups</a>
+<a href="/flavors">Flavors</a>
+<a href="/lab">The Lab</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<a href="/book" class="cta-m">Book</a>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<section>
+<div class="contain">
+<p class="kicker">The Open Ledger</p>
+<h1>Every dollar, published. Both directions.</h1>
+<p class="lead">Big companies publish their numbers once a quarter with a team of accountants. We are going to do it on one page, forever, starting before we have earned anything &mdash; because a ledger you only start once it looks good is not a ledger.</p>
+
+<div class="score">
+<div class="cell"><div class="n">$0</div><div class="l">Money in, ever</div></div>
+<div class="cell"><div class="n zero">&minus;$1,617</div><div class="l">Spent so far</div></div>
+<div class="cell"><div class="n">0</div><div class="l">Parties done</div></div>
+</div>
+
+<div class="note warn">
+<p><b>We are prelaunch.</b> No customer has paid us anything yet. The honest way to read this page right now: two kids and their parents have put about $1,600 into a business that has earned nothing, on the belief that it will. That is what starting a company actually looks like, and most businesses never show you this part.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>Where the money went</h2>
+<p class="lead">Rows marked <span class="est" style="margin-left:0;">est</span> are our best estimate rather than a receipt &mdash; we will replace each one with the real figure as we confirm it, and say so when we do.</p>
+
+<table class="ledger">
+<thead><tr><th>What</th><th>Why</th><th>Cost</th></tr></thead>
+<tbody>
+<tr><td><b>The machine</b></td><td>A used dual-tank frozen drink machine. The whole business, physically.<span class="why">Bought used &mdash; new ones run $1,500 and up, which is the number that matters when we think about a second one.</span></td><td class="tabular">$800</td></tr>
+<tr><td><b>Slush Sisters LLC</b> <span class="est">est</span></td><td>Registering as a real Texas company.<span class="why">The Texas Certificate of Formation filing fee is $300 flat. If a formation service was used it costs a little more; this row shows the state fee.</span></td><td class="tabular">$300</td></tr>
+<tr><td><b>Insurance, first year</b> <span class="est">est</span></td><td>General liability, so schools and HOAs can book us.<span class="why">Small event-rental policies run roughly $500&ndash;$1,500 a year. We show the bottom of that range until the real premium is confirmed; if ours is higher, this number goes up and we say so.</span></td><td class="tabular">$500</td></tr>
+<tr><td><b>The domain</b> <span class="est">est</span></td><td>slushsisters.com, one year.<span class="why">A .com at Cloudflare's at-cost registrar pricing.</span></td><td class="tabular">$11</td></tr>
+<tr><td><b>Web hosting</b></td><td>This entire website.<span class="why">Genuinely free. It is hand-written pages served on Cloudflare's free tier &mdash; no monthly bill, which is a real decision and not an accident.</span></td><td class="tabular">$0</td></tr>
+<tr><td><b>Email</b></td><td>hello@slushsisters.com.<span class="why">Also free &mdash; Cloudflare forwards it to an inbox we already had.</span></td><td class="tabular">$0</td></tr>
+<tr><td><b>Starting supplies</b> <span class="est">est</span></td><td>Mix, cups, straws, the candy for the rims.<span class="why">A rough allowance for what is on the shelf before party one. We will replace this with the real receipts total.</span></td><td class="tabular">$0<span style="color:#888;font-weight:400;">&ndash;$100</span></td></tr>
+<tr class="total"><td>Total in, so far</td><td></td><td class="tabular">&asymp; $1,617</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<p><b>Who paid?</b> Our parents fronted it. Whether that is a loan we pay back or an investment they made in us is a real question with a real answer, and it is one of the first things this page will pin down &mdash; because "Dad paid and nobody wrote anything down" is how family businesses get confusing later.</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>Our forecasts &mdash; written down before, not after</h2>
+<p class="lead">Real companies forecast, then find out if they were right. We are learning to do the same, so here are our guesses, dated, small on purpose. When we beat one it turns green and stays. When we miss one it stays too, with what we learned &mdash; that is the deal.</p>
+
+<table class="ledger">
+<thead><tr><th>Forecast, made Aug 2026</th><th>Our guess</th><th>What happened</th></tr></thead>
+<tbody>
+<tr><td><b>First paid booking</b><span class="why">Somebody we are not related to pays the deposit.</span></td><td class="tabular">by Sep 30</td><td>waiting</td></tr>
+<tr><td><b>First party delivered</b><span class="why">Machine out, party happens, machine back, nothing broke.</span></td><td class="tabular">by Oct 31</td><td>waiting</td></tr>
+<tr><td><b>First month with 2 parties</b><span class="why">One could be luck. Two in a month means it repeats.</span></td><td class="tabular">by Dec 31</td><td>waiting</td></tr>
+<tr><td><b>First $1,000 earned</b><span class="why">Four parties. The machine is halfway paid for.</span></td><td class="tabular">by Mar 2027</td><td>waiting</td></tr>
+<tr><td><b>Break even &mdash; every dollar paid back</b><span class="why">About 8 parties at roughly $200 each after supplies and fuel.</span></td><td class="tabular">by Jul 2027</td><td>waiting</td></tr>
+<tr><td><b>First repeat customer</b><span class="why">The one that matters most. A party good enough to book twice.</span></td><td class="tabular">by Aug 2027</td><td>waiting</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<p><b>Why the goals are small.</b> We could have written &ldquo;100 parties&rdquo; and looked ambitious. But a forecast you cannot miss is not a forecast, and a forecast you always miss teaches nothing. These are set so that beating them is realistic and still worth telling people about &mdash; and when we do beat one, we will, loudly.</p>
+</div>
+
+<div class="byo">
+<h3>The further-out ones</h3>
+<p><b>First profitable summer</b> &mdash; break even plus a real season on top, around 15&ndash;20 parties. <b>The second machine conversation</b> &mdash; the point where saying no to double-booked Saturdays costs more than the $1,500 a second machine does, around 30 parties. Neither gets a date yet. Dating a goal two summers out is pretending, and this page does not pretend.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-wash">
+<div class="contain">
+<h2>Why we publish this</h2>
+<p style="font-size:.95rem;color:#444;margin-bottom:14px;">Companies like Buffer and a whole movement of &ldquo;open startups&rdquo; publish their real revenue on the internet. It builds a kind of trust nothing else can, because anyone can check it. As far as we can tell, no kid-run business has ever done it.</p>
+<p style="font-size:.95rem;color:#444;margin-bottom:14px;">The other reason is that this page is how we learn. Forecasting, margins, break-even, what a miss teaches you &mdash; you cannot learn those from a worksheet, but you can learn them from your own numbers with your name on the page. If another kid wants to copy this whole idea for their business, <a href="/press" style="color:var(--ink-ice);font-weight:600;">we would genuinely love that</a>.</p>
+<p style="font-size:.95rem;color:#444;margin-bottom:14px;">Also, honestly: we are 11 and 8, and people sometimes wonder whether a kid business is a real business or a cute thing parents run. Numbers answer that better than words do. If this works, you will watch it work here. If it does not, that will be here too.</p>
+<p style="font-size:.95rem;color:#444;">The rule for this page is the same as <a href="/our-rules" style="color:var(--ink-ice);font-weight:600;">rule seven</a>: when a number changes, we change it and say what changed. Nothing gets quietly deleted.</p>
+</div>
+</section>
+
+<section style="text-align:center;">
+<div class="contain">
+<h2>Help us make the first row green</h2>
+<p class="lead">Party number one is the whole ballgame right now.</p>
+<a href="/book" class="btn">Book the first party</a>
+</div>
+</section>
+
+<footer>
+<div class="f-wrap">
+<div class="f-top">
+
+<div class="f-col">
+<h4>Book</h4>
+<ul>
+<li><a href="/book">Check your date</a></li>
+<li><a href="/pricing">Pricing</a></li>
+<li><a href="/flavors">Flavors</a></li>
+<li><a href="/fresh-press">Fresh Press &mdash; Agave Lime</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>What is it for</h4>
+<ul>
+<li><a href="/">Kids&rsquo; parties</a></li>
+<li><a href="/grown-ups">Grown-up parties</a></li>
+<li><a href="/office-parties">Office &amp; holiday parties</a></li>
+<li><a href="/community-events">HOA &amp; school events</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Who we are</h4>
+<ul>
+<li><a href="/about">Our story</a></li>
+<li><a href="/lab">The Lab</a></li>
+<li><a href="/our-rules">Our seven rules</a></li>
+<li><a href="/promise">Our promise</a></li>
+<li><a href="/press">Press kit</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Where we go</h4>
+<ul>
+<li><a href="/frozen-drink-machine-rental-lakeway">Lakeway</a></li>
+<li><a href="/frozen-drink-machine-rental-bee-cave">Bee Cave</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-travis">Lake Travis</a></li>
+<li><a href="/frozen-drink-machine-rental-steiner-ranch">Steiner Ranch</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-austin">Lake Austin</a></li>
+<li><a href="/frozen-drink-machine-rental-dripping-springs">Dripping Springs</a></li>
+<li><a href="/austin">All of Austin</a></li>
+</ul>
+</div>
+
+</div>
+<div class="f-bottom">
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink machine rentals &mdash; Lakeway, Texas</p>
+<p><a href="mailto:hello@slushsisters.com">hello@slushsisters.com</a></p>
+<p style="margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC &middot; Run by Harper, 11 and Finley, 8</p>
+</div>
+</div>
+</footer></body></html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Office &amp; Holiday Party Drinks — Austin &amp; Lake Travis</title>
+<meta name="description" content="Frozen or chilled drinks for office parties and holiday parties around Austin and Lake Travis. One flat price, delivered and set up, cleaned up the next morning. No bartender to hire.">
+<style>
+:root{
+  --brand:#1a237e;
+  --ice:#4fc3f7;
+  --ice-deep:#29b6f6;
+  --wash:#e8f4fd;
+  --blush:#fff5f7;
+  --on-brand:#fff;
+  --ink-ice:#0165a8;    /* 6.13:1 on white, 5.48:1 on --wash */
+  --pop:#ff4081;        /* 3.33:1 — fills, big type, shapes ONLY */
+  --ink-pink:#c2185b;   /* 5.87:1 — body text, links, small labels */
+  --pink-pale:#ffd6e7;
+  --cta:#0277bd;        /* 4.80:1 with white text */
+  --cta-deep:#01579b;
+  --line-strong:#767b85;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:var(--cta);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--cta-deep);}
+.cta-m{display:none;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;padding:10px 6px;line-height:1;}
+.cta-m{display:inline-block;background:var(--cta);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+}
+
+section{padding:52px 24px;}
+.contain{max-width:800px;margin:0 auto;}
+section h1{font-family:'Baloo 2',sans-serif;font-size:clamp(1.9rem,7vw,2.5rem);font-weight:800;margin-bottom:10px;color:var(--brand);line-height:1.1;}
+section h2{font-family:'Baloo 2',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:8px;color:var(--brand);}
+section h3{font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;margin-bottom:5px;}
+section .lead{color:#555;font-size:1rem;line-height:1.65;margin-bottom:24px;}
+section p{line-height:1.65;}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-ice);margin-bottom:10px;}
+.btn{display:inline-block;background:var(--cta);color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;}
+.btn:hover{background:var(--cta-deep);}
+.bg-light{background:#f8fbff;}
+.bg-wash{background:var(--wash);}
+
+/* COMPARE — the whole argument on this page is the price of the alternative */
+.vs{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px;}
+@media(min-width:620px){.vs{grid-template-columns:1fr 1fr;}}
+.vs .card{border:1.5px solid #e4ebf2;border-radius:12px;padding:22px;}
+.vs .card.us{border-color:var(--brand);background:var(--wash);}
+.vs .amt{font-family:'Baloo 2',sans-serif;font-size:2rem;font-weight:800;color:var(--brand);
+  line-height:1;font-variant-numeric:tabular-nums lining;margin:4px 0 10px;}
+.vs ul{list-style:none;padding:0;}
+.vs li{font-size:.86rem;color:#444;padding:6px 0;line-height:1.5;}
+
+.rows{margin-top:16px;}
+.rows .r{display:flex;justify-content:space-between;gap:18px;padding:11px 0;
+  border-bottom:1px solid #eaeff5;font-size:.89rem;}
+.rows .r:last-child{border-bottom:none;}
+.rows .r span:last-child{font-weight:600;text-align:right;color:var(--brand);
+  font-family:'Baloo 2',system-ui,sans-serif;font-variant-numeric:tabular-nums lining;white-space:nowrap;}
+
+.note{border-left:3px solid var(--ink-ice);padding:2px 0 2px 16px;margin-top:22px;}
+.note p{font-size:.88rem;color:#555;}
+.note p + p{margin-top:8px;}
+.note.warn{border-left-color:var(--ink-pink);}
+.note.warn b{color:var(--ink-pink);}
+
+.byo{background:var(--wash);border-radius:12px;padding:22px;margin-top:22px;}
+.byo h3{color:var(--brand);margin-bottom:6px;}
+.byo p{font-size:.88rem;color:#555;}
+.byo p + p{margin-top:8px;}
+
+details{border-bottom:1px solid #eee;padding:16px 0;}
+details summary{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;}
+details summary::after{content:"+";font-size:1.2rem;color:var(--ink-ice);}
+details[open] summary::after{content:"−";}
+details p{margin-top:10px;font-size:.88rem;color:#666;}
+details p + p{margin-top:8px;}
+
+
+/* FOOTER — real internal linking. Mobile-first: one column, then two at
+   560px, then four at 900px. Every link is a 44px-tall tap target. */
+footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left;}
+.f-wrap{max-width:800px;margin:0 auto;}
+.f-top{display:grid;grid-template-columns:1fr;gap:26px;}
+@media(min-width:560px){.f-top{grid-template-columns:1fr 1fr;gap:28px 32px;}}
+@media(min-width:900px){.f-top{grid-template-columns:repeat(4,1fr);}}
+.f-col h4{font-family:'Baloo 2',sans-serif;font-size:.74rem;font-weight:800;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ice);margin-bottom:6px;}
+.f-col ul{list-style:none;padding:0;margin:0;}
+.f-col li a{display:block;padding:9px 0;font-size:.86rem;color:rgba(255,255,255,.82);
+  text-decoration:none;line-height:1.35;}
+.f-col li a:hover{color:#fff;text-decoration:underline;}
+.f-bottom{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);}
+.f-bottom .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:6px;}
+.f-bottom .f-name span{color:var(--ice);}
+.f-bottom p{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:5px;}
+.f-bottom a{color:var(--ice);}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://slushsisters.com/office-parties">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:url" content="https://slushsisters.com/office-parties">
+<meta property="og:title" content="Office &amp; Holiday Party Drinks — Austin &amp; Lake Travis">
+<meta property="og:description" content="Frozen or chilled drinks for office and holiday parties. One flat price, no bartender to hire.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/grown-ups">For Grown-Ups</a>
+<a href="/flavors">Flavors</a>
+<a href="/lab">The Lab</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<a href="/book" class="cta-m">Book</a>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<section>
+<div class="contain">
+<p class="kicker">Office parties &amp; holiday parties</p>
+<h1>A drinks machine costs less than a bartender, and nobody has to run it</h1>
+<p class="lead">One flat price for the whole event. We deliver it, set it up, show whoever is hosting how it works, and come back the next morning to take it away. Nobody on your team spends the night pouring, and nobody has to clean anything.</p>
+<a href="/book" class="btn">Check your date</a>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>What this actually replaces</h2>
+<p class="lead">Most office parties solve drinks one of two ways. This is the third.</p>
+<div class="vs">
+<div class="card">
+<h3>Hiring a bartender</h3>
+<div class="amt">$300&ndash;600+</div>
+<ul>
+<li>Hourly, plus a minimum</li>
+<li>Plus the alcohol, which you buy anyway</li>
+<li>Plus mixers, ice and glassware</li>
+<li>Someone has to be there to let them in and settle up</li>
+<li>Serves one drink at a time, so there is a line</li>
+</ul>
+</div>
+<div class="card us">
+<h3>A machine for the night</h3>
+<div class="amt">$250</div>
+<ul>
+<li>Flat, whatever the headcount</li>
+<li>Delivery, setup and next-morning pickup included</li>
+<li>Cups included</li>
+<li>Two flavors at once, self-serve, no line</li>
+<li>You buy your own spirits and add them, or leave it alcohol-free</li>
+</ul>
+</div>
+</div>
+<p style="font-size:.85rem;color:#777;margin-top:14px;">Bartender figures are typical Austin rates for a few hours plus a minimum, not a quote. Get one and compare properly &mdash; we would rather you did.</p>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>The part most people do not know</h2>
+<p class="lead">The machine does not only make frozen drinks. It will chill instead of freeze &mdash; so it works at a December party in a warm office as well as it does by a pool in July.</p>
+<p style="font-size:.95rem;color:#444;margin-bottom:14px;">That matters for two reasons. Chilled means you are not handing people a slushie in winter. And chilled removes the ceiling that frozen has: a frozen drink stops freezing if there is too much alcohol in it, and a chilled one does not care.</p>
+<p style="font-size:.95rem;color:#444;">Nobody else renting these advertises it. <a href="/grown-ups" style="color:var(--ink-ice);font-weight:600;">The full explanation is on the grown-ups page</a>.</p>
+<div class="byo">
+<h3>Cold-weather ideas that actually work in it</h3>
+<p>Frozen: margarita, piña colada, a frozen mulled-cider style thing if you want to be seasonal about it. Chilled: sangria, a punch, spiked cider, a cranberry cooler, or something with no alcohol in it at all so the people driving have a real option.</p>
+<p>Carbonated is the one thing it cannot do &mdash; dispense the base, top the glass with the fizz.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-wash">
+<div class="contain">
+<h2>Sizing it for an office</h2>
+<div class="rows">
+<div class="r"><span>Both tanks, one fill</span><span>about 60 cups</span></div>
+<div class="r"><span>Time to refreeze a refill</span><span>about 20 min</span></div>
+<div class="r"><span>Comfortable for a 2&ndash;3 hour party</span><span>up to ~45 people</span></div>
+<div class="r"><span>Works with extra batches we bring</span><span>45&ndash;90 people</span></div>
+<div class="r"><span>Where one machine starts to struggle</span><span>90+ people</span></div>
+<div class="r"><span>Notice we prefer for December</span><span>3&ndash;4 weeks</span></div>
+</div>
+<div class="note">
+<p><b>December is the one month that genuinely fills up.</b> Office parties all happen in the same three weeks, and we have one machine, so it is first come, first served in a way it is not in April. If you know your date, tell us early even if nothing else is decided.</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>Two things we will tell you before you ask</h2>
+
+<div class="note warn">
+<p><b>The alcohol is entirely yours.</b> We bring the frozen or chilled base, which has none in it. Somebody on your side adds their own bottles after we have gone home, using the printed instructions we leave. Harper is 11 and Finley is 8, and they are not at your party in the evening &mdash; they set up in the daytime and leave.</p>
+<p>That is not a technicality we invented for this page. It is <a href="/promise" style="color:var(--ink-pink);font-weight:600;">written down as a rule</a>, and we published it before anybody asked.</p>
+</div>
+
+<div class="note">
+<p><b>If your office needs paperwork, ask before you book.</b> Slush Sisters LLC is a registered Texas business with liability insurance. Whether we can produce a specific certificate or vendor form, and how fast, depends on what you need &mdash; so tell us early and our dad will take care of it, rather than us promising something on a website and finding out later.</p>
+<p>If your company has a formal vendor onboarding process, we are probably the wrong size for it and we would rather say so now than waste your time.</p>
+</div>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>Questions</h2>
+<details><summary>Do you serve the drinks?</summary><p>No, and it is better this way. It is self-serve, so there is no line and nobody is stuck behind a table all night. We show whoever is hosting how it works before we leave.</p></details>
+<details><summary>Can we do one alcoholic and one not?</summary><p>Yes, and for a work party that is usually the right call. Two tanks, two flavors, and the people driving home get something that is not a soda.</p></details>
+<details><summary>Where does it need to go?</summary><p>A normal outlet within about 25 feet, a flat spot, and somewhere we can wheel a cart to. If you are on an upper floor, tell us &mdash; we will need to know about the elevator and the loading situation.</p></details>
+<details><summary>Do you come to downtown Austin?</summary><p>Yes. Free delivery within 15 miles of Lakeway, then $1 a mile beyond that, and we will tell you the exact number before you book. <a href="/austin">Our Austin page</a> is honest about how far the van goes.</p></details>
+<details><summary>How late can we keep it?</summary><p>Overnight. We collect it the next morning, so nothing has to be packed up while people are still there.</p></details>
+<details><summary>Can we get the premium recipe for a work party?</summary><p>Yes &mdash; that is <a href="/fresh-press">Fresh Press</a> at $375, made with fresh limes and agave rather than mix. It needs five days&rsquo; notice because we squeeze it the morning of. For a client-facing event it is the one to book.</p></details>
+</div>
+</section>
+
+<section style="text-align:center;">
+<div class="contain">
+<h2>Tell us your date</h2>
+<p class="lead">Headcount, the date, and whether you want it frozen or chilled. That is enough for us to come back with a straight answer the same day.</p>
+<a href="/book" class="btn">Check your date</a>
+</div>
+</section>
+
+<footer>
+<div class="f-wrap">
+<div class="f-top">
+
+<div class="f-col">
+<h4>Book</h4>
+<ul>
+<li><a href="/book">Check your date</a></li>
+<li><a href="/pricing">Pricing</a></li>
+<li><a href="/flavors">Flavors</a></li>
+<li><a href="/fresh-press">Fresh Press &mdash; Agave Lime</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>What is it for</h4>
+<ul>
+<li><a href="/">Kids&rsquo; parties</a></li>
+<li><a href="/grown-ups">Grown-up parties</a></li>
+<li><a href="/office-parties">Office &amp; holiday parties</a></li>
+<li><a href="/community-events">HOA &amp; school events</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Who we are</h4>
+<ul>
+<li><a href="/about">Our story</a></li>
+<li><a href="/lab">The Lab</a></li>
+<li><a href="/our-rules">Our seven rules</a></li>
+<li><a href="/ledger">The Open Ledger</a></li>
+<li><a href="/promise">Our promise</a></li>
+<li><a href="/press">Press kit</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Where we go</h4>
+<ul>
+<li><a href="/frozen-drink-machine-rental-lakeway">Lakeway</a></li>
+<li><a href="/frozen-drink-machine-rental-bee-cave">Bee Cave</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-travis">Lake Travis</a></li>
+<li><a href="/frozen-drink-machine-rental-steiner-ranch">Steiner Ranch</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-austin">Lake Austin</a></li>
+<li><a href="/frozen-drink-machine-rental-dripping-springs">Dripping Springs</a></li>
+<li><a href="/austin">All of Austin</a></li>
+</ul>
+</div>
+
+</div>
+<div class="f-bottom">
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink machine rentals &mdash; Lakeway, Texas</p>
+<p><a href="mailto:hello@slushsisters.com">hello@slushsisters.com</a></p>
+<p style="margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC &middot; Run by Harper, 11 and Finley, 8</p>
+</div>
+</div>
+</footer></body></html>

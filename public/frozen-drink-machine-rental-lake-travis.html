@@ -74,6 +74,14 @@ header.open nav{display:flex;}
 .hero-photo .hero-img{position:relative;right:auto;width:78%;max-width:300px;margin:24px auto 0;}
 }
 .hero-text{max-width:440px;position:relative;z-index:1;}
+/* Hero content shares the body's 800px column on desktop, so the headline and
+   the copy below it sit on one left edge. The band itself stays full-bleed. */
+@media(min-width:701px){
+.hero-photo{padding-left:max(32px,calc((100% - 800px) / 2));
+            padding-right:max(32px,calc((100% - 800px) / 2));}
+.hero-photo .hero-img{right:max(36px,calc((100% - 800px) / 2));}
+}
+
 .hero-text h1{font-family:'Baloo 2',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:800;color:var(--brand);line-height:1.1;margin-bottom:12px;}
 .hero-text p{font-size:1rem;color:#555;line-height:1.65;margin-bottom:24px;}
 .btn{display:inline-block;background:var(--cta);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .15s;}
@@ -146,11 +154,6 @@ details p{margin-top:10px;font-size:.88rem;color:#666;line-height:1.6;}
 .sp{aspect-ratio:1;background:#f5f5f5;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
 
 /* FOOTER */
-footer{background:var(--brand);color:#fff;padding:40px 24px;text-align:center;}
-footer .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px;}
-footer .f-name span{color:var(--ice);}
-footer p{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px;}
-footer a{color:var(--ice);}
 
 /* ALT BACKGROUNDS */
 .bg-light{background:#f8fbff;}
@@ -175,6 +178,25 @@ footer a{color:var(--ice);}
 .tabular{font-family:'Baloo 2',system-ui,sans-serif;font-weight:600;
   font-variant-numeric:tabular-nums lining;font-feature-settings:'tnum' 1;
   letter-spacing:0;text-align:right;}
+
+/* FOOTER — real internal linking. Mobile-first: one column, then two at
+   560px, then four at 900px. Every link is a 44px-tall tap target. */
+footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left;}
+.f-wrap{max-width:800px;margin:0 auto;}
+.f-top{display:grid;grid-template-columns:1fr;gap:26px;}
+@media(min-width:560px){.f-top{grid-template-columns:1fr 1fr;gap:28px 32px;}}
+@media(min-width:900px){.f-top{grid-template-columns:repeat(4,1fr);}}
+.f-col h4{font-family:'Baloo 2',sans-serif;font-size:.74rem;font-weight:800;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ice);margin-bottom:6px;}
+.f-col ul{list-style:none;padding:0;margin:0;}
+.f-col li a{display:block;padding:9px 0;font-size:.86rem;color:rgba(255,255,255,.82);
+  text-decoration:none;line-height:1.35;}
+.f-col li a:hover{color:#fff;text-decoration:underline;}
+.f-bottom{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);}
+.f-bottom .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:6px;}
+.f-bottom .f-name span{color:var(--ice);}
+.f-bottom p{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:5px;}
+.f-bottom a{color:var(--ice);}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -444,9 +466,60 @@ footer a{color:var(--ice);}
 </section>
 
 <footer>
+<div class="f-wrap">
+<div class="f-top">
+
+<div class="f-col">
+<h4>Book</h4>
+<ul>
+<li><a href="/book">Check your date</a></li>
+<li><a href="/pricing">Pricing</a></li>
+<li><a href="/flavors">Flavors</a></li>
+<li><a href="/fresh-press">Fresh Press &mdash; Agave Lime</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>What is it for</h4>
+<ul>
+<li><a href="/">Kids&rsquo; parties</a></li>
+<li><a href="/grown-ups">Grown-up parties</a></li>
+<li><a href="/office-parties">Office &amp; holiday parties</a></li>
+<li><a href="/community-events">HOA &amp; school events</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Who we are</h4>
+<ul>
+<li><a href="/about">Our story</a></li>
+<li><a href="/lab">The Lab</a></li>
+<li><a href="/our-rules">Our seven rules</a></li>
+<li><a href="/ledger">The Open Ledger</a></li>
+<li><a href="/promise">Our promise</a></li>
+<li><a href="/press">Press kit</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Where we go</h4>
+<ul>
+<li><a href="/frozen-drink-machine-rental-lakeway">Lakeway</a></li>
+<li><a href="/frozen-drink-machine-rental-bee-cave">Bee Cave</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-travis">Lake Travis</a></li>
+<li><a href="/frozen-drink-machine-rental-steiner-ranch">Steiner Ranch</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-austin">Lake Austin</a></li>
+<li><a href="/frozen-drink-machine-rental-dripping-springs">Dripping Springs</a></li>
+<li><a href="/austin">All of Austin</a></li>
+</ul>
+</div>
+
+</div>
+<div class="f-bottom">
 <div class="f-name"><span>Slush</span> Sisters</div>
-<p>Frozen drink rentals in Lakeway, Bee Cave &amp; Lake Travis</p>
-<p>Lakeway, TX · <a href="/book">Book a rental</a> · <a href="/promise">Our promise</a> · <a href="/our-rules">Our rules</a></p>
+<p>Frozen drink machine rentals &mdash; Lakeway, Texas</p>
 <p><a href="mailto:hello@slushsisters.com">hello@slushsisters.com</a></p>
-<p style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
+<p style="margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC &middot; Run by Harper, 11 and Finley, 8</p>
+</div>
+</div>
 </footer></body></html>
