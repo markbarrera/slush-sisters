@@ -208,13 +208,20 @@ Never hand-resize a photo or point a phone at a big file. The script does it.
   wrote down the kit itself. `/fresh-press` already carried the first hero-art
   proof from the visual-identity work.
 
-- **Next up** (from `visual-identity.md`, step 3): the text-heavy pages that are
-  still walls of words — **`/lab`, `/our-rules`, `/community-events`,
-  `/office-parties`** — each wants a hero-art band and a motif or two to break up
-  the text. `/about` and `/pricing` could each take one real photo. The
+- **2026-08-05** — Applied the hero-art band to the four text-heavy pages that
+  were walls of words: **`/lab`, `/our-rules`, `/community-events`,
+  `/office-parties`**. Each got the Slushie character plus two flavor-fitting
+  motifs (lab: lime + sour-square; rules: candy-ring + gummy-drop; community:
+  sour-square + candy-ring; office: gummy-drop + candy-ring). This is the kit
+  doing exactly what it is for — same CSS block, same character, different candy,
+  no new decisions. Verified all four at 390px: no sideways scroll, art loads.
+
+- **Next up**: `/about` and `/pricing` could each take one real photo. The
   real-photo shot list (limes halved, a hand squeezing one, the candy rims, the
   machine pouring) is the girls' afternoon, then `node scripts/optimize-images.js`
-  and they slot straight into the frame above.
+  and they slot straight into the frame above. Growing the motif library (cherry,
+  pineapple ring, strawberry, a slush drip, more Slushie poses) is the other easy
+  win.
 
 ---
 
@@ -229,10 +236,10 @@ The full, always-current list is `/inventory`. This is just the imagery view.
 | `/fresh-press` | Hero-art band (inline limes) | A fruit-and-making photo would lift it |
 | `/grown-ups` | Hero photo | A motif or two in the text |
 | `/about` | Photos of the girls | Good |
-| `/lab` | None | Hero-art band + motifs |
-| `/our-rules` | None | Hero-art band + motifs |
-| `/community-events` | None | Hero-art band + motifs |
-| `/office-parties` | None | Hero-art band + motifs |
+| `/lab` | Hero-art band + motifs, text hero, marquee | Good |
+| `/our-rules` | Hero-art band + motifs | Good |
+| `/community-events` | Hero-art band + motifs | Good |
+| `/office-parties` | Hero-art band + motifs | Good |
 | `/pricing` | None | One photo, or a motif accent |
 
 Keep this table honest as pages change.
