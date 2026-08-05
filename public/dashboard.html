@@ -26,7 +26,7 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
 .intro{color:#555;font-size:.93rem;margin-bottom:22px;}
 
 /* --- stat tiles --- */
-.stats{background:var(--brand);color:#fff;border-radius:18px;padding:24px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin-bottom:12px;}
+.stats{background:var(--brand);color:#fff;border-radius:18px;padding:24px 16px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;text-align:center;margin-bottom:12px;}
 .stat .n{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(1.8rem,8vw,3rem);line-height:1;font-variant-numeric:tabular-nums;}
 .stat .label{font-weight:700;font-size:.85rem;margin-top:4px;}
 .stat .sub{opacity:.7;font-size:.72rem;margin-top:2px;}
@@ -116,6 +116,11 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     <div class="label">Visits</div>
     <div class="sub">times someone came</div>
   </div>
+  <div class="stat">
+    <div class="n" id="stat-duration">&hellip;</div>
+    <div class="label">Avg Visit</div>
+    <div class="sub">time on site</div>
+  </div>
 </div>
 
 <div class="split" id="split">
@@ -142,6 +147,12 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     <p class="hint">Phone, computer, or tablet. Most of our visitors come from phones because they find us through text messages and social media links.</p>
     <div class="body"><div class="state">Loading&hellip;</div></div>
   </div>
+
+  <div class="card" id="card-new-return">
+    <h2>&#x1F31F; New vs returning</h2>
+    <p class="hint">How many visitors are seeing us for the first time vs coming back again. Lots of new visitors means marketing is reaching new people. Lots of returning means people are interested enough to come back.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
 </div>
 
 <div class="section">&#x1F4CA; What People Do on Our Site</div>
@@ -159,9 +170,15 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     <div class="body"><div class="state">Loading&hellip;</div></div>
   </div>
 
+  <div class="card" id="card-entry">
+    <h2>&#x1F6EC; Where people land</h2>
+    <p class="hint">The first page someone sees when they arrive — the front door. This is different from the most-read list: a page can be read a lot but rarely be the first one someone sees. If most people land on the home page, marketing links should point to the page that matches the ad instead.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
   <div class="card" id="card-clicks">
     <h2>&#x1F446; What people click</h2>
-    <p class="hint">The buttons and links people tap the most. Shows what catches their attention.</p>
+    <p class="hint">The buttons and links people tap, grouped by where on the page they are: the navigation bar at the top, the footer at the bottom, or the main content in between. This tells you whether people find what they need from the menu, or whether the page body is doing the selling.</p>
     <div class="body"><div class="state">Loading&hellip;</div></div>
   </div>
 
@@ -174,6 +191,12 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
   <div class="card" id="card-exits">
     <h2>&#x1F6AA; Where people leave</h2>
     <p class="hint">The last page someone was on before they closed the tab. If lots of people leave from /book, the form might be confusing.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-outbound">
+    <h2>&#x1F517; Links people click away to</h2>
+    <p class="hint">When someone clicks a link that takes them off our site — like our Instagram or Google Maps — it shows up here. High numbers mean people want to check us out on other platforms before booking.</p>
     <div class="body"><div class="state">Loading&hellip;</div></div>
   </div>
 </div>
@@ -309,9 +332,11 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
       el("stat-visitors").textContent = n(res.visitors);
       el("stat-pageviews").textContent = n(res.pageviews);
       el("stat-sessions").textContent = n(res.sessions);
+      el("stat-duration").textContent = res.avg_session_duration || "—";
     } else if (res && res.status === "not_configured") {
       el("stat-visitors").textContent = "—";
       el("stat-sessions").textContent = "—";
+      el("stat-duration").textContent = "—";
     }
 
     body("card-pages").innerHTML = handle(res, function(d){
@@ -352,7 +377,19 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
 
     body("card-clicks").innerHTML = handle(res, function(d){
       if (!d.clicks || !d.clicks.length) return '<div class="state">No click data yet. Once people start clicking buttons and links, the most popular ones show up here.</div>';
-      return rowsHtml(d.clicks, function(c){ return esc(c.label); }, function(c){ return n(c.count) + "×"; });
+      var locLabels = { nav: "Navigation bar", footer: "Footer", content: "Page content" };
+      var locEmoji = { nav: "🧭", footer: "👣", content: "📄" };
+      var byLoc = {};
+      d.clicks.forEach(function(c){ (byLoc[c.location] || (byLoc[c.location]=[])).push(c); });
+      var html = "";
+      ["nav","content","footer"].forEach(function(loc){
+        if (!byLoc[loc] || !byLoc[loc].length) return;
+        html += '<div class="group-label">' + (locEmoji[loc]||"") + " " + (locLabels[loc]||loc) + '</div>';
+        html += '<ul class="rows">' + byLoc[loc].map(function(c){
+          return '<li><span class="k">' + esc(c.label) + '</span><span class="v">' + n(c.count) + '×</span></li>';
+        }).join("") + '</ul>';
+      });
+      return html || empty();
     }, "POSTHOG_API_KEY");
 
     body("card-scroll").innerHTML = handle(res, function(d){
@@ -375,9 +412,33 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
       if (!d.exits || !d.exits.length) return empty();
       return rowsHtml(d.exits, function(e){ return prettyPath(e.path); }, function(e){ return n(e.count); });
     }, "POSTHOG_API_KEY");
+
+    body("card-entry").innerHTML = handle(res, function(d){
+      if (!d.entry_pages || !d.entry_pages.length) return empty();
+      return rowsHtml(d.entry_pages, function(e){ return prettyPath(e.path); }, function(e){ return n(e.sessions) + " visits"; });
+    }, "POSTHOG_API_KEY");
+
+    body("card-new-return").innerHTML = handle(res, function(d){
+      if (!d.new_vs_returning || !d.new_vs_returning.length) return empty();
+      var total = 0;
+      d.new_vs_returning.forEach(function(v){ total += v.visitors; });
+      var icons = { "new": "🌟", "returning": "🔁" };
+      var labels = { "new": "New visitors", "returning": "Returning visitors" };
+      return '<ul class="rows">' + d.new_vs_returning.map(function(v){
+        return '<li><span class="k">' + (icons[v.kind]||"") + " " + (labels[v.kind]||v.kind) + '</span>' +
+          '<span class="v">' + n(v.visitors) + (total ? ' (' + pct(v.visitors, total) + '%)' : '') + '</span></li>';
+      }).join("") + '</ul>';
+    }, "POSTHOG_API_KEY");
+
+    body("card-outbound").innerHTML = handle(res, function(d){
+      if (!d.outbound_clicks || !d.outbound_clicks.length) return '<div class="state">No outbound clicks yet. When someone taps a link that takes them off our site, it shows here.</div>';
+      return rowsHtml(d.outbound_clicks, function(c){
+        try { return esc(new URL(c.url).hostname.replace("www.","")); } catch(e){ return esc(c.url); }
+      }, function(c){ return n(c.count) + "×"; });
+    }, "POSTHOG_API_KEY");
   }).catch(function(){
-    [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions")].forEach(function(e){ if(e) e.textContent = "—"; });
-    ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits"].forEach(function(id){ body(id).innerHTML = oops(); });
+    [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions"),el("stat-duration")].forEach(function(e){ if(e) e.textContent = "—"; });
+    ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound"].forEach(function(id){ body(id).innerHTML = oops(); });
   });
 
   // --- Search terms (Google Search Console) ---
