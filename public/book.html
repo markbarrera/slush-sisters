@@ -415,9 +415,9 @@ var BOOKING_ENDPOINT = '/api/book';
 // (YYYY-MM-DD, one entry per day; list every day of a weekend you are away).
 // Every date here is BOTH shown as a heads-up under the date picker AND blocked
 // in the form, so nobody can request a day we can't do. This is the only place
-// to change it. The example below is the weekend of Oct 2–4, 2026 — replace it
-// with your real dates (or empty the list with: var UNAVAILABLE = [];).
-var UNAVAILABLE = ['2026-10-02', '2026-10-03', '2026-10-04'];
+// to change it. To clear it, use: var UNAVAILABLE = [];
+// Currently: away Thu Oct 1 – Mon Oct 5, 2026.
+var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026-10-05'];
 
 (function () {
   var form = document.getElementById('booking');
