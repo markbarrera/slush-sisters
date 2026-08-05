@@ -94,20 +94,21 @@
     autocapture: true,
     mask_all_text: false,
 
-    // --- Session recording: ON, but fully masked ---------------------------
-    // Masks every input AND all rendered text in the replay. This is the
-    // load-bearing protection for the booking form's address + phone.
+    // --- Session recording: ON and watchable, PII masked at the source -----
+    // Recordings show page copy and the ordinary booking fields (date, guests,
+    // flavors, notes) so we can see where people stall. The three sensitive
+    // inputs on /book — name, event address, phone/email — carry the class
+    // "ph-no-capture" in the markup, so THEY stay masked here even though inputs
+    // are otherwise visible. (Previously maskAllInputs + maskTextSelector:"*"
+    // blacked out everything, which defeated the point of recording at all.)
     disable_session_recording: false,
     session_recording: {
-      maskAllInputs: true,
+      maskAllInputs: false,
+      // Still hard-mask password/email input types anywhere they appear.
       maskInputOptions: {
         password: true,
-        email: true,
-        tel: true,
-        text: true,
-        number: true
-      },
-      maskTextSelector: "*"
+        email: true
+      }
     }
   });
 })();
