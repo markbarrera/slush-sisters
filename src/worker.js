@@ -341,7 +341,10 @@ async function aeQuery(env, sql) {
     `https://api.cloudflare.com/client/v4/accounts/${account}/analytics_engine/sql`,
     { method: "POST", headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` }, body: sql }
   );
-  if (!res.ok) throw new Error(`AE HTTP ${res.status}`);
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`AE HTTP ${res.status}: ${body.slice(0, 200)}`);
+  }
   return (await res.json()).data || [];
 }
 
