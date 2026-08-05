@@ -105,6 +105,13 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
+    // Canonical host: 301 www -> apex, preserving path + query. www is a
+    // separate hostname routed to this Worker; the bare domain is canonical.
+    if (url.hostname === "www.slushsisters.com") {
+      url.hostname = "slushsisters.com";
+      return Response.redirect(url.toString(), 301);
+    }
+
     // Always log first (never blocks, never throws upward). No PII, no body.
     ctx.waitUntil(logRequest(request, url, env));
 
