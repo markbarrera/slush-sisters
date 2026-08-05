@@ -296,4 +296,45 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <p style="margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC &middot; Run by Harper, 11 and Finley, 8</p>
 </div>
 </div>
-</footer></body></html>
+</footer>
+<script>
+(function(){
+  var cells = document.querySelectorAll('.score .n');
+  if (cells.length < 3) return;
+
+  fetch('/api/ledger').then(function(r){ return r.json(); }).then(function(d){
+    if (!d.ok) return;
+
+    function fmt(cents){
+      var neg = cents < 0;
+      var abs = Math.abs(Math.round(cents / 100));
+      var s = abs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return (neg ? '−$' : '$') + s;
+    }
+
+    /* Money in, ever */
+    var rev = d.revenue_cents || 0;
+    cells[0].textContent = fmt(rev);
+    cells[0].classList.toggle('zero', rev === 0);
+
+    /* Spent so far (shown as negative) */
+    var cost = d.cost_cents || 0;
+    cells[1].textContent = fmt(-cost);
+    cells[1].classList.toggle('zero', cost === 0);
+
+    /* Parties done */
+    var parties = d.parties || 0;
+    cells[2].textContent = String(parties);
+    cells[2].classList.toggle('zero', parties === 0);
+
+    /* "Updated from the books" note below the scoreboard */
+    var note = document.createElement('div');
+    note.style.cssText = 'text-align:center;font-size:.72rem;color:var(--line-strong);margin-top:10px;';
+    note.textContent = 'Updated from the books · '
+      + new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+    document.querySelector('.score').after(note);
+
+  }).catch(function(){ /* fetch failed — static numbers stay */ });
+})();
+</script>
+</body></html>
