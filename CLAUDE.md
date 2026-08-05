@@ -57,6 +57,12 @@ preview URL that does not touch production traffic.
   sentences, no marketing throat-clearing. Match it.
 - The candy garnish on every cup is the differentiator. It appears on most
   pages on purpose.
+- **"How did you hear about us" always keeps an open-ended box.** A dropdown is
+  fine for structure, but it must never be the only option — the specific,
+  in-their-own-words answer ("Sarah at the Belterra pool") is the useful one,
+  and analytics already covers the generic referrer. Never force a customer
+  into a bucket that does not fit. This is a standing form rule, not just the
+  booking page.
 
 ## Mobile first — this is the default, not a checkbox
 

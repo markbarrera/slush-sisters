@@ -108,7 +108,7 @@ const PAGES = [
      `Somebody worked out you could only make $27,000 a year. Then someone else did the math: $27,000 divided by $250 is 108 parties. And there are only about 104 weekend nights in a year. So that number was not "how many people want this." It was "how many Saturdays exist." Those are completely different things.`],
 
     ['plain', 'One machine is not a rule of nature',
-     `A second machine costs around $1,500 and pays for itself in about ten parties. If you keep saying no to people because the machine is busy, the machine is the problem — and problems you can buy your way out of are the good kind.`],
+     `A second machine costs about $800, the same as the first, and pays for itself in around four parties. If you keep saying no to people because the machine is busy, the machine is the problem — and problems you can buy your way out of are the good kind.`],
 
     ['plain', 'The thing you actually run out of is Saturdays',
      `Not machines. Not customers. There are roughly 25,000 to 35,000 households near you with money to spend on parties. You are never going to run out of those. You run out of weekend afternoons when a grown-up can drive the van.`],
