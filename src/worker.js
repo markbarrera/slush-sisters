@@ -441,6 +441,7 @@ function gscB64url(bytes) {
 
 async function importPkcs8(pem) {
   const body = pem
+    .replace(/\\n/g, "\n") // Google's JSON key stores newlines as literal \n
     .replace(/-----BEGIN[^-]+-----/, "")
     .replace(/-----END[^-]+-----/, "")
     .replace(/\s+/g, "");
