@@ -193,3 +193,28 @@ analytics, nothing collected).
 houses. That is the "same realm from anywhere" ask, it needs the Durable-Objects
 backend in Part 2, and it stays a **dad decision** (a running service Mark owns,
 plus the hardened no-accounts/no-chat/no-names line) before it's designed in.
+
+## The arcade as a growing collection (2026-08-05, later)
+
+Mark's feedback after playing: **Slushie Street is "just pushing a button over
+and over"** — a clicker, not really play. The signal: he and the kids love the
+**Toca Boca kind of thing — a character that moves and interacts**, open-ended,
+no score. Slushie Street stays in the arcade (his call: "keep that one, we'll
+just keep building the arcade"), but new games lean into that direction. Three
+added the same night, all built around the mascot moving and reacting:
+
+- **Slushie's Playhouse** (`/slushie-playhouse`) — a *toy*, the Toca answer.
+  Make a slushie (pour flavors that mix, drop candy, add a straw), give it to
+  Slushie, and it drinks and **reacts** to what you made (brain freeze on icy
+  drinks, a sugar-rush bounce on lots of candy, turns the flavor's color). Poke
+  it → giggles; drag it → wobbles. No score, no timer.
+- **Slushie Catch** (`/slushie-catch`) — a moving-character action game. Slide
+  to move Slushie, catch falling fruit/candy in the cup, dodge sour lemons and
+  ice cubes. Three lives, speeds up, high score on the device.
+- **Slushie Style** (`/slushie-style`) — a dress-up *toy* (Toca Hair Salon
+  vibe): change color, add hats/glasses/bows, pick a face, tap for a pose,
+  🎲 surprise button. No goals.
+
+So the arcade is now five: Playhouse, Catch, Style, Slush Rush, Slushie Street.
+The pattern for the next one is in `CLAUDE.md` (“The arcade”). Direction to keep
+pulling on: **interactive and character-first over score-first.**

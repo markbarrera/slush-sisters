@@ -149,8 +149,11 @@ real phone viewport with `scripts/snapshot.js`.
 
 ## The arcade aesthetic (the games)
 
-The games (`/play`, `/slush-rush`, `/slushie-street`) share the palette above
-but push the “squishy” texture furthest: big pill buttons with a solid-color
-drop shadow that compresses on `:active`, cups that squish on tap, coins that
-float up, tiny Web Audio blips (no sound files). They are full-screen, no site
-header, and orphaned. See `docs/game.md`.
+The games (a growing set under `/play` — Playhouse, Catch, Style, Slush Rush,
+Slushie Street) share the palette above but push the “squishy” texture furthest:
+big pill buttons with a solid-color drop shadow that compresses on `:active`,
+cups that squish on tap, coins that float up, tiny Web Audio blips (no sound
+files). The mascot often appears as an expressive DOM character (a cup body with
+a face whose eyes blink and mouth changes) rather than the static SVG, so it can
+move and react. They are full-screen, no site header, and orphaned. See
+`docs/game.md`.
