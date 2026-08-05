@@ -7,8 +7,17 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "drop-b4ff8c50-e5c",
   "compatibility_date": "2026-08-01",
+  // Edge Worker in front of the static site. It logs every request to Analytics
+  // Engine (crawler/traffic/leak visibility) and serves markdown to AI agents
+  // that ask for it. See src/worker.js — it hands normal requests straight back
+  // to the assets below, so serving behavior is unchanged.
+  "main": "src/worker.js",
   "assets": {
     "directory": "./public",
+    // Lets src/worker.js serve assets via env.ASSETS.fetch(request).
+    "binding": "ASSETS",
+    // Run the Worker on every request (so it can log) before assets are served.
+    "run_worker_first": true,
     // Serves /about for public/about.html and 307s /about.html -> /about.
     // This matches what production does today.
     "html_handling": "auto-trailing-slash",
@@ -16,5 +25,11 @@
     // path, which makes typos and dead links look like real pages to Google.
     // "404-page" serves public/404.html with a real 404 status instead.
     "not_found_handling": "404-page"
-  }
+  },
+  // Server-side request log. No cookies, no IP, no personal data — see the
+  // COPPA note at the top of src/worker.js. Query it with the Analytics Engine
+  // SQL API once there is data.
+  "analytics_engine_datasets": [
+    { "binding": "TRAFFIC", "dataset": "slush_traffic" }
+  ]
 }

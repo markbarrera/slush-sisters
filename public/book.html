@@ -232,6 +232,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
   "slogan": "A candy garnish on every cup."
 }
 </script>
+<script src="/analytics.js" defer></script>
 </head>
 <body><header id="hdr">
 <a href="/" class="site-name"><span>Slush</span> Sisters</a>
@@ -266,7 +267,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 
 <form id="booking" novalidate>
 <label for="f-name">Your name</label>
-<input id="f-name" name="name" type="text" autocomplete="name" required placeholder="First and last name">
+<input id="f-name" name="name" type="text" autocomplete="name" required placeholder="First and last name" class="ph-no-capture">
 
 <div class="row2">
 <div><label for="f-date">Event date</label><input id="f-date" name="event_date" type="date" required></div>
@@ -281,11 +282,11 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 </div>
 
 <label for="f-address">Event address</label>
-<input id="f-address" name="address" type="text" autocomplete="street-address" required placeholder="Street address and city">
+<input id="f-address" name="address" type="text" autocomplete="street-address" required placeholder="Street address and city" class="ph-no-capture">
 <p class="hint">We need this to plan delivery and pickup.</p>
 
 <label for="f-contact">Phone or email</label>
-<input id="f-contact" name="contact" type="text" autocomplete="tel" required placeholder="Best way to reach you">
+<input id="f-contact" name="contact" type="text" autocomplete="tel" required placeholder="Best way to reach you" class="ph-no-capture">
 
 <label for="f-heard">How did you first hear about us?</label>
 <select id="f-heard" name="heard_from" required>
