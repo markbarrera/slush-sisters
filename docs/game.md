@@ -102,6 +102,17 @@ collects anything. All doable! The current architecture (no trackers, no
 cookies) is actually nearly compliant by accident. But it is a real design
 constraint that must be honored *before* promotion, not after.
 
+> **UPDATE 2026-08-05 — this constraint was relaxed by Mark's decision.** The
+> game pages now load `public/analytics.js` (pageviews + a `game_opened` event +
+> cookies) so we can see which games are popular. Session recording stays OFF on
+> them, and there is still no account/chat/name/free-text capture. This is a
+> deliberate reversal of the "no analytics on the game page" reasoning above —
+> the reasoning is left intact because it is exactly what a lawyer should weigh.
+> Instrumenting cookies on child-facing pages, while `/book` collects a home
+> address and the arcade is linked site-wide, moves the COPPA question from
+> "compliant by accident" to "needs a real review + a privacy notice." Both are
+> outstanding. See `docs/analytics.md`.
+
 And one strategy echo worth hearing again: the creator research found that a
 1.7-million-like video produced ~$500 of revenue. A viral game played by
 kids in Ohio books zero Lakeway parties. **The game's real value is local

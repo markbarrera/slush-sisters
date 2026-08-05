@@ -426,6 +426,18 @@ var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026
   var thx = document.getElementById('thx');
   var offline = document.getElementById('offline-note');
 
+  // Top-of-funnel conversion signal: fire once, the moment someone starts
+  // filling the form. Pairs with booking_submitted so ad platforms and the
+  // dashboard can see start-rate vs finish-rate, not just completed bookings.
+  form.addEventListener('focusin', function started() {
+    form.removeEventListener('focusin', started);
+    try {
+      if (window.posthog && typeof posthog.capture === 'function') {
+        posthog.capture('booking_started');
+      }
+    } catch (_) { /* analytics must never block the form */ }
+  });
+
   function fail(msg) {
     errBox.textContent = msg;
     errBox.hidden = false;
@@ -475,15 +487,15 @@ var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026
     var upcoming = UNAVAILABLE.filter(function (d) { return dayNum(d) >= todayNum; });
     if (!upcoming.length) { avail.hidden = true; return; }
     avail.className = 'hint';
-    avail.textContent = "Heads-up: we're away " + humanRanges(upcoming) + ". Any other date is open.";
+    avail.textContent = "Heads-up: we're already booked " + humanRanges(upcoming) + ". Any other date is open.";
     avail.hidden = false;
   }
   function checkDate() {
     if (!avail || !dateEl) return;
     if (dateEl.value && UNAVAILABLE.indexOf(dateEl.value) !== -1) {
-      dateEl.setCustomValidity("We're away that day — please pick another date.");
+      dateEl.setCustomValidity("We're booked that day — please pick another date.");
       avail.className = 'hint date-warn';
-      avail.textContent = "We're away on " + fmtDay(parseLocal(dateEl.value)) + " — please pick another date.";
+      avail.textContent = "We're booked on " + fmtDay(parseLocal(dateEl.value)) + " — please pick another date.";
       avail.hidden = false;
     } else {
       dateEl.setCustomValidity('');
@@ -553,12 +565,16 @@ var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026
               event_month: month,
               first_booking_ref: data.booking_ref
             });
+            // A conversion value lets ad platforms optimize for revenue, not
+            // just booking count. Classic is $250, Fresh Press is $375.
             posthog.capture('booking_submitted', {
               booking_ref: data.booking_ref,
               heard_from: data.heard_from,
               tier: data.tier,
               guest_count: data.guest_count,
-              event_month: month
+              event_month: month,
+              value: (data.tier === 'Fresh Press' ? 375 : 250),
+              currency: 'USD'
             });
           }
         } catch (_) { /* analytics must never block a booking */ }

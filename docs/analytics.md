@@ -7,24 +7,38 @@ to get it.
 Set up 2026-08-05. Owner: Mark. This is the record of what exists, how to read
 each screen, and what is deliberately left for later.
 
-## The one rule everything here bends around
+## The rule everything here bends around (and how it changed 2026-08-05)
 
-The arcade games and the kids' pages carry **no analytics, no cookies, no
-capture — ever.** That is what keeps a page a child plays from making the whole
-site "directed to children" under COPPA, which matters because the booking form
-collects a home address and a phone number for a child's party. Every choice
-below is downstream of that rule.
+The site was built cookieless, with the arcade games and kids' pages carrying
+**no analytics, no cookies, no capture — ever** — the thing that kept a page a
+child plays from making the whole site "directed to children" under COPPA, which
+matters because the booking form collects a home address and a phone number for
+a child's party.
 
-Practical version of the rule:
+**Mark changed this on 2026-08-05,** in two steps: (1) turn the marketing/booking
+pages up to maximum granularity *with cookies* (for the business dashboard and
+for retargeting when ads turn on), and (2) instrument the *game* pages too, to
+see which games are popular. Both are deliberate. The practical rule is now:
 
-- **A page that is `noindex` gets no analytics beacon.** That covers all seven
-  games, `/play`, `/party-play`, `/inventory`, `/competition`, and `404`.
-- **`/ideas` (the kids' idea board) gets no beacon either** — it is for Harper
-  and Finley, not the public, so we do not track it and we do not want to track
-  them. (See "Orphaned pages" below — its leak risk is handled server-side, not
-  with a beacon.)
-- **The booking form's sensitive fields are masked at the source** (see PostHog
-  below).
+- **The marketing + booking pages track fully and set cookies** — profiles for
+  everyone, DNT ignored, heatmaps, per-booking attribution. (Details under
+  PostHog below.)
+- **The game pages now load analytics too** (pageviews + a `game_opened` event +
+  cookies), but **session recording stays OFF on them** — no screen-replays of
+  children — and they still have no accounts, chat, names, or free-text capture.
+- **`/party-play` gets nothing** (a printable card, hard-blocked in the loader),
+  and **`/ideas`, `/read`, `/inventory` carry no beacon** — they are family
+  pages and simply do not include the loader.
+- **The booking form's sensitive fields (name, address, phone/email) are masked
+  at the source**, so raw contact PII is not duplicated into PostHog even at
+  "maximum" granularity.
+
+**The honest consequence of the change:** the site now sets tracking cookies on
+pages children use directly *and* collects a child's home address on `/book`
+*and* links the arcade from every page. That makes the COPPA posture a real open
+question. **Two follow-ups are outstanding and now matter:** a lawyer's review of
+the posture, and a visible privacy/cookie notice (there is none today). See the
+PostHog section for the specifics.
 
 ## What is set up
 

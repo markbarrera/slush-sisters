@@ -4,43 +4,48 @@
 
   This is the ONE place analytics is configured for the whole site, on purpose.
 
-  POSTURE CHANGE — 2026-08-05 (decided by Mark)
-  ---------------------------------------------
-  Tracking was previously cookieless, DNT-respecting, and profile-free. Mark
-  asked to track visitors as granularly as possible, WITH cookies, to power the
-  business dashboard's per-customer funnel ("this person heard about us here,
-  read these pages, then booked"). This file now does that on the marketing and
-  booking pages. What changed from the old posture:
+  POSTURE — as of 2026-08-05 (decided by Mark)
+  --------------------------------------------
+  Track visitors as granularly as possible, WITH cookies, to power the business
+  dashboard's per-customer funnel AND to build retargeting-grade audiences for
+  when ads turn on. Concretely, on every page this file loads:
 
-    - Cookies are ON (durable cross-session identity, not just localStorage).
-    - "Do Not Track" is no longer honored — DNT visitors are tracked too.
-    - A person profile is built for EVERY visitor (was: identified-only).
+    - Cookies ON (durable cross-session identity, not just localStorage).
+    - "Do Not Track" is NOT honored — DNT visitors are tracked too.
+    - A person profile is built for EVERY visitor.
     - Heatmaps, dead clicks, and web-vitals capture are on.
-    - Each booking is stitched to that visitor via posthog.identify() in
-      public/book.html, so the pre-booking browsing history joins the booking.
+    - UTM/referrer are captured automatically (PostHog sets $initial_utm_* person
+      properties + utm on events), which is the attribution ads will need.
+    - Each booking is stitched to its visitor via posthog.identify() in
+      public/book.html, with a conversion value ($250 / $375) on the event.
 
-  THE LINE THAT DID **NOT** MOVE — the game / kid pages
-  -----------------------------------------------------
-  Every arcade and game page still carries NO analytics, NO cookies, NO capture.
-  That is what keeps a page a child plays from making the whole site "directed to
-  children" under COPPA — which matters precisely because the booking form
-  collects a home address and a phone number for a child's party. Turning cookies
-  ON for the site makes that line MORE load-bearing, not less. Extending tracking
-  onto the game pages is a separate, explicit decision (and one the repo flags for
-  a lawyer's review); until that call is made, the route guard below keeps them
-  clean even if this file is ever included on one by mistake.
+  THE GAME / KID PAGES — changed 2026-08-05
+  -----------------------------------------
+  These pages USED to carry no analytics at all — the mechanism that kept a page
+  a child plays from making the whole site "directed to children" under COPPA.
+  Mark asked to see which games are popular, so they are now instrumented too:
+  pageviews, a "game_opened" event, and cookies, so game popularity and
+  cross-game navigation are visible.
+
+  Two things about that, on the record:
+    1. **Session recording is OFF on game pages** (see isGame below). Watching
+       replays of individual children playing is the sharpest privacy exposure
+       here and adds nothing to "which games are popular." To capture it anyway,
+       set RECORD_GAMES = true below — a deliberate one-line change, not a
+       default.
+    2. This makes the site's COPPA posture a REAL open question, not a hedged
+       one: it now sets tracking cookies on pages children use directly AND
+       collects a child's home address on /book AND links the arcade from every
+       page. A lawyer's review of this posture, and a visible privacy/cookie
+       notice, are both outstanding (see docs/analytics.md).
 
   WHAT IS STILL MASKED, EVEN AT "MAXIMUM" GRANULARITY
   ---------------------------------------------------
-  Session recording is on and inputs are visible so replays are useful — EXCEPT
-  the three sensitive inputs on /book (name, event address, phone/email), which
-  carry the class "ph-no-capture" in the markup. Those stay masked so a customer's
-  child's home address and phone are not duplicated into a third-party replay
-  tool. The booking itself still records in full to your own inbox (and, once
-  built, your own database). Behavioral granularity is unaffected by this — it
-  only keeps raw contact PII out of PostHog. If a new sensitive field is ever
-  added to a form, give it "ph-no-capture" too. To also capture those fields in
-  replays, remove the class — that is a deliberate one-line change, not a default.
+  On /book, the three sensitive inputs (name, event address, phone/email) carry
+  class "ph-no-capture" so the home address and phone a customer types are not
+  duplicated into a third-party replay. The booking still records in full to your
+  own inbox and database. If a new sensitive field is added to any form, give it
+  "ph-no-capture" too.
 
   The POSTHOG_KEY below is the Slush Sisters project key. It is public by design —
   it ships in page source on every PostHog site — so it is safe to commit. To
@@ -49,13 +54,23 @@
 (function () {
   "use strict";
 
-  // --- Layer 2: hard route guard -------------------------------------------
-  // Never initialize on a game / kid-facing path, whatever page included this.
-  // This is the COPPA line; it holds until there is an explicit decision to
-  // instrument the game pages. Do not remove without that decision on record.
-  var BLOCKED = [
+  // Watch children play back as video? Off by default (see header). Flip to true
+  // only as a deliberate, reviewed decision.
+  var RECORD_GAMES = false;
+
+  var path = (location.pathname || "/").replace(/\/+$/, "") || "/";
+
+  // Pages that get NOTHING, ever, even if this file is included by mistake.
+  // /party-play is a printable table card, not a play surface.
+  var NEVER = ["/party-play"];
+  for (var n = 0; n < NEVER.length; n++) {
+    if (path === NEVER[n] || path === NEVER[n] + ".html") return;
+  }
+
+  // Game / arcade surfaces. Instrumented (per Mark, 2026-08-05) but with session
+  // recording held off unless RECORD_GAMES is set.
+  var GAMES = [
     "/play",
-    "/party-play",
     "/slushie-playhouse",
     "/slushie-street",
     "/slushie-style",
@@ -63,9 +78,13 @@
     "/slushie-guys",
     "/slush-rush"
   ];
-  var path = (location.pathname || "/").replace(/\/+$/, "") || "/";
-  for (var i = 0; i < BLOCKED.length; i++) {
-    if (path === BLOCKED[i] || path === BLOCKED[i] + ".html") return;
+  var isGame = false, gameSlug = "";
+  for (var i = 0; i < GAMES.length; i++) {
+    if (path === GAMES[i] || path === GAMES[i] + ".html") {
+      isGame = true;
+      gameSlug = GAMES[i].slice(1);
+      break;
+    }
   }
 
   var POSTHOG_KEY = "phc_yN1IDp6NIx4uANHzmtjlrFFbohdZdC8mZIbQ6hnKWZH";
@@ -81,8 +100,8 @@
     api_host: POSTHOG_HOST,
 
     // --- Maximum-granularity identity (Mark, 2026-08-05) --------------------
-    // Cookies ON: durable identity that survives across sessions and tabs, so a
-    // visitor who comes back next week is the same person, not a new one.
+    // Cookies ON: durable identity across sessions and tabs — the basis of any
+    // retargeting audience later.
     persistence: "localStorage+cookie",
     disable_cookie: false,
     cross_subdomain_cookie: false,
@@ -90,8 +109,8 @@
     // Track everyone, including Do-Not-Track browsers.
     respect_dnt: false,
 
-    // Build a person profile for every visitor, so anonymous browsing can later
-    // be stitched to a booking via identify() (see public/book.html).
+    // A person profile for every visitor, so anonymous browsing can be stitched
+    // to a booking (see public/book.html) and to ad-source UTMs.
     person_profiles: "always",
 
     // Page + engagement analytics.
@@ -107,13 +126,10 @@
     capture_dead_clicks: true,
     capture_performance: true,
 
-    // --- Session recording: full, with contact PII masked at the source ----
-    // Inputs are visible (date, guests, flavors, the "how did you hear" box,
-    // notes) so replays show where people stall. The three sensitive inputs on
-    // /book carry class "ph-no-capture" in the markup, so the home address and
-    // phone a customer types stay masked here. Password/email input TYPES are
-    // hard-masked anywhere they appear.
-    disable_session_recording: false,
+    // --- Session recording -------------------------------------------------
+    // ON for marketing/booking pages, with the three sensitive /book inputs
+    // masked at source. OFF on game pages (children) unless RECORD_GAMES is set.
+    disable_session_recording: isGame ? !RECORD_GAMES : false,
     session_recording: {
       maskAllInputs: false,
       maskInputOptions: {
@@ -122,4 +138,12 @@
       }
     }
   });
+
+  // Tag every event on a game page with its surface + slug, and log the open so
+  // "which games are popular" is a first-class question, not just a pageview
+  // count.
+  if (isGame) {
+    posthog.register({ surface: "game", game: gameSlug });
+    posthog.capture("game_opened", { game: gameSlug });
+  }
 })();

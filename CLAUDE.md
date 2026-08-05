@@ -189,16 +189,33 @@ for the full scope, the tier plan, and the COPPA reasoning.
   others by design.
 
 Each game is one self-contained HTML file, same as a page. **They are orphaned
-like `/read`: `noindex`, not in the nav, footer, sitemap or `scripts/snapshot.js`
-set.** The COPPA line is load-bearing: **no analytics, no cookies, no capture,
-no accounts, no chat, no names on any game page — ever.** That is what keeps a
-page a kid plays from making the site "directed to children." The only thing
-stored is a high score / save game, in the browser, on the device. Honor this
-before any promotion, not after.
+like `/read`: `noindex`, not in the footer, sitemap or `scripts/snapshot.js`
+set.** (`/play`, the hub, *is* in the main nav — see the standing decision
+below.)
 
-When you add a game: build it, keep it one self-contained file, hold the COPPA
-line above, add a card to `/play`, note it in `docs/game.md`, and run
-`npm run inventory`.
+**The COPPA line moved 2026-08-05 — read this carefully.** The games used to
+carry **no analytics, no cookies, no capture — ever**, which is what kept a page
+a child plays from making the whole site "directed to children." Mark then asked
+to measure which games are popular, and accepted instrumenting them: the game
+pages now load `public/analytics.js` (pageviews, a `game_opened` event, cookies).
+So the analytics/cookies part of the old rule is **reversed by decision, not by
+accident** — if you see older notes saying "no analytics on any game page ever,"
+the current intended state is that games ARE instrumented. Do not "restore" the
+clean version.
+
+What **still** holds on game pages, and must not drift: **no accounts, no chat,
+no names, no free-text a child types is captured, and session recording is OFF**
+(the loader disables it on game paths). The only thing stored is a high score /
+save game, in the browser, on the device. And the honest consequence: setting
+cookies on pages children use directly, while `/book` collects a child's home
+address and the arcade is linked from every page, makes the site's COPPA footing
+a **real open question** — a lawyer's review of the posture and a visible
+privacy/cookie notice are both outstanding (`docs/analytics.md`).
+
+When you add a game: build it, keep it one self-contained file, hold the reduced
+line above (no accounts/chat/names, recording off), include
+`<script src="/analytics.js" defer></script>` so its opens are counted, add a
+card to `/play`, note it in `docs/game.md`, and run `npm run inventory`.
 
 **How the arcade is reached — a standing decision (updated 2026-08-05).** The
 arcade (`/play`) is linked from the **main site nav** on every page ("Arcade",
