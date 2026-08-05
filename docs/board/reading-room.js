@@ -770,6 +770,116 @@ const PAGES = [
 },
   ],
 },
+
+/* ========================= THE ARCADE (games) =========================== */
+{
+  slug: 'the-games',
+  title: 'The games we made',
+  kicker: 'Your arcade',
+  lede: `We built a little arcade — six games and toys with Slushie in them. They live at /play. This is what each one is, why they are built the way they are, and the one thing we could not fully finish yet.`,
+  close: [
+    ['They are meant to be shown, not to go viral',
+     `The best thing that can happen is a kid at one of your parties plays a game, likes it, and tells their mom — and their mom is the one who books you. A friend at Lake Travis Elementary playing it is worth more than a million strangers on the internet, and it costs nothing.`],
+    ['Nobody outside can find them by accident',
+     `The games are not in Google, and nothing on them tracks who plays. You reach them because someone gave you the link, or scanned the card at a party. That is on purpose — the middle group explains why it matters.`],
+  ],
+  groups: [
+{
+  name: 'What is in the arcade',
+  color: '#4fc3f7',
+  blurb: 'Six of them. Tap a card on /play to play any one.',
+  cards: [
+    ['plain', 'Slushie Guys',
+     `A running-and-jumping race, like Stumble Guys. You dodge swinging hammers and spinning bars, jump the gaps, and try to beat the other slushies to the finish. It is the biggest one, and the one you asked for. Three courses that get harder.`],
+    ['plain', 'Slushie’s Playhouse',
+     `Not really a game — a toy. You make a slushie any way you want, hand it to Slushie, and it drinks it and does something funny: a brain freeze, a sugar-rush bounce, or it turns the color of the drink. Poke it and it giggles.`],
+    ['plain', 'Slushie Catch',
+     `Slide Slushie side to side to catch the falling fruit and candy in the cup — and dodge the sour lemons, because those cost you a life.`],
+    ['plain', 'Slushie Style',
+     `A dressing-up toy. Give Slushie hats, glasses, bows and colors, then tap it for a pose. There is a surprise button that throws a random look together.`],
+    ['plain', 'Slush Rush',
+     `The fast one. Read the order, build the cup before the timer runs out, add the right candy, serve. It gets quicker and quicker until you miss.`],
+    ['plain', 'Slushie Street',
+     `Start with one little stand and build a whole street of them. Play it by yourself, or race a friend on the same iPad — most money in 60 seconds wins.`],
+  ],
+},
+{
+  name: 'Why they are built the way they are',
+  color: '#ffb74d',
+  blurb: 'A few rules we followed on purpose.',
+  cards: [
+    ['plain', 'No game ever asks your name',
+     `None of the games ask who you are, none of them sign you up for anything, and none of them remember anything except your high score — and that stays on the one iPad you played on. There is a real reason: a website "made for kids" has to follow a strict American law about children, and the way you stay on the safe side of it is to never collect a single thing from a kid. So the games collect nothing. Ever.`],
+    ['debate', 'Should the games be shouted about all over the website?',
+     `Yes — they are fun. Put a big link on every page so everybody finds them.`,
+     `The more the website looks like it is "for kids", the more that strict children's law covers the whole site — including the booking form, which asks for a home address. Keeping the games quiet keeps the rest of the site simple and safe.`,
+     `Your dad made the call to put an "Arcade" link in the top menu, which is the loud version. It is one line to take back out if you change your mind, and it is worth a lawyer checking one day — because of that home address on the booking form.`],
+    ['plain', 'You reach them through the party',
+     `There is a card you can print — it is at /party-play — with a little square code on it. You set it on the party table, a kid points a phone camera at it, and it opens the arcade. That is the main way we want kids to find the games: at the actual party, not by us broadcasting them everywhere.`],
+  ],
+},
+{
+  name: 'The one we could not fully finish',
+  color: '#ba68c8',
+  blurb: 'Slushie Guys is almost the real thing. Almost.',
+  cards: [
+    ['plain', 'You are racing the computer, not your friends',
+     `In real Stumble Guys you race your actual friends from their houses. The other slushies in our game are the computer pretending to be players. It looks like a race and it feels like one — but they are not really your friends.`],
+    ['debate', 'Could it race real friends one day?',
+     `Yes. Kids do exactly this in Stumble Guys and Roblox all the time, so it is completely possible to build.`,
+     `It needs a special always-on computer (grown-ups call it a "server") that has to keep running and can break, and someone — Dad — owns keeping it alive forever. It also has to be built very carefully so kids can never type their names or chat with strangers.`,
+     `It is a Dad decision — not because it is hard to imagine, but because it puts a running thing in his life that never turns off. If you play this game a lot and really want it, that is exactly when to go ask him.`],
+  ],
+},
+  ],
+},
+
+/* ===================== THE CHARACTER (yours to draw) ==================== */
+{
+  slug: 'your-character',
+  title: 'The character is yours to draw',
+  kicker: 'Your decision',
+  lede: `We drew a little character named Slushie — a slushie cup with a face. It is a first try, not the finished thing. Like the colors, it is meant to be yours: you draw over it, and your version becomes the real one.`,
+  close: [
+    ['A character you drew beats one a grown-up drew',
+     `The whole point of a company run by two kids is that the two kids made it. A mascot a designer handed you does not prove that. A mascot Finley drew does. So draw over ours — that is not us being polite, it is the actual plan.`],
+  ],
+  groups: [
+{
+  name: 'Meet Slushie',
+  color: '#7ed957',
+  blurb: 'It is on the front of the arcade and it is the little racer in the games.',
+  cards: [
+    ['plain', 'It is a cup, not a kid',
+     `Slushie is a cup with a face — never a drawing of a person, and never a cartoon of either of you. That is on purpose. A cup keeps everything about the drink, and it means there is never a picture of a child on something we use to sell parties. That one is a safety rule, and it does not change.`],
+    ['plain', 'It can be any flavor color',
+     `The same character works in green, pink, blue or mango — every flavor is just a different colored Slushie. In the racing game, the other players you are beating are just Slushie in other colors.`],
+  ],
+},
+{
+  name: 'It is a first draft',
+  color: '#ff4081',
+  blurb: 'This is the actual thing we want you to do with it.',
+  cards: [
+    ['plain', 'Draw over it',
+     `Print it out, or trace it on a screen, and redraw it however you like — rounder, sillier, a different face, a floppier straw. Your drawing becomes the real Slushie, and we will scan it in and put it on the site. The one there now is just a starting point so there was something to draw on top of.`],
+    ['plain', '"Watch us design our mascot" is a video',
+     `Two kids drawing their own company's character is exactly the kind of thing people like to watch — a lot more than a video about slushies. The drawing itself is worth filming.`],
+  ],
+},
+{
+  name: 'Why drawings and not photos',
+  color: '#4fc3f7',
+  blurb: 'A choice about how the whole website looks.',
+  cards: [
+    ['plain', 'Drawings look like you. Photos look like an ad.',
+     `A hand-drawn, slightly wonky, candy-bright world looks like something two kids actually made. Perfect glossy photos look like every other company. The drawings are also free and load instantly, because they are made of code, not picture files.`],
+    ['plain', 'No fancy cocktail photos, on purpose',
+     `It is tempting to put a big shiny photo of a margarita on the grown-ups page. We do not, and here is why: a glossy cocktail photo makes an 11-year-old's company look like a tequila advert, which is exactly the wrong look for you. If we ever show a real drink, it is the frozen cup with the candy on the rim, next to real fruit — never a bar cocktail.`],
+  ],
+},
+  ],
+},
 ];
 
 /* ------------------------------------------------------------------ render */
