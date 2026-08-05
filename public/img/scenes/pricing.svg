@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="Two frozen drink cups with price tags reading 250 dollars and 375 dollars">
+  <!-- Pricing: two recipes, one machine. Classic $250 and Fresh Press $375. -->
+  <!-- Classic cup (left, blue) -->
+  <g transform="translate(96,64)">
+    <rect x="2" y="-34" width="7" height="22" rx="3.5" fill="#ff4081" transform="rotate(12)"/>
+    <path d="M-20,-20 L20,-20 L15,58 Q14,66 4,66 L-4,66 Q-14,66 -15,58 Z" fill="#fff" stroke="#1a237e" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M-16,-2 L16,-2 L12,58 Q11,65 3,65 L-3,65 Q-11,65 -12,58 Z" fill="#4fc3f7"/>
+    <circle cx="0" cy="-20" r="6" fill="#ffd24d" stroke="#1a237e" stroke-width="3"/>
+  </g>
+  <!-- tag $250 -->
+  <g transform="translate(120,120) rotate(8)">
+    <path d="M0,-14 L40,-14 A6,6 0 0 1 46,-8 L46,8 A6,6 0 0 1 40,14 L0,14 L-12,0 Z" fill="#ffd24d" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="-2" cy="0" r="3.5" fill="#fff" stroke="#1a237e" stroke-width="2.5"/>
+    <text x="22" y="1" text-anchor="middle" dominant-baseline="central" font-family="'Baloo 2', system-ui, sans-serif" font-weight="800" font-size="17" fill="#1a237e">$250</text>
+  </g>
+
+  <!-- Fresh Press cup (right, green) -->
+  <g transform="translate(212,64)">
+    <rect x="2" y="-34" width="7" height="22" rx="3.5" fill="#4fc3f7" transform="rotate(12)"/>
+    <path d="M-20,-20 L20,-20 L15,58 Q14,66 4,66 L-4,66 Q-14,66 -15,58 Z" fill="#fff" stroke="#1a237e" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M-16,-2 L16,-2 L12,58 Q11,65 3,65 L-3,65 Q-11,65 -12,58 Z" fill="#86cf7a"/>
+    <circle cx="0" cy="-20" r="6" fill="#ff8fa0" stroke="#1a237e" stroke-width="3"/>
+  </g>
+  <!-- tag $375 -->
+  <g transform="translate(236,120) rotate(8)">
+    <path d="M0,-14 L40,-14 A6,6 0 0 1 46,-8 L46,8 A6,6 0 0 1 40,14 L0,14 L-12,0 Z" fill="#eef7ee" stroke="#2e7d32" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="-2" cy="0" r="3.5" fill="#fff" stroke="#2e7d32" stroke-width="2.5"/>
+    <text x="22" y="1" text-anchor="middle" dominant-baseline="central" font-family="'Baloo 2', system-ui, sans-serif" font-weight="800" font-size="17" fill="#2e7d32">$375</text>
+  </g>
+
+  <g fill="#4fc3f7"><path d="M164,44 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/></g>
+</svg>

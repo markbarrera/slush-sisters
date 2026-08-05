@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="A tipped-over frozen drink cup that has melted into a puddle">
+  <!-- 404: this page melted. A drooping cup and a puddle. -->
+  <!-- puddle -->
+  <ellipse cx="176" cy="150" rx="86" ry="15" fill="#86cf7a" opacity=".45"/>
+  <ellipse cx="176" cy="150" rx="86" ry="15" fill="none" stroke="#1a237e" stroke-width="3" opacity=".5"/>
+
+  <!-- tipped cup -->
+  <g transform="rotate(-18 150 100)">
+    <rect x="14" y="-34" width="7" height="22" rx="3.5" fill="#4fc3f7" transform="rotate(18)"/>
+    <path d="M124,44 L196,44 L188,120 Q186,130 174,130 L146,130 Q134,130 132,120 Z" fill="#fff" stroke="#1a237e" stroke-width="5" stroke-linejoin="round"/>
+    <!-- drippy slush -->
+    <path d="M130,60 q10,-8 20,0 t20,0 t18,0 l-6,58 Q180,126 172,126 L148,126 Q138,126 137,118 Z" fill="#86cf7a"/>
+    <!-- candy -->
+    <circle cx="160" cy="44" r="6" fill="#ffd24d" stroke="#1a237e" stroke-width="3"/>
+    <!-- sad face -->
+    <circle cx="150" cy="86" r="4" fill="#1a237e"/>
+    <circle cx="170" cy="86" r="4" fill="#1a237e"/>
+    <path d="M150,104 q10,-8 20,0" fill="none" stroke="#1a237e" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- drip falling -->
+  <path d="M150,138 q-3,6 0,9 q3,-3 0,-9Z" fill="#86cf7a"/>
+
+  <g fill="#4fc3f7"><path d="M232,54 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/></g>
+</svg>

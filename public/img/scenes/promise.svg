@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="A shield with a checkmark, flanked by a lime slice, meaning a promise kept and only fruit inside">
+  <!-- Our promise: only fruit in the machine, and the rules we keep. A trust
+       shield with a check, and real fruit either side (frozen limeade). -->
+
+  <!-- lime (left) -->
+  <g transform="translate(74,116)">
+    <circle r="24" fill="#6cbf6a" stroke="#1a237e" stroke-width="4.5"/>
+    <circle r="17" fill="#d8f0c0"/>
+    <g stroke="#9ed98f" stroke-width="2.4" stroke-linecap="round">
+      <path d="M0,0 L0,-15"/><path d="M0,0 L13,-8"/><path d="M0,0 L15,0"/><path d="M0,0 L13,8"/>
+      <path d="M0,0 L0,15"/><path d="M0,0 L-13,8"/><path d="M0,0 L-15,0"/><path d="M0,0 L-13,-8"/>
+    </g>
+  </g>
+
+  <!-- shield -->
+  <path d="M160,32 L208,49 V96 Q208,142 160,158 Q112,142 112,96 V49 Z" fill="#eaf6ff" stroke="#1a237e" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M160,44 L196,57 V95 Q196,131 160,145 Q124,131 124,95 V57 Z" fill="#fff" stroke="#1a237e" stroke-width="3"/>
+  <path d="M140,96 l15,16 27,-36" fill="none" stroke="#86cf7a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- small cup (right) -->
+  <g transform="translate(250,112)">
+    <rect x="1" y="-28" width="6" height="18" rx="3" fill="#4fc3f7" transform="rotate(12)"/>
+    <path d="M-13,-15 L13,-15 L10,24 Q9,30 2,30 L-2,30 Q-9,30 -10,24 Z" fill="#fff" stroke="#1a237e" stroke-width="4.5" stroke-linejoin="round"/>
+    <path d="M-10,-2 L10,-2 L8,24 Q7,29 1,29 L-1,29 Q-8,29 -8,24 Z" fill="#86cf7a"/>
+    <circle cx="0" cy="-15" r="4.5" fill="#ffd24d" stroke="#1a237e" stroke-width="2.5"/>
+  </g>
+
+  <g fill="#4fc3f7"><path d="M160,20 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/></g>
+</svg>
