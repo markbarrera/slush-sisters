@@ -200,16 +200,20 @@ When you add a game: build it, keep it one self-contained file, hold the COPPA
 line above, add a card to `/play`, note it in `docs/game.md`, and run
 `npm run inventory`.
 
-**How the arcade is reached — a standing decision (2026-08-05).** The arcade is
-**deliberately not in the site nav or footer.** Prominently linking games for
-8–12s from every page is a signal a site is "directed to children," which would
-change the whole site's COPPA footing — and the booking form collects a home
-address and phone number, so that footing matters. Instead the arcade is reached
-**adult-mediated**: a link on the booking confirmation (`/book`), and
-**`/party-play`** — a printable table card with a QR to `/play` the girls set
-out at the party. That reaches the right kids through the party, not by
-broadcasting site-wide. Do not add the arcade to the nav, footer or sitemap
-without Mark deciding to accept that tradeoff.
+**How the arcade is reached — a standing decision (updated 2026-08-05).** The
+arcade (`/play`) is linked from the **main site nav** on every page ("Arcade",
+before the Book button). Mark asked for this explicitly, **accepting the COPPA
+tradeoff**: prominently linking games for 8–12s from every page is a signal a
+site is "directed to children," and the booking form collects a home address and
+phone, so the footing matters — Mark made the call to accept it after the
+tradeoff was laid out in full. (Earlier in the day the decision was the opposite
+— reached only adult-mediated — so if you see conflicting older notes, **the nav
+link is the current, intended state**; do not "restore" the orphaned version.)
+Worth a lawyer's review of the COPPA posture at some point given the booking
+form. The individual game pages stay `noindex` and out of the sitemap; only the
+human-facing nav link changed. The other reach paths still exist too: a link on
+the booking confirmation (`/book`) and **`/party-play`**, a printable table card
+with a QR to `/play` for the party table.
 
 ## Before changing anything
 
