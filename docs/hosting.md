@@ -9,34 +9,34 @@ what is still unconfirmed.
 | --- | --- | --- |
 | DNS | Cloudflare | Authoritative NS are `veda.ns.cloudflare.com` / `zod.ns.cloudflare.com` |
 | CDN / proxy | Cloudflare | `server: cloudflare`, `cf-ray`, `cf-cache-status` on every response |
-| Site type | Hand-written static HTML, no CMS | 5 standalone `.html` files, all CSS inline in `<style>`, no build output, no framework markers |
-| Serving | Cloudflare Workers Static Assets | `/about.html` 307s to `/about`; unknown paths fall back to `index.html` — the Workers assets behavior |
-| Email | No MX records on the apex | MX lookup returns SOA only, so no mail is delivered to `@slushsisters.com` |
-| `www` | Does not resolve | `www.slushsisters.com` fails DNS resolution |
+| Site type | Hand-written static HTML + one edge Worker | Standalone `.html` files, CSS inline; `src/worker.js` runs in front of them (request logging, booking email, markdown-for-agents, www redirect) |
+| Serving | Workers Static Assets behind `src/worker.js` | `run_worker_first: true` so the Worker runs on every request, then serves the file via `env.ASSETS`; `/about.html` still 307s to `/about`, unknown paths still 404 |
+| Email | Cloudflare Email Routing (inbound) | MX = `route1/2/3.mx.cloudflare.net`, forwards to a verified destination. SPF + DKIM present, DMARC `p=reject` (set 2026-08-05) |
+| `www` | Resolves, 301s to apex | `www.slushsisters.com` is a Worker route; `src/worker.js` redirects it to the bare domain, preserving path + query (2026-08-05) |
 
-## Not yet confirmed
+## Worker binding — confirmed 2026-08-05
 
-The Cloudflare account reachable from this session contains exactly one Worker:
+`drop-b4ff8c50-e5c` (created 2026-07-24) is the site's Worker. Confirmed by
+deploying to it and watching production change, and by the Domains & Routes
+screen: it owns `slushsisters.com` and now `www.slushsisters.com/*` as a route.
+`name` in `wrangler.jsonc` is correct.
 
-```
-drop-b4ff8c50-e5c   created 2026-07-24
-```
+The Worker is no longer a pass-through — `src/worker.js` is the one bit of server
+code (logging, booking email, markdown-for-agents, www redirect). The pages are
+still static; see `docs/analytics.md` and `docs/booking-worker.md`.
 
-That is almost certainly the site — it is the only Worker in the account, it was
-created the same period the site went up, and its serving behavior matches
-production exactly. But the read-only Cloudflare connector available here cannot
-list Worker custom domains or routes, so **the binding has not been verified**.
+## Account-level toggles that had to be enabled once
 
-**Verify before the first deploy.** In the Cloudflare dashboard:
-Workers & Pages → `drop-b4ff8c50-e5c` → Settings → Domains & Routes. Confirm
-`slushsisters.com` is listed.
+Two features are off by default on a new account and each blocks `wrangler
+deploy` (with a specific error) until enabled in the dashboard — worth knowing,
+because the error is opaque:
 
-- If it is → `name` in `wrangler.jsonc` is correct, nothing to change.
-- If it is not → find the Worker or Pages project that owns the domain and put
-  that name in `wrangler.jsonc` instead.
-
-Deploying under the wrong name creates a second, unrouted Worker. It will not
-break the live site, but it will not update it either.
+- **Analytics Engine** — enable at Workers & Pages → Analytics Engine → Enable.
+  Until then, an `analytics_engine_datasets` binding fails deploy with **error
+  10089**. Enabled 2026-08-05.
+- **Email Routing** — enable at `slushsisters.com` → Email → Email Routing, and
+  verify a destination address. Until then, a `send_email` binding fails deploy.
+  Enabled + verified (`mark@markbarrera.com`) 2026-08-05.
 
 ## Access needed for automated deploys
 
