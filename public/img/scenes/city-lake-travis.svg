@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Lake Travis: a boat on open water below the Hill Country">
+  <circle cx="266" cy="42" r="15" fill="#ffd24d" stroke="#1a237e" stroke-width="4"/>
+  <g stroke="#1a237e" stroke-width="3" stroke-linecap="round"><path d="M266,20 v-7"/><path d="M287,30 l5,-5"/></g>
+  <!-- hills -->
+  <path d="M0,132 Q70,92 150,120 Q230,148 320,104 L320,150 L0,150 Z" fill="#9ed98f" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <!-- water -->
+  <path d="M0,140 L320,140 L320,200 L0,200 Z" fill="#4fc3f7"/>
+  <path d="M0,140 Q80,132 160,140 T320,138" fill="none" stroke="#1a237e" stroke-width="4"/>
+  <g stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"><path d="M40,158 h26"/><path d="M96,172 h30"/><path d="M210,164 h28"/><path d="M256,180 h24"/></g>
+  <!-- motorboat -->
+  <g transform="translate(150,150)">
+    <path d="M-34,0 L36,0 L28,18 L-26,18 Z" fill="#fff" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-20,0 L-20,-16 L18,-16 L26,0 Z" fill="#ff4081" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-2,-16 L-2,-30 L20,-24 L18,-16 Z" fill="#4fc3f7" stroke="#1a237e" stroke-width="3.5" stroke-linejoin="round"/>
+  </g>
+  <!-- cup -->
+  <g transform="translate(292,120)">
+    <rect x="0.5" y="-16" width="5" height="14" rx="2.5" fill="#ff4081" transform="rotate(12)"/>
+    <path d="M-11,-11 L11,-11 L9,20 Q8,25 2,25 L-2,25 Q-8,25 -9,20 Z" fill="#fff" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-8.5,0 L8.5,0 L7,20 Q6,24 1,24 L-1,24 Q-7,24 -7,20 Z" fill="#86cf7a"/>
+    <circle cx="0" cy="-11" r="4" fill="#ffd24d" stroke="#1a237e" stroke-width="2.4"/>
+  </g>
+</svg>

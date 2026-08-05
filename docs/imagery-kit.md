@@ -54,6 +54,7 @@ All 60×60, deep-blue outline, candy-bright fill — drop-in anywhere.
 | `gummy-drop.svg` | Yellow squishy gummy | Mango, general candy, a soft accent |
 | `sour-square.svg` | Green sugar-coated square | Sour Patch / watermelon, the tart flavors |
 | `lime.svg` | Lime slice | Fresh Press, margarita, anything citrus |
+| `pin.svg` | Blue map pin, pink dot | Neighborhood / "where we go" lists |
 
 Need something not in the list (a cherry, a pineapple ring, a slush drip)? Build
 it with the recipe below and add it to the table. That is how the kit grows.
@@ -240,6 +241,18 @@ Never hand-resize a photo or point a phone at a big file. The script does it.
   to these — they are a first pass in the house style, exactly the kind of thing
   they should redraw in their own hand, like the colors and the character.
 
+- **2026-08-05** — Leaned local: replaced the one shared machine photo that
+  every service-area page reused with a **bespoke city scene each** —
+  `city-lakeway` (home on the hills + a sailboat), `city-bee-cave` (a bee, for
+  the name), `city-lake-travis` (a boat on open water), `city-lake-austin` (the
+  360 arch bridge), `city-steiner-ranch` (a longhorn + a Texas star),
+  `city-dripping-springs` (a red barn + bluebonnets), `city-austin` (the Capitol
+  skyline), and `city-margarita-austin` (skyline + a big lime). Each keeps the
+  page's text hero and drops the illustration into the image slot. Also added a
+  `pin` motif to every neighborhood list so "where we go" reads like a local map.
+  Local is part of the sell, so the art should be too. Verified at 390px and on
+  desktop.
+
 - **Next up**: the girls' reactions and redraws. The real-photo shot list (limes
   halved, a hand squeezing one, the candy rims, the machine pouring) is still an
   easy afternoon, then `node scripts/optimize-images.js`. Growing the motif
@@ -270,7 +283,7 @@ The full, always-current list is `/inventory`. This is just the imagery view.
 | `/ledger` | Bespoke scene (open book, both columns) | Good |
 | `/press` | Bespoke scene (newspaper + camera) | Good |
 | `/404` | Bespoke scene (a melted cup) | Good |
-| service-area pages | Hero photo each | Good |
+| service-area pages | Bespoke **city scene** each + map-pin neighborhood lists | Good |
 | `/ideas`, `/play`, `/slush-rush`, `/slushie-street` | Generated / arcade — own visual system | Leave to their generators |
 
 Keep this table honest as pages change.

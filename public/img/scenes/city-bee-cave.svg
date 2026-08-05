@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Bee Cave: a friendly bee over Hill Country with a flower and a cup">
+  <circle cx="270" cy="42" r="14" fill="#ffd24d" stroke="#1a237e" stroke-width="4"/>
+  <!-- hills -->
+  <path d="M0,152 Q90,108 190,146 Q250,166 320,132 L320,200 L0,200 Z" fill="#9ed98f" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M0,176 Q110,140 210,170 Q270,186 320,166 L320,200 L0,200 Z" fill="#6cbf6a" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <!-- flower -->
+  <g transform="translate(60,150)">
+    <path d="M0,0 V34" stroke="#2e7d32" stroke-width="4" stroke-linecap="round"/>
+    <g fill="#ff8fa0" stroke="#1a237e" stroke-width="3"><circle cx="0" cy="-10" r="7"/><circle cx="9" cy="-2" r="7"/><circle cx="-9" cy="-2" r="7"/><circle cx="5" cy="8" r="7"/><circle cx="-5" cy="8" r="7"/></g>
+    <circle cx="0" cy="-1" r="5" fill="#ffd24d" stroke="#1a237e" stroke-width="3"/>
+  </g>
+  <!-- flight path -->
+  <path d="M96,120 Q140,86 176,112 T236,96" fill="none" stroke="#1a237e" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="3 7"/>
+  <!-- bee -->
+  <g transform="translate(176,84)">
+    <ellipse cx="-16" cy="-8" rx="13" ry="9" fill="#fff" fill-opacity=".85" stroke="#1a237e" stroke-width="3"/>
+    <ellipse cx="16" cy="-8" rx="13" ry="9" fill="#fff" fill-opacity=".85" stroke="#1a237e" stroke-width="3"/>
+    <ellipse cx="0" cy="4" rx="24" ry="18" fill="#ffd24d" stroke="#1a237e" stroke-width="4"/>
+    <path d="M8,-11 A18,18 0 0 1 12,20" stroke="#1a237e" stroke-width="6" fill="none"/>
+    <path d="M-8,-12 A18,18 0 0 0 -13,18" stroke="#1a237e" stroke-width="6" fill="none"/>
+    <circle cx="-9" cy="0" r="3" fill="#1a237e"/><circle cx="9" cy="0" r="3" fill="#1a237e"/>
+    <path d="M-8,10 Q0,16 8,10" fill="none" stroke="#1a237e" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- cup -->
+  <g transform="translate(292,154)">
+    <rect x="0.5" y="-16" width="5" height="14" rx="2.5" fill="#4fc3f7" transform="rotate(12)"/>
+    <path d="M-11,-11 L11,-11 L9,20 Q8,25 2,25 L-2,25 Q-8,25 -9,20 Z" fill="#fff" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-8.5,0 L8.5,0 L7,20 Q6,24 1,24 L-1,24 Q-7,24 -7,20 Z" fill="#ff4081"/>
+    <circle cx="0" cy="-11" r="4" fill="#ffd24d" stroke="#1a237e" stroke-width="2.4"/>
+  </g>
+</svg>
