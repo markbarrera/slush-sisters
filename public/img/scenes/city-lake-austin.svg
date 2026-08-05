@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Lake Austin: the arched 360 bridge over the water below the hills">
+  <circle cx="272" cy="40" r="14" fill="#ffd24d" stroke="#1a237e" stroke-width="4"/>
+  <!-- hills behind -->
+  <path d="M0,120 Q80,80 170,110 Q240,132 320,96 L320,150 L0,150 Z" fill="#9ed98f" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <!-- water -->
+  <path d="M0,150 L320,150 L320,200 L0,200 Z" fill="#4fc3f7"/>
+  <path d="M0,150 Q80,144 160,150 T320,148" fill="none" stroke="#1a237e" stroke-width="4"/>
+  <!-- bridge deck -->
+  <path d="M20,132 H300" stroke="#1a237e" stroke-width="6" stroke-linecap="round"/>
+  <!-- steel arch -->
+  <path d="M52,132 Q160,66 268,132" fill="none" stroke="#1a237e" stroke-width="6"/>
+  <!-- hangers -->
+  <g stroke="#1a237e" stroke-width="3"><path d="M90,112 V132"/><path d="M124,98 V132"/><path d="M160,90 V132"/><path d="M196,98 V132"/><path d="M230,112 V132"/></g>
+  <!-- piers into water -->
+  <g stroke="#1a237e" stroke-width="5"><path d="M52,132 V150"/><path d="M268,132 V150"/></g>
+  <!-- cup on the near shore -->
+  <g transform="translate(288,120)">
+    <rect x="0.5" y="-16" width="5" height="14" rx="2.5" fill="#4fc3f7" transform="rotate(12)"/>
+    <path d="M-11,-11 L11,-11 L9,20 Q8,25 2,25 L-2,25 Q-8,25 -9,20 Z" fill="#fff" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-8.5,0 L8.5,0 L7,20 Q6,24 1,24 L-1,24 Q-7,24 -7,20 Z" fill="#ff4081"/>
+    <circle cx="0" cy="-11" r="4" fill="#ffd24d" stroke="#1a237e" stroke-width="2.4"/>
+  </g>
+</svg>

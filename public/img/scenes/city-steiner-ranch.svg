@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Steiner Ranch: a friendly longhorn on the range with a Texas star">
+  <circle cx="270" cy="42" r="14" fill="#ffd24d" stroke="#1a237e" stroke-width="4"/>
+  <!-- Texas star -->
+  <path d="M60,44 l6,17 18,0 -14.5,10.5 5.5,17 -15,-10.5 -15,10.5 5.5,-17 -14.5,-10.5 18,0 Z" fill="#4fc3f7" stroke="#1a237e" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- hills / range -->
+  <path d="M0,150 Q90,116 200,146 Q260,162 320,140 L320,200 L0,200 Z" fill="#9ed98f" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M0,176 Q120,150 220,172 Q270,182 320,170 L320,200 L0,200 Z" fill="#6cbf6a" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <!-- longhorn -->
+  <g transform="translate(168,120)">
+    <!-- horns -->
+    <path d="M-30,-14 Q-64,-30 -78,-8" fill="none" stroke="#1a237e" stroke-width="6" stroke-linecap="round"/>
+    <path d="M30,-14 Q64,-30 78,-8" fill="none" stroke="#1a237e" stroke-width="6" stroke-linecap="round"/>
+    <!-- head -->
+    <path d="M-30,-18 Q0,-30 30,-18 L24,20 Q14,40 0,40 Q-14,40 -24,20 Z" fill="#e6b877" stroke="#1a237e" stroke-width="4.5" stroke-linejoin="round"/>
+    <!-- ears -->
+    <path d="M-30,-14 q-14,-2 -18,6 q10,4 18,-2Z" fill="#e6b877" stroke="#1a237e" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M30,-14 q14,-2 18,6 q-10,4 -18,-2Z" fill="#e6b877" stroke="#1a237e" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- snout -->
+    <path d="M-16,14 Q0,26 16,14 L12,28 Q0,36 -12,28 Z" fill="#fff" stroke="#1a237e" stroke-width="3.5" stroke-linejoin="round"/>
+    <circle cx="-11" cy="0" r="3.5" fill="#1a237e"/><circle cx="11" cy="0" r="3.5" fill="#1a237e"/>
+    <circle cx="-7" cy="22" r="1.8" fill="#1a237e"/><circle cx="7" cy="22" r="1.8" fill="#1a237e"/>
+  </g>
+  <!-- cup -->
+  <g transform="translate(290,150)">
+    <rect x="0.5" y="-16" width="5" height="14" rx="2.5" fill="#ff4081" transform="rotate(12)"/>
+    <path d="M-11,-11 L11,-11 L9,20 Q8,25 2,25 L-2,25 Q-8,25 -9,20 Z" fill="#fff" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-8.5,0 L8.5,0 L7,20 Q6,24 1,24 L-1,24 Q-7,24 -7,20 Z" fill="#4fc3f7"/>
+    <circle cx="0" cy="-11" r="4" fill="#ffd24d" stroke="#1a237e" stroke-width="2.4"/>
+  </g>
+</svg>

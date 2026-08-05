@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Austin: the skyline with the Capitol dome and a frozen drink cup">
+  <circle cx="278" cy="38" r="13" fill="#ffd24d" stroke="#1a237e" stroke-width="4"/>
+  <!-- ground -->
+  <path d="M0,176 H320" stroke="#1a237e" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- left building -->
+  <rect x="20" y="108" width="40" height="68" rx="3" fill="#4fc3f7" stroke="#1a237e" stroke-width="4.5"/>
+  <g fill="#eaf6ff"><rect x="28" y="118" width="10" height="10"/><rect x="42" y="118" width="10" height="10"/><rect x="28" y="136" width="10" height="10"/><rect x="42" y="136" width="10" height="10"/><rect x="28" y="154" width="10" height="10"/><rect x="42" y="154" width="10" height="10"/></g>
+
+  <!-- Frost-style tower -->
+  <path d="M76,176 V96 L86,80 L96,96 V176 Z" fill="#9ed8f5" stroke="#1a237e" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M86,80 V66" stroke="#1a237e" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Capitol -->
+  <g transform="translate(160,0)">
+    <rect x="-46" y="128" width="92" height="48" rx="2" fill="#f4c9a0" stroke="#1a237e" stroke-width="4.5"/>
+    <rect x="-12" y="150" width="24" height="26" rx="2" fill="#e0a878" stroke="#1a237e" stroke-width="3.5"/>
+    <rect x="-20" y="112" width="40" height="18" rx="2" fill="#f4c9a0" stroke="#1a237e" stroke-width="4"/>
+    <path d="M-20,112 Q0,74 20,112 Z" fill="#f0b98a" stroke="#1a237e" stroke-width="4.5" stroke-linejoin="round"/>
+    <path d="M0,74 V60" stroke="#1a237e" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M-4,58 l4,-8 4,8 Z" fill="#ffd24d" stroke="#1a237e" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- right building -->
+  <rect x="228" y="120" width="34" height="56" rx="3" fill="#86cf7a" stroke="#1a237e" stroke-width="4.5"/>
+  <g fill="#e4f5dd"><rect x="235" y="130" width="8" height="9"/><rect x="247" y="130" width="8" height="9"/><rect x="235" y="146" width="8" height="9"/><rect x="247" y="146" width="8" height="9"/></g>
+
+  <!-- cup -->
+  <g transform="translate(292,150)">
+    <rect x="0.5" y="-16" width="5" height="14" rx="2.5" fill="#ff4081" transform="rotate(12)"/>
+    <path d="M-11,-11 L11,-11 L9,20 Q8,25 2,25 L-2,25 Q-8,25 -9,20 Z" fill="#fff" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-8.5,0 L8.5,0 L7,20 Q6,24 1,24 L-1,24 Q-7,24 -7,20 Z" fill="#ff4081"/>
+    <circle cx="0" cy="-11" r="4" fill="#ffd24d" stroke="#1a237e" stroke-width="2.4"/>
+  </g>
+</svg>

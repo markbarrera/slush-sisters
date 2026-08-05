@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Map pin">
+  <!-- Motif kit — a map pin for neighborhood lists (docs/imagery-kit.md). -->
+  <path d="M12 2 C7 2 3.5 5.6 3.5 10.2 C3.5 16 12 22.5 12 22.5 S20.5 16 20.5 10.2 C20.5 5.6 17 2 12 2 Z" fill="#4fc3f7" stroke="#1a237e" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="12" cy="10" r="3.4" fill="#ff4081" stroke="#1a237e" stroke-width="1.6"/>
+</svg>
