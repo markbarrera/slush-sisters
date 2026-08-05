@@ -156,6 +156,7 @@ section h1{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:800;ma
 
 /* FORM STATES */
 .hint{font-size:.72rem;color:#999;margin-top:4px;}
+.hint.date-warn{color:#8f1d2c;font-weight:600;}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 .notice{border-radius:8px;padding:14px 16px;font-size:.85rem;line-height:1.5;margin:16px 0;}
 .notice strong{display:block;margin-bottom:4px;}
@@ -273,6 +274,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <div><label for="f-date">Event date</label><input id="f-date" name="event_date" type="date" required></div>
 <div><label for="f-guests">Guest count</label><input id="f-guests" name="guest_count" type="number" min="1" inputmode="numeric" placeholder="e.g. 30"></div>
 </div>
+<p class="hint" id="date-avail" hidden></p>
 
 <div class="row2">
 <div><label for="f-tier">Which recipe</label><select id="f-tier" name="tier" required><option value="Classic">Classic — $250</option><option value="Fresh Press">Fresh Press — $375, five days&rsquo; notice</option></select></div>
@@ -409,6 +411,14 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 // ---------------------------------------------------------------------------
 var BOOKING_ENDPOINT = '/api/book';
 
+// Weekends or days we cannot do — we are away or already booked. EDIT THIS LIST
+// (YYYY-MM-DD, one entry per day; list every day of a weekend you are away).
+// Every date here is BOTH shown as a heads-up under the date picker AND blocked
+// in the form, so nobody can request a day we can't do. This is the only place
+// to change it. The example below is the weekend of Oct 2–4, 2026 — replace it
+// with your real dates (or empty the list with: var UNAVAILABLE = [];).
+var UNAVAILABLE = ['2026-10-02', '2026-10-03', '2026-10-04'];
+
 (function () {
   var form = document.getElementById('booking');
   var btn = document.getElementById('submit-btn');
@@ -437,6 +447,54 @@ var BOOKING_ENDPOINT = '/api/book';
     dateEl.min = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
       .toISOString().slice(0, 10);
   }
+
+  // Unavailable dates: list them as a heads-up, and block them if picked. A
+  // native date input can't grey out specific days, so we show them up front
+  // (see UNAVAILABLE above) and catch the choice on the way in.
+  var avail = document.getElementById('date-avail');
+  function dayNum(iso) { var p = iso.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]) / 86400000; }
+  function parseLocal(iso) { var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function fmtDay(d) { return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
+  // Collapse a sorted date list into human ranges: Oct 2–4, Nov 21.
+  function humanRanges(list) {
+    var ids = list.slice().sort(), out = [], i = 0;
+    while (i < ids.length) {
+      var startI = i;
+      while (i + 1 < ids.length && dayNum(ids[i + 1]) - dayNum(ids[i]) === 1) { i++; }
+      var s = parseLocal(ids[startI]), e = parseLocal(ids[i]);
+      if (startI === i) out.push(fmtDay(s));
+      else if (s.getMonth() === e.getMonth()) out.push(s.toLocaleDateString('en-US', { month: 'short' }) + ' ' + s.getDate() + '–' + e.getDate());
+      else out.push(fmtDay(s) + '–' + fmtDay(e));
+      i++;
+    }
+    return out.join(', ');
+  }
+  function showAvailList() {
+    if (!avail || !dateEl) return;
+    var todayNum = dayNum(dateEl.min);
+    var upcoming = UNAVAILABLE.filter(function (d) { return dayNum(d) >= todayNum; });
+    if (!upcoming.length) { avail.hidden = true; return; }
+    avail.className = 'hint';
+    avail.textContent = "Heads-up: we're away " + humanRanges(upcoming) + ". Any other date is open.";
+    avail.hidden = false;
+  }
+  function checkDate() {
+    if (!avail || !dateEl) return;
+    if (dateEl.value && UNAVAILABLE.indexOf(dateEl.value) !== -1) {
+      dateEl.setCustomValidity("We're away that day — please pick another date.");
+      avail.className = 'hint date-warn';
+      avail.textContent = "We're away on " + fmtDay(parseLocal(dateEl.value)) + " — please pick another date.";
+      avail.hidden = false;
+    } else {
+      dateEl.setCustomValidity('');
+      showAvailList();
+    }
+  }
+  if (dateEl) {
+    dateEl.addEventListener('input', checkDate);
+    dateEl.addEventListener('change', checkDate);
+  }
+  showAvailList();
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
