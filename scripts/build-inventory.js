@@ -105,11 +105,22 @@ for (const f of fs.readdirSync(path.join(ROOT, 'public/read')).sort()) {
 }
 
 const docs = [];
-for (const f of fs.readdirSync(path.join(ROOT, 'docs')).sort()) {
-  if (!f.endsWith('.md')) continue;
-  const rel = 'docs/' + f;
-  docs.push({ ...mdInfo(path.join(ROOT, rel)), rel, changed: lastChanged(rel) });
-}
+// Walk docs/ recursively so subfoldered docs (e.g. docs/competitors/*.md) are
+// listed too. Skip docs/board (generators, not prose) and docs/history
+// (snapshots, rendered separately below).
+(function walkDocs(dir, prefix) {
+  for (const f of fs.readdirSync(dir).sort()) {
+    const full = path.join(dir, f);
+    const rel = prefix + f;
+    if (fs.statSync(full).isDirectory()) {
+      if (rel === 'docs/board' || rel === 'docs/history') continue;
+      walkDocs(full, rel + '/');
+      continue;
+    }
+    if (!f.endsWith('.md')) continue;
+    docs.push({ ...mdInfo(full), rel, changed: lastChanged(rel) });
+  }
+})(path.join(ROOT, 'docs'), 'docs/');
 
 const builders = [];
 for (const rel of ['scripts/snapshot.js', 'scripts/build-inventory.js',
