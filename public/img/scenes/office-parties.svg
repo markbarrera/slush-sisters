@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="A two-tank frozen drink machine under a string of party lights, with two cups">
+  <!-- Office & holiday parties: the machine itself — cheaper than a bartender,
+       and nobody has to run it. Two tanks, string lights for the holiday party. -->
+  <defs>
+    <clipPath id="tankL"><rect x="106" y="50" width="46" height="46" rx="15"/></clipPath>
+    <clipPath id="tankR"><rect x="168" y="50" width="46" height="46" rx="15"/></clipPath>
+  </defs>
+
+  <!-- string lights -->
+  <path d="M24,40 Q160,58 296,36" fill="none" stroke="#1a237e" stroke-width="3"/>
+  <g stroke="#1a237e" stroke-width="2.5">
+    <circle cx="64" cy="47" r="5.5" fill="#ff4081"/>
+    <circle cx="104" cy="50" r="5.5" fill="#ffd24d"/>
+    <circle cx="160" cy="52" r="5.5" fill="#4fc3f7"/>
+    <circle cx="216" cy="50" r="5.5" fill="#86cf7a"/>
+    <circle cx="256" cy="46" r="5.5" fill="#ff8fa0"/>
+  </g>
+
+  <!-- two tanks (hoppers) -->
+  <rect x="106" y="50" width="46" height="46" rx="15" fill="#ffffff" fill-opacity=".75" stroke="#1a237e" stroke-width="5"/>
+  <g clip-path="url(#tankL)"><path d="M104,74 q11,-7 23,0 t23,0 V96 H104 Z" fill="#86cf7a"/></g>
+  <rect x="168" y="50" width="46" height="46" rx="15" fill="#ffffff" fill-opacity=".75" stroke="#1a237e" stroke-width="5"/>
+  <g clip-path="url(#tankR)"><path d="M166,74 q11,-7 23,0 t23,0 V96 H166 Z" fill="#4fc3f7"/></g>
+
+  <!-- machine body -->
+  <rect x="98" y="94" width="124" height="60" rx="10" fill="#eaf6ff" stroke="#1a237e" stroke-width="5"/>
+  <!-- two dispenser taps -->
+  <path d="M136,120 h10 v10 q0,4 -5,4 t-5,-4 Z" fill="#4fc3f7" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M174,120 h10 v10 q0,4 -5,4 t-5,-4 Z" fill="#4fc3f7" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  <!-- drip tray -->
+  <rect x="112" y="150" width="96" height="8" rx="4" fill="#fff" stroke="#1a237e" stroke-width="4"/>
+
+  <!-- two cups catching the pour -->
+  <g transform="translate(141,140)">
+    <path d="M-9,-2 L9,-2 L7,16 Q6,21 1,21 L-1,21 Q-6,21 -7,16 Z" fill="#86cf7a" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(179,140)">
+    <path d="M-9,-2 L9,-2 L7,16 Q6,21 1,21 L-1,21 Q-6,21 -7,16 Z" fill="#4fc3f7" stroke="#1a237e" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+
+  <!-- sparkles -->
+  <g fill="#4fc3f7">
+    <path d="M250,120 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/>
+    <path d="M60,120 l1.6,5 5,1.6 -5,1.6 -1.6,5 -1.6,-5 -5,-1.6 5,-1.6 Z"/>
+  </g>
+</svg>

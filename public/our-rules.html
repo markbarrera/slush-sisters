@@ -93,6 +93,24 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 .f-bottom .f-name span{color:var(--ice);}
 .f-bottom p{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:5px;}
 .f-bottom a{color:var(--ice);}
+/* HERO ART — illustrated identity band from the motif kit (docs/imagery-kit.md).
+   Mobile-first: full-width band, art centered, candy tucked to the sides. */
+.hero-art{background:linear-gradient(180deg,var(--wash),#f4fbff);padding:36px 24px 30px;}
+.hero-art .panel{max-width:800px;margin:0 auto;position:relative;display:flex;justify-content:center;min-height:210px;}
+.hero-art .char{width:172px;height:auto;filter:drop-shadow(0 14px 22px rgba(26,35,126,.16));position:relative;z-index:2;}
+.hero-art .candy{position:absolute;width:56px;height:56px;z-index:1;filter:drop-shadow(0 6px 10px rgba(26,35,126,.12));}
+.hero-art .candy.l{left:5%;bottom:2px;transform:rotate(-12deg);}
+.hero-art .candy.r{right:6%;top:8px;transform:rotate(14deg);}
+.hero-art .spark{position:absolute;color:var(--ice);opacity:.6;font-size:1.1rem;z-index:1;}
+.hero-art .spark.s1{top:6px;left:34%;}
+.hero-art .spark.s2{bottom:24px;right:30%;font-size:.8rem;}
+.hero-art .spark.s3{top:40%;left:12%;font-size:.9rem;}
+@media(min-width:620px){
+  .hero-art .char{width:210px;}
+  .hero-art .candy{width:74px;height:74px;}
+  .hero-art .candy.l{left:13%;}
+  .hero-art .candy.r{right:13%;}
+}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -121,6 +139,12 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <a href="/book" class="cta-m">Book</a>
 <button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
 </header>
+
+<section class="hero-art">
+<div class="panel">
+<img class="scene" src="/img/scenes/our-rules.svg" alt="A checklist of rules next to an award rosette with the number seven" width="320" height="180" fetchpriority="high" style="width:100%;max-width:360px;height:auto;align-self:center;filter:drop-shadow(0 12px 20px rgba(26,35,126,.14));">
+</div>
+</section>
 
 <section>
 <div class="contain">

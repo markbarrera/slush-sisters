@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="A science flask of green slush next to a thermometer and a measuring dial">
+  <!-- The Lab: we measure it, we do not guess. Flask + thermometer + gauge. -->
+  <defs>
+    <clipPath id="flaskFill"><path d="M140,74 L112,142 Q109,154 122,154 L178,154 Q191,154 188,142 L160,74 Z"/></clipPath>
+  </defs>
+
+  <!-- measuring dial (left) -->
+  <circle cx="64" cy="120" r="30" fill="#fff" stroke="#1a237e" stroke-width="5"/>
+  <path d="M46,120 A18,18 0 0 1 82,120" fill="none" stroke="#4fc3f7" stroke-width="4" stroke-linecap="round"/>
+  <g stroke="#1a237e" stroke-width="2.4" stroke-linecap="round"><path d="M50,112 l4,3"/><path d="M64,104 v5"/><path d="M78,112 l-4,3"/></g>
+  <path d="M64,120 L77,107" stroke="#1a237e" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="64" cy="120" r="4.5" fill="#1a237e"/>
+
+  <!-- flask (center) -->
+  <rect x="134" y="28" width="32" height="11" rx="5.5" fill="#fff" stroke="#1a237e" stroke-width="5"/>
+  <rect x="140" y="34" width="20" height="44" rx="4" fill="#eaf6ff" stroke="#1a237e" stroke-width="5"/>
+  <path d="M140,74 L112,142 Q109,154 122,154 L178,154 Q191,154 188,142 L160,74 Z" fill="#fff" stroke="#1a237e" stroke-width="5" stroke-linejoin="round"/>
+  <g clip-path="url(#flaskFill)">
+    <path d="M104,116 q11,-9 22,0 t22,0 t22,0 t22,0 V158 H104 Z" fill="#86cf7a"/>
+    <circle cx="134" cy="132" r="4" fill="#c6ecb6"/>
+    <circle cx="150" cy="124" r="3" fill="#c6ecb6"/>
+    <circle cx="164" cy="136" r="3.5" fill="#c6ecb6"/>
+  </g>
+  <g stroke="#1a237e" stroke-width="2.4" stroke-linecap="round"><path d="M176,122 h9"/><path d="M172,134 h9"/><path d="M168,146 h9"/></g>
+
+  <!-- thermometer (right) -->
+  <rect x="236" y="40" width="16" height="88" rx="8" fill="#fff" stroke="#1a237e" stroke-width="5"/>
+  <circle cx="244" cy="132" r="15" fill="#4fc3f7" stroke="#1a237e" stroke-width="5"/>
+  <rect x="240" y="100" width="8" height="34" fill="#29b6f6"/>
+  <g stroke="#1a237e" stroke-width="2.4" stroke-linecap="round"><path d="M253,58 h6"/><path d="M253,72 h6"/><path d="M253,86 h6"/></g>
+
+  <!-- sparkles -->
+  <g fill="#4fc3f7">
+    <path d="M118,44 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 Z"/>
+    <path d="M206,150 l1.6,5 5,1.6 -5,1.6 -1.6,5 -1.6,-5 -5,-1.6 5,-1.6 Z"/>
+  </g>
+</svg>
