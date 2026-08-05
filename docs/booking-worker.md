@@ -8,9 +8,10 @@ the form collects a child's party address and a parent's phone number, and this
 way that information only ever lives in your own Cloudflare account and your own
 inbox.
 
-The booking code now lives in the site's single Worker (`src/worker.js`),
-alongside the request logging and the markdown-for-agents feature. It is written
-and tested but **currently paused** — see "Two pieces" below.
+The booking code lives in the site's single Worker (`src/worker.js`), alongside
+the request logging and the markdown-for-agents feature. It is **on** as of
+2026-08-05: Email Routing is verified and the `send_email` binding is enabled, so
+bookings are delivered live.
 
 ## The two pieces that have to be true
 
@@ -22,8 +23,7 @@ never fake a "thanks!" for a request that vanished.
    this up once in the Cloudflare dashboard (below). It is what lets the site
    send mail to `mark@markbarrera.com`.
 2. **The `send_email` binding is turned on in `wrangler.jsonc`** and the form is
-   pointed at the endpoint. Both are one-line changes, currently commented out
-   on purpose so the site deploys cleanly until piece 1 is done.
+   pointed at the endpoint. Both are done (see Piece 2).
 
 ### Piece 1 — Email Routing (you do this once, in the dashboard)
 
@@ -40,22 +40,20 @@ If you ever want bookings to go to a **different** inbox, that address has to be
 verified here first, then the `destination_address` line in `wrangler.jsonc` is
 changed to match — a one-line change for whoever edits the site.
 
-### Piece 2 — turn the binding on (a small code change, once piece 1 is done)
+### Piece 2 — turn the binding on (done)
 
-Tell me when Email Routing is verified and I will make these three edits and
-deploy them together:
+Both switches are on as of 2026-08-05:
 
-- Un-comment the `send_email` block in `wrangler.jsonc`.
-- Set `var BOOKING_ENDPOINT = '/api/book';` in `public/book.html` (it is `''`
-  today, which is what shows the "not turned on" notice).
-- (While we are at it, if Analytics Engine is enabled, un-comment the
-  `analytics_engine_datasets` block too, so request logging starts.)
+- The `send_email` block in `wrangler.jsonc` is un-commented.
+- `public/book.html` has `var BOOKING_ENDPOINT = '/api/book';`.
+- (The `analytics_engine_datasets` block stays commented until Analytics Engine
+  is enabled on the account — that is a separate feature and does not affect
+  booking.)
 
 **Safety detail:** if your inbox is **not** verified in Email Routing, a deploy
 that includes the `send_email` binding **fails on purpose** with an error
 instead of publishing a form that cannot deliver. So the worst case is "the site
-did not update," never "bookings are silently disappearing." That is exactly why
-the binding is left commented until piece 1 is confirmed.
+did not update," never "bookings are silently disappearing."
 
 ## Testing it (before trusting it)
 

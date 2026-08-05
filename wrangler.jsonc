@@ -25,7 +25,7 @@
     // path, which makes typos and dead links look like real pages to Google.
     // "404-page" serves public/404.html with a real 404 status instead.
     "not_found_handling": "404-page"
-  }
+  },
   // Server-side request log (crawler/traffic/leak visibility) — TEMPORARILY OFF.
   // Adding the TRAFFIC binding below blocks `wrangler deploy` with error 10089
   // until Analytics Engine is enabled once on the account:
@@ -36,18 +36,15 @@
   //   "analytics_engine_datasets": [
   //     { "binding": "TRAFFIC", "dataset": "slush_traffic" }
   //   ]
-  //
-  // Booking email (POST /api/book -> business inbox via Email Routing) —
-  // TEMPORARILY OFF. Adding the send_email binding below blocks `wrangler
-  // deploy` until Email Routing is on and the destination is verified:
-  //   Cloudflare dashboard -> slushsisters.com -> Email -> Email Routing ->
-  //   enable, add destination mark@markbarrera.com, click the verify link.
-  //   (Full walkthrough: docs/booking-worker.md.)
-  // Until then src/worker.js reports "not configured" for /api/book and the form
-  // at /book stays on its honest "not turned on" notice. To turn booking on,
-  // verify Email Routing, uncomment the block below, AND set
-  // BOOKING_ENDPOINT = '/api/book' in public/book.html.
-  //   "send_email": [
-  //     { "name": "BOOKING_EMAIL", "destination_address": "mark@markbarrera.com" }
-  //   ]
+
+  // Booking email (POST /api/book -> business inbox via Email Routing) — ON.
+  // Email Routing is enabled and mark@markbarrera.com is verified as the
+  // destination, so this binding deploys cleanly and the /api/book handler in
+  // src/worker.js sends each booking to that inbox. destination_address locks
+  // the Worker to that one address — it can email nowhere else. Sending to a
+  // verified destination is free on any plan. Full detail: docs/booking-worker.md.
+  // Paired with BOOKING_ENDPOINT = '/api/book' in public/book.html.
+  "send_email": [
+    { "name": "BOOKING_EMAIL", "destination_address": "mark@markbarrera.com" }
+  ]
 }
