@@ -7,24 +7,47 @@ to get it.
 Set up 2026-08-05. Owner: Mark. This is the record of what exists, how to read
 each screen, and what is deliberately left for later.
 
-## The one rule everything here bends around
+## The rule everything here bends around (and how it changed 2026-08-05)
 
-The arcade games and the kids' pages carry **no analytics, no cookies, no
-capture — ever.** That is what keeps a page a child plays from making the whole
-site "directed to children" under COPPA, which matters because the booking form
-collects a home address and a phone number for a child's party. Every choice
-below is downstream of that rule.
+The site was built cookieless, with the arcade games and kids' pages carrying
+**no analytics, no cookies, no capture — ever** — the thing that kept a page a
+child plays from making the whole site "directed to children" under COPPA, which
+matters because the booking form collects a home address and a phone number for
+a child's party.
 
-Practical version of the rule:
+**Mark changed this on 2026-08-05,** in two steps: (1) turn the marketing/booking
+pages up to maximum granularity *with cookies* (for the business dashboard and
+for retargeting when ads turn on), and (2) instrument the *game* pages too, to
+see which games are popular. Both are deliberate. The practical rule is now:
 
-- **A page that is `noindex` gets no analytics beacon.** That covers all seven
-  games, `/play`, `/party-play`, `/inventory`, `/competition`, and `404`.
-- **`/ideas` (the kids' idea board) gets no beacon either** — it is for Harper
-  and Finley, not the public, so we do not track it and we do not want to track
-  them. (See "Orphaned pages" below — its leak risk is handled server-side, not
-  with a beacon.)
-- **The booking form's sensitive fields are masked at the source** (see PostHog
-  below).
+- **The marketing + booking pages track fully and set cookies** — profiles for
+  everyone, DNT ignored, heatmaps, per-booking attribution. (Details under
+  PostHog below.)
+- **The game pages now load analytics too** (pageviews + a `game_opened` event +
+  cookies), but **session recording stays OFF on them** — no screen-replays of
+  children — and they still have no accounts, chat, names, or free-text capture.
+- **`/party-play` gets nothing** (a printable card, hard-blocked in the loader),
+  and **`/ideas`, `/read`, `/inventory` carry no beacon** — they are family
+  pages and simply do not include the loader.
+- **The booking form's sensitive fields (name, address, phone/email) are masked
+  at the source**, so raw contact PII is not duplicated into PostHog even at
+  "maximum" granularity.
+
+**The honest consequence of the change:** the site now sets tracking cookies on
+pages children use directly *and* collects a child's home address on `/book`
+*and* links the arcade from every page. That makes the COPPA posture a real open
+question. **One follow-up is outstanding:** a lawyer's review of the posture.
+
+**Cookie consent banner — added 2026-08-05.** A lightweight, self-built consent
+notice is now baked into `public/analytics.js` itself. On first visit a banner
+at the bottom of the page says what the cookies are for and offers two buttons:
+OK or No thanks. The answer is saved in localStorage (not a cookie). If they
+decline, PostHog never loads and no cookie is set. If they accept, tracking
+works normally. Returning visitors who already chose are never asked again. A
+"Cookie settings" link in the footer can re-open the choice via
+`window.slushResetConsent()`. This is the visible privacy notice that was
+flagged as outstanding — it doesn't replace a lawyer's COPPA review, but it's
+the companion a lawyer would want to see.
 
 ## What is set up
 
@@ -71,19 +94,40 @@ cannot quietly drift on one page out of two dozen. The file also refuses to
 initialize on a game path even if it were ever included there by mistake — two
 layers, not one.
 
-**Privacy posture (deliberate):**
+**Tracking posture (changed 2026-08-05, decided by Mark).** The marketing and
+booking pages were previously cookieless, DNT-respecting, and profile-free. Mark
+asked to track visitors as granularly as possible, with cookies, to power the
+business dashboard's per-customer funnel. The posture on those pages is now:
 
-- **Cookieless.** The anonymous visitor id lives in `localStorage`, not a cookie,
-  so funnels still work across pages without a tracking cookie.
-- **No identify().** No one logs in, so no personal profiles are ever built.
-- **"Do Not Track" honored.**
-- **Session recording is on and watchable, but the booking form's sensitive
-  fields are masked at the source.** The name, event address, and phone/email
-  inputs on `/book` carry the class `ph-no-capture`, so a replay never shows the
-  home address or phone a customer types. Every other field — date, guests,
-  recipe, flavors, the "how did you hear about us" box, notes — is visible,
-  which is what makes the recording worth watching. **If a new sensitive field is
-  ever added to any form, give it `ph-no-capture` too.**
+- **Cookies ON.** Durable identity that survives across sessions, so a returning
+  visitor is recognized as the same person (`persistence: "localStorage+cookie"`).
+- **"Do Not Track" is no longer honored** — DNT browsers are tracked too.
+- **A person profile is built for every visitor** (`person_profiles: "always"`),
+  so anonymous browsing can be stitched to a booking.
+- **identify() on booking.** When the form is submitted, `public/book.html` calls
+  `posthog.identify()` with the booking's reference id and its attribution + party
+  details — but **not** the name, address, or phone. Raw contact PII stays in the
+  booking email and the business database; it is never sent to PostHog.
+- **Heatmaps, dead-click and web-vitals capture on.**
+- **Session recording on**, inputs visible — **except** the three sensitive
+  inputs on `/book` (name, event address, phone/email), which keep the
+  `ph-no-capture` class so a customer's home address and phone are not duplicated
+  into a third-party replay. **If a new sensitive field is added to any form, give
+  it `ph-no-capture` too.**
+
+**The COPPA line did NOT move.** Every game and kid-facing page still carries no
+analytics, no cookies, no capture — the route guard in `public/analytics.js`
+still refuses to initialize on those paths. Turning cookies on for the rest of
+the site makes that separation *more* load-bearing: the site now sets tracking
+cookies AND collects a child's home address on `/book` AND links the arcade from
+every page. **Two follow-ups this raises, both open:**
+
+- **Legal review is now worth doing, not just "at some point."** The COPPA
+  posture and a written privacy/cookie notice (there is none today) should get a
+  lawyer's eyes before this is leaned on hard. Instrumenting the *game* pages
+  themselves would be a further, separate decision — deliberately not done here.
+- **A visible privacy notice** describing the cookies and tracking is the normal
+  companion to this posture and does not exist yet.
 
 **What it answers, once data flows:**
 

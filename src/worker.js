@@ -1,32 +1,29 @@
 /*
-  Slush Sisters — edge Worker (one Worker, three jobs)
-  ====================================================
+  Slush Sisters — edge Worker (one Worker, four jobs)
+  ===================================================
 
-  A site can only have one `main` Worker, so the three things that need to run
+  A site can only have one `main` Worker, so the four things that need to run
   in front of the static site live here together:
 
     1. LOG every request server-side to Analytics Engine — who fetched what,
        which crawler, what status, which country. Crawler visibility + a check
-       on whether outside traffic leaks into the orphaned pages. (Binding
-       currently paused in wrangler.jsonc until Analytics Engine is enabled.)
+       on whether outside traffic leaks into the orphaned pages.
 
     2. MARKDOWN for agents — when an agent asks for markdown (Accept:
        text/markdown or ?format=md) a page returns a compact markdown version.
 
-    3. BOOKING — POST /api/book validates a booking and emails it to the
-       business inbox via Cloudflare Email Routing. Nothing is stored; the email
-       is the record. (send_email binding paused in wrangler.jsonc until Email
-       Routing is verified — see docs/booking-worker.md. Until then the handler
-       reports "not configured" and the form at /book stays on its honest
-       "not turned on" notice.)
+    3. BOOKING — POST /api/book validates a booking, emails it to the business
+       inbox via Cloudflare Email Routing, and writes it to D1 so the Cockpit
+       and /ledger have it from day one.
+
+    4. COCKPIT + LEDGER API — read/write endpoints for the business dashboard:
+       list/update bookings, add costs, add learnings, get ledger totals and
+       jar balances. All backed by the slush_business D1 database.
 
   Everything else is handed straight back to the static assets, unchanged.
 
   COPPA note: the logging is server-side operational logging — NO cookies, NO
-  IP, NO personal data — so it is safe even on game/orphan paths (unlike the
-  PostHog beacon, which stays off them). The booking handler is the only place
-  that touches personal data, and it only ever emails one verified inbox; it
-  never stores anything.
+  IP, NO personal data — so it is safe even on game/orphan paths.
 */
 
 import { EmailMessage } from "cloudflare:email";
@@ -112,6 +109,7 @@ const FIELDS = [
   ["heard_from", "Heard about us"],
   ["heard_from_detail", "…in their words"],
   ["notes", "Notes"],
+  ["booking_ref", "Booking ref"],
 ];
 
 export default {
@@ -130,7 +128,13 @@ export default {
 
     // Job 3: booking endpoint.
     if (url.pathname === "/api/book") {
-      return handleBooking(request, env);
+      return handleBooking(request, env, ctx);
+    }
+
+    // Job 4: Cockpit + Ledger API.
+    if (url.pathname.startsWith("/api/")) {
+      const apiRes = await handleAPI(request, url, env);
+      if (apiRes) return apiRes;
     }
 
     // Job 4: dashboard data for /dashboard. Server-side so API tokens never
@@ -162,7 +166,7 @@ export default {
 };
 
 // --- Job 3: booking --------------------------------------------------------
-async function handleBooking(request, env) {
+async function handleBooking(request, env, ctx) {
   if (request.method !== "POST") {
     return json({ ok: false, error: "Method not allowed." }, 405);
   }
@@ -208,6 +212,12 @@ async function handleBooking(request, env) {
     console.error("booking email failed:", err && err.stack ? err.stack : err);
     return json({ ok: false, error: "Could not send your request. Please try again." }, 502);
   }
+
+  // Write the booking to D1 alongside the email, so the Cockpit and /ledger
+  // have it from day one. Non-blocking: the customer already has their
+  // confirmation, so a D1 hiccup must never surface as a booking failure.
+  ctx.waitUntil(saveBookingToD1(data, env));
+
   return json({ ok: true });
 }
 
@@ -300,6 +310,178 @@ function base64Utf8(s) {
   let bin = "";
   for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
   return btoa(bin);
+}
+
+// --- Job 3b: D1 persistence ------------------------------------------------
+async function saveBookingToD1(data, env) {
+  if (!env.DB) return;
+  try {
+    const ref = field(data, "booking_ref") || "bk_" + Date.now().toString(36);
+    const tier = field(data, "tier");
+    const priceCents = tier === "Fresh Press" ? 37500 : 25000;
+    await env.DB.prepare(
+      `INSERT OR IGNORE INTO bookings
+         (ref, created_at, status, name, address, contact,
+          event_date, tier, flavor_1, flavor_2, guest_count, notes,
+          heard_from, heard_from_detail, utm_source, utm_campaign,
+          price_cents, paid_cents)
+       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)`
+    ).bind(
+      ref,
+      field(data, "submitted_at") || new Date().toISOString(),
+      "new",
+      field(data, "name"),
+      field(data, "address"),
+      field(data, "contact"),
+      field(data, "event_date"),
+      tier,
+      field(data, "flavor_1"),
+      field(data, "flavor_2"),
+      parseInt(field(data, "guest_count"), 10) || null,
+      field(data, "notes"),
+      field(data, "heard_from"),
+      field(data, "heard_from_detail"),
+      field(data, "utm_source"),
+      field(data, "utm_campaign"),
+      priceCents
+    ).run();
+  } catch (err) {
+    console.error("D1 booking insert failed:", err && err.stack ? err.stack : err);
+  }
+}
+
+// --- Job 4: Cockpit + Ledger API -------------------------------------------
+// Read-only APIs that the future Cockpit page and auto-generated /ledger will
+// call. All responses are JSON with CORS restricted to the same origin (the
+// Worker serves both the API and the pages, so same-origin fetch just works).
+
+async function handleAPI(request, url, env) {
+  if (!env.DB) return json({ ok: false, error: "Database not configured." }, 503);
+
+  // GET /api/bookings — list bookings (Cockpit)
+  if (url.pathname === "/api/bookings" && request.method === "GET") {
+    const status = url.searchParams.get("status");
+    let q = "SELECT ref, created_at, status, name, event_date, tier, flavor_1, flavor_2, guest_count, heard_from, price_cents, paid_cents, delivered_at FROM bookings";
+    const params = [];
+    if (status) { q += " WHERE status = ?"; params.push(status); }
+    q += " ORDER BY created_at DESC LIMIT 200";
+    const { results } = await env.DB.prepare(q).bind(...params).all();
+    return json({ ok: true, bookings: results });
+  }
+
+  // GET /api/bookings/:ref — single booking with its costs
+  if (url.pathname.startsWith("/api/bookings/") && request.method === "GET") {
+    const ref = url.pathname.split("/")[3];
+    if (!ref) return json({ ok: false, error: "Missing ref." }, 400);
+    const booking = await env.DB.prepare(
+      "SELECT * FROM bookings WHERE ref = ?"
+    ).bind(ref).first();
+    if (!booking) return json({ ok: false, error: "Not found." }, 404);
+    const { results: costs } = await env.DB.prepare(
+      "SELECT * FROM costs WHERE booking_ref = ? ORDER BY created_at"
+    ).bind(ref).all();
+    const { results: learnings } = await env.DB.prepare(
+      "SELECT * FROM learnings WHERE booking_ref = ? ORDER BY created_at"
+    ).bind(ref).all();
+    return json({ ok: true, booking, costs, learnings });
+  }
+
+  // PATCH /api/bookings/:ref — update booking status/paid
+  if (url.pathname.startsWith("/api/bookings/") && request.method === "PATCH") {
+    const ref = url.pathname.split("/")[3];
+    if (!ref) return json({ ok: false, error: "Missing ref." }, 400);
+    let body;
+    try { body = await request.json(); } catch { return json({ ok: false, error: "Bad JSON." }, 400); }
+    const allowed = ["status", "paid_cents", "delivered_at", "price_cents"];
+    const sets = [], vals = [];
+    for (const k of allowed) {
+      if (body[k] !== undefined) { sets.push(`${k} = ?`); vals.push(body[k]); }
+    }
+    if (!sets.length) return json({ ok: false, error: "Nothing to update." }, 400);
+    vals.push(ref);
+    await env.DB.prepare(`UPDATE bookings SET ${sets.join(", ")} WHERE ref = ?`).bind(...vals).run();
+    return json({ ok: true });
+  }
+
+  // POST /api/costs — add a cost line
+  if (url.pathname === "/api/costs" && request.method === "POST") {
+    let body;
+    try { body = await request.json(); } catch { return json({ ok: false, error: "Bad JSON." }, 400); }
+    const cat = (body.category || "").trim();
+    const amt = parseInt(body.amount_cents, 10);
+    if (!cat || isNaN(amt)) return json({ ok: false, error: "category and amount_cents required." }, 400);
+    await env.DB.prepare(
+      `INSERT INTO costs (booking_ref, created_at, category, label, amount_cents, is_estimate, note)
+       VALUES (?,?,?,?,?,?,?)`
+    ).bind(
+      body.booking_ref || null,
+      new Date().toISOString(),
+      cat,
+      body.label || null,
+      amt,
+      body.is_estimate ? 1 : 0,
+      body.note || null
+    ).run();
+    return json({ ok: true });
+  }
+
+  // POST /api/learnings — add a learning
+  if (url.pathname === "/api/learnings" && request.method === "POST") {
+    let body;
+    try { body = await request.json(); } catch { return json({ ok: false, error: "Bad JSON." }, 400); }
+    const text = (body.body || "").trim();
+    if (!text) return json({ ok: false, error: "body is required." }, 400);
+    await env.DB.prepare(
+      `INSERT INTO learnings (created_at, booking_ref, body, tag) VALUES (?,?,?,?)`
+    ).bind(new Date().toISOString(), body.booking_ref || null, text, body.tag || null).run();
+    return json({ ok: true });
+  }
+
+  // GET /api/ledger — the numbers the public /ledger page needs
+  if (url.pathname === "/api/ledger" && request.method === "GET") {
+    const totals = await env.DB.prepare(`
+      SELECT
+        COUNT(*) AS parties,
+        COALESCE(SUM(CASE WHEN status = 'delivered' THEN paid_cents ELSE 0 END), 0) AS revenue_cents,
+        COALESCE(SUM(CASE WHEN status = 'delivered' THEN price_cents ELSE 0 END), 0) AS billed_cents
+      FROM bookings WHERE status != 'canceled'
+    `).first();
+    const { results: costRows } = await env.DB.prepare(`
+      SELECT category, COALESCE(SUM(amount_cents), 0) AS total_cents, MAX(is_estimate) AS has_estimates
+      FROM costs GROUP BY category ORDER BY total_cents DESC
+    `).all();
+    const totalCostCents = costRows.reduce((s, r) => s + r.total_cents, 0);
+    const { results: jarRows } = await env.DB.prepare(`
+      SELECT jar, COALESCE(SUM(amount_cents), 0) AS balance_cents
+      FROM jar_entries GROUP BY jar
+    `).all();
+    const settings = {};
+    const { results: settingRows } = await env.DB.prepare(
+      "SELECT key, value FROM settings"
+    ).all();
+    for (const r of settingRows) settings[r.key] = r.value;
+    return json({
+      ok: true,
+      parties: totals.parties,
+      revenue_cents: totals.revenue_cents,
+      billed_cents: totals.billed_cents,
+      cost_cents: totalCostCents,
+      profit_cents: totals.revenue_cents - totalCostCents,
+      costs_by_category: costRows,
+      jars: jarRows,
+      settings
+    });
+  }
+
+  // GET /api/settings — all settings
+  if (url.pathname === "/api/settings" && request.method === "GET") {
+    const { results } = await env.DB.prepare("SELECT key, value FROM settings").all();
+    const obj = {};
+    for (const r of results) obj[r.key] = r.value;
+    return json({ ok: true, settings: obj });
+  }
+
+  return null;
 }
 
 // --- Job 1: logging --------------------------------------------------------

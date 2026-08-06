@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cockpit — Slush Sisters</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{
+  --brand:#1a237e;
+  --ice:#4fc3f7;
+  --ice-deep:#29b6f6;
+  --wash:#e8f4fd;
+  --blush:#fff5f7;
+  --on-brand:#fff;
+  --ink-ice:#0165a8;
+  --pop:#ff4081;
+  --ink-pink:#c2185b;
+  --pink-pale:#ffd6e7;
+  --cta:#0277bd;
+  --cta-deep:#01579b;
+  --line-strong:#767b85;
+  --good:#2e7d32;
+  --good-pale:#eef7ee;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:var(--wash);min-height:100vh;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+/* --- TABULAR UTILITY ---------------------------------------------------- */
+.tabular{font-family:'Baloo 2',system-ui,sans-serif;font-weight:600;
+  font-variant-numeric:tabular-nums lining;font-feature-settings:'tnum' 1;
+  letter-spacing:0;text-align:right;}
+
+/* --- HEADER ------------------------------------------------------------- */
+header{background:var(--brand);color:var(--on-brand);padding:16px 20px;display:flex;
+  align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.25rem;
+  color:var(--on-brand);text-decoration:none;}
+.site-name em{font-style:normal;color:var(--ice);}
+.hdr-label{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.82rem;
+  color:var(--ice);letter-spacing:.06em;margin-left:10px;}
+.back-link{font-size:.8rem;color:rgba(255,255,255,.7);text-decoration:none;}
+.back-link:hover{color:#fff;}
+
+/* --- LAYOUT ------------------------------------------------------------- */
+.shell{max-width:860px;margin:0 auto;padding:20px 16px 60px;}
+h1{font-family:'Baloo 2',sans-serif;font-size:1.6rem;font-weight:800;
+  color:var(--brand);margin:0 0 16px;line-height:1.15;}
+h2{font-family:'Baloo 2',sans-serif;font-size:1.2rem;font-weight:800;
+  color:var(--brand);margin:20px 0 12px;line-height:1.2;}
+h3{font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:700;
+  color:var(--brand);margin:0 0 8px;}
+
+/* --- SCOREBOARD --------------------------------------------------------- */
+.score{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:8px;}
+@media(min-width:520px){.score{grid-template-columns:repeat(3,1fr);}}
+.cell{background:#fff;border:2px solid var(--brand);border-radius:14px;
+  padding:18px 14px;text-align:center;}
+.cell .n{font-family:'Baloo 2',sans-serif;font-size:2rem;font-weight:800;
+  color:var(--brand);line-height:1;font-variant-numeric:tabular-nums lining;}
+.cell .n.neg{color:var(--ink-pink);}
+.cell .n.pos{color:var(--good);}
+.cell .l{font-size:.74rem;font-weight:700;margin-top:6px;color:#555;text-transform:uppercase;
+  letter-spacing:.06em;}
+
+/* --- JARS --------------------------------------------------------------- */
+.jars{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px;}
+@media(min-width:480px){.jars{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:700px){.jars{grid-template-columns:repeat(3,1fr);}}
+.jar{background:#fff;border-radius:12px;padding:14px;border-left:5px solid var(--ice);}
+.jar.supplies{border-left-color:var(--ice);}
+.jar.tax{border-left-color:var(--ink-pink);}
+.jar.payback{border-left-color:var(--brand);}
+.jar.profit{border-left-color:var(--good);}
+.jar.pay{border-left-color:var(--pop);}
+.jar .jar-name{font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--line-strong);margin-bottom:4px;}
+.jar .jar-val{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.25rem;
+  color:var(--brand);font-variant-numeric:tabular-nums lining;}
+
+/* --- BOOKINGS ----------------------------------------------------------- */
+.booking-list{list-style:none;padding:0;margin:0;}
+.booking-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:10px;
+  cursor:pointer;border:1px solid #e0e6ee;transition:box-shadow .15s;}
+.booking-card:hover{box-shadow:0 4px 16px rgba(26,35,126,.08);}
+.bk-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.bk-name{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1rem;color:var(--brand);}
+.bk-date{font-size:.82rem;color:#555;}
+.bk-tier{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  padding:3px 10px;border-radius:99px;background:var(--wash);color:var(--ink-ice);}
+.bk-tier.fresh{background:var(--good-pale);color:var(--good);}
+.badge{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.07em;padding:3px 10px;border-radius:99px;}
+.badge.new{background:var(--wash);color:var(--ink-ice);}
+.badge.confirmed{background:var(--good-pale);color:var(--good);}
+.badge.delivered{background:var(--brand);color:var(--on-brand);}
+.badge.canceled{background:var(--pink-pale);color:var(--ink-pink);}
+
+/* --- EXPANDED BOOKING --------------------------------------------------- */
+.bk-detail{display:none;margin-top:14px;padding-top:14px;border-top:1px solid #eaeff5;}
+.booking-card.open .bk-detail{display:block;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.detail-grid .dg-label{font-size:.72rem;font-weight:700;color:var(--line-strong);
+  text-transform:uppercase;letter-spacing:.06em;}
+.detail-grid .dg-val{font-size:.88rem;color:#333;margin-bottom:6px;}
+.bk-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.bk-actions button{font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:700;
+  padding:10px 18px;border-radius:8px;border:none;cursor:pointer;
+  min-height:44px;min-width:44px;transition:background .15s;}
+.btn-confirm{background:var(--good-pale);color:var(--good);}
+.btn-confirm:hover{background:#d4edd4;}
+.btn-deliver{background:var(--brand);color:var(--on-brand);}
+.btn-deliver:hover{background:#0d1660;}
+.btn-cancel{background:var(--pink-pale);color:var(--ink-pink);}
+.btn-cancel:hover{background:#ffbdd5;}
+
+/* --- COST & LEARNING DETAIL LISTS --------------------------------------- */
+.detail-costs,.detail-learnings{margin-top:10px;}
+.detail-costs h4,.detail-learnings h4{font-family:'Baloo 2',sans-serif;font-size:.82rem;
+  font-weight:700;color:var(--ink-ice);margin-bottom:6px;}
+.cost-line,.learning-line{font-size:.84rem;color:#444;padding:6px 0;
+  border-bottom:1px solid #f0f3f7;}
+.cost-line .cost-cat{font-size:.68rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--line-strong);margin-right:6px;}
+.cost-line .cost-amt{float:right;}
+
+/* --- FORMS -------------------------------------------------------------- */
+.form-section{background:#fff;border-radius:14px;padding:20px;margin-top:14px;
+  border:1px solid #e0e6ee;}
+.form-row{margin-bottom:14px;}
+.form-row label{display:block;font-size:.78rem;font-weight:700;color:var(--brand);
+  margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;}
+.form-row input,.form-row select,.form-row textarea{width:100%;font-family:'DM Sans',sans-serif;
+  font-size:.9rem;padding:11px 12px;border:2px solid var(--line-strong);border-radius:8px;
+  background:#fff;color:#1a1a1a;outline:none;transition:border-color .15s;}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{
+  border-color:var(--cta);}
+.form-row textarea{min-height:80px;resize:vertical;}
+.form-row .check-row{display:flex;align-items:center;gap:8px;}
+.form-row .check-row input[type="checkbox"]{width:22px;height:22px;accent-color:var(--cta);}
+.form-row .check-row label{margin:0;text-transform:none;font-size:.88rem;}
+.form-btn{font-family:'DM Sans',sans-serif;background:var(--cta);color:#fff;
+  font-weight:700;font-size:.9rem;padding:13px 28px;border:none;border-radius:8px;
+  cursor:pointer;min-height:44px;transition:background .15s;}
+.form-btn:hover{background:var(--cta-deep);}
+.form-btn:disabled{opacity:.5;cursor:not-allowed;}
+.form-msg{font-size:.82rem;margin-top:8px;font-weight:600;}
+.form-msg.ok{color:var(--good);}
+.form-msg.err{color:var(--ink-pink);}
+
+/* --- LOADING / EMPTY ---------------------------------------------------- */
+.loading{text-align:center;padding:32px;color:var(--line-strong);font-size:.9rem;}
+.empty{text-align:center;padding:28px;color:var(--line-strong);font-size:.9rem;
+  background:#fff;border-radius:14px;border:1px dashed #ccc;}
+
+/* --- FOOTER ------------------------------------------------------------- */
+footer{background:var(--brand);color:#fff;padding:24px 20px;text-align:center;
+  margin-top:40px;}
+footer .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1rem;
+  margin-bottom:4px;}
+footer .f-name em{font-style:normal;color:var(--ice);}
+footer p{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:4px;}
+footer a{color:var(--ice);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+
+/* --- TOGGLE SECTIONS ---------------------------------------------------- */
+.section-toggle{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.2rem;
+  color:var(--brand);background:none;border:none;cursor:pointer;display:flex;
+  align-items:center;gap:8px;padding:0;margin:24px 0 12px;line-height:1.2;}
+.section-toggle .arrow{display:inline-block;transition:transform .2s;font-size:.8em;}
+.section-toggle.open .arrow{transform:rotate(90deg);}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;">
+    <a href="/" class="site-name"><em>Slush</em> Sisters</a>
+    <span class="hdr-label">The Cockpit</span>
+  </div>
+  <a href="/" class="back-link">&larr; Main site</a>
+</header>
+
+<div class="shell">
+
+  <!-- SCOREBOARD -->
+  <h1>How are we doing?</h1>
+  <div class="score" id="score">
+    <div class="cell"><div class="n tabular" id="s-rev">...</div><div class="l">Revenue</div></div>
+    <div class="cell"><div class="n tabular" id="s-cost">...</div><div class="l">Costs</div></div>
+    <div class="cell"><div class="n tabular" id="s-profit">...</div><div class="l">Profit</div></div>
+  </div>
+  <div style="text-align:center;margin-bottom:4px;">
+    <span id="s-parties" style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.9rem;color:var(--brand);">...</span>
+    <span style="font-size:.8rem;color:#555;"> parties</span>
+  </div>
+
+  <!-- JARS -->
+  <h2>The jars</h2>
+  <div class="jars" id="jars">
+    <div class="loading">Loading jars...</div>
+  </div>
+
+  <!-- BOOKINGS -->
+  <button class="section-toggle open" id="tog-bookings" onclick="toggleSection('bookings')">
+    <span class="arrow">&#9654;</span> Bookings
+  </button>
+  <div id="sec-bookings">
+    <ul class="booking-list" id="booking-list">
+      <li class="loading">Loading bookings...</li>
+    </ul>
+  </div>
+
+  <!-- ADD COST -->
+  <button class="section-toggle open" id="tog-cost" onclick="toggleSection('cost')">
+    <span class="arrow">&#9654;</span> Add a cost
+  </button>
+  <div id="sec-cost">
+    <div class="form-section">
+      <form id="cost-form" onsubmit="submitCost(event)">
+        <div class="form-row">
+          <label for="c-cat">Category</label>
+          <select id="c-cat" required>
+            <option value="">Pick one...</option>
+            <option value="mix">Mix</option>
+            <option value="cups">Cups</option>
+            <option value="candy">Candy</option>
+            <option value="fuel">Fuel</option>
+            <option value="insurance">Insurance</option>
+            <option value="equipment">Equipment</option>
+            <option value="fees">Fees</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="c-label">What was it?</label>
+          <input type="text" id="c-label" placeholder="e.g. Watermelon mix, 2 gallons">
+        </div>
+        <div class="form-row">
+          <label for="c-amount">Amount ($)</label>
+          <input type="number" id="c-amount" step="0.01" min="0" placeholder="12.50" required>
+        </div>
+        <div class="form-row">
+          <div class="check-row">
+            <input type="checkbox" id="c-est">
+            <label for="c-est">This is an estimate</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="c-note">Note (optional)</label>
+          <input type="text" id="c-note" placeholder="Any extra detail">
+        </div>
+        <div class="form-row">
+          <label for="c-booking">For which booking?</label>
+          <select id="c-booking">
+            <option value="">Overhead (no specific booking)</option>
+          </select>
+        </div>
+        <button type="submit" class="form-btn" id="c-btn">Add cost</button>
+        <div class="form-msg" id="c-msg"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD LEARNING -->
+  <button class="section-toggle open" id="tog-learning" onclick="toggleSection('learning')">
+    <span class="arrow">&#9654;</span> Add a learning
+  </button>
+  <div id="sec-learning">
+    <div class="form-section">
+      <form id="learn-form" onsubmit="submitLearning(event)">
+        <div class="form-row">
+          <label for="l-body">What did we learn?</label>
+          <textarea id="l-body" placeholder="e.g. The watermelon mix freezes too hard if you add extra water" required></textarea>
+        </div>
+        <div class="form-row">
+          <label for="l-tag">Tag (optional)</label>
+          <input type="text" id="l-tag" placeholder="e.g. recipe, delivery, setup">
+        </div>
+        <div class="form-row">
+          <label for="l-booking">For which booking?</label>
+          <select id="l-booking">
+            <option value="">General (no specific booking)</option>
+          </select>
+        </div>
+        <button type="submit" class="form-btn" id="l-btn">Save learning</button>
+        <div class="form-msg" id="l-msg"></div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="f-name"><em>Slush</em> Sisters LLC</div>
+  <p><a href="/">Back to slushsisters.com</a></p>
+</footer>
+
+<script>
+(function(){
+  /* ---- helpers ---- */
+  function fmtMoney(cents){
+    if(cents==null) cents=0;
+    var neg=cents<0;
+    var abs=Math.abs(Math.round(cents))/100;
+    var s=abs.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    return (neg?'−$':'$')+s;
+  }
+  function fmtDollars(cents){
+    if(cents==null) cents=0;
+    var neg=cents<0;
+    var abs=Math.abs(Math.round(cents))/100;
+    var s=abs.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+    return (neg?'−$':'$')+s;
+  }
+  function fmtDate(d){
+    if(!d) return '';
+    try{return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+    catch(e){return d;}
+  }
+  function esc(s){
+    if(!s) return '';
+    var d=document.createElement('div');d.textContent=s;return d.innerHTML;
+  }
+
+  var bookingsData=[];
+
+  /* ---- fetch everything ---- */
+  Promise.all([
+    fetch('/api/ledger').then(function(r){return r.json();}),
+    fetch('/api/bookings').then(function(r){return r.json();})
+  ]).then(function(results){
+    var ledger=results[0], bk=results[1];
+    if(ledger.ok) renderLedger(ledger);
+    if(bk.ok){bookingsData=bk.bookings||[];renderBookings();populateBookingDropdowns();}
+  }).catch(function(err){
+    document.getElementById('s-rev').textContent='Error';
+    document.getElementById('booking-list').innerHTML='<li class="empty">Could not load data. Try refreshing.</li>';
+  });
+
+  /* ---- render ledger / scoreboard ---- */
+  function renderLedger(d){
+    var rev=d.revenue_cents||0;
+    var cost=d.cost_cents||0;
+    var profit=d.profit_cents||0;
+    var parties=d.parties||0;
+
+    var elRev=document.getElementById('s-rev');
+    elRev.textContent=fmtDollars(rev);
+    elRev.className='n tabular'+(rev===0?' neg':'');
+
+    var elCost=document.getElementById('s-cost');
+    elCost.textContent=fmtDollars(-cost);
+    elCost.className='n tabular neg';
+
+    var elProfit=document.getElementById('s-profit');
+    elProfit.textContent=fmtDollars(profit);
+    elProfit.className='n tabular'+(profit>=0?' pos':' neg');
+
+    document.getElementById('s-parties').textContent=parties;
+
+    /* jars */
+    var jarEl=document.getElementById('jars');
+    var jars=d.jars||[];
+    if(!jars.length){
+      jarEl.innerHTML='<div class="empty">No jar entries yet. They show up after your first payment.</div>';
+      return;
+    }
+    var jarColors={supplies:'supplies',tax:'tax',payback:'payback',profit:'profit',pay:'pay'};
+    var html='';
+    for(var i=0;i<jars.length;i++){
+      var j=jars[i];
+      var cls=jarColors[j.jar]||'';
+      html+='<div class="jar '+esc(cls)+'">'
+        +'<div class="jar-name">'+esc(j.jar)+'</div>'
+        +'<div class="jar-val tabular">'+fmtMoney(j.balance_cents)+'</div>'
+        +'</div>';
+    }
+    jarEl.innerHTML=html;
+  }
+
+  /* ---- render bookings ---- */
+  function renderBookings(){
+    var list=document.getElementById('booking-list');
+    if(!bookingsData.length){
+      list.innerHTML='<li class="empty">No bookings yet. They show up when someone fills out the form.</li>';
+      return;
+    }
+    var html='';
+    for(var i=0;i<bookingsData.length;i++){
+      var b=bookingsData[i];
+      var st=b.status||'new';
+      var tierCls=(b.tier==='Fresh Press')?'fresh':'';
+      html+='<li class="booking-card" data-ref="'+esc(b.ref)+'" onclick="toggleBooking(this)">'
+        +'<div class="bk-row">'
+          +'<div>'
+            +'<div class="bk-name">'+esc(b.name)+'</div>'
+            +'<div class="bk-date">'+fmtDate(b.event_date)+'</div>'
+          +'</div>'
+          +'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'
+            +'<span class="bk-tier '+tierCls+'">'+esc(b.tier||'Classic')+'</span>'
+            +'<span class="badge '+esc(st)+'">'+esc(st)+'</span>'
+          +'</div>'
+        +'</div>'
+        +'<div class="bk-detail" id="detail-'+esc(b.ref)+'">'
+          +'<div class="loading">Loading details...</div>'
+        +'</div>'
+      +'</li>';
+    }
+    list.innerHTML=html;
+  }
+
+  /* ---- expand a booking ---- */
+  window.toggleBooking=function(el){
+    var wasOpen=el.classList.contains('open');
+    el.classList.toggle('open');
+    if(!wasOpen){
+      var ref=el.getAttribute('data-ref');
+      loadBookingDetail(ref);
+    }
+  };
+
+  function loadBookingDetail(ref){
+    var container=document.getElementById('detail-'+ref);
+    if(!container) return;
+    container.innerHTML='<div class="loading">Loading...</div>';
+
+    fetch('/api/bookings/'+encodeURIComponent(ref)).then(function(r){return r.json();}).then(function(d){
+      if(!d.ok){container.innerHTML='<div class="empty">Could not load.</div>';return;}
+      var b=d.booking;
+      var costs=d.costs||[];
+      var learnings=d.learnings||[];
+
+      var html='<div class="detail-grid">';
+      var fields=[
+        ['Flavors',(b.flavor_1||'')+(b.flavor_2?' + '+b.flavor_2:'')],
+        ['Guests',b.guest_count||''],
+        ['Price',fmtMoney(b.price_cents)],
+        ['Paid',fmtMoney(b.paid_cents)],
+        ['Contact',b.contact||''],
+        ['Address',b.address||''],
+        ['How they heard',b.heard_from||''],
+        ['In their words',b.heard_from_detail||''],
+        ['Notes',b.notes||''],
+        ['Delivered',b.delivered_at?fmtDate(b.delivered_at):'Not yet']
+      ];
+      for(var i=0;i<fields.length;i++){
+        if(!fields[i][1]) continue;
+        html+='<div><div class="dg-label">'+esc(fields[i][0])+'</div>'
+          +'<div class="dg-val">'+esc(String(fields[i][1]))+'</div></div>';
+      }
+      html+='</div>';
+
+      /* costs for this booking */
+      if(costs.length){
+        html+='<div class="detail-costs"><h4>Costs</h4>';
+        for(var c=0;c<costs.length;c++){
+          html+='<div class="cost-line">'
+            +'<span class="cost-cat">'+esc(costs[c].category)+'</span>'
+            +esc(costs[c].label||'')
+            +(costs[c].is_estimate?' <span style="color:var(--ink-pink);font-size:.72rem;font-weight:700;">EST</span>':'')
+            +'<span class="cost-amt tabular">'+fmtMoney(costs[c].amount_cents)+'</span>'
+          +'</div>';
+        }
+        html+='</div>';
+      }
+
+      /* learnings for this booking */
+      if(learnings.length){
+        html+='<div class="detail-learnings"><h4>Learnings</h4>';
+        for(var l=0;l<learnings.length;l++){
+          html+='<div class="learning-line">'
+            +(learnings[l].tag?'<span style="color:var(--ink-ice);font-size:.72rem;font-weight:700;margin-right:6px;">'+esc(learnings[l].tag)+'</span>':'')
+            +esc(learnings[l].body)
+          +'</div>';
+        }
+        html+='</div>';
+      }
+
+      /* action buttons */
+      var st=b.status||'new';
+      html+='<div class="bk-actions">';
+      if(st==='new') html+='<button class="btn-confirm" onclick="event.stopPropagation();updateStatus(\''+esc(ref)+'\',\'confirmed\')">Mark confirmed</button>';
+      if(st==='new'||st==='confirmed') html+='<button class="btn-deliver" onclick="event.stopPropagation();updateStatus(\''+esc(ref)+'\',\'delivered\')">Mark delivered</button>';
+      if(st!=='canceled') html+='<button class="btn-cancel" onclick="event.stopPropagation();updateStatus(\''+esc(ref)+'\',\'canceled\')">Cancel</button>';
+      html+='</div>';
+
+      container.innerHTML=html;
+    }).catch(function(){
+      container.innerHTML='<div class="empty">Could not load details. Try again.</div>';
+    });
+  }
+
+  /* ---- update booking status ---- */
+  window.updateStatus=function(ref,status){
+    var body={status:status};
+    if(status==='delivered') body.delivered_at=new Date().toISOString();
+    fetch('/api/bookings/'+encodeURIComponent(ref),{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.ok){
+        /* update local data and re-render */
+        for(var i=0;i<bookingsData.length;i++){
+          if(bookingsData[i].ref===ref){
+            bookingsData[i].status=status;
+            if(status==='delivered') bookingsData[i].delivered_at=body.delivered_at;
+          }
+        }
+        renderBookings();
+        /* also refresh the scoreboard */
+        fetch('/api/ledger').then(function(r){return r.json();}).then(function(ld){
+          if(ld.ok) renderLedger(ld);
+        });
+      }else{
+        alert('Could not update: '+(d.error||'Unknown error'));
+      }
+    }).catch(function(){alert('Network error. Try again.');});
+  };
+
+  /* ---- populate booking dropdowns ---- */
+  function populateBookingDropdowns(){
+    var selectors=['c-booking','l-booking'];
+    for(var s=0;s<selectors.length;s++){
+      var sel=document.getElementById(selectors[s]);
+      if(!sel) continue;
+      /* keep the first "overhead/general" option */
+      while(sel.options.length>1) sel.remove(1);
+      for(var i=0;i<bookingsData.length;i++){
+        var b=bookingsData[i];
+        if(b.status==='canceled') continue;
+        var opt=document.createElement('option');
+        opt.value=b.ref;
+        opt.textContent=b.name+' ('+fmtDate(b.event_date)+')';
+        sel.appendChild(opt);
+      }
+    }
+  }
+
+  /* ---- submit cost ---- */
+  window.submitCost=function(e){
+    e.preventDefault();
+    var btn=document.getElementById('c-btn');
+    var msg=document.getElementById('c-msg');
+    btn.disabled=true;
+    msg.textContent='';
+    msg.className='form-msg';
+
+    var dollars=parseFloat(document.getElementById('c-amount').value);
+    if(isNaN(dollars)||dollars<0){
+      msg.textContent='Enter a valid amount.';msg.className='form-msg err';
+      btn.disabled=false;return;
+    }
+
+    var payload={
+      category:document.getElementById('c-cat').value,
+      label:document.getElementById('c-label').value.trim()||null,
+      amount_cents:Math.round(dollars*100),
+      is_estimate:document.getElementById('c-est').checked,
+      note:document.getElementById('c-note').value.trim()||null,
+      booking_ref:document.getElementById('c-booking').value||null
+    };
+
+    fetch('/api/costs',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    }).then(function(r){return r.json();}).then(function(d){
+      btn.disabled=false;
+      if(d.ok){
+        msg.textContent='Cost saved!';msg.className='form-msg ok';
+        document.getElementById('cost-form').reset();
+        /* refresh scoreboard */
+        fetch('/api/ledger').then(function(r){return r.json();}).then(function(ld){
+          if(ld.ok) renderLedger(ld);
+        });
+      }else{
+        msg.textContent='Error: '+(d.error||'Something went wrong.');msg.className='form-msg err';
+      }
+    }).catch(function(){
+      btn.disabled=false;
+      msg.textContent='Network error. Try again.';msg.className='form-msg err';
+    });
+  };
+
+  /* ---- submit learning ---- */
+  window.submitLearning=function(e){
+    e.preventDefault();
+    var btn=document.getElementById('l-btn');
+    var msg=document.getElementById('l-msg');
+    btn.disabled=true;
+    msg.textContent='';
+    msg.className='form-msg';
+
+    var payload={
+      body:document.getElementById('l-body').value.trim(),
+      tag:document.getElementById('l-tag').value.trim()||null,
+      booking_ref:document.getElementById('l-booking').value||null
+    };
+
+    if(!payload.body){
+      msg.textContent='Write something first.';msg.className='form-msg err';
+      btn.disabled=false;return;
+    }
+
+    fetch('/api/learnings',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    }).then(function(r){return r.json();}).then(function(d){
+      btn.disabled=false;
+      if(d.ok){
+        msg.textContent='Learning saved!';msg.className='form-msg ok';
+        document.getElementById('learn-form').reset();
+      }else{
+        msg.textContent='Error: '+(d.error||'Something went wrong.');msg.className='form-msg err';
+      }
+    }).catch(function(){
+      btn.disabled=false;
+      msg.textContent='Network error. Try again.';msg.className='form-msg err';
+    });
+  };
+
+  /* ---- section toggle ---- */
+  window.toggleSection=function(name){
+    var sec=document.getElementById('sec-'+name);
+    var tog=document.getElementById('tog-'+name);
+    if(!sec||!tog) return;
+    var open=tog.classList.contains('open');
+    if(open){
+      sec.style.display='none';
+      tog.classList.remove('open');
+    }else{
+      sec.style.display='';
+      tog.classList.add('open');
+    }
+  };
+
+})();
+</script>
+</body>
+</html>
