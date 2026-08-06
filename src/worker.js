@@ -149,6 +149,14 @@ export default {
       return handleGameEvent(request, env);
     }
 
+    // Short links: /go/fb → /?utm_source=facebook&utm_medium=social etc.
+    // Memorable URLs for the girls to paste into Facebook groups, Instagram
+    // bios, text messages, QR codes. Each 301s with UTM params so the
+    // dashboard can show which sharing channels actually drive traffic.
+    if (url.pathname.startsWith("/go/")) {
+      return handleGoRedirect(url);
+    }
+
     // Job 2: markdown negotiation for agents.
     if (wantsMarkdown(request, url) && isPagePath(url.pathname)) {
       try {
@@ -579,7 +587,7 @@ async function handleContentStats(env) {
   const WIN = "timestamp > now() - INTERVAL 7 DAY";
   const PV = "event = '$pageview' AND " + WIN;
   try {
-    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits, entryPages, newVsReturn, outbound, duration] = await Promise.all([
+    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits, entryPages, newVsReturn, outbound, duration, utmSources, utmMediums, utmCampaigns] = await Promise.all([
       hog("SELECT count() AS pv, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV),
       hog("SELECT properties.$pathname AS p, count() AS n FROM events WHERE " + PV + " GROUP BY p ORDER BY n DESC LIMIT 10"),
       hog("SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE " + PV + " GROUP BY src ORDER BY n DESC LIMIT 8"),
@@ -594,6 +602,9 @@ async function handleContentStats(env) {
       hog("SELECT CASE WHEN count() > 1 THEN 'returning' ELSE 'new' END AS kind, count(DISTINCT sub.did) AS n FROM (SELECT distinct_id AS did, count(DISTINCT toDate(timestamp)) AS day_count FROM events WHERE " + PV + " GROUP BY did HAVING day_count >= 1) AS sub GROUP BY CASE WHEN sub.day_count > 1 THEN 'returning' ELSE 'new' END"),
       hog("SELECT properties.$external_click_url AS url, count() AS n FROM events WHERE event = '$autocapture' AND " + WIN + " AND properties.$external_click_url IS NOT NULL AND properties.$external_click_url != '' GROUP BY url ORDER BY n DESC LIMIT 8"),
       hog("SELECT avg(dateDiff('second', min_ts, max_ts)) AS avg_sec FROM (SELECT \"$session_id\" AS sid, min(timestamp) AS min_ts, max(timestamp) AS max_ts FROM events WHERE " + PV + " GROUP BY sid HAVING sid IS NOT NULL AND sid != '')"),
+      hog("SELECT properties.$utm_source AS src, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_source IS NOT NULL AND properties.$utm_source != '' GROUP BY src ORDER BY n DESC LIMIT 10"),
+      hog("SELECT properties.$utm_medium AS med, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_medium IS NOT NULL AND properties.$utm_medium != '' GROUP BY med ORDER BY n DESC LIMIT 10"),
+      hog("SELECT properties.$utm_campaign AS cam, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_campaign IS NOT NULL AND properties.$utm_campaign != '' GROUP BY cam ORDER BY n DESC LIMIT 10"),
     ]);
     const scrollPct = (v) => { const n = Number(v) || 0; return n <= 1 ? Math.round(n * 100) : Math.round(n); };
     const avgDur = num(duration[0] && duration[0][0]);
@@ -621,6 +632,9 @@ async function handleContentStats(env) {
       new_vs_returning: newVsReturn.map((r) => ({ kind: r[0], visitors: num(r[1]) })),
       outbound_clicks: outbound.map((r) => ({ url: r[0], count: num(r[1]) })),
       avg_session_duration: durMin > 0 ? durMin + "m " + durSec + "s" : durSec + "s",
+      utm_sources: utmSources.map((r) => ({ source: r[0], views: num(r[1]), visitors: num(r[2]) })),
+      utm_mediums: utmMediums.map((r) => ({ medium: r[0], views: num(r[1]), visitors: num(r[2]) })),
+      utm_campaigns: utmCampaigns.map((r) => ({ campaign: r[0], views: num(r[1]), visitors: num(r[2]) })),
     });
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
@@ -666,6 +680,40 @@ async function handleSearchStats(env) {
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
   }
+}
+
+// --- Short links (/go/) -------------------------------------------------------
+// A map of slug → { path, source, medium, campaign? }. Each redirects to
+// the path with UTM params appended, so the girls type slushsisters.com/go/fb
+// and the traffic shows up attributed in the dashboard.
+
+const GO_LINKS = {
+  fb:        { path: "/", source: "facebook", medium: "social" },
+  ig:        { path: "/", source: "instagram", medium: "social" },
+  nd:        { path: "/", source: "nextdoor", medium: "social" },
+  tiktok:    { path: "/", source: "tiktok", medium: "social" },
+  text:      { path: "/", source: "text", medium: "direct" },
+  email:     { path: "/", source: "email", medium: "email" },
+  flyer:     { path: "/", source: "flyer", medium: "print" },
+  qr:        { path: "/", source: "qr", medium: "print" },
+  party:     { path: "/play", source: "party-table", medium: "qr" },
+  book:      { path: "/book", source: "share", medium: "direct" },
+  flavors:   { path: "/flavors", source: "share", medium: "direct" },
+  austin:    { path: "/margarita-machine-rental-austin", source: "share", medium: "direct" },
+};
+
+function handleGoRedirect(url) {
+  const slug = url.pathname.slice(4).toLowerCase().replace(/\/$/, "");
+  const link = GO_LINKS[slug];
+  if (!link) {
+    return new Response("Not found", { status: 404 });
+  }
+  const dest = new URL(url.origin + link.path);
+  dest.searchParams.set("utm_source", link.source);
+  dest.searchParams.set("utm_medium", link.medium);
+  const campaign = link.campaign || url.searchParams.get("utm_campaign");
+  if (campaign) dest.searchParams.set("utm_campaign", campaign);
+  return Response.redirect(dest.toString(), 301);
 }
 
 // --- Game telemetry -----------------------------------------------------------

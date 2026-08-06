@@ -155,6 +155,46 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
   </div>
 </div>
 
+<div class="section">&#x1F3AF; Tracking Links</div>
+<p class="section-hint">When you share a link like <code>slushsisters.com/go/fb</code>, the visit gets tagged so we know which posts and channels actually bring people in. These numbers only count tagged visits — they won't show anything until you start using the /go/ links.</p>
+<div class="grid">
+  <div class="card" id="card-utm-source">
+    <h2>&#x1F4E3; Source</h2>
+    <p class="hint">Where the link was shared — Facebook, Instagram, a text message, a flyer. This is the "who sent them" answer.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-utm-medium">
+    <h2>&#x1F4E8; Medium</h2>
+    <p class="hint">The type of channel — social media, email, print, direct share. "Social" means any social app; "print" means a flyer or QR code.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-utm-campaign">
+    <h2>&#x1F4CB; Campaign</h2>
+    <p class="hint">If you name a specific push — like "summer-2026" or "bee-cave-moms" — it shows up here so you can compare which campaigns worked.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-go-links">
+    <h2>&#x1F517; Your sharing links</h2>
+    <p class="hint">Copy and paste these when you post or share. Each one goes to slushsisters.com with a hidden tag so the dashboard knows where the visit came from.</p>
+    <div class="body">
+      <ul class="rows">
+        <li><span class="k">Facebook post</span><span class="v" style="font-size:.78rem">slushsisters.com/go/fb</span></li>
+        <li><span class="k">Instagram bio</span><span class="v" style="font-size:.78rem">slushsisters.com/go/ig</span></li>
+        <li><span class="k">Nextdoor</span><span class="v" style="font-size:.78rem">slushsisters.com/go/nd</span></li>
+        <li><span class="k">TikTok</span><span class="v" style="font-size:.78rem">slushsisters.com/go/tiktok</span></li>
+        <li><span class="k">Text message</span><span class="v" style="font-size:.78rem">slushsisters.com/go/text</span></li>
+        <li><span class="k">Email</span><span class="v" style="font-size:.78rem">slushsisters.com/go/email</span></li>
+        <li><span class="k">Printed flyer</span><span class="v" style="font-size:.78rem">slushsisters.com/go/flyer</span></li>
+        <li><span class="k">QR code</span><span class="v" style="font-size:.78rem">slushsisters.com/go/qr</span></li>
+        <li><span class="k">Party table card</span><span class="v" style="font-size:.78rem">slushsisters.com/go/party</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <div class="section">&#x1F4CA; What People Do on Our Site</div>
 <p class="section-hint">Once someone arrives, these numbers show what they actually read and click. The goal is getting them to the booking page.</p>
 <div class="grid">
@@ -464,9 +504,24 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
         try { return esc(new URL(c.url).hostname.replace("www.","")); } catch(e){ return esc(c.url); }
       }, function(c){ return n(c.count) + "×"; });
     }, "POSTHOG_API_KEY");
+
+    body("card-utm-source").innerHTML = handle(res, function(d){
+      if (!d.utm_sources || !d.utm_sources.length) return '<div class="state">No tagged visits yet. Start sharing links like slushsisters.com/go/fb and the sources show up here.</div>';
+      return rowsHtml(d.utm_sources, function(s){ return esc(s.source); }, function(s){ return n(s.visitors) + " people, " + n(s.views) + " views"; });
+    }, "POSTHOG_API_KEY");
+
+    body("card-utm-medium").innerHTML = handle(res, function(d){
+      if (!d.utm_mediums || !d.utm_mediums.length) return '<div class="state">No tagged visits yet.</div>';
+      return rowsHtml(d.utm_mediums, function(m){ return esc(m.medium); }, function(m){ return n(m.visitors) + " people, " + n(m.views) + " views"; });
+    }, "POSTHOG_API_KEY");
+
+    body("card-utm-campaign").innerHTML = handle(res, function(d){
+      if (!d.utm_campaigns || !d.utm_campaigns.length) return '<div class="state">No campaigns yet. Add a campaign name to any link: slushsisters.com/go/fb?utm_campaign=summer-2026</div>';
+      return rowsHtml(d.utm_campaigns, function(c){ return esc(c.campaign); }, function(c){ return n(c.visitors) + " people, " + n(c.views) + " views"; });
+    }, "POSTHOG_API_KEY");
   }).catch(function(){
     [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions"),el("stat-duration")].forEach(function(e){ if(e) e.textContent = "—"; });
-    ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound"].forEach(function(id){ body(id).innerHTML = oops(); });
+    ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound","card-utm-source","card-utm-medium","card-utm-campaign"].forEach(function(id){ body(id).innerHTML = oops(); });
   });
 
   // --- Game analytics (Analytics Engine) ---
