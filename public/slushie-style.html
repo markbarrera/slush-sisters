@@ -154,6 +154,8 @@ button{font-family:inherit;cursor:pointer;}
     {id:'extra', label:'Extra',  slot:'slotExtra',   opts:['','🎀','👔','🧣','🌈','💖']},
     {id:'face',  label:'Face',   slot:null,          opts:['happy','cool','wow','silly']}
   ];
+  function track(evt,extra){try{navigator.sendBeacon('/api/game-event',JSON.stringify(Object.assign({game:'style',event:evt},extra||{})));}catch(e){}}
+
   var FACE_EMOJI={happy:'😊',cool:'😎',wow:'😮',silly:'😝'};
   var state={color:'#7ed957',hat:'',eyes:'',extra:'',face:'happy'};
   var activeCat='color';
@@ -199,7 +201,7 @@ button{font-family:inherit;cursor:pointer;}
   }
 
   function pose(){
-    resume();
+    resume(); track('pose');
     var ch=$('char'); ch.classList.remove('pose'); void ch.offsetWidth; ch.classList.add('pose');
     $('spk1').classList.remove('go'); $('spk2').classList.remove('go'); void ch.offsetWidth;
     $('spk1').classList.add('go'); $('spk2').classList.add('go');
@@ -207,7 +209,7 @@ button{font-family:inherit;cursor:pointer;}
     setHint(pick(['Ta-da! 💁','Work it! 📸','So stylish!','Strike a pose!']));
   }
   function surprise(){
-    resume();
+    resume(); track('surprise');
     state.color=pick(COLORS);
     state.hat=pick(CATS[1].opts); state.eyes=pick(CATS[2].opts);
     state.extra=pick(CATS[3].opts); state.face=pick(CATS[4].opts);

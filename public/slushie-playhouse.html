@@ -216,6 +216,8 @@ button{font-family:inherit;cursor:pointer;}
   "use strict";
   var $=function(id){return document.getElementById(id);};
 
+  function track(evt,extra){try{navigator.sendBeacon('/api/game-event',JSON.stringify(Object.assign({game:'playhouse',event:evt},extra||{})));}catch(e){}}
+
   /* ---- audio (no files) ---- */
   var AC=null;
   function tone(freq,dur,type,vol){
@@ -315,6 +317,7 @@ button{font-family:inherit;cursor:pointer;}
     if(busy) return;
     resume();
     if(cup.fill<=0){ react('confused'); return; }
+    track('give',{detail:cup.dominant||'mix'});
     busy=true;
     var col=mixHex(cup.colors);
     $('cup').classList.add('give');

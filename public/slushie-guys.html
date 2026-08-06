@@ -134,6 +134,8 @@ canvas{display:block;width:100%;height:100%;}
     g.gain.exponentialRampToValueAtTime(.0001,x+(d||.1));o.stop(x+(d||.1));}catch(e){}}
   function resume(){try{if(AC&&AC.state==='suspended')AC.resume();}catch(e){}}
 
+  function track(evt,extra){try{navigator.sendBeacon('/api/game-event',JSON.stringify(Object.assign({game:'guys',event:evt},extra||{})));}catch(e){}}
+
   /* ---- world / view ---- */
   var WORLD_H=620, GY=560;                 // design height + ground line (world units)
   var view={w:390,h:640,scale:1};
@@ -228,6 +230,7 @@ canvas{display:block;width:100%;height:100%;}
   }
 
   function startLevel(idx){
+    track('level_start',{detail:'level:'+idx});
     var def=LEVELS[idx]; G.levelIdx=idx; G.level=def; G.mode='play'; G.t=0; G.cam=0;
     G.finishOrder=[]; G.confetti=[];
     // build obstacle runtime state
@@ -395,8 +398,8 @@ canvas{display:block;width:100%;height:100%;}
     var place=G.finishOrder.indexOf(G.player)+1;
     burstConfetti();
     tone(700,.12); setTimeout(function(){tone(950,.16);},130);
-    // best time
     var prev=getBest(G.levelIdx), t=G.player.finishT, nb=false;
+    track('level_finish',{score:place,dur:Math.round(t),detail:'level:'+G.levelIdx});
     if(prev<=0||t<prev){ localStorage.setItem(bestKey(G.levelIdx), t.toFixed(2)); nb=true; }
     setTimeout(function(){ showResult(place,t,nb,prev); }, 900);
   }

@@ -230,6 +230,8 @@ button{font-family:inherit;cursor:pointer;}
   "use strict";
   var $=function(id){return document.getElementById(id);};
 
+  function track(evt,extra){try{navigator.sendBeacon('/api/game-event',JSON.stringify(Object.assign({game:'street',event:evt},extra||{})));}catch(e){}}
+
   /* ---- tiny Web Audio blips (no files) ---- */
   var AC=null;
   function beep(freq,dur,type,vol){
@@ -372,7 +374,7 @@ button{font-family:inherit;cursor:pointer;}
   }
 
   function startSolo(){
-    show('solo'); resumeAudio();
+    show('solo'); resumeAudio(); track('start',{detail:'solo'});
     var had=loadSolo();
     renderShop(); updateSolo();
     if(had && solo._welcome){
@@ -445,7 +447,7 @@ button{font-family:inherit;cursor:pointer;}
     duel.raf=requestAnimationFrame(dLoop);
   }
   function startRace(){
-    show('duel'); resumeAudio();
+    show('duel'); resumeAudio(); track('race_start');
     duel.running=true; duel.left=RACE_SECS; duel.last=0;
     duel.p1={money:0,cup:0,help:0}; duel.p2={money:0,cup:0,help:0};
     $('win').classList.add('hide');
@@ -455,6 +457,7 @@ button{font-family:inherit;cursor:pointer;}
   }
   function endRace(){
     duel.running=false; cancelAnimationFrame(duel.raf);
+    track('race_end',{score:Math.max(Math.floor(duel.p1.money),Math.floor(duel.p2.money))});
     $('dClock').textContent='0';
     var m1=Math.floor(duel.p1.money), m2=Math.floor(duel.p2.money);
     $('win1').textContent=fmt(m1); $('win2').textContent=fmt(m2);

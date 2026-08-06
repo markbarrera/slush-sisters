@@ -217,8 +217,10 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;color:var(--brand)
     if(S.lives<=0) over();
   }
 
+  function track(evt,extra){try{navigator.sendBeacon('/api/game-event',JSON.stringify(Object.assign({game:'catch',event:evt},extra||{})));}catch(e){}}
+
   function start(){
-    measure();
+    measure(); track('start');
     S.running=true; S.score=0; S.lives=3; S.items=[]; S.speed=1; S.spawnT=0; S.last=0;
     field.innerHTML=''; $('score').textContent='0'; $('lives').textContent='❤️❤️❤️';
     $('cf').style.height='38%';
@@ -229,6 +231,7 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;color:var(--brand)
   }
   function over(){
     S.running=false; cancelAnimationFrame(S.raf);
+    track('end',{score:S.score,dur:Math.round(performance.now()/1000)});
     if(S.score>BEST){ BEST=S.score; localStorage.setItem('slushcatch_best',String(BEST)); }
     var nb=S.score>=BEST&&S.score>0;
     $('overTitle').textContent=nb?'New best!':'Nice catch!';
