@@ -391,19 +391,26 @@ async function handleContentStats(env) {
   const WIN = "timestamp > now() - INTERVAL 7 DAY";
   const PV = "event = '$pageview' AND " + WIN;
   try {
-    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits] = await Promise.all([
+    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits, entryPages, newVsReturn, outbound, duration] = await Promise.all([
       hog("SELECT count() AS pv, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV),
       hog("SELECT properties.$pathname AS p, count() AS n FROM events WHERE " + PV + " GROUP BY p ORDER BY n DESC LIMIT 10"),
       hog("SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE " + PV + " GROUP BY src ORDER BY n DESC LIMIT 8"),
       hog("SELECT properties.$device_type AS d, count(DISTINCT distinct_id) AS n FROM events WHERE " + PV + " GROUP BY d ORDER BY n DESC"),
-      hog("SELECT properties.$el_text AS t, count() AS n FROM events WHERE event = '$autocapture' AND properties.$event_type = 'click' AND " + WIN + " AND properties.$el_text != '' AND length(properties.$el_text) > 1 GROUP BY t ORDER BY n DESC LIMIT 10"),
+      hog("SELECT CASE WHEN elements_chain LIKE '%nav%' THEN 'nav' WHEN elements_chain LIKE '%footer%' THEN 'footer' ELSE 'content' END AS loc, properties.$el_text AS t, count() AS n FROM events WHERE event = '$autocapture' AND properties.$event_type = 'click' AND " + WIN + " AND properties.$el_text != '' AND length(properties.$el_text) > 1 GROUP BY loc, t ORDER BY n DESC LIMIT 20"),
       hog("SELECT properties.$prev_pageview_pathname AS p, avg(toFloat64OrNull(toString(properties.$prev_pageview_max_scroll_percentage))) AS s FROM events WHERE event = '$pageleave' AND " + WIN + " AND properties.$prev_pageview_pathname IS NOT NULL GROUP BY p ORDER BY s ASC LIMIT 10"),
       hog("SELECT count(DISTINCT \"$session_id\") AS n FROM events WHERE " + PV + " AND properties.$pathname IN ('/book', '/book.html')"),
       hog("SELECT count() AS n FROM events WHERE event = 'booking_submitted' AND " + WIN),
       hog("SELECT properties.$geoip_city_name AS city, properties.$geoip_subdivision_1_name AS region, count(DISTINCT distinct_id) AS n FROM events WHERE " + PV + " AND properties.$geoip_city_name IS NOT NULL AND properties.$geoip_city_name != '' GROUP BY city, region ORDER BY n DESC LIMIT 10"),
       hog("SELECT properties.$prev_pageview_pathname AS p, count() AS n FROM events WHERE event = '$pageleave' AND " + WIN + " AND properties.$prev_pageview_pathname IS NOT NULL GROUP BY p ORDER BY n DESC LIMIT 8"),
+      hog("SELECT properties.$pathname AS p, count(DISTINCT \"$session_id\") AS n FROM events WHERE " + PV + " AND properties.$is_initial_page_view = true GROUP BY p ORDER BY n DESC LIMIT 8"),
+      hog("SELECT CASE WHEN count() > 1 THEN 'returning' ELSE 'new' END AS kind, count(DISTINCT sub.did) AS n FROM (SELECT distinct_id AS did, count(DISTINCT toDate(timestamp)) AS day_count FROM events WHERE " + PV + " GROUP BY did HAVING day_count >= 1) AS sub GROUP BY CASE WHEN sub.day_count > 1 THEN 'returning' ELSE 'new' END"),
+      hog("SELECT properties.$external_click_url AS url, count() AS n FROM events WHERE event = '$autocapture' AND " + WIN + " AND properties.$external_click_url IS NOT NULL AND properties.$external_click_url != '' GROUP BY url ORDER BY n DESC LIMIT 8"),
+      hog("SELECT avg(dateDiff('second', min_ts, max_ts)) AS avg_sec FROM (SELECT \"$session_id\" AS sid, min(timestamp) AS min_ts, max(timestamp) AS max_ts FROM events WHERE " + PV + " GROUP BY sid HAVING sid IS NOT NULL AND sid != '')"),
     ]);
     const scrollPct = (v) => { const n = Number(v) || 0; return n <= 1 ? Math.round(n * 100) : Math.round(n); };
+    const avgDur = num(duration[0] && duration[0][0]);
+    const durMin = Math.floor(avgDur / 60);
+    const durSec = avgDur % 60;
     return json({
       status: "ok",
       window_days: 7,
@@ -413,7 +420,7 @@ async function handleContentStats(env) {
       top_pages: pages.map((r) => ({ path: r[0], views: num(r[1]) })),
       sources: refs.map((r) => ({ source: r[0], views: num(r[1]) })),
       devices: devices.map((r) => ({ type: r[0] || "Unknown", visitors: num(r[1]) })),
-      clicks: clicks.map((r) => ({ label: r[0], count: num(r[1]) })),
+      clicks: clicks.map((r) => ({ location: r[0], label: r[1], count: num(r[2]) })),
       scroll: scroll.map((r) => ({ path: r[0], pct: scrollPct(r[1]) })),
       funnel: {
         all_sessions: num(overview[0] && overview[0][2]),
@@ -422,6 +429,10 @@ async function handleContentStats(env) {
       },
       geo: geo.map((r) => ({ city: r[0], region: r[1], visitors: num(r[2]) })),
       exits: exits.map((r) => ({ path: r[0], count: num(r[1]) })),
+      entry_pages: entryPages.map((r) => ({ path: r[0], sessions: num(r[1]) })),
+      new_vs_returning: newVsReturn.map((r) => ({ kind: r[0], visitors: num(r[1]) })),
+      outbound_clicks: outbound.map((r) => ({ url: r[0], count: num(r[1]) })),
+      avg_session_duration: durMin > 0 ? durMin + "m " + durSec + "s" : durSec + "s",
     });
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
