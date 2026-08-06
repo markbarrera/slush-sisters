@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Our Numbers — Slush Sisters</title>
+<meta name="description" content="Who visited Slush Sisters, who is reading about us on the internet, and how people found us. A private page for Harper and Finley.">
+<style>
+:root{
+  --brand:#1a237e; --ice:#4fc3f7; --ice-deep:#29b6f6; --wash:#e8f4fd;
+  --blush:#fff5f7; --pop:#ff4081; --ink-ice:#0165a8; --ink-pink:#c2185b;
+  --line:#e6ecf5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:var(--wash);line-height:1.5;}
+.wrap{max-width:860px;margin:0 auto;padding:24px 18px 64px;}
+a{color:var(--ink-ice);}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;}
+.wordmark{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;color:var(--brand);text-decoration:none;}
+.wordmark span{color:var(--ice);}
+.back{font-size:.85rem;font-weight:600;text-decoration:none;}
+
+h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size:clamp(1.7rem,6vw,2.4rem);line-height:1.1;margin-bottom:6px;}
+.intro{color:#555;font-size:.93rem;margin-bottom:22px;}
+
+/* --- stat tiles --- */
+.stats{background:var(--brand);color:#fff;border-radius:18px;padding:24px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin-bottom:12px;}
+.stat .n{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:clamp(1.8rem,8vw,3rem);line-height:1;font-variant-numeric:tabular-nums;}
+.stat .label{font-weight:700;font-size:.85rem;margin-top:4px;}
+.stat .sub{opacity:.7;font-size:.72rem;margin-top:2px;}
+
+/* --- bot/human split --- */
+.split{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#555;}
+.split strong{color:var(--brand);}
+.split-track{display:flex;height:10px;border-radius:5px;overflow:hidden;margin-top:8px;background:#eee;}
+.split-seg{height:100%;}
+.seg-human{background:var(--ice);}
+.seg-search{background:#66bb6a;}
+.seg-ai{background:#ab47bc;}
+.seg-social{background:#ffa726;}
+.seg-scraper{background:#ef5350;}
+.seg-none{background:#bdbdbd;}
+.split-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;font-size:.75rem;}
+.split-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:3px;vertical-align:middle;}
+
+/* --- section headings --- */
+.section{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.1rem;color:var(--brand);margin:28px 0 4px;}
+.section-hint{color:#888;font-size:.82rem;margin-bottom:14px;}
+
+/* --- card grid --- */
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:8px;}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr;}}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;}
+.card h2{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.05rem;color:var(--brand);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.card .hint{color:#888;font-size:.8rem;margin-bottom:14px;}
+
+/* --- rows (lists) --- */
+.rows{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.rows li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #f2f5fa;font-size:.9rem;}
+.rows li:last-child{border-bottom:none;}
+.rows .k{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rows .v{font-family:'Baloo 2',sans-serif;font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink-ice);flex:none;}
+
+/* --- group labels inside crawler card --- */
+.group-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9aa4b2;margin:12px 0 2px;}
+.group-label:first-child{margin-top:0;}
+
+/* --- funnel bars --- */
+.funnel-step{margin-bottom:10px;}
+.funnel-step:last-child{margin-bottom:0;}
+.funnel-track{background:#f0f4f8;border-radius:8px;height:34px;position:relative;overflow:hidden;}
+.funnel-fill{height:100%;border-radius:8px;display:flex;align-items:center;padding:0 12px;font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;min-width:fit-content;}
+.funnel-fill.f1{background:var(--brand);}
+.funnel-fill.f2{background:var(--ice-deep);}
+.funnel-fill.f3{background:var(--pop);}
+.funnel-label{font-size:.78rem;color:#777;margin-top:2px;}
+
+/* --- scroll bars --- */
+.scroll-bar{display:inline-block;height:14px;background:var(--ice);border-radius:7px;vertical-align:middle;margin-right:6px;min-width:4px;}
+
+/* --- states --- */
+.state{font-size:.88rem;color:#777;padding:10px 0;}
+.state.wait{color:var(--ink-pink);}
+.pill{display:inline-block;background:var(--wash);color:var(--ink-ice);border-radius:999px;padding:2px 10px;font-size:.7rem;font-weight:700;margin-left:6px;}
+
+.foot{margin-top:28px;color:#888;font-size:.8rem;text-align:center;}
+code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="wordmark" href="/">Slush<span>Sisters</span></a>
+  <a class="back" href="/">&#8249; Back to the site</a>
+</header>
+
+<h1>Our Numbers</h1>
+<p class="intro">Everything we know about who visits our site, how they found us, what they do when they get here, and whether they book. This is what marketing looks like — real data about real people deciding whether to hire us. Last 7 days, updated when you reload.</p>
+
+<div class="stats" id="stats">
+  <div class="stat">
+    <div class="n" id="stat-visitors">&hellip;</div>
+    <div class="label">Visitors</div>
+    <div class="sub">different people</div>
+  </div>
+  <div class="stat">
+    <div class="n" id="stat-pageviews">&hellip;</div>
+    <div class="label">Page Views</div>
+    <div class="sub">total pages read</div>
+  </div>
+  <div class="stat">
+    <div class="n" id="stat-sessions">&hellip;</div>
+    <div class="label">Visits</div>
+    <div class="sub">times someone came</div>
+  </div>
+</div>
+
+<div class="split" id="split">
+  <div class="state">Loading traffic breakdown&hellip;</div>
+</div>
+
+<div class="section">&#x1F6AA; How People Find Us</div>
+<p class="section-hint">Where visitors come from before they land on our site. This is how we know which marketing is working and which is not.</p>
+<div class="grid">
+  <div class="card" id="card-sources">
+    <h2>&#x1F517; Where they came from</h2>
+    <p class="hint">The website or app someone was on right before they clicked to our site. "Direct" means they typed slushsisters.com or used a bookmark.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-geo">
+    <h2>&#x1F4CD; Where visitors are</h2>
+    <p class="hint">The city people are browsing from, based on their internet connection (not their exact address).</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-devices">
+    <h2>&#x1F4F1; What they're using</h2>
+    <p class="hint">Phone, computer, or tablet. Most of our visitors come from phones because they find us through text messages and social media links.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+</div>
+
+<div class="section">&#x1F4CA; What People Do on Our Site</div>
+<p class="section-hint">Once someone arrives, these numbers show what they actually read and click. The goal is getting them to the booking page.</p>
+<div class="grid">
+  <div class="card" id="card-pages">
+    <h2>&#x2B50; Most-read pages</h2>
+    <p class="hint">The pages people spent time on. The home page usually gets the most, but what matters is whether they also read /book.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-funnel">
+    <h2>&#x1F3AF; The booking path</h2>
+    <p class="hint">Out of everyone who visited, how many made it to the booking page, and how many actually sent a booking. This is the number that matters most.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-clicks">
+    <h2>&#x1F446; What people click</h2>
+    <p class="hint">The buttons and links people tap the most. Shows what catches their attention.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-scroll">
+    <h2>&#x1F4D6; How far people read</h2>
+    <p class="hint">How far down each page people scroll before leaving. 100% means they read the whole thing. Low numbers mean they leave before the important part.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-exits">
+    <h2>&#x1F6AA; Where people leave</h2>
+    <p class="hint">The last page someone was on before they closed the tab. If lots of people leave from /book, the form might be confusing.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+</div>
+
+<div class="section">&#x1F916; Who Else Is Reading About Us</div>
+<p class="section-hint">These aren't customers. They're search engines and AI helpers that decide whether to recommend us when someone asks "frozen drink rentals near me." More readers here means more chances to show up.</p>
+<div class="grid">
+  <div class="card" id="card-crawlers">
+    <h2>&#x1F50E; Search engines and AI</h2>
+    <p class="hint">The robots that come to read our site so they can recommend us when someone searches.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-search">
+    <h2>&#x1F524; What people googled</h2>
+    <p class="hint">The actual words people typed into Google that made our site show up. "Impressions" means how many times we appeared, not how many clicked.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+</div>
+
+<p class="foot">Numbers cover the last 7 days and update when you reload. Nothing here is a secret about any customer — just totals. "Visitors" counts different people; "Visits" counts if the same person comes back twice; "Page Views" counts every page anyone read. The stat tiles only count real people using a browser, not robots.</p>
+</div>
+
+<script>
+(function () {
+  var KIND = {
+    search: { label: "Search engines", emoji: "🔍", color: "#66bb6a" },
+    ai:     { label: "AI assistants",  emoji: "🤖", color: "#ab47bc" },
+    social: { label: "Social & chat",  emoji: "💬", color: "#ffa726" },
+    scraper:{ label: "Scrapers & tools", emoji: "🔧", color: "#ef5350" }
+  };
+  var SEG_COLORS = { human: "var(--ice)", search: "#66bb6a", ai: "#ab47bc", social: "#ffa726", scraper: "#ef5350", none: "#bdbdbd" };
+  var SEG_LABELS = { human: "Real people", search: "Search engines", ai: "AI helpers", social: "Social apps", scraper: "Scrapers", none: "Unknown" };
+  var SEG_ORDER = ["human", "search", "ai", "social", "scraper", "none"];
+  var SEG_CSS = { human: "seg-human", search: "seg-search", ai: "seg-ai", social: "seg-social", scraper: "seg-scraper", none: "seg-none" };
+
+  function el(id){ return document.getElementById(id); }
+  function body(cardId){ return el(cardId).querySelector(".body"); }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){
+    return ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" })[c]; }); }
+  function prettyPath(p){ if(!p || p === "/") return "Home page"; return esc(p.replace(/\.html$/,"")); }
+  function n(x){ return Number(x || 0).toLocaleString(); }
+  function pct(part, whole){ return whole ? Math.round(part / whole * 100) : 0; }
+
+  function rowsHtml(items, keyFn, valFn){
+    if (!items || !items.length) return empty();
+    return '<ul class="rows">' + items.map(function(it){
+      return '<li><span class="k">' + keyFn(it) + '</span><span class="v">' + valFn(it) + '</span></li>';
+    }).join("") + '</ul>';
+  }
+
+  function waiting(secretName){
+    return '<div class="state wait">Waiting for a key. Add <code>' + esc(secretName) +
+      '</code> as a Worker secret and this fills in automatically.</div>';
+  }
+  function oops(){ return '<div class="state">Couldn\'t load this right now. Try reloading in a minute.</div>'; }
+  function empty(){ return '<div class="state">No data yet — check back once the site has some traffic.</div>'; }
+
+  function handle(res, ok, needName){
+    if (!res || res.status === "error") return oops();
+    if (res.status === "not_configured") return waiting(needName);
+    return ok(res);
+  }
+
+  var trafficData = null;
+
+  function updateSplit() {
+    if (!trafficData) return;
+    var splitEl = el("split");
+    if (trafficData.status === "not_configured") {
+      splitEl.innerHTML = waiting("CF_ANALYTICS_TOKEN");
+      return;
+    }
+    if (trafficData.status !== "ok") {
+      splitEl.innerHTML = '<div class="state">Traffic breakdown unavailable.</div>';
+      return;
+    }
+    var d = trafficData;
+    var total = d.total_page_requests || 1;
+    var cats = {};
+    (d.traffic_split || []).forEach(function(s){ cats[s.category] = s.requests; });
+    var humanN = cats["human"] || 0;
+    var humanPct = pct(humanN, total);
+
+    var txt = "<strong>" + n(humanN) + " out of " + n(total) + " page visits (" + humanPct + "%) were real people.</strong> The rest were robots — search engines reading the site, AI helpers checking if they should recommend us, and scrapers.";
+
+    var segs = "";
+    var legend = "";
+    SEG_ORDER.forEach(function(k) {
+      var v = cats[k] || 0;
+      if (!v) return;
+      var w = Math.max(pct(v, total), 1);
+      segs += '<div class="split-seg ' + SEG_CSS[k] + '" style="width:' + w + '%"></div>';
+      legend += '<span><i style="background:' + SEG_COLORS[k] + '"></i>' + SEG_LABELS[k] + ' ' + n(v) + '</span>';
+    });
+
+    splitEl.innerHTML = txt + '<div class="split-track">' + segs + '</div><div class="split-legend">' + legend + '</div>';
+  }
+
+  // --- Traffic (Cloudflare Analytics Engine) ---
+  fetch("/api/stats/traffic").then(function(r){ return r.json(); }).then(function(res){
+    trafficData = res;
+
+    if (el("stat-visitors").textContent === "…" && res.status === "ok") {
+      el("stat-pageviews").textContent = n(res.page_views);
+    }
+
+    body("card-crawlers").innerHTML = handle(res, function(d){
+      if (!d.crawlers || !d.crawlers.length) return empty();
+      var byKind = { search: [], ai: [], social: [], scraper: [] };
+      d.crawlers.forEach(function(c){ (byKind[c.kind] || (byKind[c.kind]=[])).push(c); });
+      var html = "";
+      ["search","ai","social","scraper"].forEach(function(k){
+        if (!byKind[k] || !byKind[k].length) return;
+        var info = KIND[k] || { emoji: "", label: k };
+        html += '<div class="group-label">' + info.emoji + " " + info.label + '</div>';
+        html += '<ul class="rows">' + byKind[k].map(function(c){
+          return '<li><span class="k">' + esc(c.name) + '</span><span class="v">' + n(c.hits) + '</span></li>';
+        }).join("") + '</ul>';
+      });
+      return html || empty();
+    }, "CF_ANALYTICS_TOKEN");
+
+    updateSplit();
+  }).catch(function(){
+    body("card-crawlers").innerHTML = oops();
+    el("split").innerHTML = '<div class="state">Traffic breakdown unavailable.</div>';
+  });
+
+  // --- Content (PostHog): the big payload ---
+  fetch("/api/stats/content").then(function(r){ return r.json(); }).then(function(res){
+    if (res && res.status === "ok") {
+      el("stat-visitors").textContent = n(res.visitors);
+      el("stat-pageviews").textContent = n(res.pageviews);
+      el("stat-sessions").textContent = n(res.sessions);
+    } else if (res && res.status === "not_configured") {
+      el("stat-visitors").textContent = "—";
+      el("stat-sessions").textContent = "—";
+    }
+
+    body("card-pages").innerHTML = handle(res, function(d){
+      return rowsHtml(d.top_pages, function(p){ return prettyPath(p.path); }, function(p){ return n(p.views); });
+    }, "POSTHOG_API_KEY");
+
+    body("card-sources").innerHTML = handle(res, function(d){
+      return rowsHtml(d.sources, function(s){ return esc(s.source); }, function(s){ return n(s.views); });
+    }, "POSTHOG_API_KEY");
+
+    body("card-devices").innerHTML = handle(res, function(d){
+      if (!d.devices || !d.devices.length) return empty();
+      var icons = { Mobile: "📱", Desktop: "💻", Tablet: "📝" };
+      return rowsHtml(d.devices, function(v){
+        return (icons[v.type] || "") + " " + esc(v.type);
+      }, function(v){ return n(v.visitors) + " people"; });
+    }, "POSTHOG_API_KEY");
+
+    body("card-funnel").innerHTML = handle(res, function(d){
+      var f = d.funnel;
+      if (!f || !f.all_sessions) return empty();
+      var steps = [
+        { label: "Visited the site", n: f.all_sessions, cls: "f1" },
+        { label: "Looked at the booking page", n: f.viewed_book, cls: "f2" },
+        { label: "Sent a booking", n: f.submitted, cls: "f3" }
+      ];
+      var max = f.all_sessions || 1;
+      return steps.map(function(s){
+        var w = Math.max(pct(s.n, max), 6);
+        return '<div class="funnel-step">' +
+          '<div class="funnel-track"><div class="funnel-fill ' + s.cls + '" style="width:' + w + '%">' +
+          n(s.n) + '</div></div>' +
+          '<div class="funnel-label">' + s.label +
+          (s.n < max ? ' (' + pct(s.n, max) + '% of visitors)' : '') +
+          '</div></div>';
+      }).join("");
+    }, "POSTHOG_API_KEY");
+
+    body("card-clicks").innerHTML = handle(res, function(d){
+      if (!d.clicks || !d.clicks.length) return '<div class="state">No click data yet. Once people start clicking buttons and links, the most popular ones show up here.</div>';
+      return rowsHtml(d.clicks, function(c){ return esc(c.label); }, function(c){ return n(c.count) + "×"; });
+    }, "POSTHOG_API_KEY");
+
+    body("card-scroll").innerHTML = handle(res, function(d){
+      if (!d.scroll || !d.scroll.length) return '<div class="state">No scroll data yet. Once people browse the site, we\'ll see how far they read each page.</div>';
+      return '<ul class="rows">' + d.scroll.map(function(s){
+        var w = Math.max(Math.round(s.pct * 0.8), 3);
+        return '<li><span class="k">' + prettyPath(s.path) + '</span>' +
+          '<span class="v"><span class="scroll-bar" style="width:' + w + 'px"></span>' + s.pct + '%</span></li>';
+      }).join("") + '</ul>';
+    }, "POSTHOG_API_KEY");
+
+    body("card-geo").innerHTML = handle(res, function(d){
+      if (!d.geo || !d.geo.length) return empty();
+      return rowsHtml(d.geo, function(g){
+        return esc(g.city) + (g.region ? ", " + esc(g.region) : "");
+      }, function(g){ return n(g.visitors); });
+    }, "POSTHOG_API_KEY");
+
+    body("card-exits").innerHTML = handle(res, function(d){
+      if (!d.exits || !d.exits.length) return empty();
+      return rowsHtml(d.exits, function(e){ return prettyPath(e.path); }, function(e){ return n(e.count); });
+    }, "POSTHOG_API_KEY");
+  }).catch(function(){
+    [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions")].forEach(function(e){ if(e) e.textContent = "—"; });
+    ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits"].forEach(function(id){ body(id).innerHTML = oops(); });
+  });
+
+  // --- Search terms (Google Search Console) ---
+  fetch("/api/stats/search").then(function(r){ return r.json(); }).then(function(res){
+    body("card-search").innerHTML = handle(res, function(d){
+      if (!d.queries || !d.queries.length)
+        return '<div class="state">No search words yet — Google needs a few days of data after a site is verified. Check back this week.</div>';
+      return rowsHtml(d.queries, function(q){ return esc(q.query); }, function(q){ return n(q.impressions) + " times"; });
+    }, "GSC_SA_EMAIL");
+  }).catch(function(){
+    body("card-search").innerHTML = oops();
+  });
+})();
+</script>
+</body>
+</html>

@@ -56,6 +56,19 @@ const BOTS = [
   ["WhatsApp", "social", /WhatsApp/i],
   ["TelegramBot", "social", /TelegramBot/i],
   ["Discordbot", "social", /Discordbot/i],
+  ["AhrefsBot", "scraper", /AhrefsBot/i],
+  ["SEMrushBot", "scraper", /SemrushBot/i],
+  ["MJ12bot", "scraper", /MJ12bot/i],
+  ["DotBot", "scraper", /DotBot/i],
+  ["YandexBot", "search", /YandexBot/i],
+  ["Baiduspider", "search", /Baiduspider/i],
+  ["python-requests", "scraper", /python-requests/i],
+  ["curl", "scraper", /\bcurl\//i],
+  ["Go-http-client", "scraper", /Go-http-client/i],
+  ["wget", "scraper", /\bWget\//i],
+  ["Scrapy", "scraper", /Scrapy/i],
+  ["Java", "scraper", /\bJava\/\d/i],
+  ["Headless browser", "scraper", /HeadlessChrome|PhantomJS|Puppeteer/i],
 ];
 
 function classify(ua) {
@@ -124,6 +137,12 @@ export default {
       if (apiRes) return apiRes;
     }
 
+    // Job 4: dashboard data for /dashboard. Server-side so API tokens never
+    // reach the browser; each returns a placeholder when its secret is unset.
+    if (url.pathname === "/api/stats/traffic") return handleTrafficStats(env);
+    if (url.pathname === "/api/stats/content") return handleContentStats(env);
+    if (url.pathname === "/api/stats/search") return handleSearchStats(env);
+
     // Job 2: markdown negotiation for agents.
     if (wantsMarkdown(request, url) && isPagePath(url.pathname)) {
       try {
@@ -184,7 +203,7 @@ async function handleBooking(request, env, ctx) {
     to: RECIPIENT,
     replyTo: contact.includes("@") ? contact : "",
     subject: subjectLine(data),
-    body: renderBooking(data),
+    body: renderBooking(data, request, env),
   });
 
   try {
@@ -220,14 +239,42 @@ function subjectLine(data) {
   return `New booking — ${name}${date ? " — " + date : ""}`;
 }
 
-function renderBooking(data) {
+function renderBooking(data, request, env) {
   const lines = ["New booking request from slushsisters.com", ""];
   for (const [key, label] of FIELDS) {
     const val = field(data, key);
     if (val) lines.push(`${label}: ${val}`);
   }
-  lines.push("", `Submitted: ${field(data, "submitted_at") || "(time not recorded)"}`, "");
-  lines.push("Reply to this email to answer the customer, if they left an email address.");
+  lines.push("", `Submitted: ${field(data, "submitted_at") || "(time not recorded)"}`);
+
+  // --- How this booking reached us (attribution) ---------------------------
+  // First-party marketing context, plus coarse location Cloudflare derives from
+  // the IP. The raw IP is NOT included or stored — only city/region/country.
+  const attr = [];
+  const src = (data && typeof data._source === "object" && data._source) || {};
+  const cap = (v, n) => String(v == null ? "" : v).slice(0, n);
+  if (src.referrer) attr.push(`Came from: ${cap(src.referrer, 300)}`);
+  const utm = [src.utm_source, src.utm_medium, src.utm_campaign].filter(Boolean).map((s) => cap(s, 120));
+  if (utm.length) attr.push(`Campaign: ${utm.join(" / ")}`);
+  if (src.landing) attr.push(`Landed on: ${cap(src.landing, 200)}`);
+  if (Array.isArray(src.pages) && src.pages.length) {
+    attr.push(`Pages this visit (${src.pages.length}): ${src.pages.map((p) => cap(p, 80)).join(" -> ").slice(0, 1200)}`);
+  }
+  if (src.started) attr.push(`Visit started: ${cap(src.started, 40)}`);
+  const cf = (request && request.cf) || {};
+  const loc = [cf.city, cf.region, cf.country].filter(Boolean).join(", ");
+  if (loc) attr.push(`Approx. location (from Cloudflare, no IP stored): ${cap(loc, 120)}`);
+  if (cf.timezone) attr.push(`Timezone: ${cap(cf.timezone, 60)}`);
+  const ua = request && request.headers && request.headers.get("user-agent");
+  if (ua) attr.push(`Device: ${cap(ua, 256)}`);
+  const sid = field(data, "_ph_session");
+  const pid = env && env.POSTHOG_PROJECT_ID;
+  if (sid && pid) {
+    attr.push(`Watch their visit (masked recording): https://us.posthog.com/project/${pid}/replay/${cap(sid, 80)}`);
+  }
+  if (attr.length) lines.push("", "— How this booking reached us —", ...attr);
+
+  lines.push("", "Reply to this email to answer the customer, if they left an email address.");
   return lines.join("\n");
 }
 
@@ -458,6 +505,207 @@ async function logRequest(request, url, env) {
   } catch (_) {
     // logging must never affect the response
   }
+}
+
+// --- Job 4: dashboard data -------------------------------------------------
+// Read-only summaries for /dashboard. Tokens live as Worker secrets and never
+// reach the browser. Every path returns 200 with a { status } field: a missing
+// secret gives { status: "not_configured" }, an upstream failure gives
+// { status: "error" } — never a thrown 500 — so the page degrades gracefully.
+// The data is aggregate and non-personal (path counts, crawler names, referrer
+// domains); if it should ever be private, gate these two routes behind a token.
+
+const CF_ACCOUNT_ID_FALLBACK = "e1c0408b82c4364eb726c9c040aa85dd";
+
+async function aeQuery(env, sql) {
+  const account = env.CF_ACCOUNT_ID || CF_ACCOUNT_ID_FALLBACK;
+  const res = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${account}/analytics_engine/sql`,
+    { method: "POST", headers: { Authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}` }, body: sql }
+  );
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`AE HTTP ${res.status}: ${body.slice(0, 200)}`);
+  }
+  return (await res.json()).data || [];
+}
+
+async function handleTrafficStats(env) {
+  if (!env.CF_ANALYTICS_TOKEN) {
+    return json({ status: "not_configured", need: "CF_ANALYTICS_TOKEN" });
+  }
+  const PAGE = "blob6 = 'GET' AND blob1 NOT LIKE '%.%' AND blob1 NOT LIKE '/api/%'";
+  const WIN = "timestamp > NOW() - INTERVAL '7' DAY";
+  try {
+    const [humanViews, allReqs, crawlers, split] = await Promise.all([
+      aeQuery(env, `SELECT sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE} AND blob3 = 'human'`),
+      aeQuery(env, `SELECT sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE}`),
+      aeQuery(env, `SELECT blob2 AS crawler, blob3 AS kind, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND blob3 IN ('search','ai','social','scraper') GROUP BY crawler, kind ORDER BY n DESC LIMIT 20`),
+      aeQuery(env, `SELECT blob3 AS category, sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE} GROUP BY category ORDER BY n DESC`),
+    ]);
+    return json({
+      status: "ok",
+      window_days: 7,
+      page_views: num(humanViews[0] && humanViews[0].n),
+      total_page_requests: num(allReqs[0] && allReqs[0].n),
+      crawlers: crawlers.map((r) => ({ name: r.crawler, kind: r.kind, hits: num(r.n) })),
+      traffic_split: split.map((r) => ({ category: r.category, requests: num(r.n) })),
+    });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+async function handleContentStats(env) {
+  if (!env.POSTHOG_API_KEY || !env.POSTHOG_PROJECT_ID) {
+    return json({ status: "not_configured", need: "POSTHOG_API_KEY + POSTHOG_PROJECT_ID" });
+  }
+  const host = env.POSTHOG_HOST || "https://us.posthog.com";
+  async function hog(q) {
+    const res = await fetch(`${host}/api/projects/${env.POSTHOG_PROJECT_ID}/query/`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${env.POSTHOG_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ query: { kind: "HogQLQuery", query: q } }),
+    });
+    if (!res.ok) throw new Error(`PostHog HTTP ${res.status}`);
+    return (await res.json()).results || [];
+  }
+  const WIN = "timestamp > now() - INTERVAL 7 DAY";
+  const PV = "event = '$pageview' AND " + WIN;
+  try {
+    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits] = await Promise.all([
+      hog("SELECT count() AS pv, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV),
+      hog("SELECT properties.$pathname AS p, count() AS n FROM events WHERE " + PV + " GROUP BY p ORDER BY n DESC LIMIT 10"),
+      hog("SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE " + PV + " GROUP BY src ORDER BY n DESC LIMIT 8"),
+      hog("SELECT properties.$device_type AS d, count(DISTINCT distinct_id) AS n FROM events WHERE " + PV + " GROUP BY d ORDER BY n DESC"),
+      hog("SELECT properties.$el_text AS t, count() AS n FROM events WHERE event = '$autocapture' AND properties.$event_type = 'click' AND " + WIN + " AND properties.$el_text != '' AND length(properties.$el_text) > 1 GROUP BY t ORDER BY n DESC LIMIT 10"),
+      hog("SELECT properties.$prev_pageview_pathname AS p, avg(toFloat64OrNull(toString(properties.$prev_pageview_max_scroll_percentage))) AS s FROM events WHERE event = '$pageleave' AND " + WIN + " AND properties.$prev_pageview_pathname IS NOT NULL GROUP BY p ORDER BY s ASC LIMIT 10"),
+      hog("SELECT count(DISTINCT \"$session_id\") AS n FROM events WHERE " + PV + " AND properties.$pathname IN ('/book', '/book.html')"),
+      hog("SELECT count() AS n FROM events WHERE event = 'booking_submitted' AND " + WIN),
+      hog("SELECT properties.$geoip_city_name AS city, properties.$geoip_subdivision_1_name AS region, count(DISTINCT distinct_id) AS n FROM events WHERE " + PV + " AND properties.$geoip_city_name IS NOT NULL AND properties.$geoip_city_name != '' GROUP BY city, region ORDER BY n DESC LIMIT 10"),
+      hog("SELECT properties.$prev_pageview_pathname AS p, count() AS n FROM events WHERE event = '$pageleave' AND " + WIN + " AND properties.$prev_pageview_pathname IS NOT NULL GROUP BY p ORDER BY n DESC LIMIT 8"),
+    ]);
+    const scrollPct = (v) => { const n = Number(v) || 0; return n <= 1 ? Math.round(n * 100) : Math.round(n); };
+    return json({
+      status: "ok",
+      window_days: 7,
+      visitors: num(overview[0] && overview[0][1]),
+      pageviews: num(overview[0] && overview[0][0]),
+      sessions: num(overview[0] && overview[0][2]),
+      top_pages: pages.map((r) => ({ path: r[0], views: num(r[1]) })),
+      sources: refs.map((r) => ({ source: r[0], views: num(r[1]) })),
+      devices: devices.map((r) => ({ type: r[0] || "Unknown", visitors: num(r[1]) })),
+      clicks: clicks.map((r) => ({ label: r[0], count: num(r[1]) })),
+      scroll: scroll.map((r) => ({ path: r[0], pct: scrollPct(r[1]) })),
+      funnel: {
+        all_sessions: num(overview[0] && overview[0][2]),
+        viewed_book: num(funnelBook[0] && funnelBook[0][0]),
+        submitted: num(funnelSubmit[0] && funnelSubmit[0][0]),
+      },
+      geo: geo.map((r) => ({ city: r[0], region: r[1], visitors: num(r[2]) })),
+      exits: exits.map((r) => ({ path: r[0], count: num(r[1]) })),
+    });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+function num(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? Math.round(n) : 0;
+}
+
+// Search Console (top queries) via a service account. Needs GSC_SA_EMAIL +
+// GSC_SA_KEY (the PEM private key) as Worker secrets, and the service account
+// added as a read-only user on the property. GSC_SITE defaults to the domain.
+async function handleSearchStats(env) {
+  if (!env.GSC_SA_EMAIL || !env.GSC_SA_KEY) {
+    return json({ status: "not_configured", need: "GSC_SA_EMAIL + GSC_SA_KEY" });
+  }
+  try {
+    const token = await gscAccessToken(env);
+    const site = env.GSC_SITE || "sc-domain:slushsisters.com";
+    const res = await fetch(
+      `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(site)}/searchAnalytics/query`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          startDate: isoDaysAgo(28),
+          endDate: isoDaysAgo(1),
+          dimensions: ["query"],
+          rowLimit: 12,
+        }),
+      }
+    );
+    if (!res.ok) throw new Error(`GSC HTTP ${res.status}`);
+    const out = await res.json();
+    const queries = (out.rows || []).map((r) => ({
+      query: (r.keys && r.keys[0]) || "",
+      clicks: num(r.clicks),
+      impressions: num(r.impressions),
+    }));
+    return json({ status: "ok", window_days: 28, queries });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+async function gscAccessToken(env) {
+  const now = Math.floor(Date.now() / 1000);
+  const enc = (o) => gscB64url(new TextEncoder().encode(JSON.stringify(o)));
+  const signingInput =
+    enc({ alg: "RS256", typ: "JWT" }) +
+    "." +
+    enc({
+      iss: env.GSC_SA_EMAIL,
+      scope: "https://www.googleapis.com/auth/webmasters.readonly",
+      aud: "https://oauth2.googleapis.com/token",
+      iat: now,
+      exp: now + 3600,
+    });
+  const key = await importPkcs8(env.GSC_SA_KEY);
+  const sig = await crypto.subtle.sign(
+    { name: "RSASSA-PKCS1-v1_5" },
+    key,
+    new TextEncoder().encode(signingInput)
+  );
+  const jwt = signingInput + "." + gscB64url(new Uint8Array(sig));
+  const res = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body:
+      "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=" +
+      encodeURIComponent(jwt),
+  });
+  if (!res.ok) throw new Error(`GSC token HTTP ${res.status}`);
+  return (await res.json()).access_token;
+}
+
+function gscB64url(bytes) {
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+async function importPkcs8(pem) {
+  const body = pem
+    .replace(/\\n/g, "\n") // Google's JSON key stores newlines as literal \n
+    .replace(/-----BEGIN[^-]+-----/, "")
+    .replace(/-----END[^-]+-----/, "")
+    .replace(/\s+/g, "");
+  const der = Uint8Array.from(atob(body), (c) => c.charCodeAt(0));
+  return crypto.subtle.importKey(
+    "pkcs8",
+    der.buffer,
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+}
+
+function isoDaysAgo(n) {
+  return new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
 }
 
 // --- Job 2: minimal HTML -> Markdown ---------------------------------------

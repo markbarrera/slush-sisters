@@ -7,18 +7,27 @@ Slush Sisters LLC. $250 per rental, delivery and pickup included.
 
 ## Stack
 
-Static HTML on Cloudflare Workers Static Assets. That is the whole stack — no
-build step, no framework, no CMS, no dependencies in the pages themselves.
+Static HTML on Cloudflare Workers Static Assets, with one small edge Worker in
+front. No build step, no framework, no CMS, no dependencies in the pages.
 
 - `public/` — the site. Each page is one self-contained `.html` file with its
   CSS inline in a `<style>` block.
+- `src/worker.js` — the one bit of server code. It runs on every request
+  (`run_worker_first`), then serves the file unchanged via `env.ASSETS`. It does
+  four things: logs each request to Analytics Engine (crawler/traffic/leak
+  visibility), emails bookings (`POST /api/book` → Email Routing), serves a
+  markdown version to AI agents, and 301s `www` → apex. It sets no cookies,
+  stores no PII, and runs no code in the visitor's browser, so it does not touch
+  the COPPA line. Full detail in `docs/analytics.md` and `docs/booking-worker.md`.
+  **Do not "simplify" the site back to pure static assets** — the Worker is
+  deliberate.
 - `wrangler.jsonc` — deploy config. The `name` field must match the Worker that
   owns the `slushsisters.com` domain; see `docs/hosting.md`.
 - `.github/workflows/` — deploy on merge to `main`, preview on PR.
 
-Keep it this way unless there is a concrete reason not to. The site is five
-pages of static content that changes a few times a year. A build step would cost
-more than it returns.
+Keep it this way unless there is a concrete reason not to. The site is a few
+dozen pages of static content plus the one logging/booking Worker. Still no
+build step — a heavier toolchain would cost more than it returns.
 
 ## Working on it
 

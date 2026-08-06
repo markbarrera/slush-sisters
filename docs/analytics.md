@@ -158,8 +158,11 @@ outside traffic ever leaks into them.
 code on the kids' pages, and a client-side beacon cannot see a bot or scraper
 anyway. Leak detection is a **server-side** job — the edge sees every request to
 every path regardless of whether the page carries any code. That is exactly what
-the deferred Worker (below) is for, and monitoring orphaned-page traffic is its
-clearest use case.
+the edge Worker (`src/worker.js`, **live** since 2026-08-05) does: it logs every
+request to the `slush_traffic` Analytics Engine dataset, orphaned paths included.
+Leak check query: `SELECT blob1 AS path, sum(_sample_interval) AS hits FROM
+slush_traffic WHERE blob2 = 'none' AND (blob1 LIKE '/ideas%' OR blob1 LIKE
+'/read%' OR blob1 LIKE '/inventory%') GROUP BY path ORDER BY hits DESC`.
 
 What can be checked **today**, with no build:
 
@@ -227,43 +230,102 @@ when the Worker is built:
 Each credential is created by Mark and stored as a Worker secret (never shown to
 anyone); the public `phc_` key is the only one that lives in the repo.
 
-## Deferred — follow-ups
+## Status — what is live (2026-08-05)
 
-1. **Edge Worker — built; logging paused on one dashboard click.** The Worker
-   (`src/worker.js`) runs in front of the static site, serves markdown to
-   agents, and is *ready* to log every request (path, crawler, status, coarse
-   country — no cookies, no IP, no PII) to the `slush_traffic` Analytics Engine
-   dataset. **The Analytics Engine binding is temporarily commented out in
-   `wrangler.jsonc`** because it blocks `wrangler deploy` (error 10089) until
-   Analytics Engine is enabled once on the account:
-   **Cloudflare dashboard → Workers & Pages → Analytics Engine → Enable.** Once
-   enabled, un-comment the `analytics_engine_datasets` block and logging turns
-   on (the Worker no-ops logging until then, so serving and markdown are
-   unaffected). Query the log with the Analytics Engine SQL API, e.g.
-   `SELECT blob1 AS path, blob2 AS crawler, sum(_sample_interval) AS hits FROM
-   slush_traffic WHERE timestamp > NOW() - INTERVAL '7' DAY GROUP BY path,
-   crawler ORDER BY hits DESC`.
-   **Still to come — the dashboard phase:** the kids'-language page that reads
-   this log plus GSC and PostHog. Needs the three read-only credentials in
-   "How the future dashboard gets its data" above.
-   **Also in this one Worker:** the booking-email handler (`POST /api/book`),
-   merged in from the booking-form work so the site keeps a single `main`
-   Worker. It is paused the same way (the `send_email` binding is commented
-   until Email Routing is verified) — see `docs/booking-worker.md`.
-2. **Instrument `/ideas`** — intentionally **not** done; it is a kids' page, so
-   it stays beacon-free by design. Listed only so no one "fixes" its absence.
-3. **DNS records** (approved 2026-08-05; Mark applies these in Cloudflare — this
-   session cannot write DNS). All are low-risk and reversible.
-   - **`www` redirect.** DNS → Add record: Type `CNAME`, Name `www`, Target
-     `slushsisters.com`, Proxy **on** (orange cloud). Then Rules → Redirect Rules
-     → Create: when hostname equals `www.slushsisters.com`, redirect (301) to
-     `https://slushsisters.com` preserving path and query.
-   - **SPF** (the domain sends no mail, so authorize nobody). DNS → Add record:
-     Type `TXT`, Name `@`, Content `v=spf1 -all`.
-   - **DMARC** (reject anything that fails). DNS → Add record: Type `TXT`, Name
-     `_dmarc`, Content `v=DMARC1; p=reject; sp=reject; aspf=s; adkim=s`.
-   - **Optional null MX** (states plainly that the domain accepts no mail). DNS →
-     Add record: Type `MX`, Name `@`, Mail server `.`, Priority `0`.
+The whole original plan shipped the same day:
+
+- **Search Console** — verified; search + crawl-stats data flowing.
+- **PostHog** — live on the 22 marketing pages; recordings masked as above.
+- **Edge request logger** — live. `src/worker.js` writes every request to the
+  `slush_traffic` Analytics Engine dataset (~92-day retention). Read it with the
+  Analytics Engine SQL API, e.g. `SELECT blob1 AS path, blob2 AS crawler,
+  sum(_sample_interval) AS hits FROM slush_traffic WHERE timestamp > NOW() -
+  INTERVAL '7' DAY GROUP BY path, crawler ORDER BY hits DESC`. Creating the
+  dataset by hand in the dashboard was **not** required — the binding
+  auto-creates it on first write. (A hand-made `site_requests` dataset from
+  setup is unused and can be deleted.)
+- **Booking form → email** — live. `POST /api/book` emails each booking to the
+  verified inbox via Email Routing; see `docs/booking-worker.md`.
+- **Email hardening** — SPF + DKIM present, DMARC `p=reject`.
+- **`www` → apex** — 301 in the Worker. Cloudflare Redirect Rules were not on
+  this plan's menu, so `www` is a Worker route and `src/worker.js` does the
+  redirect (preserving path + query).
+
+## The dashboard — `/dashboard`
+
+An orphaned, `noindex` kids'-language page ("Our Numbers") designed to teach
+Harper and Finley what marketing analytics actually looks like — real data about
+real people deciding whether to hire them. It reads through Worker routes
+(`/api/stats/*`) so **no API token ever reaches the browser**. Each source
+degrades gracefully — a card shows real data when its credential is set, and a
+friendly "waiting for the key" state otherwise, so it never breaks.
+
+**What the dashboard shows** (all last 7 days):
+
+- **Stat tiles** — unique visitors, total page views, visit count (sessions).
+  These count only real browsers, not bots.
+- **Bot vs human split** — a visual breakdown of all page traffic by category
+  (real people, search engines, AI helpers, social previews, scrapers). The
+  Worker classifies each request by user agent and reports the proportions.
+- **Where people came from** — referrer domains (PostHog `$referring_domain`).
+- **Where visitors are** — city + region (PostHog `$geoip_city_name`).
+- **Devices** — phone / desktop / tablet split.
+- **Most-read pages** — page views by path.
+- **Booking funnel** — the three-step conversion: all sessions → viewed `/book`
+  → `booking_submitted`. This is the number that matters most.
+- **Most-clicked things** — top elements people click (PostHog autocapture).
+- **How far people scroll** — average scroll depth per page (`$pageleave` +
+  `$prev_pageview_max_scroll_percentage`). Low numbers mean people leave before
+  the important content.
+- **Where people leave** — exit pages (last page before closing the tab).
+- **Crawlers** — named search / AI / social / scraper bots, from AE.
+- **Search terms** — what people typed into Google (GSC, when configured).
+
+Like `/read` and `/ideas` it is orphaned: `noindex`, not in the nav, footer,
+sitemap, or `scripts/snapshot.js` set, and — being a family page — it carries
+**no** PostHog beacon.
+
+**To light up the live data, Mark adds these as Worker secrets** (Workers & Pages
+→ drop-b4ff8c50-e5c → Settings → Variables and Secrets, or `wrangler secret
+put`). Until then the dashboard shows placeholders — nothing breaks.
+
+- **Cloudflare traffic / crawlers** → `CF_ANALYTICS_TOKEN`, an API token scoped
+  to **Account Analytics → Read** (My Profile → API Tokens → Create Token). The
+  account id is set as the plain var `CF_ACCOUNT_ID` in `wrangler.jsonc`.
+- **PostHog content** → `POSTHOG_API_KEY` (a read-only *personal* API key) plus
+  `POSTHOG_PROJECT_ID`. The public `phc_` write key already in the repo cannot
+  *read* data.
+- **GSC search terms** → placeholder for now. Wiring it needs a Google service
+  account added read-only to the property (or a scheduled pull from this
+  session). Deferred deliberately ("placeholders for GSC").
+
+## Still deferred
+
+- **Instrument `/ideas`** — intentionally **not** done; it is a kids' page, so it
+  stays beacon-free by design. Listed only so no one "fixes" its absence.
+- **GSC live feed into the dashboard** — see above; placeholder until a service
+  account is added.
+
+## Booking attribution — the marketing-learning layer
+
+Each booking email now carries **how that visit reached us**, so a booking can be
+tied to a channel and a path (for marketing learning and the case study):
+
+- **Source** — referrer + any UTM tags on the landing link.
+- **Landing page** and the **ordered list of pages** seen that visit.
+- **Approx. location** — city / region / country that Cloudflare derives from the
+  IP. **The raw IP is never included or stored** — only the coarse location.
+- **Device** (user-agent) and a **link to the masked PostHog session recording**
+  of that exact visit, so you can watch what they did (address/phone stay masked).
+- Plus their own **"how did you hear about us"** words, as always.
+
+How it's captured, and the line it holds: the visit journey is recorded
+**first-party in `sessionStorage`** (no cookie, cleared when the browser closes)
+by `public/analytics.js` — marketing pages only, never a game/kids page — and
+sent with the booking POST. A `booking_submitted` event also fires into PostHog
+for the funnel. Deliberately **not** done: storing raw IPs, third-party
+IP-geolocation, or any persistent cross-site identity. Identified data
+(name/address) lives only in the booking email; PostHog stays pseudonymous.
 
 ## Access model
 

@@ -211,9 +211,7 @@ a.n:hover{text-decoration:underline;}
 footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
   font-size:.76rem;color:#8a8f99;}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>

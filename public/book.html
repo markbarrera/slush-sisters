@@ -195,9 +195,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 .hero-art{background:linear-gradient(180deg,var(--wash),#f4fbff);padding:32px 24px 28px;}
 .hero-art .panel{max-width:800px;margin:0 auto;display:flex;justify-content:center;}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <meta name="theme-color" content="#1a237e">
@@ -534,6 +532,15 @@ var UNAVAILABLE = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026
     // read these pages, then booked."
     data.booking_ref = 'bk_' + Date.now().toString(36) +
       Math.random().toString(36).slice(2, 8);
+
+    // Attribution — how this visit reached us. First-party, no cookie, no IP.
+    var j = null;
+    try { j = JSON.parse(sessionStorage.getItem('ss_journey') || 'null'); } catch (e) {}
+    if (j) data._source = j;
+    // Link the booking to its (masked) PostHog session recording.
+    try {
+      if (window.posthog && posthog.get_session_id) data._ph_session = posthog.get_session_id();
+    } catch (e) {}
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
