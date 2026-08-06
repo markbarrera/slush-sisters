@@ -142,6 +142,12 @@ export default {
     if (url.pathname === "/api/stats/traffic") return handleTrafficStats(env);
     if (url.pathname === "/api/stats/content") return handleContentStats(env);
     if (url.pathname === "/api/stats/search") return handleSearchStats(env);
+    if (url.pathname === "/api/stats/games") return handleGameStats(env);
+
+    // Game telemetry beacon — lightweight, first-party, no cookies, no PII.
+    if (url.pathname === "/api/game-event" && request.method === "POST") {
+      return handleGameEvent(request, env);
+    }
 
     // Job 2: markdown negotiation for agents.
     if (wantsMarkdown(request, url) && isPagePath(url.pathname)) {
@@ -657,6 +663,69 @@ async function handleSearchStats(env) {
       impressions: num(r.impressions),
     }));
     return json({ status: "ok", window_days: 28, queries });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+// --- Game telemetry -----------------------------------------------------------
+// Lightweight, first-party, fire-and-forget. Games send a tiny JSON beacon via
+// sendBeacon; the Worker writes one AE row per event. No cookies, no PII,
+// no third-party scripts on the game page. Easy to remove: delete this handler,
+// the route, and the track() snippet from each game HTML.
+
+const GAME_EVENTS = new Set([
+  "start", "end", "serve", "round", "level_start", "level_finish",
+  "give", "pose", "surprise", "tap", "race_start", "race_end",
+]);
+const GAME_NAMES = new Set([
+  "catch", "rush", "playhouse", "style", "street", "guys",
+]);
+
+async function handleGameEvent(request, env) {
+  try {
+    const body = await request.json();
+    const game = String(body.game || "").slice(0, 20);
+    const evt = String(body.event || "").slice(0, 20);
+    if (!GAME_NAMES.has(game) || !GAME_EVENTS.has(evt)) {
+      return json({ ok: false }, 400);
+    }
+    const score = Number(body.score) || 0;
+    const dur = Number(body.dur) || 0;
+    const detail = String(body.detail || "").slice(0, 60);
+    if (env.TRAFFIC) {
+      env.TRAFFIC.writeDataPoint({
+        indexes: ["game"],
+        blobs: [game, evt, detail, "", "", "POST", ""],
+        doubles: [score, dur],
+      });
+    }
+    return json({ ok: true });
+  } catch (_) {
+    return json({ ok: false }, 400);
+  }
+}
+
+async function handleGameStats(env) {
+  if (!env.CF_ANALYTICS_TOKEN) {
+    return json({ status: "not_configured", need: "CF_ANALYTICS_TOKEN" });
+  }
+  try {
+    const sql = (q) => aeQuery(env, q);
+    const [plays, scores, popularity, hourly] = await Promise.all([
+      sql("SELECT blob1 AS game, blob2 AS evt, count() AS n FROM slush_traffic WHERE index1 = 'game' AND timestamp > NOW() - INTERVAL '7' DAY AND blob2 IN ('start','end') GROUP BY game, evt ORDER BY game, evt"),
+      sql("SELECT blob1 AS game, max(double1) AS best, avg(double1) AS avg_score, avg(double2) AS avg_dur FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'end' AND timestamp > NOW() - INTERVAL '7' DAY GROUP BY game ORDER BY game"),
+      sql("SELECT blob1 AS game, count() AS n FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'start' AND timestamp > NOW() - INTERVAL '7' DAY GROUP BY game ORDER BY n DESC"),
+      sql("SELECT toHour(timestamp) AS hr, count() AS n FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'start' AND timestamp > NOW() - INTERVAL '7' DAY GROUP BY hr ORDER BY hr"),
+    ]);
+    return json({
+      status: "ok",
+      window_days: 7,
+      plays: plays.map((r) => ({ game: r[0], event: r[1], count: num(r[2]) })),
+      scores: scores.map((r) => ({ game: r[0], best: num(r[1]), avg: num(r[2]), avg_dur_sec: num(r[3]) })),
+      popularity: popularity.map((r) => ({ game: r[0], starts: num(r[1]) })),
+      hourly: hourly.map((r) => ({ hour: num(r[0]), starts: num(r[1]) })),
+    });
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
   }

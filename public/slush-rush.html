@@ -416,8 +416,11 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;
     if(S.running) setTimeout(newRound, 720);
   }
 
+  function track(evt,extra){try{navigator.sendBeacon('/api/game-event',JSON.stringify(Object.assign({game:'rush',event:evt},extra||{})));}catch(e){}}
+
   // ---- start / over -------------------------------------------------------
   function start(){
+    track('start');
     S.score=0; S.lives=3; S.round=0; S.running=true;
     $('score').textContent='0'; $('lives').textContent='❤️❤️❤️';
     $('startScreen').classList.add('hide'); $('overScreen').classList.add('hide');
@@ -427,6 +430,7 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;
 
   function gameOver(){
     S.running=false; stopTimer(); cancelAnimationFrame(S.raf);
+    track('end',{score:S.score,detail:'round:'+S.round});
     if(S.score>BEST){ BEST=S.score; localStorage.setItem('slushrush_best', String(BEST)); }
     var cups = Math.max(0, Math.round(S.score/100));
     $('overFinal').textContent = 'You scored '+S.score;

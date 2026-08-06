@@ -201,6 +201,34 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
   </div>
 </div>
 
+<div class="section">&#x1F3AE; The Arcade</div>
+<p class="section-hint">How people play the games. This only counts game events (starting, finishing, scoring) — not every tap, so it's lightweight.</p>
+<div class="grid">
+  <div class="card" id="card-game-pop">
+    <h2>&#x1F3C6; Most played games</h2>
+    <p class="hint">Which games get started the most. If a game is popular, that's the one to show off at the party table.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-game-scores">
+    <h2>&#x1F4CA; Scores and times</h2>
+    <p class="hint">Average and best scores for each game, plus how long a typical round lasts.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-game-hours">
+    <h2>&#x23F0; When people play</h2>
+    <p class="hint">What time of day the games get played — shown in UTC (roughly 5-6 hours ahead of Texas time).</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
+  <div class="card" id="card-game-finish">
+    <h2>&#x2705; Start vs finish rate</h2>
+    <p class="hint">How many people start a game vs finish it. A big gap means people try it but don't stick — maybe it's confusing or too hard.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+</div>
+
 <div class="section">&#x1F916; Who Else Is Reading About Us</div>
 <p class="section-hint">These aren't customers. They're search engines and AI helpers that decide whether to recommend us when someone asks "frozen drink rentals near me." More readers here means more chances to show up.</p>
 <div class="grid">
@@ -439,6 +467,54 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
   }).catch(function(){
     [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions"),el("stat-duration")].forEach(function(e){ if(e) e.textContent = "—"; });
     ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound"].forEach(function(id){ body(id).innerHTML = oops(); });
+  });
+
+  // --- Game analytics (Analytics Engine) ---
+  var GAME_LABELS = { catch: "Slushie Catch", rush: "Slush Rush", playhouse: "Playhouse", style: "Slushie Style", street: "Slushie Street", guys: "Slushie Guys" };
+  function gameName(k){ return GAME_LABELS[k] || k; }
+
+  fetch("/api/stats/games").then(function(r){ return r.json(); }).then(function(res){
+    body("card-game-pop").innerHTML = handle(res, function(d){
+      if (!d.popularity || !d.popularity.length) return '<div class="state">No game plays yet. Once someone starts a game, it shows up here.</div>';
+      return rowsHtml(d.popularity, function(p){ return gameName(p.game); }, function(p){ return n(p.starts) + " plays"; });
+    }, "CF_ANALYTICS_TOKEN");
+
+    body("card-game-scores").innerHTML = handle(res, function(d){
+      if (!d.scores || !d.scores.length) return '<div class="state">No finished games yet.</div>';
+      return '<ul class="rows">' + d.scores.map(function(s){
+        var parts = [gameName(s.game)];
+        var vals = [];
+        if(s.best) vals.push("best: " + n(s.best));
+        if(s.avg) vals.push("avg: " + n(s.avg));
+        if(s.avg_dur_sec) vals.push(Math.round(s.avg_dur_sec) + "s avg round");
+        return '<li><span class="k">' + esc(parts[0]) + '</span><span class="v">' + esc(vals.join(" · ")) + '</span></li>';
+      }).join("") + '</ul>';
+    }, "CF_ANALYTICS_TOKEN");
+
+    body("card-game-hours").innerHTML = handle(res, function(d){
+      if (!d.hourly || !d.hourly.length) return '<div class="state">No game plays yet.</div>';
+      var max = Math.max.apply(null, d.hourly.map(function(h){ return h.starts; }));
+      return '<div style="display:flex;align-items:flex-end;gap:2px;height:80px;padding:8px 0">' +
+        d.hourly.map(function(h){
+          var pctH = max ? Math.max(4, Math.round(h.starts / max * 100)) : 4;
+          return '<div title="' + h.hour + ':00 UTC — ' + n(h.starts) + ' plays" style="flex:1;background:var(--ice);border-radius:3px 3px 0 0;height:' + pctH + '%;min-width:6px"></div>';
+        }).join("") + '</div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.65rem;color:#999"><span>12am</span><span>6am</span><span>noon</span><span>6pm</span><span>12am</span></div>';
+    }, "CF_ANALYTICS_TOKEN");
+
+    body("card-game-finish").innerHTML = handle(res, function(d){
+      if (!d.plays || !d.plays.length) return '<div class="state">No game plays yet.</div>';
+      var byGame = {};
+      d.plays.forEach(function(p){ if(!byGame[p.game]) byGame[p.game]={start:0,end:0}; byGame[p.game][p.event]=p.count; });
+      var games = Object.keys(byGame).sort(function(a,b){ return byGame[b].start - byGame[a].start; });
+      return '<ul class="rows">' + games.map(function(g){
+        var s = byGame[g].start, e = byGame[g].end;
+        var rate = s ? Math.round(e / s * 100) : 0;
+        return '<li><span class="k">' + gameName(g) + '</span><span class="v">' + n(s) + ' started, ' + n(e) + ' finished (' + rate + '%)</span></li>';
+      }).join("") + '</ul>';
+    }, "CF_ANALYTICS_TOKEN");
+  }).catch(function(){
+    ["card-game-pop","card-game-scores","card-game-hours","card-game-finish"].forEach(function(id){ body(id).innerHTML = oops(); });
   });
 
   // --- Search terms (Google Search Console) ---
