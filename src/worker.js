@@ -20,6 +20,9 @@
        list/update bookings, add costs, add learnings, get ledger totals and
        jar balances. All backed by the slush_business D1 database.
 
+    5. WAITLIST — POST /api/waitlist saves an email to D1 for the "tell me
+       when dates open" signup. One email, one time, not a newsletter.
+
   Everything else is handed straight back to the static assets, unchanged.
 
   COPPA note: the logging is server-side operational logging — NO cookies, NO
@@ -129,6 +132,11 @@ export default {
     // Job 3: booking endpoint.
     if (url.pathname === "/api/book") {
       return handleBooking(request, env, ctx);
+    }
+
+    // Job 5: waitlist — "tell me when dates open."
+    if (url.pathname === "/api/waitlist") {
+      return handleWaitlist(request, env);
     }
 
     // Job 4: Cockpit + Ledger API.
@@ -370,6 +378,42 @@ async function saveBookingToD1(data, env) {
   } catch (err) {
     console.error("D1 booking insert failed:", err && err.stack ? err.stack : err);
   }
+}
+
+// --- Job 5: waitlist --------------------------------------------------------
+async function handleWaitlist(request, env) {
+  if (request.method !== "POST") {
+    return json({ ok: false, error: "Method not allowed." }, 405);
+  }
+  if (!env.DB) {
+    return json({ ok: false, error: "Database is not configured yet." }, 503);
+  }
+
+  let data;
+  try {
+    const buf = await request.arrayBuffer();
+    if (buf.byteLength > 4096) return json({ ok: false, error: "Request too large." }, 413);
+    data = JSON.parse(new TextDecoder().decode(buf));
+  } catch {
+    return json({ ok: false, error: "Could not read your request." }, 400);
+  }
+
+  const email = (typeof data.email === "string" ? data.email : "").trim().toLowerCase();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return json({ ok: false, error: "That does not look like an email address." }, 400);
+  }
+  const source = typeof data.source === "string" ? data.source.slice(0, 200) : null;
+
+  try {
+    await env.DB.prepare(
+      "INSERT INTO waitlist (created_at, email, source) VALUES (?, ?, ?) ON CONFLICT(email) DO NOTHING"
+    ).bind(new Date().toISOString(), email, source).run();
+  } catch (err) {
+    console.error("Waitlist insert failed:", err && err.stack ? err.stack : err);
+    return json({ ok: false, error: "Something went wrong. Try again in a moment." }, 500);
+  }
+
+  return json({ ok: true });
 }
 
 // --- Job 4: Cockpit + Ledger API -------------------------------------------
