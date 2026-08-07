@@ -230,7 +230,7 @@ when the Worker is built:
 Each credential is created by Mark and stored as a Worker secret (never shown to
 anyone); the public `phc_` key is the only one that lives in the repo.
 
-## Status — what is live (2026-08-05)
+## Status — what is live (updated 2026-08-06)
 
 The whole original plan shipped the same day:
 
@@ -278,6 +278,10 @@ friendly "waiting for the key" state otherwise, so it never breaks.
   `$prev_pageview_max_scroll_percentage`). Low numbers mean people leave before
   the important content.
 - **Where people leave** — exit pages (last page before closing the tab).
+- **Tracking links (UTM)** — three cards showing which sources, mediums, and
+  campaigns are bringing tagged visitors. Fed by the `/go/` short links (e.g.
+  `/go/fb` sets `utm_source=facebook`, `utm_medium=social`). A reference card
+  lists every available `/go/` link with copy-paste URLs.
 - **Crawlers** — named search / AI / social / scraper bots, from AE.
 - **Search terms** — what people typed into Google (GSC, when configured).
 

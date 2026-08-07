@@ -30,6 +30,44 @@ Two audiences, on purpose:
 
 ---
 
+## 2026-08-06 — Tracking links, outreach list, and launch plan
+
+Three things shipped, all aimed at launch prep.
+
+**`/go/` short links — attribution without making the girls think about UTMs.**
+Twelve memorable URLs (`slushsisters.com/go/fb`, `/go/ig`, `/go/text`, etc.)
+that 301 redirect to the right page with UTM params baked in. The girls paste
+the link when posting in a Facebook group or texting a friend; the visit lands
+in the dashboard attributed to the right channel. Any link also accepts
+`?utm_campaign=summer-2026` for per-campaign tracking. It's one map in the
+Worker — adding a new link is one line of code, no UI needed.
+
+**UTM tracking on the dashboard.** Three new cards (Source, Medium, Campaign)
+that query PostHog's auto-captured UTM properties, plus a reference card listing
+every `/go/` link with copy-paste URLs. The girls can now see exactly which
+channels are bringing people to the site.
+
+**`/outreach` — the outreach list.** An orphaned internal page with 25+ outreach
+targets across 6 tiers: local community hubs (Lakeway Moms, Kelsey Kennedy,
+Lake Travis Lifestyle, Austin Moms), cross-referral partners (bounce houses,
+event planners, photographers), the realtor circuit, organization giveaways
+(LTYA, NCL, LTISD PTAs, Hill Country Galleria), local press (Community Impact,
+KVUE/KXAN, Lake Travis View), and stretch targets (@austinwithkids,
+@austinfunforkids). Each card has a personalized outreach angle and is tagged
+with who handles it (Harper, Finley, or Dad). Safety rules at the bottom — no
+addresses in captions, no future locations, Dad handles press.
+
+**`/launch-plan` — interactive launch checklist.** Six phases from pre-launch
+testing through ongoing marketing, with checkboxes that persist to localStorage
+so the girls can track progress on their iPad. Each item tagged with who does
+it. Includes a tracking links reference card. Based on the launch sequence in
+`docs/marketing.md`.
+
+Both new pages are orphaned — noindex, not in nav, no analytics. They are
+internal planning tools for the girls to use, not site content.
+
+---
+
 ## 2026-08-05 — Analytics, a real booking form, and a domain that finally works
 
 The day the site got eyes. By the end of it we could see who visits, who crawls,

@@ -418,13 +418,23 @@ serve — it lets a reporter say yes without a phone call.
 
 ## Part 12 — Measuring it
 
-Currently **nothing**, which means no baseline for any of this. Worth fixing
-before running campaigns:
+**Updated 2026-08-06.** Tracking is live and attribution works end to end:
 
-- Cloudflare Web Analytics — free, no cookie banner, one snippet
-- Google Business Profile insights
-- Asking every booker "how did you hear about us" and writing it down. At this
-  volume that hand-kept list beats any dashboard.
+- **PostHog** — live on all 22 marketing pages, with per-visitor profiles,
+  booking funnel, and heatmaps. Game pages have pageviews + `game_opened` events
+  but no session recording (COPPA line).
+- **`/go/` short links** — 12 memorable URLs (`slushsisters.com/go/fb`, `/go/ig`,
+  etc.) that 301 redirect with UTM params baked in. The girls paste these when
+  posting. Campaign tracking via `?utm_campaign=` on any link.
+- **Dashboard** (`/dashboard`) shows UTM source, medium, and campaign breakdowns,
+  plus visitor stats, referrers, device split, booking funnel, and crawler data.
+- **Booking attribution** — each booking email carries referrer, UTM tags,
+  landing page, page sequence, city, device, and a link to the session recording.
+- **"How did you hear about us"** open-ended box on the booking form — the
+  in-their-own-words answer is still the most useful signal at this volume.
+- **Google Search Console** — verified; search terms and crawl stats flowing.
+- **Cloudflare AI Crawl Control** — shows which AI crawlers hit the site.
+- Google Business Profile is not yet created.
 
 ---
 
@@ -469,12 +479,13 @@ Add them. Do not wait for permission.
 | Six service-area pages | Live |
 | Social preview cards | Live |
 | `llms.txt` for AI assistants | Live |
-| Booking form | **Not working** — no destination configured |
-| Analytics | Not installed |
+| Booking form | Live — emails to verified inbox |
+| Analytics (PostHog + AE + GSC) | Live — see `docs/analytics.md` |
+| `/dashboard` | Live — visitor stats, funnel, UTMs, crawlers |
+| `/go/` tracking links | Live — 12 short links with UTM attribution |
+| `/outreach` outreach list | Live (orphaned) — 25+ targets across 6 tiers |
+| `/launch-plan` launch checklist | Live (orphaned) — interactive, localStorage |
 | Google Business Profile | Not created |
 | Social handles | Not secured |
 | `/press` page | Not built |
 | Origin story page | Planned — see `origin-story.md` |
-
-Every campaign here ends with someone trying to book. Until the form has
-somewhere to send requests, all of this leaks out of a hole in the bucket.
