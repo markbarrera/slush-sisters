@@ -26,7 +26,7 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
 .phase{background:#fff;border:1px solid #e6ecf5;border-radius:18px;padding:22px 20px;margin-bottom:20px;}
 .phase h2{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;color:var(--brand);margin-bottom:2px;display:flex;align-items:center;gap:10px;}
 .phase .when{font-size:.82rem;font-weight:700;color:var(--ink-pink);margin-bottom:12px;}
-.phase p{font-size:.9rem;color:#555;margin-bottom:12px;}
+.phase>p{font-size:.9rem;color:#555;margin-bottom:12px;}
 
 .checklist{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;}
 .checklist li{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;padding:8px 12px;background:#f8fafd;border-radius:10px;}
@@ -36,15 +36,31 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
 .checklist .who.dad{background:#fff3e0;color:#e65100;}
 .checklist .detail{font-size:.82rem;color:#888;margin-top:2px;}
 
+/* Accordion */
+.acc{border-top:1px solid #edf1f7;margin-top:10px;}
+.acc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:12px 0 6px;cursor:pointer;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.95rem;color:var(--brand);text-align:left;}
+.acc-toggle .arrow{font-size:.7rem;color:#aab;transition:transform .2s;}
+.acc-toggle[aria-expanded="true"] .arrow{transform:rotate(90deg);}
+.acc-body{display:none;padding:0 0 8px;font-size:.86rem;color:#444;}
+.acc-body.open{display:block;}
+.acc-body ul{padding-left:18px;margin:6px 0;}
+.acc-body li{margin-bottom:4px;}
+.acc-body .tmpl{background:#f8f4ff;border-left:3px solid #b06cf0;padding:10px 14px;border-radius:0 10px 10px 0;margin:8px 0;font-size:.84rem;white-space:pre-wrap;}
+.acc-body .tmpl strong{color:#7b3fb0;}
+.acc-body .shot{background:#eaf7ea;border-left:3px solid var(--good);padding:10px 14px;border-radius:0 10px 10px 0;margin:8px 0;font-size:.84rem;}
+.acc-body .shot strong{color:var(--good);}
+.acc-body .warn{background:#fff5f7;border-left:3px solid var(--pop);padding:10px 14px;border-radius:0 10px 10px 0;margin:8px 0;font-size:.84rem;}
+.acc-body .warn strong{color:var(--ink-pink);}
+.acc-body h4{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:.88rem;color:var(--brand);margin:10px 0 4px;}
+.acc-body .bio-box{background:#f0f6fe;border-radius:10px;padding:12px 14px;margin:8px 0;font-size:.84rem;}
+.acc-body .bio-box strong{color:var(--ice-deep);}
+
 .links{background:#fff;border:1px solid #e6ecf5;border-radius:16px;padding:18px 20px;margin-bottom:20px;}
 .links h2{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.05rem;color:var(--brand);margin-bottom:10px;}
 .links ul{list-style:none;padding:0;}
 .links li{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f2f5fa;font-size:.88rem;}
 .links li:last-child{border-bottom:none;}
 .links .lk{font-family:'Baloo 2',sans-serif;font-weight:700;color:var(--ice-deep);font-size:.82rem;}
-
-.bignum{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:2.6rem;color:var(--brand);line-height:1;text-align:center;margin:6px 0;}
-.bignum-label{text-align:center;font-size:.88rem;color:#777;margin-bottom:16px;}
 
 .section{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.15rem;color:var(--brand);margin:28px 0 10px;}
 
@@ -64,10 +80,11 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
 </header>
 
 <h1>Launch Plan</h1>
-<p class="intro">The step-by-step plan for going public with Slush Sisters. Work through each phase in order. Check things off as you go — your progress saves on this device.</p>
+<p class="intro">The step-by-step plan for going public with Slush Sisters. Work through each phase in order. Check things off as you go — your progress saves on this device. Tap any section to expand the details.</p>
 
 <div class="note"><strong>The goal:</strong> Get our first 10 real bookings. Not followers, not likes — bookings. Everything on this list is chosen because it gets us closer to someone typing their address into the booking form.</div>
 
+<!-- ===== PHASE 0 ===== -->
 <div class="phase">
   <h2>&#x1F6E0;&#xFE0F; Phase 0 — Make Sure It All Works</h2>
   <div class="when">Before anything else</div>
@@ -77,73 +94,467 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
     <li><div class="box" data-i="1"></div><div>Site loads fast on a phone <span class="who">Harper or Finley</span><div class="detail">Open slushsisters.com on your phone. Does it load in under 3 seconds? Can you find the Book button without scrolling?</div></div></li>
     <li><div class="box" data-i="2"></div><div>Every page has correct info — price ($250), service area, flavors <span class="who">Harper or Finley</span><div class="detail">Read through every page on your phone. Flag anything that looks wrong or old.</div></div></li>
     <li><div class="box" data-i="3"></div><div>Google Business Profile created <span class="who dad">Dad</span><div class="detail">Go to business.google.com and set up "Slush Sisters" with the Lakeway address. This is how we show up when someone googles "frozen drink rental near me."</div></div></li>
-    <li><div class="box" data-i="4"></div><div>Instagram handle secured <span class="who dad">Dad</span><div class="detail">@slushsisters is taken. Try @slushsistersatx, @slushsisterstx, or @theslushsisters. Claim it and put slushsisters.com/go/ig in the bio.</div></div></li>
+    <li><div class="box" data-i="4"></div><div>Instagram handle secured <span class="who dad">Dad</span><div class="detail">@slushsisters is taken. Try @slushsistersatx, @slushsisterstx, or @theslushsisters. Claim it now — we need it before Phase 1.</div></div></li>
+    <li><div class="box" data-i="5"></div><div>Shoot the launch photo and video set <span class="who">Harper and Finley</span></div></li>
   </ul>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Photos and videos to shoot before launch <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>You need these BEFORE you post anywhere. Shoot them all in one session so everything matches.</p>
+      <div class="shot"><strong>Must-have photos (at least 5):</strong>
+1. Both of you next to the machine, smiling, candy cups in hand — the "hero shot" for every bio
+2. Close-up of a candy-garnished cup (the differentiator — this goes everywhere)
+3. The machine pouring into a cup (action shot)
+4. Both of you loading the van or rolling the machine on a dolly (the "we actually deliver" proof)
+5. A table setup at a party — cups, candy station, the machine, everything ready
+6. Optional: you two laughing or goofing around — the "we're sisters" personality shot</div>
+      <div class="shot"><strong>Must-have videos (at least 3):</strong>
+1. <strong>The 15-second intro:</strong> "We're Harper and Finley and we rent frozen drink machines." Pan to the machine, show a cup being poured, show the candy. This is your pinned post.
+2. <strong>The setup time-lapse:</strong> Arrival to ready in 10 seconds. Shows it's real, not a stock photo business.
+3. <strong>The candy garnish close-up:</strong> Slow-mo or close-up of someone decorating a cup with candy. This is the most shareable single shot you can get.</div>
+      <div class="warn"><strong>Rules for ALL photos and videos:</strong> Never show a customer's house number, street sign, or address. No school names visible. No kids who aren't you two without a parent's OK. If you're at someone's house for a photo shoot, ask first.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Instagram profile setup — exact fields <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <h4>Account type</h4>
+      <p>Business account (not personal, not creator). This unlocks the contact button and post insights. Settings > Account > Switch to Professional Account > Business.</p>
+
+      <h4>Profile photo</h4>
+      <p>Hero shot #1 — both of you with the machine. NOT a logo. People follow people, and two kids is more interesting than a cup graphic. Crop it tight so your faces are visible at thumbnail size.</p>
+
+      <div class="bio-box"><strong>Name field:</strong> Slush Sisters | Lakeway TX
+<strong>Username:</strong> @slushsistersatx (or whichever handle you get)
+<strong>Bio (150 chars max):</strong>
+Frozen drink machine rentals 🍧
+Run by two sisters, 11 & 8
+Lakeway · Bee Cave · Lake Travis
+$250/day · We deliver + set up
+<strong>Link:</strong> slushsisters.com/go/ig
+<strong>Contact button:</strong> Email (the booking inbox)
+<strong>Category:</strong> Event Planner or Party Supply & Rental</div>
+      <div class="warn"><strong>Why the link says /go/ig:</strong> This tracking link tells the dashboard that the visitor came from Instagram. If you put the plain slushsisters.com link, we can't tell where they came from.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">TikTok profile setup — exact fields <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <h4>Account type</h4>
+      <p>Business account. Settings > Manage account > Switch to Business Account > choose "Event Services" or "Food & Beverage."</p>
+
+      <div class="bio-box"><strong>Name:</strong> Slush Sisters
+<strong>Username:</strong> @slushsistersatx (match Instagram if possible)
+<strong>Bio (80 chars max):</strong>
+Frozen drink rentals by 2 sisters (11 & 8) 🧊
+Lakeway TX · $250/day · We deliver
+<strong>Link:</strong> slushsisters.com/go/tiktok
+<strong>Email (in settings):</strong> The booking inbox</div>
+      <p>Pin your 15-second intro video at the top of your profile. This is the first thing anyone sees.</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Facebook page setup <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <h4>Who does this</h4>
+      <p>Dad creates and owns the page (must be 13+). The girls can help write posts but Dad posts them.</p>
+
+      <div class="bio-box"><strong>Page name:</strong> Slush Sisters
+<strong>Category:</strong> Party Supply & Rental Shop
+<strong>Bio / About:</strong>
+Frozen drink machine rentals for parties and events in Lakeway, Bee Cave, and the Lake Travis area. Run by two sisters, Harper (11) and Finley (8). $250 for the day — delivery and pickup included. Both kid-friendly slushies and frozen cocktails for adults.
+
+Book at slushsisters.com
+<strong>Website:</strong> slushsisters.com/go/fb
+<strong>Phone:</strong> (only if you want calls — optional)
+<strong>Location:</strong> Lakeway, TX (don't put a home address)
+<strong>Cover photo:</strong> The party setup shot — table with cups, candy, machine</div>
+      <div class="warn"><strong>Important:</strong> The Facebook page is separate from posting in Facebook GROUPS. The page is your permanent presence. Group posts (Phase 2) are how people actually find you. You need the page first so the group posts have somewhere to link back to.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Google Business Profile setup <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <h4>Who does this</h4>
+      <p>Dad only. Go to <a href="https://business.google.com">business.google.com</a> and click "Manage now."</p>
+
+      <div class="bio-box"><strong>Business name:</strong> Slush Sisters
+<strong>Category:</strong> Party equipment rental service
+<strong>Service area:</strong> Lakeway, Bee Cave, Spicewood, Lago Vista, Steiner Ranch, Rough Hollow, Belterra, Dripping Springs (list every area — do NOT set a single address)
+<strong>Phone:</strong> The business number (if you have one)
+<strong>Website:</strong> slushsisters.com
+<strong>Description:</strong>
+Frozen drink machine rentals for parties and events. Run by two sisters, Harper (11) and Finley (8). We deliver the machine, set it up, and pick it up the next day. $250 for the day. We serve both kid-friendly slushies and frozen cocktails for adults. Serving Lakeway, Bee Cave, and the entire Lake Travis area.
+<strong>Hours:</strong> Set as "By appointment" or custom hours
+<strong>Photos:</strong> Upload the hero shot, the cup close-up, and the party setup shot</div>
+      <p>Google will verify by postcard or phone. This takes 3-5 days. Start it NOW so it's live before you post in Facebook groups.</p>
+    </div>
+  </div>
 </div>
 
+<!-- ===== PHASE 1 ===== -->
 <div class="phase">
   <h2>&#x1F4E3; Phase 1 — Tell the Inner Circle</h2>
   <div class="when">Week 1</div>
   <p>Start with people who already know you. They'll be your first customers and your first word-of-mouth.</p>
   <ul class="checklist" data-phase="1">
-    <li><div class="box" data-i="0"></div><div>Text 10 friends' parents <span class="who">Harper and Finley</span><div class="detail">"Hey! We started a frozen drink machine rental business. We deliver to your house, set it up, and pick it up — $250 for the whole day. Check it out: slushsisters.com/go/text"</div></div></li>
-    <li><div class="box" data-i="1"></div><div>Tell your teachers and school friends <span class="who">Harper and Finley</span><div class="detail">Just tell them in person. "We started a business!" People will ask to see the website.</div></div></li>
-    <li><div class="box" data-i="2"></div><div>Post the first Instagram story <span class="who">Harper or Finley</span><div class="detail">A 15-second video of the machine running with candy on a cup. Caption: "We're open! 🍧" with a link to slushsisters.com/go/ig</div></div></li>
-    <li><div class="box" data-i="3"></div><div>Dad texts his parent friends <span class="who dad">Dad</span><div class="detail">Same message, to the grown-up network. Use slushsisters.com/go/text so the dashboard counts it.</div></div></li>
+    <li><div class="box" data-i="0"></div><div>Text 10 friends' parents <span class="who">Harper and Finley</span></div></li>
+    <li><div class="box" data-i="1"></div><div>Tell your teachers and school friends in person <span class="who">Harper and Finley</span></div></li>
+    <li><div class="box" data-i="2"></div><div>Post the 15-second intro video on Instagram + TikTok <span class="who">Harper or Finley</span></div></li>
+    <li><div class="box" data-i="3"></div><div>Pin the intro video to the top of both profiles <span class="who">Harper or Finley</span></div></li>
+    <li><div class="box" data-i="4"></div><div>Post the candy cup close-up as your second post <span class="who">Harper or Finley</span></div></li>
+    <li><div class="box" data-i="5"></div><div>Dad texts his parent friends <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="6"></div><div>Share to your personal Instagram story <span class="who">Harper and Finley</span></div></li>
   </ul>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Exact text message to send <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Send this to 10 friends' parents. Personalize the first line — use their name. Keep it short.</p>
+      <div class="tmpl"><strong>For Harper/Finley to send (from your phone or Mom/Dad's):</strong>
+"Hey [Name]! We started a frozen drink machine rental business — Slush Sisters! We deliver to your house, set it up with candy on every cup, and pick it up the next day. $250 for the whole day. Check it out: slushsisters.com/go/text"</div>
+      <div class="tmpl"><strong>For Dad to send to his network:</strong>
+"Hey — the girls started a frozen drink machine rental business this summer. They deliver, set up, and pick up. $250/day, Lakeway/Bee Cave/Lake Travis area. Both kid-friendly slushies and frozen cocktails for grown-ups. slushsisters.com/go/text — would mean a lot if you'd share it with anyone planning a party."</div>
+      <div class="warn"><strong>Why /go/text:</strong> Every text uses slushsisters.com/go/text so the dashboard shows how many people came from text messages. Don't use the plain link.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">First 5 Instagram/TikTok posts — exactly what to post <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Post these over your first 5-7 days. Don't dump them all at once.</p>
+
+      <h4>Post 1 — The intro (pin this)</h4>
+      <p>The 15-second video you already shot. Caption:</p>
+      <div class="tmpl">"We're Harper (11) and Finley (8) and we rent frozen drink machines for parties. We deliver to your house, set it up with candy on every cup, and pick it up the next day. Lakeway, Bee Cave, Lake Travis. $250 for the whole day. Link in bio."</div>
+
+      <h4>Post 2 — The candy cup</h4>
+      <p>Close-up photo or slow-mo of the candy garnish going on a cup. This is the differentiator. Caption:</p>
+      <div class="tmpl">"Every cup gets candy. Not just a straw — real candy on the rim. That's the Slush Sisters difference."</div>
+
+      <h4>Post 3 — The setup time-lapse</h4>
+      <p>The time-lapse video of arrival to ready. Caption:</p>
+      <div class="tmpl">"Arrival to ready in [X] minutes. We bring the machine, set up the candy station, and you don't have to do anything."</div>
+
+      <h4>Post 4 — Something NOT about the business</h4>
+      <p>A trend video, a sister challenge, something funny. This is the post that makes people follow you as people, not just as a business. No selling. No link. Just be yourselves.</p>
+
+      <h4>Post 5 — The money post</h4>
+      <p>Count the cash box or show what a batch of mix costs. People LOVE watching kids talk about real money. Caption:</p>
+      <div class="tmpl">"How much does it actually cost us to make a batch? Let's find out." [show the ingredients and add up the cost]</div>
+
+      <div class="warn"><strong>The ratio to remember:</strong> Half your posts = just being sisters (funny, trends, your life). A third = the business (money, what you're learning). The rest = the product (drinks, candy, the machine). If every post is "book us!" nobody follows.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Instagram story ideas for week 1 <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Stories disappear in 24 hours — they're low-stakes practice. Post 2-3 per day during launch week.</p>
+      <ul>
+        <li>"We're officially open!" with a boomerang of a cup being poured</li>
+        <li>Poll: "Which flavor would you pick?" with two options</li>
+        <li>"Behind the scenes" of loading the van</li>
+        <li>A question sticker: "What flavor should we add next?"</li>
+        <li>"POV: You booked the Slush Sisters" — walk up to the machine, pour, add candy</li>
+        <li>Countdown sticker to your first booking (if you have one)</li>
+        <li>Repost anyone who shares your post to their story</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
+<!-- ===== PHASE 2 ===== -->
 <div class="phase">
   <h2>&#x1F3D8;&#xFE0F; Phase 2 — Hit the Neighborhood Groups</h2>
   <div class="when">Week 1-2</div>
-  <p>This is where bookings come from. A mom in a Facebook group asking "does anyone know someone who does frozen drinks?" is the single best customer we can find. We want to be the answer before anyone asks.</p>
+  <p>This is where bookings come from. Neighborhood Facebook groups convert better than Instagram or TikTok for a local party rental. One post in the right group is worth a month of social media posting.</p>
   <ul class="checklist" data-phase="2">
-    <li><div class="box" data-i="0"></div><div>Post in "Lakeway, Bee Cave, Lake Travis area — News & Chatter" <span class="who dad">Dad</span><div class="detail">Short, honest post. Include slushsisters.com/go/fb. Don't be salesy — just say what you do, the price, and that the girls run it.</div></div></li>
-    <li><div class="box" data-i="1"></div><div>Post in Steiner Ranch groups <span class="who dad">Dad</span><div class="detail">Same message, different group. One post per group, not a blast.</div></div></li>
-    <li><div class="box" data-i="2"></div><div>Post in Rough Hollow / Belterra groups <span class="who dad">Dad</span><div class="detail">Same approach. These are the neighborhoods in our delivery zone.</div></div></li>
-    <li><div class="box" data-i="3"></div><div>Post on Nextdoor <span class="who dad">Dad</span><div class="detail">Use slushsisters.com/go/nd for the link. Nextdoor lets you post to nearby neighborhoods.</div></div></li>
-    <li><div class="box" data-i="4"></div><div>Check the <a href="/dashboard">dashboard</a> — are clicks coming in? <span class="who">Anyone</span><div class="detail">Look at the "Tracking Links" section. Which source is getting the most clicks?</div></div></li>
+    <li><div class="box" data-i="0"></div><div>Post in "Lakeway, Bee Cave, Lake Travis area — News & Chatter" <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="1"></div><div>Post in Steiner Ranch groups <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="2"></div><div>Post in Rough Hollow / Belterra groups <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="3"></div><div>Post on Nextdoor <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="4"></div><div>Reply to any "party rental" question in any group <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="5"></div><div>Check the <a href="/dashboard">dashboard</a> — are clicks coming in? <span class="who">Anyone</span></div></li>
   </ul>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Exact Facebook group post — copy this <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Dad posts this. Keep it honest and short. Don't sound like an ad.</p>
+      <div class="tmpl"><strong>Post text:</strong>
+"My daughters (11 and 8) started a frozen drink machine rental business this summer — Slush Sisters. They deliver to your house, set up the machine with candy on every cup, and pick it up the next day. $250 for the whole day. They do both kid-friendly slushies and frozen cocktails for adults — your choice.
+
+Serving Lakeway, Bee Cave, Steiner Ranch, and the Lake Travis area. Their website: slushsisters.com/go/fb"</div>
+
+      <h4>What photo to include</h4>
+      <p>Attach 2-3 photos: the hero shot (both girls with the machine), the candy cup close-up, and the party setup. Facebook posts with photos get 2-3x more engagement than text-only.</p>
+
+      <div class="warn"><strong>One post per group.</strong> Don't post in 5 groups on the same day — it looks spammy. Space them out: one group per day over a week. And some groups have rules about self-promotion — read the pinned post before posting. If they say "Business posts on Fridays only," wait until Friday.</div>
+
+      <h4>When someone replies or asks a question</h4>
+      <p>Reply quickly. Be helpful, not salesy. If someone asks "do you do margaritas?" say "Yes! We have a frozen margarita mix — you add your own tequila. We can also do kid-friendly flavors in the other tank. slushsisters.com/flavors"</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Nextdoor post — it's different from Facebook <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Nextdoor is neighbors talking to neighbors. It's less formal than Facebook groups. Post in the "For Sale & Free" or "Recommendations" section.</p>
+      <div class="tmpl"><strong>Post text:</strong>
+"Neighbor recommendation (from us!): My girls started Slush Sisters — they rent frozen drink machines for parties. They're 11 and 8, they deliver in the Lakeway/Bee Cave area, and they put candy on every cup. $250 for the whole day, delivery and pickup included. slushsisters.com/go/nd"</div>
+      <p>Include the hero photo. Nextdoor surfaces posts to nearby neighborhoods automatically.</p>
+    </div>
+  </div>
 </div>
 
+<!-- ===== PHASE 3 ===== -->
 <div class="phase">
   <h2>&#x1F91D; Phase 3 — Outreach</h2>
   <div class="when">Week 2-3</div>
-  <p>Now reach people who don't know us yet. Work through the <a href="/outreach">outreach list</a> — one message per day, no blasting.</p>
+  <p>Now reach people who don't know us yet. Work through the <a href="/outreach">outreach list</a> — one message per day, no blasting. Each person on that list has a reason we picked them and a suggested way to reach out.</p>
   <ul class="checklist" data-phase="3">
-    <li><div class="box" data-i="0"></div><div>Message @lakewaymoms on Instagram <span class="who">Harper</span><div class="detail">See the <a href="/outreach">outreach list</a> for the suggested message. Offer a giveaway.</div></div></li>
-    <li><div class="box" data-i="1"></div><div>Email Lake Travis Lifestyle / Cathy Hale <span class="who dad">Dad</span><div class="detail">Pitch the kid-entrepreneur story. See <a href="/outreach">outreach list</a> for the angle.</div></div></li>
-    <li><div class="box" data-i="2"></div><div>Contact 2 bounce house companies for cross-referral <span class="who dad">Dad</span><div class="detail">We Bring The Party, iParty and Bounce, or Sky High. "We do drinks, you do bounce houses — same party. Let's refer each other."</div></div></li>
-    <li><div class="box" data-i="3"></div><div>Offer one free setup to a local organization <span class="who dad">Dad</span><div class="detail">Little League, school PTA, fire station. Cost: one batch of mix. Return: their entire parent network hears about us.</div></div></li>
-    <li><div class="box" data-i="4"></div><div>Pitch one Lakeway realtor for an open house setup <span class="who dad">Dad</span><div class="detail">Start with one agent you know. Offer the first one free. See <a href="/outreach">outreach list</a>.</div></div></li>
+    <li><div class="box" data-i="0"></div><div>Message @lakewaymoms on Instagram <span class="who">Harper</span></div></li>
+    <li><div class="box" data-i="1"></div><div>DM Kelsey Kennedy (@somuchlifeblog) <span class="who">Harper or Finley</span></div></li>
+    <li><div class="box" data-i="2"></div><div>Email Lake Travis Lifestyle / Cathy Hale <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="3"></div><div>Contact Austin Moms for a feature <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="4"></div><div>Contact 2 bounce house companies for cross-referral <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="5"></div><div>Offer one free setup to a local organization <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="6"></div><div>Pitch one Lakeway realtor for an open house setup <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="7"></div><div>Email Lake Travis Current / Neighbors of Lakeway magazine <span class="who dad">Dad</span></div></li>
   </ul>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">DM templates for community accounts <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Harper or Finley sends these. Keep it short, genuine, and don't ask for anything complicated. The offer of a giveaway is the hook — it gives THEM something to share, not just us something to promote.</p>
+
+      <h4>For @lakewaymoms</h4>
+      <div class="tmpl">"Hey! We're Harper and Finley, two sisters in Lakeway (11 and 8). We just started a frozen drink machine rental business called Slush Sisters — we deliver, set up, and pick up for $250/day. Would you be open to sharing us with the Lakeway Moms community? We'd love to do a giveaway for your followers — a free rental for someone! slushsisters.com"</div>
+
+      <h4>For Kelsey Kennedy (@somuchlifeblog)</h4>
+      <div class="tmpl">"Hey Kelsey! We're two sisters in Lakeway (11 and 8) and we just started a frozen drink machine rental business. We saw you cover local things on The Austin Things and thought you might think it's cool — we deliver right here in Lakeway. Would love to set one up at your next event or get-together, on us, and see if your followers would be into it! slushsisters.com"</div>
+
+      <h4>For any community account</h4>
+      <div class="tmpl">"Hi! We're two sisters (11 and 8) in [their area] and we just started Slush Sisters — frozen drink machine rentals. We deliver, set up, put candy on every cup, and pick up the next day. $250 for the day. Would you be open to sharing us? We'd love to do a giveaway for your followers. slushsisters.com"</div>
+      <div class="warn"><strong>If they say no or don't reply:</strong> That's fine. Don't message again. Move to the next person on the list.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Email templates for press and publications <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Dad sends these. Keep the email under 150 words. Include ONE photo (the hero shot). Link to the website. Make the subject line the story.</p>
+
+      <h4>For Lake Travis Lifestyle / Community Impact / Lake Travis View</h4>
+      <div class="tmpl"><strong>Subject:</strong> Two Lakeway sisters (11 and 8) started a frozen drink rental business
+
+Hi [Name],
+
+My daughters Harper (11) and Finley (8) registered an LLC this summer and started Slush Sisters — a frozen drink machine rental business serving the Lake Travis area. They set the price ($250/day), pick the flavors, create the candy garnish that goes on every cup, and deliver with me.
+
+The story isn't really about slushies — it's about two kids who are running a real business, learning what things cost, and deciding what to charge. They'd love to be featured and are happy to do an interview or have you come to a setup.
+
+Website: slushsisters.com
+[Attached: hero photo]
+
+Thanks,
+Mark Barrera</div>
+
+      <h4>For KVUE / KXAN features desk</h4>
+      <div class="tmpl"><strong>Subject:</strong> Two sisters (11 and 8) started a frozen drink rental business in Lakeway — visual story
+
+Hi,
+
+Quick pitch for a summer feature: my daughters Harper (11) and Finley (8) started Slush Sisters — a frozen drink machine rental business. They're a registered LLC, they deliver the machine themselves, and they put candy garnish on every cup.
+
+It's a visual story — the machine running, kids pouring cups, candy going on the rims. We'd love to have you at a setup to film.
+
+Website: slushsisters.com
+[Attached: hero photo]
+
+Mark Barrera
+[phone number]</div>
+      <div class="warn"><strong>Timing:</strong> Send press emails Tuesday-Thursday morning. Never Monday (overloaded inbox) or Friday (forgotten by Monday). And send them AFTER you have at least one good party setup photo — a business with no photos looks like it hasn't started yet.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Cross-referral pitch — bounce houses, event planners, photographers <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Dad handles these. The pitch is simple: same party, different service, let's help each other.</p>
+      <div class="tmpl"><strong>For bounce house companies (We Bring The Party, iParty and Bounce, Sky High):</strong>
+
+"Hi — I'm Mark, and my daughters run Slush Sisters, a frozen drink machine rental in the Lakeway/Bee Cave area. We do drinks, you do bounce houses — same party, no overlap. Would you be open to a cross-referral? We'll recommend you to every customer who books with us, and we'd love to be on your vendor list too. Happy to drop off some flyers or cards.
+
+slushsisters.com"</div>
+      <div class="tmpl"><strong>For event planners (Capital Events Austin, etc.):</strong>
+
+"Hi — my daughters (11 and 8) run Slush Sisters, a frozen drink machine rental serving the Lake Travis area. $250/day, delivery and pickup included, both kid-friendly slushies and frozen cocktails for adults. We'd love to be on your preferred vendor list. Happy to do a sample setup for your team so you can see the product.
+
+slushsisters.com"</div>
+
+      <h4>What to bring to the conversation</h4>
+      <ul>
+        <li>A flyer or card they can hand out at their events</li>
+        <li>Your website link (slushsisters.com)</li>
+        <li>The offer to recommend THEM to your customers too</li>
+        <li>Photos of a real setup they can show clients</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">The free giveaway pitch — organizations, schools, sports <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>This is the highest-return thing on this entire list. Cost: one batch of mix (~$20-40). Return: the organization shares it to hundreds of local parents with THEIR credibility attached.</p>
+      <div class="tmpl"><strong>For a school PTA / youth sports / NCL / fire station:</strong>
+
+"Hi — we're Slush Sisters, a frozen drink machine rental run by two sisters in LTISD (ages 11 and 8). We'd love to donate a free frozen drink setup for your next [end-of-season party / teacher appreciation event / fall festival / community event]. We bring the machine, set it up, and clean up — all you'd need to do is let families know it's there. All we'd ask is a mention when you share the event."</div>
+      <h4>Best targets (in order)</h4>
+      <ol>
+        <li><strong>Your own school's PTA</strong> — easiest yes, and Harper/Finley can make the ask themselves</li>
+        <li><strong>Little League / soccer end-of-season</strong> — hundreds of families, outdoors, hot</li>
+        <li><strong>Lake Travis NCL</strong> — mother-daughter org, "two girls running a business" fits their mission</li>
+        <li><strong>Hill Country Galleria events</strong> — outdoor mall in Bee Cave, always looking for vendors</li>
+        <li><strong>Fire station open house</strong> — community event, great content, feel-good story</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">The realtor pitch — a Dad conversation <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>This one changes revenue, not just reach. A frozen drink machine at a summer open house is a crowd magnet, and the realtor posts about it to their entire network of affluent families.</p>
+      <div class="tmpl"><strong>Pitch (in person or email):</strong>
+
+"I'd like to offer your next open house a free frozen drink setup — our girls run the machine, your visitors get a slushie, and you get a talking point that brings people through the door. If it works, we'd love to be your go-to for open house events at $250."</div>
+      <h4>How to start</h4>
+      <ol>
+        <li>Pick ONE realtor you already know — a neighbor, a friend, someone from school</li>
+        <li>Offer the first one free. This is a demo, not a giveaway.</li>
+        <li>The girls MUST be there at setup. A dad dropping off a machine is forgettable. Two kids explaining how it works is a story the host retells to every guest.</li>
+        <li>If it works, ask that realtor to introduce you to their office. One warm intro beats ten cold emails.</li>
+      </ol>
+      <div class="warn"><strong>Constraint:</strong> Lakeway/Westlake households are privacy-sensitive. Photos of their house, kids, or guests are usually a hard no. Plan for content from these events to be the girls only. Ask before every shot.</div>
+    </div>
+  </div>
 </div>
 
+<!-- ===== PHASE 4 ===== -->
 <div class="phase">
   <h2>&#x1F4F0; Phase 4 — Press</h2>
   <div class="when">Week 3-4</div>
-  <p>Once you have a few bookings (or at least one great setup photo), pitch the local news. The story writes itself: two kids, a real LLC, a real business.</p>
+  <p>Once you have a few bookings (or at least one great setup photo), pitch the local news. The story writes itself: two kids, a real LLC, a real business. Press is free, credible, and permanent in search.</p>
   <ul class="checklist" data-phase="3b">
-    <li><div class="box" data-i="0"></div><div>Email Community Impact — Lake Travis / Westlake edition <span class="who dad">Dad</span><div class="detail">Short pitch: "Two Lakeway sisters started a frozen drink rental business." Include a photo and the website.</div></div></li>
-    <li><div class="box" data-i="1"></div><div>Email KVUE or KXAN features desk <span class="who dad">Dad</span><div class="detail">Subject: "Two sisters (11 and 8) started a frozen drink rental business in Lakeway." Offer a setup they can film.</div></div></li>
-    <li><div class="box" data-i="2"></div><div>Email Lake Travis View <span class="who dad">Dad</span><div class="detail">Same pitch, local paper.</div></div></li>
-    <li><div class="box" data-i="3"></div><div>Submit to Austin Moms for a feature or giveaway <span class="who dad">Dad</span><div class="detail">Pitch a profile or a giveaway collab. See <a href="/outreach">outreach list</a>.</div></div></li>
+    <li><div class="box" data-i="0"></div><div>Email Community Impact — Lake Travis / Westlake edition <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="1"></div><div>Email KVUE or KXAN features desk <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="2"></div><div>Email Lake Travis View <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="3"></div><div>Submit to Austin Moms for a feature or giveaway <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="4"></div><div>Email Lake Travis Current and Neighbors of Lakeway magazine <span class="who dad">Dad</span></div></li>
   </ul>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">What to have ready before any press pitch <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>A reporter who says yes needs these immediately. Have them ready BEFORE you send the first email.</p>
+      <div class="shot"><strong>Press kit (a folder on your phone/computer):</strong>
+1. <strong>Hero photo</strong> — both girls with the machine, high resolution, horizontal crop (TV and web use horizontal)
+2. <strong>Action photo</strong> — a cup being poured, candy going on
+3. <strong>Party setup photo</strong> — the full table at a real party (this is why you wait until after booking #1)
+4. <strong>One-paragraph description</strong> — "Slush Sisters is a frozen drink machine rental business run by Harper (11) and Finley (8) in Lakeway, TX. They're a registered LLC, they deliver the machine, set it up with candy-garnished cups, and pick it up the next day. $250 for the day, both kid-friendly slushies and frozen cocktails for adults. slushsisters.com"
+5. <strong>Mark's phone number</strong> — reporters want to call, not email back and forth</div>
+      <div class="warn"><strong>TV is different from print.</strong> TV needs something to FILM. Always offer "come to a setup" — a running machine, cups being poured, the girls talking to guests. A TV segment at a real party is 10x better than an interview in your kitchen.</div>
+    </div>
+  </div>
 </div>
 
+<!-- ===== PHASE 5 ===== -->
 <div class="phase">
   <h2>&#x1F504; Phase 5 — Keep Going</h2>
   <div class="when">Ongoing</div>
   <p>After the launch push, the work shifts to two things: posting content and following up. Half your posts should have nothing to do with slushies — just be yourselves.</p>
   <ul class="checklist" data-phase="4">
-    <li><div class="box" data-i="0"></div><div>Post 2-3 times per week on Instagram <span class="who">Harper and Finley</span><div class="detail">Mix it up: one about the business, one just being sisters, one about something trending. Don't let every post be "book us!"</div></div></li>
-    <li><div class="box" data-i="1"></div><div>Reply to every Facebook group question about party rentals <span class="who dad">Dad</span><div class="detail">When someone asks "does anyone know a frozen drink rental?" — that's your moment. Be helpful, not salesy.</div></div></li>
-    <li><div class="box" data-i="2"></div><div>Check the <a href="/dashboard">dashboard</a> weekly <span class="who">Anyone</span><div class="detail">Which tracking links are getting clicks? Which pages do people read? Is anyone making it to the booking page?</div></div></li>
-    <li><div class="box" data-i="3"></div><div>After every booking: ask for a photo you can share <span class="who">Harper or Finley</span><div class="detail">"Can we share a photo from your party?" Most people say yes. One real party photo is worth ten staged ones.</div></div></li>
-    <li><div class="box" data-i="4"></div><div>After 10 bookings: review what worked <span class="who">Everyone</span><div class="detail">Look at the dashboard. Where did those 10 customers come from? Do more of whatever that was.</div></div></li>
+    <li><div class="box" data-i="0"></div><div>Post 2-3 times per week on Instagram/TikTok <span class="who">Harper and Finley</span></div></li>
+    <li><div class="box" data-i="1"></div><div>Reply to every Facebook group question about party rentals <span class="who dad">Dad</span></div></li>
+    <li><div class="box" data-i="2"></div><div>Check the <a href="/dashboard">dashboard</a> weekly <span class="who">Anyone</span></div></li>
+    <li><div class="box" data-i="3"></div><div>After every booking: ask for a photo you can share <span class="who">Harper or Finley</span></div></li>
+    <li><div class="box" data-i="4"></div><div>After 10 bookings: review what worked <span class="who">Everyone</span></div></li>
   </ul>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Content calendar — what to post each week <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Aim for 2-3 posts per week. This is a suggested rhythm, not a rule. Skip a week if you're busy — consistency matters more than frequency.</p>
+
+      <h4>Weekly rhythm</h4>
+      <ul>
+        <li><strong>Monday or Tuesday:</strong> A "just us" post — trend, sister challenge, something funny, something you're into. No selling.</li>
+        <li><strong>Wednesday or Thursday:</strong> A business post — money talk, what you learned, a behind-the-scenes, a setup. The story, not the product.</li>
+        <li><strong>Friday or Saturday:</strong> A product post — a cup, a flavor, a party, the candy. This is the one that can be "book us."</li>
+      </ul>
+
+      <h4>The 10 posts that always work</h4>
+      <ol>
+        <li>Count the cash box after a party. Say the real number.</li>
+        <li>Update how much you still owe Dad for the machine.</li>
+        <li>Rank all six flavors worst to best. Disagree with each other.</li>
+        <li>Invent a flavor that turns out terrible. Post it anyway.</li>
+        <li>Argue about something ridiculous for 60 seconds.</li>
+        <li>Set up a party, sped up to 10 seconds.</li>
+        <li>Show what your setup kit actually contains.</li>
+        <li>Close-up of candy going on cups, one at a time.</li>
+        <li>A customer's kid tasting it for the first time (with permission!).</li>
+        <li>Reply to a comment on camera.</li>
+      </ol>
+
+      <div class="warn"><strong>The one rule that matters most:</strong> If every post is "book us!" the only followers are people who already want a rental — and once they've booked, they're done. The accounts that grow are the ones where people follow the PEOPLE. Half your posts should have nothing to do with slushies.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">After every booking — what to capture <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <p>Every booking is content AND a referral opportunity. Don't leave without these.</p>
+      <h4>At the party</h4>
+      <ul>
+        <li>Ask the host: "Can we take a few photos of the setup for our social media?" (Most say yes)</li>
+        <li>Shoot: the table setup, a cup close-up, the machine running, the line if there is one</li>
+        <li>If they say yes to video: 15 seconds of the party in action, a kid reacting to the candy</li>
+        <li>If they say no: respect it completely, take photos of JUST the machine/cups/candy, no people</li>
+      </ul>
+      <h4>After the party</h4>
+      <ul>
+        <li>Text the host a thank you: "Thanks for having us! Here's a photo from the setup. If any of your friends want to rent, our link is slushsisters.com/go/text"</li>
+        <li>Post one photo to Instagram within 24 hours while it's fresh</li>
+        <li>Note what worked and what didn't — this goes in the "what we tried" section of the marketing doc</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc">
+    <button class="acc-toggle" aria-expanded="false">Seasonal hooks — what to post when <span class="arrow">&#9654;</span></button>
+    <div class="acc-body">
+      <table style="width:100%;border-collapse:collapse;font-size:.84rem;">
+        <tr style="border-bottom:1px solid #e6ecf5;"><td style="padding:6px 0;font-weight:700;">Feb-Mar</td><td style="padding:6px 8px;">Booking season opens. Push early dates. "First booking of the year goes to..."</td></tr>
+        <tr style="border-bottom:1px solid #e6ecf5;"><td style="padding:6px 0;font-weight:700;">April</td><td style="padding:6px 8px;">Teacher appreciation week — giveaway to a school. Great content.</td></tr>
+        <tr style="border-bottom:1px solid #e6ecf5;"><td style="padding:6px 0;font-weight:700;">May</td><td style="padding:6px 8px;">Last day of school. Biggest content moment of the year. Film EVERYTHING.</td></tr>
+        <tr style="border-bottom:1px solid #e6ecf5;"><td style="padding:6px 0;font-weight:700;">Jun-Aug</td><td style="padding:6px 8px;">Peak season. Pool parties, lake houses, birthdays. Post party content every week.</td></tr>
+        <tr style="border-bottom:1px solid #e6ecf5;"><td style="padding:6px 0;font-weight:700;">July 4</td><td style="padding:6px 8px;">Red/white/blue cup combo. Flag decorations. Patriotic candy.</td></tr>
+        <tr style="border-bottom:1px solid #e6ecf5;"><td style="padding:6px 0;font-weight:700;">August</td><td style="padding:6px 8px;">Back to school. "Last party of the summer" energy.</td></tr>
+        <tr style="border-bottom:1px solid #e6ecf5;"><td style="padding:6px 0;font-weight:700;">October</td><td style="padding:6px 8px;">Halloween. Candy garnish is a natural fit. Spooky flavor names.</td></tr>
+        <tr><td style="padding:6px 0;font-weight:700;">Nov-Dec</td><td style="padding:6px 8px;">Slow season. Use it for the origin story, year-in-review content, planning next year.</td></tr>
+      </table>
+    </div>
+  </div>
 </div>
 
+<!-- ===== TRACKING LINKS ===== -->
 <div class="links">
   <h2>Your Tracking Links</h2>
   <p style="font-size:.85rem;color:#777;margin-bottom:12px;">Use these when you share links. Each one tells the dashboard where the visitor came from.</p>
@@ -154,7 +565,7 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
     <li><span>TikTok</span><span class="lk">slushsisters.com/go/tiktok</span></li>
     <li><span>Text message</span><span class="lk">slushsisters.com/go/text</span></li>
     <li><span>Email</span><span class="lk">slushsisters.com/go/email</span></li>
-    <li><span>Flyer</span><span class="lk">slushsisters.com/go/flyer</span></li>
+    <li><span>Flyer / print</span><span class="lk">slushsisters.com/go/flyer</span></li>
     <li><span>QR code</span><span class="lk">slushsisters.com/go/qr</span></li>
     <li><span>Party table card</span><span class="lk">slushsisters.com/go/party</span></li>
   </ul>
@@ -172,7 +583,6 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
   try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){}
 
   document.querySelectorAll(".box").forEach(function(box){
-    var li = box.closest("li");
     var phase = box.closest("[data-phase]").getAttribute("data-phase");
     var idx = box.getAttribute("data-i");
     var id = phase + ":" + idx;
@@ -184,6 +594,14 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
         box.classList.add("done"); box.textContent = "✓"; saved[id] = 1;
       }
       try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e){}
+    });
+  });
+
+  document.querySelectorAll(".acc-toggle").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", !expanded);
+      btn.nextElementSibling.classList.toggle("open");
     });
   });
 })();
