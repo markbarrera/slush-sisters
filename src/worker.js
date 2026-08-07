@@ -167,6 +167,9 @@ export default {
       }
     }
 
+    // AI monitoring results API.
+    if (url.pathname === "/api/stats/ai-monitor") return handleAiMonitorStats(env);
+
     // Default: serve the static asset, add a Link header pointing at llms.txt.
     const res = await env.ASSETS.fetch(request);
     const ct = res.headers.get("content-type") || "";
@@ -177,6 +180,10 @@ export default {
       return out;
     }
     return res;
+  },
+
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(runAiMonitor(env));
   },
 };
 
@@ -931,4 +938,158 @@ function strip(s) {
     .replace(/&ndash;/g, "–")
     .replace(/[ \t]+/g, " ")
     .trim();
+}
+
+// --- Job 5: AI prompt monitoring (DataForSEO cron) ---------------------------
+// Weekly cron queries DataForSEO's LLM Mentions API for a set of prompts to
+// check whether AI assistants mention slushsisters.com when people ask about
+// frozen drink / margarita machine rentals. Results go to D1.
+
+const AI_MONITOR_PROMPTS = [
+  "margarita machine rental lakeway tx",
+  "frozen drink machine rental austin",
+  "best margarita machine rental near lake travis",
+  "slushie machine rental bee cave texas",
+  "kids party rental ideas lakeway",
+  "frozen drink rental for birthday party austin tx",
+  "who rents margarita machines in lakeway",
+  "frozen drink machine rental near me bee cave",
+  "party rental companies lake travis area",
+  "margarita machine rental westlake tx",
+];
+
+async function runAiMonitor(env) {
+  if (!env.DATAFORSEO_LOGIN || !env.DATAFORSEO_PASSWORD) return;
+  if (!env.DB) return;
+
+  const auth = btoa(env.DATAFORSEO_LOGIN + ":" + env.DATAFORSEO_PASSWORD);
+  const now = new Date().toISOString();
+
+  for (const prompt of AI_MONITOR_PROMPTS) {
+    try {
+      const res = await fetch(
+        "https://api.dataforseo.com/v3/ai_optimization/llm_mentions/search_mentions/live",
+        {
+          method: "POST",
+          headers: {
+            "Authorization": "Basic " + auth,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify([{
+            target: [{
+              domain: "slushsisters.com",
+              search_filter: "include_or_exclude",
+              search_scope: ["any"],
+              include_subdomains: true,
+            }],
+            keyword: prompt,
+            location_code: 2840,
+            language_code: "en",
+            limit: 10,
+          }]),
+        }
+      );
+
+      if (!res.ok) {
+        await env.DB.prepare(
+          "INSERT INTO ai_monitor_runs (run_at, prompt, platform, mentioned, mention_count, raw) VALUES (?, ?, 'all', 0, 0, ?)"
+        ).bind(now, prompt, `HTTP ${res.status}`).run();
+        continue;
+      }
+
+      const data = await res.json();
+      const task = data.tasks && data.tasks[0];
+      const result = task && task.result && task.result[0];
+      const items = (result && result.items) || [];
+
+      const dominated = items.filter((it) => {
+        const sources = it.sources || [];
+        return sources.some((s) => (s.domain || "").includes("slushsisters.com"));
+      });
+
+      const allDomains = new Set();
+      for (const it of items) {
+        for (const s of it.sources || []) {
+          if (s.domain && !s.domain.includes("slushsisters.com")) {
+            allDomains.add(s.domain);
+          }
+        }
+      }
+
+      const snippet = items[0] && items[0].answer
+        ? items[0].answer.slice(0, 500)
+        : null;
+
+      const sourceUrls = [];
+      for (const it of dominated) {
+        for (const s of it.sources || []) {
+          if (s.url) sourceUrls.push(s.url);
+        }
+      }
+
+      await env.DB.prepare(
+        "INSERT INTO ai_monitor_runs (run_at, prompt, platform, mentioned, mention_count, competitors, answer_snippet, sources, raw) VALUES (?, ?, 'all', ?, ?, ?, ?, ?, ?)"
+      ).bind(
+        now,
+        prompt,
+        dominated.length > 0 ? 1 : 0,
+        dominated.length,
+        JSON.stringify([...allDomains].slice(0, 20)),
+        snippet,
+        sourceUrls.length ? JSON.stringify(sourceUrls) : null,
+        JSON.stringify(data).slice(0, 5000),
+      ).run();
+    } catch (err) {
+      try {
+        await env.DB.prepare(
+          "INSERT INTO ai_monitor_runs (run_at, prompt, platform, mentioned, mention_count, raw) VALUES (?, ?, 'all', 0, 0, ?)"
+        ).bind(now, prompt, String(err)).run();
+      } catch (_) { /* best effort */ }
+    }
+  }
+}
+
+async function handleAiMonitorStats(env) {
+  if (!env.DB) return json({ status: "not_configured", need: "D1" });
+  try {
+    const latest = await env.DB.prepare(
+      "SELECT run_at FROM ai_monitor_runs ORDER BY run_at DESC LIMIT 1"
+    ).first();
+    if (!latest) return json({ status: "ok", last_run: null, prompts: [] });
+
+    const rows = await env.DB.prepare(
+      "SELECT prompt, mentioned, mention_count, competitors, answer_snippet, sources FROM ai_monitor_runs WHERE run_at = ? ORDER BY mentioned DESC, mention_count DESC"
+    ).bind(latest.run_at).all();
+
+    const prompts = (rows.results || []).map((r) => ({
+      prompt: r.prompt,
+      mentioned: r.mentioned === 1,
+      mentions: r.mention_count,
+      competitors: safeJsonParse(r.competitors, []),
+      snippet: r.answer_snippet,
+      sources: safeJsonParse(r.sources, []),
+    }));
+
+    const history = await env.DB.prepare(
+      "SELECT run_at, SUM(mentioned) AS hits, COUNT(*) AS total FROM ai_monitor_runs GROUP BY run_at ORDER BY run_at DESC LIMIT 12"
+    ).all();
+
+    return json({
+      status: "ok",
+      last_run: latest.run_at,
+      prompts,
+      history: (history.results || []).map((r) => ({
+        date: r.run_at,
+        mentioned: r.hits,
+        total: r.total,
+      })),
+    });
+  } catch (err) {
+    return json({ status: "error", message: String((err && err.message) || err) });
+  }
+}
+
+function safeJsonParse(s, fallback) {
+  if (!s) return fallback;
+  try { return JSON.parse(s); } catch (_) { return fallback; }
 }

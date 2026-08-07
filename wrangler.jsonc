@@ -58,6 +58,13 @@
     }
   ],
 
+  // Weekly AI prompt monitoring — every Sunday at 06:00 UTC (midnight CST).
+  // The scheduled() handler in src/worker.js queries DataForSEO's LLM Mentions
+  // API for a set of prompts and stores results in D1.
+  "triggers": {
+    "crons": ["0 6 * * 0"]
+  },
+
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,
