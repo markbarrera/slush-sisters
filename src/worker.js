@@ -687,7 +687,11 @@ async function handleSearchStats(env) {
 // the path with UTM params appended, so the girls type slushsisters.com/go/fb
 // and the traffic shows up attributed in the dashboard.
 
-const GO_LINKS = {
+// Source channels — each slug maps to the UTM source/medium pair.
+// A plain /go/fb link uses the channel's default path (usually /).
+// A compound /go/fb/book link keeps the same attribution but lands
+// on /book instead, so one set of slugs works for every page.
+const GO_CHANNELS = {
   fb:        { path: "/", source: "facebook", medium: "social" },
   ig:        { path: "/", source: "instagram", medium: "social" },
   nd:        { path: "/", source: "nextdoor", medium: "social" },
@@ -703,15 +707,19 @@ const GO_LINKS = {
 };
 
 function handleGoRedirect(url) {
-  const slug = url.pathname.slice(4).toLowerCase().replace(/\/$/, "");
-  const link = GO_LINKS[slug];
-  if (!link) {
+  const after = url.pathname.slice(4).toLowerCase().replace(/\/$/, "");
+  const slashIdx = after.indexOf("/");
+  const slug = slashIdx === -1 ? after : after.slice(0, slashIdx);
+  const pagePath = slashIdx === -1 ? null : "/" + after.slice(slashIdx + 1);
+
+  const channel = GO_CHANNELS[slug];
+  if (!channel) {
     return new Response("Not found", { status: 404 });
   }
-  const dest = new URL(url.origin + link.path);
-  dest.searchParams.set("utm_source", link.source);
-  dest.searchParams.set("utm_medium", link.medium);
-  const campaign = link.campaign || url.searchParams.get("utm_campaign");
+  const dest = new URL(url.origin + (pagePath || channel.path));
+  dest.searchParams.set("utm_source", channel.source);
+  dest.searchParams.set("utm_medium", channel.medium);
+  const campaign = channel.campaign || url.searchParams.get("utm_campaign");
   if (campaign) dest.searchParams.set("utm_campaign", campaign);
   return Response.redirect(dest.toString(), 301);
 }
