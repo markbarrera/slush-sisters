@@ -347,7 +347,9 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 </div>
 <div class="rows">
 <div class="r"><span>Syrup you need</span><span id="mSyrup">&mdash;</span></div>
+<div class="r"><span>&nbsp;&nbsp;&nbsp;On the bucket that is</span><span id="mSyrupBucket">&mdash;</span></div>
 <div class="r"><span>Water you need</span><span id="mWater">&mdash;</span></div>
+<div class="r"><span>&nbsp;&nbsp;&nbsp;On the bucket that is</span><span id="mWaterBucket">&mdash;</span></div>
 <div class="r"><span>Roughly what Brix that lands at</span><span id="mBrix">&mdash;</span></div>
 <div class="r"><span>Twelve-ounce cups from one fill</span><span id="mCups">&mdash;</span></div>
 </div>
@@ -366,7 +368,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 
 <div class="tool">
 <h3>Try it: the cups calculator</h3>
-<p class="why">Our machine has two tanks and each one holds about three gallons. A gallon is 128 ounces and a cup is 12, so one full tank is about 32 cups. We say 30, because some of it always sticks to the sides and never comes out.</p>
+<p class="why">Our machine has two tanks and each one holds about three gallons. Pick the cup size you are using &mdash; bigger cups mean fewer drinks from the same tank. We subtract a little for what sticks to the sides and never pours out.</p>
 <div class="field">
 <label for="guests">How many people are coming</label>
 <input type="number" id="guests" value="30" min="4" max="200" step="1">
@@ -374,6 +376,15 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <div class="field">
 <label for="hours">How long the party runs (hours)</label>
 <input type="number" id="hours" value="3" min="1" max="8" step="0.5">
+</div>
+<div class="field">
+<label for="cupSize">Cup size</label>
+<select id="cupSize">
+<option value="12" selected>12 oz &mdash; standard</option>
+<option value="16">16 oz &mdash; big cup</option>
+<option value="20">20 oz &mdash; extra big</option>
+<option value="24">24 oz &mdash; giant</option>
+</select>
 </div>
 <div class="field">
 <label for="weather">What the day is doing</label>
@@ -585,16 +596,27 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
     if(g>=1) return g.toFixed(2).replace(/\.?0+$/,'')+' gal';
     return Math.round(g*128)+' fl oz';
   }
+  function fmtBucket(gal){
+    var oz=gal*128;
+    var liters=gal*3.78541;
+    var quarts=gal*4;
+    var cups=oz/8;
+    var parts=[];
+    if(quarts>=1) parts.push(quarts.toFixed(1).replace(/\.0$/,'')+' quart'+(quarts>=1.05?'s':''));
+    else parts.push(cups.toFixed(1).replace(/\.0$/,'')+' cup'+(cups>=1.05?'s':''));
+    parts.push(liters.toFixed(2).replace(/\.?0+$/,'')+' L');
+    return parts.join(' = ');
+  }
   function mix(){
     var t=parseFloat(tank.value)||0, p=parseFloat(ratio.value);
     var syrup=t/(p+1), water=t-syrup;
-    // Diluting a syrup of S Brix with p parts water lands at S/(p+1).
-    // S is an input, not an assumption, because ours has never been measured.
     var S=parseFloat(document.getElementById('syrup').value)||0;
     var brix=S/(p+1);
     var cups=Math.round(t*128/12);
     document.getElementById('mSyrup').textContent=fmtGal(syrup);
+    document.getElementById('mSyrupBucket').textContent=fmtBucket(syrup);
     document.getElementById('mWater').textContent=fmtGal(water);
+    document.getElementById('mWaterBucket').textContent=fmtBucket(water);
     document.getElementById('mBrix').textContent=brix.toFixed(1)+'\u00B0';
     document.getElementById('mCups').textContent=cups+' cups';
     var b=band(brix), mb=document.getElementById('mixBox');
@@ -607,21 +629,21 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
   syrupBx.addEventListener('input',mix); mix();
 
   // --- cups calculator -------------------------------------------------
-  // One tank is ~3 gal = 32 twelve-oz cups on paper; 30 in practice, because
-  // the last of it clings to the auger and the walls and never pours.
-  var CUPS_PER_TANK=30, TANKS=2;
+  // One tank is ~3 gal = 384 oz. Cups per tank depends on the cup size.
+  // We subtract ~2 oz per tank for what clings to the auger and walls.
+  var TANK_OZ=3*128-2, TANKS=2;
   var guests=document.getElementById('guests'),hours=document.getElementById('hours'),
-      weather=document.getElementById('weather');
-  function cups(){
+      weather=document.getElementById('weather'),cupSizeSel=document.getElementById('cupSize');
+  function cupsCalc(){
     var g=parseFloat(guests.value)||0, h=parseFloat(hours.value)||0,
-        w=parseFloat(weather.value);
-    // First hour is everyone at once; after that it settles to about half a
-    // cup each per hour. Counted at our own parties, not looked up.
+        w=parseFloat(weather.value), cupOz=parseFloat(cupSizeSel.value);
+    var cupsPerTank=Math.floor(TANK_OZ/cupOz);
+    var have=cupsPerTank*TANKS;
     var want=Math.round(g*(1+Math.max(0,h-1)*0.5)*w);
-    var have=CUPS_PER_TANK*TANKS;
-    var refills=Math.max(0,Math.ceil((want-have)/CUPS_PER_TANK));
-    document.getElementById('cCups').textContent=want+' cups';
-    document.getElementById('cHave').textContent=have+' cups';
+    var refills=Math.max(0,Math.ceil((want-have)/cupsPerTank));
+    var sizeLabel=cupOz+'-oz';
+    document.getElementById('cCups').textContent=want+' cups ('+sizeLabel+')';
+    document.getElementById('cHave').textContent=have+' cups ('+sizeLabel+')';
     document.getElementById('cRefill').textContent=refills?refills+(refills>1?' refills':' refill'):'none';
     var cb=document.getElementById('cupBox'),cv=document.getElementById('cupV'),cd=document.getElementById('cupD');
     if(want<=have){
@@ -638,8 +660,9 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
       cb.classList.add('warn');
     }
   }
-  guests.addEventListener('input',cups); hours.addEventListener('input',cups);
-  weather.addEventListener('change',cups); cups();
+  guests.addEventListener('input',cupsCalc); hours.addEventListener('input',cupsCalc);
+  weather.addEventListener('change',cupsCalc); cupSizeSel.addEventListener('change',cupsCalc);
+  cupsCalc();
 
   // --- Fresh Press base builder ----------------------------------------
   // Mass balance on sugar, treating Brix as percent sugar by weight and the
