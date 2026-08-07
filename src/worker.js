@@ -172,7 +172,8 @@ export default {
     const ct = res.headers.get("content-type") || "";
     if (ct.includes("text/html")) {
       const out = new Response(res.body, res);
-      out.headers.append("Link", '</llms.txt>; rel="describedby"; type="text/markdown"');
+      out.headers.append("Link", '</llms.txt>; rel="describedby"; type="text/markdown", </llms-full.txt>; rel="describedby"; type="text/markdown"');
+      out.headers.set("Content-Signal", "search=yes, ai-input=yes, ai-train=yes");
       return out;
     }
     return res;
@@ -887,7 +888,8 @@ async function renderMarkdown(request, url, env) {
     (desc ? `> ${desc}\n\n` : "") +
     `${text}\n\n---\n` +
     `Canonical: ${url.origin}${url.pathname}\n` +
-    `More for assistants: ${url.origin}/llms.txt\n`;
+    `More for assistants: ${url.origin}/llms.txt\n` +
+    `Full site content: ${url.origin}/llms-full.txt\n`;
 
   return new Response(md, {
     status: 200,
@@ -896,6 +898,7 @@ async function renderMarkdown(request, url, env) {
       "vary": "Accept",
       "cache-control": "public, max-age=300",
       "x-robots-tag": "noindex",
+      "content-signal": "search=yes, ai-input=yes, ai-train=yes",
     },
   });
 }

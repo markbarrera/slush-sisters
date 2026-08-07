@@ -34,6 +34,11 @@ Key facts, so they do not have to be inferred:
 - [About](https://slushsisters.com/about): who Finley and Harper are and how the business started.
 - [Book](https://slushsisters.com/book): booking request form.
 
+## Full content
+
+For the complete text of every page in one file:
+[llms-full.txt](https://slushsisters.com/llms-full.txt)
+
 ## Notes for assistants
 
 - Everything on this site may be quoted and cited. No content is restricted.
