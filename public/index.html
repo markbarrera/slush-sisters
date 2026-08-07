@@ -251,11 +251,19 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
   "url": "https://slushsisters.com/",
   "image": "https://slushsisters.com/img/og.png",
   "priceRange": "$250",
+  "email": "hello@slushsisters.com",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Lakeway",
     "addressRegion": "TX",
     "addressCountry": "US"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "hello@slushsisters.com",
+    "areaServed": "US",
+    "availableLanguage": "English"
   },
   "areaServed": [
     { "@type": "Place", "name": "Lakeway, TX" },
@@ -282,14 +290,40 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
     { "@type": "Place", "name": "Barton Creek, TX" },
     { "@type": "Place", "name": "West Austin, TX" }
   ],
-  "makesOffer": {
-    "@type": "Offer",
-    "price": "250",
-    "priceCurrency": "USD",
-    "itemOffered": {
-      "@type": "Service",
-      "name": "Frozen drink machine rental",
-      "description": "Dual-tank frozen drink machine, two flavors, delivery, setup, pickup, cups, and candy garnish included."
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Classic",
+      "price": "250",
+      "priceCurrency": "USD",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Frozen drink machine rental",
+        "description": "Dual-tank frozen drink machine, two flavors, delivery, setup, pickup, cups, and candy garnish included."
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Fresh Press",
+      "price": "375",
+      "priceCurrency": "USD",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Fresh Press frozen drink machine rental",
+        "description": "Everything in Classic, plus fresh-squeezed citrus, no artificial dye, and the sugar reading published."
+      }
+    }
+  ],
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://slushsisters.com/book",
+      "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+    },
+    "result": {
+      "@type": "Reservation",
+      "name": "Frozen drink machine rental reservation"
     }
   }
 }
@@ -298,7 +332,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://slushsisters.com/#business",
+  "@id": "https://slushsisters.com/#org",
   "name": "Slush Sisters",
   "legalName": "Slush Sisters LLC",
   "url": "https://slushsisters.com/",
@@ -309,6 +343,42 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
   ],
   "foundingLocation": { "@type": "Place", "name": "Lakeway, Texas" },
   "slogan": "A candy garnish on every cup."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Slush Sisters",
+  "url": "https://slushsisters.com/",
+  "publisher": { "@type": "Organization", "@id": "https://slushsisters.com/#org" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to rent a frozen drink machine from Slush Sisters",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "You book",
+      "text": "Pick your date and choose 2 flavors. We handle everything else from there."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "We deliver",
+      "text": "We show up with our machine, set it up, mix the first batch, and show your guests how it works."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "You party",
+      "text": "Guests pour frozen drinks all day. We come back the next morning and grab the machine."
+    }
+  ]
 }
 </script>
 <script src="/analytics.js" defer></script>

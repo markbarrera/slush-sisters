@@ -136,6 +136,12 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     <div class="body"><div class="state">Loading&hellip;</div></div>
   </div>
 
+  <div class="card" id="card-ai-referrals">
+    <h2>&#x1F916; People from AI assistants</h2>
+    <p class="hint">Visitors who came to our site from an AI assistant like ChatGPT, Perplexity, or Claude. This means someone asked an AI "where can I rent a margarita machine" and the AI sent them to us. This is the number that shows our AI optimization is working.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
   <div class="card" id="card-geo">
     <h2>&#x1F4CD; Where visitors are</h2>
     <p class="hint">The city people are browsing from, based on their internet connection (not their exact address).</p>
@@ -283,6 +289,12 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     <p class="hint">The actual words people typed into Google that made our site show up. "Impressions" means how many times we appeared, not how many clicked.</p>
     <div class="body"><div class="state">Loading&hellip;</div></div>
   </div>
+
+  <div class="card" id="card-ai-monitor">
+    <h2>&#x1F9E0; Do AI assistants mention us?</h2>
+    <p class="hint">Every week we ask AI assistants questions like "where can I rent a margarita machine in Lakeway?" and check whether they mention Slush Sisters. This is how we know if our site is showing up when people use AI instead of Google.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
 </div>
 
 <p class="foot">Numbers cover the last 7 days and update when you reload. Nothing here is a secret about any customer — just totals. "Visitors" counts different people; "Visits" counts if the same person comes back twice; "Page Views" counts every page anyone read. The stat tiles only count real people using a browser, not robots.</p>
@@ -415,6 +427,17 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
       return rowsHtml(d.sources, function(s){ return esc(s.source); }, function(s){ return n(s.views); });
     }, "POSTHOG_API_KEY");
 
+    body("card-ai-referrals").innerHTML = handle(res, function(d){
+      if (!d.ai_referrals || !d.ai_referrals.length) return '<div class="state">No visits from AI assistants yet. This will light up when someone asks ChatGPT or Perplexity about margarita machine rentals and clicks through to our site. The llms.txt, markdown for agents, and Content-Signal headers are all in place to make that happen.</div>';
+      var aiNames = { "chat.openai.com": "ChatGPT", "chatgpt.com": "ChatGPT", "perplexity.ai": "Perplexity", "claude.ai": "Claude", "gemini.google.com": "Gemini", "copilot.microsoft.com": "Copilot", "you.com": "You.com", "poe.com": "Poe", "search.brave.com": "Brave Search", "kagi.com": "Kagi" };
+      var total = 0; d.ai_referrals.forEach(function(r){ total += r.visitors; });
+      var html = '<div class="rows"><div class="row"><span style="font-weight:600">Total from AI</span><span>' + n(total) + ' people</span></div>';
+      d.ai_referrals.forEach(function(r){
+        html += '<div class="row"><span>' + esc(aiNames[r.source] || r.source) + '</span><span>' + n(r.visitors) + ' people, ' + n(r.views) + ' views</span></div>';
+      });
+      return html + '</div>';
+    }, "POSTHOG_API_KEY");
+
     body("card-devices").innerHTML = handle(res, function(d){
       if (!d.devices || !d.devices.length) return empty();
       var icons = { Mobile: "📱", Desktop: "💻", Tablet: "📝" };
@@ -521,7 +544,7 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     }, "POSTHOG_API_KEY");
   }).catch(function(){
     [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions"),el("stat-duration")].forEach(function(e){ if(e) e.textContent = "—"; });
-    ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound","card-utm-source","card-utm-medium","card-utm-campaign"].forEach(function(id){ body(id).innerHTML = oops(); });
+    ["card-pages","card-sources","card-ai-referrals","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound","card-utm-source","card-utm-medium","card-utm-campaign"].forEach(function(id){ body(id).innerHTML = oops(); });
   });
 
   // --- Game analytics (Analytics Engine) ---
@@ -581,6 +604,32 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     }, "GSC_SA_EMAIL");
   }).catch(function(){
     body("card-search").innerHTML = oops();
+  });
+
+  // --- AI prompt monitoring (DataForSEO weekly cron) ---
+  fetch("/api/stats/ai-monitor").then(function(r){ return r.json(); }).then(function(res){
+    body("card-ai-monitor").innerHTML = handle(res, function(d){
+      if (!d.last_run) return '<div class="state">No AI monitoring data yet. The weekly check runs every Sunday and tests whether AI assistants mention Slush Sisters when people ask about frozen drink rentals. Add your DataForSEO credentials as Worker secrets (DATAFORSEO_LOGIN, DATAFORSEO_PASSWORD) to turn it on.</div>';
+      var mentioned = d.prompts.filter(function(p){ return p.mentioned; });
+      var html = '<div style="margin-bottom:12px;font-size:.85em;color:#666">Last checked: ' + esc(new Date(d.last_run).toLocaleDateString()) + ' &middot; ' + mentioned.length + ' of ' + d.prompts.length + ' prompts mention us</div>';
+      html += '<ul class="rows">';
+      d.prompts.forEach(function(p){
+        var icon = p.mentioned ? "✅" : "❌";
+        var detail = p.mentioned ? p.mentions + " mention" + (p.mentions !== 1 ? "s" : "") : "not mentioned";
+        html += '<li><span class="k">' + icon + ' ' + esc(p.prompt) + '</span><span class="v">' + esc(detail) + '</span></li>';
+      });
+      html += '</ul>';
+      if (d.history && d.history.length > 1) {
+        html += '<div style="margin-top:12px;font-size:.8em;color:#666"><strong>History:</strong> ';
+        html += d.history.slice(0, 8).map(function(h){
+          return esc(new Date(h.date).toLocaleDateString()) + ': ' + h.mentioned + '/' + h.total;
+        }).join(' &rarr; ');
+        html += '</div>';
+      }
+      return html;
+    }, "DATAFORSEO_LOGIN");
+  }).catch(function(){
+    body("card-ai-monitor").innerHTML = oops();
   });
 })();
 </script>
