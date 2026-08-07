@@ -136,6 +136,12 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     <div class="body"><div class="state">Loading&hellip;</div></div>
   </div>
 
+  <div class="card" id="card-ai-referrals">
+    <h2>&#x1F916; People from AI assistants</h2>
+    <p class="hint">Visitors who came to our site from an AI assistant like ChatGPT, Perplexity, or Claude. This means someone asked an AI "where can I rent a margarita machine" and the AI sent them to us. This is the number that shows our AI optimization is working.</p>
+    <div class="body"><div class="state">Loading&hellip;</div></div>
+  </div>
+
   <div class="card" id="card-geo">
     <h2>&#x1F4CD; Where visitors are</h2>
     <p class="hint">The city people are browsing from, based on their internet connection (not their exact address).</p>
@@ -415,6 +421,17 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
       return rowsHtml(d.sources, function(s){ return esc(s.source); }, function(s){ return n(s.views); });
     }, "POSTHOG_API_KEY");
 
+    body("card-ai-referrals").innerHTML = handle(res, function(d){
+      if (!d.ai_referrals || !d.ai_referrals.length) return '<div class="state">No visits from AI assistants yet. This will light up when someone asks ChatGPT or Perplexity about margarita machine rentals and clicks through to our site. The llms.txt, markdown for agents, and Content-Signal headers are all in place to make that happen.</div>';
+      var aiNames = { "chat.openai.com": "ChatGPT", "chatgpt.com": "ChatGPT", "perplexity.ai": "Perplexity", "claude.ai": "Claude", "gemini.google.com": "Gemini", "copilot.microsoft.com": "Copilot", "you.com": "You.com", "poe.com": "Poe", "search.brave.com": "Brave Search", "kagi.com": "Kagi" };
+      var total = 0; d.ai_referrals.forEach(function(r){ total += r.visitors; });
+      var html = '<div class="rows"><div class="row"><span style="font-weight:600">Total from AI</span><span>' + n(total) + ' people</span></div>';
+      d.ai_referrals.forEach(function(r){
+        html += '<div class="row"><span>' + esc(aiNames[r.source] || r.source) + '</span><span>' + n(r.visitors) + ' people, ' + n(r.views) + ' views</span></div>';
+      });
+      return html + '</div>';
+    }, "POSTHOG_API_KEY");
+
     body("card-devices").innerHTML = handle(res, function(d){
       if (!d.devices || !d.devices.length) return empty();
       var icons = { Mobile: "📱", Desktop: "💻", Tablet: "📝" };
@@ -521,7 +538,7 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     }, "POSTHOG_API_KEY");
   }).catch(function(){
     [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions"),el("stat-duration")].forEach(function(e){ if(e) e.textContent = "—"; });
-    ["card-pages","card-sources","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound","card-utm-source","card-utm-medium","card-utm-campaign"].forEach(function(id){ body(id).innerHTML = oops(); });
+    ["card-pages","card-sources","card-ai-referrals","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound","card-utm-source","card-utm-medium","card-utm-campaign"].forEach(function(id){ body(id).innerHTML = oops(); });
   });
 
   // --- Game analytics (Analytics Engine) ---

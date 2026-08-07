@@ -588,7 +588,7 @@ async function handleContentStats(env) {
   const WIN = "timestamp > now() - INTERVAL 7 DAY";
   const PV = "event = '$pageview' AND " + WIN;
   try {
-    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits, entryPages, newVsReturn, outbound, duration, utmSources, utmMediums, utmCampaigns] = await Promise.all([
+    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits, entryPages, newVsReturn, outbound, duration, utmSources, utmMediums, utmCampaigns, aiReferrals] = await Promise.all([
       hog("SELECT count() AS pv, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV),
       hog("SELECT properties.$pathname AS p, count() AS n FROM events WHERE " + PV + " GROUP BY p ORDER BY n DESC LIMIT 10"),
       hog("SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE " + PV + " GROUP BY src ORDER BY n DESC LIMIT 8"),
@@ -606,6 +606,7 @@ async function handleContentStats(env) {
       hog("SELECT properties.$utm_source AS src, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_source IS NOT NULL AND properties.$utm_source != '' GROUP BY src ORDER BY n DESC LIMIT 10"),
       hog("SELECT properties.$utm_medium AS med, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_medium IS NOT NULL AND properties.$utm_medium != '' GROUP BY med ORDER BY n DESC LIMIT 10"),
       hog("SELECT properties.$utm_campaign AS cam, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_campaign IS NOT NULL AND properties.$utm_campaign != '' GROUP BY cam ORDER BY n DESC LIMIT 10"),
+      hog("SELECT properties.$referring_domain AS src, count() AS n, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV + " AND properties.$referring_domain IN ('chat.openai.com','chatgpt.com','perplexity.ai','claude.ai','gemini.google.com','copilot.microsoft.com','you.com','poe.com','search.brave.com','kagi.com') GROUP BY src ORDER BY n DESC"),
     ]);
     const scrollPct = (v) => { const n = Number(v) || 0; return n <= 1 ? Math.round(n * 100) : Math.round(n); };
     const avgDur = num(duration[0] && duration[0][0]);
@@ -636,6 +637,7 @@ async function handleContentStats(env) {
       utm_sources: utmSources.map((r) => ({ source: r[0], views: num(r[1]), visitors: num(r[2]) })),
       utm_mediums: utmMediums.map((r) => ({ medium: r[0], views: num(r[1]), visitors: num(r[2]) })),
       utm_campaigns: utmCampaigns.map((r) => ({ campaign: r[0], views: num(r[1]), visitors: num(r[2]) })),
+      ai_referrals: aiReferrals.map((r) => ({ source: r[0], views: num(r[1]), visitors: num(r[2]), sessions: num(r[3]) })),
     });
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
