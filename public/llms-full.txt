@@ -18,7 +18,7 @@ Key facts:
 - Included: dual-tank frozen drink machine, two flavors, delivery, setup, cups,
   a candy garnish on every cup, and pickup the next morning.
 - Flavors (choose two): Watermelon, Strawberry Lemonade, Blue Raspberry, Mango,
-  Margarita Lime, Pina Colada.
+  Orange, Margarita Lime, Pina Colada.
 - Alcohol: Slush Sisters rents the machine and supplies the mix. It does not
   sell or serve alcohol. Customers add their own tequila for margaritas.
 - Service area: Lakeway, Bee Cave, Lake Travis, Spicewood, Dripping Springs,
@@ -157,7 +157,7 @@ either a fun detail or the whole reason you book us.
   to kids' birthday parties instead.
 - How many flavors do we get? Two. The machine has two tanks, so you pick two
   from the flavor list and they both run all day. Watermelon, Strawberry
-  Lemonade, Blue Raspberry, Mango, Margarita Lime, and Pina Colada.
+  Lemonade, Blue Raspberry, Mango, Orange, Margarita Lime, and Pina Colada.
 - When do you pick the machine up? The next morning. You keep it for the whole
   event and overnight, so nobody has to watch the clock or clean anything up at
   the end of the night.
@@ -283,7 +283,7 @@ surprise you. The kids' tank costs the same as the grown-up one.
 
 Five days' notice -- we squeeze it the morning of your party.
 
-### The six classic flavors -- $250
+### The seven classic flavors -- $250
 
 Pick any two. Every cup still gets its candy garnish.
 
@@ -295,6 +295,8 @@ Pick any two. Every cup still gets its candy garnish.
   every single time. Blue raspberry ring on the rim
 - Mango -- Tropical and smooth. Amazing with a little Tajin on the rim. A
   grown-up favorite too. Mango gummy bear on the rim
+- Orange -- Classic citrus. Bright, sweet, and tastes like a freshly squeezed
+  creamsicle without the cream. Orange slice gummy on the rim
 - Margarita Lime -- THE classic margarita base. We make it frozen, adults add
   their own tequila. Lime wedge gummy on the rim
 - Pina Colada -- Coconut + pineapple. Tastes like a vacation in a cup. Pool
@@ -392,7 +394,7 @@ Press $375), Flavor 1, Flavor 2, Event address, Phone or email, How did you
 first hear about us (dropdown + open-ended text), Anything else.
 
 Flavors available: Watermelon, Strawberry Lemonade, Blue Raspberry, Mango,
-Margarita Lime, Pina Colada, Agave Lime (Fresh Press).
+Orange, Margarita Lime, Pina Colada, Agave Lime (Fresh Press).
 
 What happens next:
 1. We check your date is open and reply the same day.
