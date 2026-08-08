@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Everest — what we have learned so far</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{
+  --brand:#1a237e;
+  --ice:#4fc3f7;
+  --ice-deep:#29b6f6;
+  --wash:#e8f4fd;
+  --blush:#fff5f7;
+  --on-brand:#fff;
+  --ink-ice:#0165a8;
+  --pop:#ff4081;
+  --ink-pink:#c2185b;
+  --pink-pale:#ffd6e7;
+  --cta:#0277bd;
+  --cta-deep:#01579b;
+  --line-strong:#767b85;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:var(--ink-ice);}
+img{max-width:100%;display:block;}
+
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:var(--cta);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--cta-deep);}
+.cta-m{display:none;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;}
+.cta-m{display:inline-block;background:var(--cta);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+.menu-btn{padding:10px 6px;line-height:1;}
+}
+
+section{padding:48px 24px;}
+.contain{max-width:720px;margin:0 auto;}
+h1{font-family:'Baloo 2',sans-serif;font-size:1.75rem;font-weight:800;margin-bottom:8px;color:var(--brand);}
+h2{font-family:'Baloo 2',sans-serif;font-size:1.3rem;font-weight:800;margin-top:36px;margin-bottom:12px;color:#1a1a1a;}
+p{font-size:.92rem;color:#444;line-height:1.7;margin-bottom:12px;}
+
+.checklist{list-style:none;padding:0;margin:0 0 12px 0;}
+.checklist li{position:relative;padding:12px 12px 12px 36px;border-bottom:1px solid #f0f0f0;font-size:.9rem;color:#333;line-height:1.6;}
+.checklist li::before{content:"☐";position:absolute;left:8px;top:12px;font-size:1.1rem;color:var(--ink-ice);}
+.checklist li strong{color:#1a1a1a;}
+.checklist li .why{display:block;font-size:.82rem;color:#777;margin-top:4px;line-height:1.5;}
+.checklist li .how{display:block;font-size:.82rem;color:var(--ink-ice);margin-top:4px;line-height:1.5;font-weight:500;}
+
+.intro-box{background:var(--wash);border-radius:12px;padding:24px;margin-bottom:32px;}
+.intro-box p{margin-bottom:8px;}
+.intro-box p:last-child{margin-bottom:0;}
+
+.section-label{display:inline-block;font-family:'Baloo 2',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-ice);margin-bottom:4px;}
+
+.bg-light{background:#f8fbff;}
+
+footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left;}
+.f-wrap{max-width:800px;margin:0 auto;}
+.f-bottom{margin-top:0;padding-top:0;}
+.f-bottom .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:6px;}
+.f-bottom .f-name span{color:var(--ice);}
+.f-bottom p{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:5px;}
+.f-bottom a{color:var(--ice);}
+</style>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta name="theme-color" content="#1a237e">
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/grown-ups">For Grown-Ups</a>
+<a href="/flavors">Flavors</a>
+<a href="/lab">The Lab</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/play">Arcade</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<a href="/book" class="cta-m">Book</a>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">&#9776;</button>
+</header>
+
+<section>
+<div class="contain">
+<h1>For Everest</h1>
+
+<div class="intro-box">
+<p>This page is for our friend Everest, who runs <a href="https://eezfreeze.com/">EEZ Freeze</a> in Wimberley. He is the reason Slush Sisters exists &mdash; we saw his business and wanted to do our own version up in Lakeway.</p>
+<p>We are not competitors. We are 45 minutes apart and we send each other business. This is everything we have tried so far that worked, written down so he can use whatever is useful and skip whatever is not.</p>
+<p>We will keep adding to it as we learn more.</p>
+</div>
+
+<h2>Your website</h2>
+<p>Your site looks clean and it works. These are things we added to ours that made a difference.</p>
+
+<span class="section-label">Big wins</span>
+<ul class="checklist">
+<li>
+<strong>Add an online booking form.</strong>
+<span class="why">Right now people have to call, text, or email to book. A form on the site lets someone book at 11 pm on a Tuesday without waiting for a reply. It also captures their info in one place so nothing gets lost in a text thread.</span>
+<span class="how">You do not need anything fancy. A simple form with: name, date, address, which flavors, and how they heard about you. The "how did you hear about us" box should be open-ended (not a dropdown) &mdash; the specific answer ("Sarah at the pool") is more useful than a category.</span>
+</li>
+<li>
+<strong>Tell your story on the site.</strong>
+<span class="why">Your site says what EEZ Freeze does but not who you are. People book a kid-run business partly because of the kid. The fact that you are 11 and started this yourself is the most interesting thing about your company, and it is not on your website right now.</span>
+<span class="how">Add a section about yourself &mdash; how you got the idea, how old you were when you started, what you have learned. One or two paragraphs and a photo of you at an event. This is the thing people share.</span>
+</li>
+<li>
+<strong>Add real photos from events.</strong>
+<span class="why">Photos of the machine at a real party, with real people holding drinks, convert way better than stock images or product shots. They show what the experience actually looks like.</span>
+<span class="how">Ask customers if you can take a few photos during setup. Even phone photos work. Show the machine set up in a backyard, a kid holding a blue raspberry slushie, the table with cups ready to go.</span>
+</li>
+</ul>
+
+<span class="section-label">SEO (showing up on Google)</span>
+<ul class="checklist">
+<li>
+<strong>Set up a Google Business Profile.</strong>
+<span class="why">When someone searches "frozen drink machine rental Wimberley" on Google, a Business Profile is what shows the map listing with your phone number, reviews, and a link to your site. Without one, you are invisible on Google Maps. This is free and it is probably the single highest-value thing on this list.</span>
+<span class="how">Open Google Maps on your phone, tap your profile picture, tap "Your Business Profile," and follow the steps. Pick "Party equipment rental service" as the category. Set it as a service-area business (no storefront address shown). Add Wimberley and the Hill Country towns you serve. Google will verify you by phone or postcard.</span>
+</li>
+<li>
+<strong>Add a meta description to your site.</strong>
+<span class="why">A meta description is the two lines of text that show under your site name in Google search results. Without one, Google picks a random sentence from your page. With one, you control what people read before they click.</span>
+<span class="how">In the &lt;head&gt; of your HTML, add: &lt;meta name="description" content="Frozen drink machine rentals in Wimberley, TX. Delivery, setup, and pickup included. Kid-friendly slushies and grown-up frozen cocktails."&gt;</span>
+</li>
+<li>
+<strong>Create separate pages for each town you serve.</strong>
+<span class="why">A page called "Frozen Drink Machine Rental in Wimberley" ranks for people searching those exact words in that town. A page called "Frozen Drink Machine Rental in Dripping Springs" ranks for that town. One homepage cannot rank for all of them.</span>
+<span class="how">Each page does not need to be long. A headline, a paragraph about what parties look like in that area, your pricing, and a booking link. We have six of these and they bring in real traffic.</span>
+</li>
+<li>
+<strong>Add structured data (schema markup).</strong>
+<span class="why">This is code in the page that tells Google exactly what your business is &mdash; name, location, service area, price, FAQs. Google uses it to show rich results (star ratings, price, FAQ dropdowns) instead of just a plain link.</span>
+<span class="how">This one is more technical. If you are building the site yourself, search "LocalBusiness schema markup" and add a JSON-LD block in the &lt;head&gt;. If someone is helping you with the site, ask them to add it.</span>
+</li>
+<li>
+<strong>Add Open Graph tags so links look good when shared.</strong>
+<span class="why">When someone shares your site link on Facebook, iMessage, or Instagram, the OG tags control what image and text show up in the preview. Without them, the link looks blank or pulls a random image.</span>
+<span class="how">Add og:title, og:description, and og:image tags in the &lt;head&gt;. The image should be 1200&times;630 pixels &mdash; your logo on a colored background works fine.</span>
+</li>
+</ul>
+
+<h2>Google Search Console</h2>
+<ul class="checklist">
+<li>
+<strong>Set up Google Search Console.</strong>
+<span class="why">It is free and it shows you exactly what people are typing into Google when your site shows up, how often they click, and which pages rank. Without it, you are guessing what search terms matter.</span>
+<span class="how">Go to search.google.com/search-console, add your site as a "Domain" property, and verify with a DNS TXT record (your domain registrar has instructions for this). It takes a few days to start showing data.</span>
+</li>
+</ul>
+
+<h2>Analytics (knowing what is happening on your site)</h2>
+<ul class="checklist">
+<li>
+<strong>Add basic analytics so you know how many people visit.</strong>
+<span class="why">Right now you have no way to know how many people look at your site, which pages they visit, or where they come from. Even simple numbers &mdash; 50 visitors this week vs. 200 &mdash; tell you whether what you are doing is working.</span>
+<span class="how">We use PostHog (free tier is plenty for our volume). Google Analytics is the other common option. Either one is a single script tag you add to your page. PostHog is more privacy-friendly, which matters if kids visit your site.</span>
+</li>
+<li>
+<strong>Use UTM-tagged links when you post on social media.</strong>
+<span class="why">A UTM tag is extra text on the end of a URL that tells your analytics where the click came from. Without it, you see "someone visited my site" but not "someone visited because of the Instagram post I made on Tuesday."</span>
+<span class="how">Instead of sharing eezfreeze.com, share eezfreeze.com?utm_source=instagram&amp;utm_medium=social. We made short redirect links (/go/ig, /go/fb, /go/tiktok) so the girls do not have to type the full thing every time.</span>
+</li>
+</ul>
+
+<h2>Social media</h2>
+<p>We are still figuring this out ourselves. Here is what the research says and what we have seen work.</p>
+
+<ul class="checklist">
+<li>
+<strong>Post Reels, not just photos.</strong>
+<span class="why">Instagram and TikTok both push video way harder than static photos. A 15-second Reel of you setting up the machine at a party reaches 2&ndash;3 times more people than a photo of the same setup.</span>
+<span class="how">The easiest Reel to make is a setup timelapse: prop your phone up, start recording, set up the machine and the table, speed it up to 15 seconds. Shoot one at every rental.</span>
+</li>
+<li>
+<strong>Show yourself, not just the product.</strong>
+<span class="why">We looked at a bunch of similar businesses on Instagram. The ones that grow fastest are the ones where you see the person running it. An 11-year-old running a real business is the interesting part &mdash; slushies are just the vehicle. People share the story, not the drink.</span>
+<span class="how">Behind-the-scenes content: loading the machine into the car, counting the money after a rental, testing a new flavor, arguing with your parents about the business. The less polished, the better.</span>
+</li>
+<li>
+<strong>Post in your local Facebook groups.</strong>
+<span class="why">For a local service business, neighborhood Facebook groups convert better than Instagram or TikTok. The people in those groups are the ones actually booking parties in your area.</span>
+<span class="how">Find the Wimberley community groups, the neighborhood groups, the parents&rsquo; groups. Post when you have an opening, share a photo from a recent event, answer when someone asks about party ideas. Do not spam &mdash; be helpful and be real.</span>
+</li>
+<li>
+<strong>Not everything has to be selling.</strong>
+<span class="why">If every post is "book a machine," people stop following. Roughly half of what you post should just be you &mdash; business lessons, school stuff, behind the scenes, funny things that happened. The people who follow you for that are the ones who eventually book.</span>
+</li>
+</ul>
+
+<h2>Product ideas</h2>
+<p>These are things we have done or are thinking about. Take whatever sounds good.</p>
+
+<ul class="checklist">
+<li>
+<strong>Add a candy garnish to every cup.</strong>
+<span class="why">This is our thing and you are welcome to steal it. A piece of candy on the rim that matches the flavor &mdash; watermelon slushie gets a Sour Patch Watermelon, blue raspberry gets a blue gummy &mdash; costs almost nothing per cup and it is the thing people photograph and post. It is the most shared part of the experience.</span>
+</li>
+<li>
+<strong>Expand the flavor menu.</strong>
+<span class="why">You have four flavors right now. More options mean more reasons for repeat customers and more things to post about. We have sixteen classic flavors and it gives people something to talk about when they are picking.</span>
+<span class="how">Test new flavors in small batches. We keep a lab page on our site where we post our experiments, including the ones that failed. Customers think it is fun and it is good content.</span>
+</li>
+<li>
+<strong>Consider a premium fresh-fruit tier.</strong>
+<span class="why">We are working on a "Fresh Press" option &mdash; real limes, agave, no artificial dye &mdash; at a higher price point. The Hill Country / wine country crowd will pay more for something that feels handmade. Wimberley seems like exactly the right market for this.</span>
+<span class="how">Start with a simple fresh limeade or lemonade recipe. Test whether it freezes properly in your machine before you sell it &mdash; low-sugar mixes can freeze too hard.</span>
+</li>
+<li>
+<strong>Offer themed or named packages.</strong>
+<span class="why">Instead of "pick two flavors," offer a "Birthday Bash" (strawberry + blue raspberry + candy bar) or a "Pool Party" (watermelon + pina colada). Named packages make the decision easier for the customer and give each setup its own identity for content.</span>
+</li>
+</ul>
+
+<h2>Business stuff</h2>
+<ul class="checklist">
+<li>
+<strong>Get business insurance.</strong>
+<span class="why">Schools, HOAs, and corporate events will not book you without it. Even backyard parties &mdash; if something goes wrong with the machine at someone&rsquo;s house, insurance is what protects your family. It is boring but it is real.</span>
+</li>
+<li>
+<strong>Put your pricing on the site.</strong>
+<span class="why">Your pricing is already on your site, which is good &mdash; a lot of businesses hide it. The clearer you make it (one price, everything included, no surprises), the more people book without needing to call first.</span>
+</li>
+<li>
+<strong>Track where every booking comes from.</strong>
+<span class="why">Knowing that five bookings came from the Wimberley Facebook group and zero came from Instagram tells you where to spend your time. Without tracking, you are guessing.</span>
+<span class="how">The simplest version: add "How did you hear about us?" to your booking process (call, text, or form). Write it down for every single booking. Review it once a month.</span>
+</li>
+</ul>
+
+<h2>What we are still working on</h2>
+<p>We do not have all of this figured out either. Things we are actively trying to get right:</p>
+<ul class="checklist">
+<li><strong>Consistent social posting</strong> &mdash; we know what to post, we just need to do it every week.</li>
+<li><strong>Getting reviews</strong> &mdash; we just set up our Google Business Profile and need to ask past customers to leave reviews.</li>
+<li><strong>The fresh-fruit premium tier</strong> &mdash; still testing recipes and figuring out the price.</li>
+<li><strong>Connecting social media analytics</strong> &mdash; we track website traffic well but we are still learning how to measure what works on Instagram and TikTok.</li>
+</ul>
+<p>We will update this page as we figure things out. If you try something from this list and it works (or does not), let us know and we will add it.</p>
+
+<div style="margin-top:36px;padding:24px;background:var(--wash);border-radius:12px;text-align:center;">
+<p style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.1rem;color:var(--brand);margin-bottom:8px;">We are rooting for you, Everest.</p>
+<p style="font-size:.88rem;color:#555;margin-bottom:0;">&mdash; Harper and Finley</p>
+</div>
+
+</div>
+</section>
+
+<footer>
+<div class="f-wrap">
+<div class="f-bottom">
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink machine rentals &mdash; Lakeway, Texas</p>
+<p><a href="mailto:hello@slushsisters.com">hello@slushsisters.com</a></p>
+<p style="margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC</p>
+</div>
+</div>
+</footer></body></html>
