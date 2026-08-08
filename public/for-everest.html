@@ -112,7 +112,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <li>
 <strong>Add an online booking form.</strong>
 <span class="why">Right now people have to call, text, or email to book. A form on the site lets someone book at 11 pm on a Tuesday without waiting for a reply. It also captures their info in one place so nothing gets lost in a text thread.</span>
-<span class="how">You do not need anything fancy. A simple form with: name, date, address, which flavors, and how they heard about you. The "how did you hear about us" box should be open-ended (not a dropdown) &mdash; the specific answer ("Sarah at the pool") is more useful than a category.</span>
+<span class="how">You do not need anything fancy. Here are the exact fields we use: name, email, phone, event date, event time, event address (so you know if it is in your delivery range), which two flavors they want (dropdown from your menu), "anything else we should know" (free text), and "how did you hear about us" (also free text, not a dropdown &mdash; the specific answer like "Jenny at the Wimberley pool" is more useful than a category like "word of mouth"). You can build this with Google Forms for free, or Tally.so is another free option that looks nicer. Either one emails you when someone submits.</span>
 </li>
 <li>
 <strong>Tell your story on the site.</strong>
@@ -131,18 +131,50 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <li>
 <strong>Set up a Google Business Profile.</strong>
 <span class="why">When someone searches "frozen drink machine rental Wimberley" on Google, a Business Profile is what shows the map listing with your phone number, reviews, and a link to your site. Without one, you are invisible on Google Maps. This is free and it is probably the single highest-value thing on this list.</span>
-<span class="how">Open Google Maps on your phone, tap your profile picture, tap "Your Business Profile," and follow the steps. Pick "Party equipment rental service" as the category. Set it as a service-area business (no storefront address shown). Add Wimberley and the Hill Country towns you serve. Google will verify you by phone or postcard.</span>
+<span class="how">Open Google Maps on your phone, tap your profile picture, tap "Your Business Profile," and follow the steps. Business name: EEZ Freeze. Category: "Party equipment rental service." Set it as a service-area business (no storefront address shown). For service areas, add: Wimberley, San Marcos, Kyle, Buda, New Braunfels, Canyon Lake, Blanco, and Dripping Springs. Business description: "Frozen drink machine rentals in Wimberley and the Texas Hill Country. Delivery, setup, and pickup included. Slushies for kids, frozen cocktails for grown-ups. Run by Everest, age 11." Google will verify you by phone or postcard &mdash; phone is instant if they offer it, postcard takes about a week.</span>
 </li>
 <li>
 <strong>Add a meta description to your site.</strong>
 <span class="why">A meta description is the two lines of text that show under your site name in Google search results. Without one, Google picks a random sentence from your page. With one, you control what people read before they click.</span>
-<span class="how">In the &lt;head&gt; of your HTML, add: &lt;meta name="description" content="Frozen drink machine rentals in Wimberley, TX. Delivery, setup, and pickup included. Kid-friendly slushies and grown-up frozen cocktails."&gt;</span>
+<span class="how">In the &lt;head&gt; of your HTML, right after the &lt;title&gt; tag, paste this line exactly:<br><code style="display:block;background:#f5f5f5;padding:8px 12px;border-radius:6px;font-size:.8rem;margin-top:6px;overflow-x:auto;white-space:pre;">&lt;meta name="description" content="Frozen drink machine rentals in Wimberley and the Texas Hill Country. Delivery, setup, and pickup included. Slushies for kids, frozen cocktails for grown-ups. Run by Everest, age 11."&gt;</code></span>
 </li>
 <li>
-<strong>Create separate pages for each town you serve.</strong>
-<span class="why">A page called "Frozen Drink Machine Rental in Wimberley" ranks for people searching those exact words in that town. A page called "Frozen Drink Machine Rental in Dripping Springs" ranks for that town. One homepage cannot rank for all of them.</span>
-<span class="how">Each page does not need to be long. A headline, a paragraph about what parties look like in that area, your pricing, and a booking link. We have six of these and they bring in real traffic.</span>
+<strong>Create a separate page for each town you serve.</strong>
+<span class="why">A page called "Frozen Drink Machine Rental in San Marcos" ranks for people searching those exact words in San Marcos. Your homepage cannot rank for every town. We have six of these and they bring in real traffic.</span>
+<span class="how">Here are the pages we would make if we were EEZ Freeze, in priority order:</span>
 </li>
+</ul>
+
+<ol class="checklist" style="list-style:none;counter-reset:town;">
+<li style="padding-left:36px;">
+<strong>1. Wimberley</strong> &mdash; your home base. You already rank here but a dedicated page with "Frozen Drink Machine Rental in Wimberley, TX" in the title, a meta description, and FAQ schema will lock it down.
+</li>
+<li style="padding-left:36px;">
+<strong>2. San Marcos</strong> &mdash; 15 minutes south, Texas State University campus, college parties plus family events. This is probably your biggest untapped market. Title: "Frozen Drink Machine Rental in San Marcos, TX."
+</li>
+<li style="padding-left:36px;">
+<strong>3. Kyle</strong> &mdash; 20 minutes east, one of the fastest-growing cities in Texas, lots of new neighborhoods with young families throwing birthday parties. Title: "Frozen Drink Machine Rental in Kyle, TX."
+</li>
+<li style="padding-left:36px;">
+<strong>4. Buda</strong> &mdash; 25 minutes northeast, same growth story as Kyle. Title: "Frozen Drink Machine Rental in Buda, TX."
+</li>
+<li style="padding-left:36px;">
+<strong>5. New Braunfels</strong> &mdash; 30 minutes southeast, big tourist and river town. Lots of summer parties, Gruene Hall area, float trips. Title: "Frozen Drink Machine Rental in New Braunfels, TX."
+</li>
+<li style="padding-left:36px;">
+<strong>6. Canyon Lake</strong> &mdash; 25 minutes south, lake community with summer parties very similar to the Lake Travis crowd we serve. Title: "Frozen Drink Machine Rental in Canyon Lake, TX."
+</li>
+<li style="padding-left:36px;">
+<strong>7. Blanco</strong> &mdash; 25 minutes west, small Hill Country town but enough events to be worth a page. Title: "Frozen Drink Machine Rental in Blanco, TX."
+</li>
+<li style="padding-left:36px;">
+<strong>8. Dripping Springs</strong> &mdash; 20 minutes northwest. We also serve Dripping Springs from our side, so this one overlaps. That is fine &mdash; we can both have a page and let the customer pick whoever is closer or available. No need to avoid it.
+</li>
+</ol>
+
+<p style="font-size:.85rem;color:#555;line-height:1.6;margin-top:12px;margin-bottom:20px;">Each page needs: a title with the town name and "Frozen Drink Machine Rental," a meta description (one sentence about what you do there), a headline, one or two paragraphs about what parties look like in that area, your pricing, and a link to book. That is it &mdash; ours are about 400 words each. Write something real about the area, not generic filler.</p>
+
+<ul class="checklist">
 <li>
 <strong>Add structured data (schema markup).</strong>
 <span class="why">This is code in the page that tells Google exactly what your business is &mdash; name, location, service area, price, FAQs. Google uses it to show rich results (star ratings, price, FAQ dropdowns) instead of just a plain link.</span>
@@ -151,7 +183,11 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <li>
 <strong>Add Open Graph tags so links look good when shared.</strong>
 <span class="why">When someone shares your site link on Facebook, iMessage, or Instagram, the OG tags control what image and text show up in the preview. Without them, the link looks blank or pulls a random image.</span>
-<span class="how">Add og:title, og:description, and og:image tags in the &lt;head&gt;. The image should be 1200&times;630 pixels &mdash; your logo on a colored background works fine.</span>
+<span class="how">Paste these lines in the &lt;head&gt; of your HTML, after the meta description:<br><code style="display:block;background:#f5f5f5;padding:8px 12px;border-radius:6px;font-size:.8rem;margin-top:6px;overflow-x:auto;white-space:pre;">&lt;meta property="og:title" content="EEZ Freeze — Frozen Drink Machine Rentals in Wimberley, TX"&gt;
+&lt;meta property="og:description" content="Frozen drink machine rentals in Wimberley and the Hill Country. Delivery, setup, pickup included."&gt;
+&lt;meta property="og:image" content="https://eezfreeze.com/your-og-image.png"&gt;
+&lt;meta property="og:image:width" content="1200"&gt;
+&lt;meta property="og:image:height" content="630"&gt;</code>For the image, make a 1200&times;630 pixel graphic &mdash; your EEZ Freeze logo centered on a solid background color. Canva can do this for free in about two minutes. Save it as a PNG, upload it to your site, and put the URL in the og:image tag.</span>
 </li>
 </ul>
 
@@ -169,12 +205,12 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <li>
 <strong>Add basic analytics so you know how many people visit.</strong>
 <span class="why">Right now you have no way to know how many people look at your site, which pages they visit, or where they come from. Even simple numbers &mdash; 50 visitors this week vs. 200 &mdash; tell you whether what you are doing is working.</span>
-<span class="how">We use PostHog (free tier is plenty for our volume). Google Analytics is the other common option. Either one is a single script tag you add to your page. PostHog is more privacy-friendly, which matters if kids visit your site.</span>
+<span class="how">We use PostHog. Here is how to set it up: go to posthog.com, sign up with your email, create a project called "EEZ Freeze," and it will give you a script tag &mdash; a few lines of code that start with &lt;script&gt;. Paste that right before the &lt;/head&gt; tag in your HTML. That is it. Once it is in, you will see a dashboard showing how many people visited, which pages they looked at, where they came from, and what they clicked. The free tier handles up to a million events a month, which is way more than either of us will ever hit.</span>
 </li>
 <li>
 <strong>Use UTM-tagged links when you post on social media.</strong>
 <span class="why">A UTM tag is extra text on the end of a URL that tells your analytics where the click came from. Without it, you see "someone visited my site" but not "someone visited because of the Instagram post I made on Tuesday."</span>
-<span class="how">Instead of sharing eezfreeze.com, share eezfreeze.com?utm_source=instagram&amp;utm_medium=social. We made short redirect links (/go/ig, /go/fb, /go/tiktok) so the girls do not have to type the full thing every time.</span>
+<span class="how">When you post on Instagram, share this link instead of plain eezfreeze.com:<br><code style="display:block;background:#f5f5f5;padding:8px 12px;border-radius:6px;font-size:.8rem;margin-top:6px;overflow-x:auto;white-space:pre;">eezfreeze.com?utm_source=instagram&amp;utm_medium=social</code>For Facebook:<br><code style="display:block;background:#f5f5f5;padding:8px 12px;border-radius:6px;font-size:.8rem;margin-top:6px;overflow-x:auto;white-space:pre;">eezfreeze.com?utm_source=facebook&amp;utm_medium=social</code>For TikTok:<br><code style="display:block;background:#f5f5f5;padding:8px 12px;border-radius:6px;font-size:.8rem;margin-top:6px;overflow-x:auto;white-space:pre;">eezfreeze.com?utm_source=tiktok&amp;utm_medium=social</code>Save these in your phone&rsquo;s notes so you can copy-paste them. Your analytics will then show exactly how many visitors came from each platform.</span>
 </li>
 </ul>
 
@@ -195,7 +231,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <li>
 <strong>Post in your local Facebook groups.</strong>
 <span class="why">For a local service business, neighborhood Facebook groups convert better than Instagram or TikTok. The people in those groups are the ones actually booking parties in your area.</span>
-<span class="how">Find the Wimberley community groups, the neighborhood groups, the parents&rsquo; groups. Post when you have an opening, share a photo from a recent event, answer when someone asks about party ideas. Do not spam &mdash; be helpful and be real.</span>
+<span class="how">Search Facebook for these kinds of groups and join them: "Wimberley Community," "Wimberley Texas Moms," "San Marcos Moms," "Kyle Texas Community," "Buda Texas Community," "New Braunfels Moms Group," and any neighborhood-specific groups in the subdivisions near you. Post when you have an opening, share a photo from a recent event, answer when someone asks about party ideas. Do not spam &mdash; be helpful and be real. One post in a neighborhood group with 3,000 members is worth more than an Instagram post that reaches 200 strangers.</span>
 </li>
 <li>
 <strong>Not everything has to be selling.</strong>
@@ -209,12 +245,13 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <ul class="checklist">
 <li>
 <strong>Add a candy garnish to every cup.</strong>
-<span class="why">This is our thing and you are welcome to steal it. A piece of candy on the rim that matches the flavor &mdash; watermelon slushie gets a Sour Patch Watermelon, blue raspberry gets a blue gummy &mdash; costs almost nothing per cup and it is the thing people photograph and post. It is the most shared part of the experience.</span>
+<span class="why">This is our thing and you are welcome to steal it. A piece of candy on the rim that matches the flavor costs almost nothing per cup and it is the thing people photograph and post. It is the most shared part of the experience.</span>
+<span class="how">For your four flavors: Blue Raspberry &rarr; blue Jolly Rancher or blue gummy bear. Green Apple &rarr; green apple ring or green Jolly Rancher. Watermelon &rarr; Sour Patch Watermelon. Pina Colada &rarr; a gummy pineapple ring or a small pineapple wedge if you want to go fresh. Buy in bulk from Sam&rsquo;s Club or Amazon &mdash; a bag that does 50 cups costs about $4.</span>
 </li>
 <li>
 <strong>Expand the flavor menu.</strong>
-<span class="why">You have four flavors right now. More options mean more reasons for repeat customers and more things to post about. We have sixteen classic flavors and it gives people something to talk about when they are picking.</span>
-<span class="how">Test new flavors in small batches. We keep a lab page on our site where we post our experiments, including the ones that failed. Customers think it is fun and it is good content.</span>
+<span class="why">You have four flavors right now (Blue Raspberry, Green Apple, Watermelon, Pina Colada). More options mean more reasons for repeat customers and more things to post about. We have sixteen and it gives people something to talk about when they are picking.</span>
+<span class="how">Flavors we would add next if we were you: Strawberry (the most popular kids&rsquo; flavor by far), Mango (works great as a cocktail mixer too), Lemonade (everyone likes it, easy to make), and Cherry Limeade (the Sonic drive-through flavor &mdash; people get excited about it). Test each one in a small batch first to make sure it freezes right in your machine. If it comes out too icy or too soft, adjust the sugar ratio &mdash; we post our experiments at <a href="/lab">slushsisters.com/lab</a> if you want to see how we test.</span>
 </li>
 <li>
 <strong>Consider a premium fresh-fruit tier.</strong>
