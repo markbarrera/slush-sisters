@@ -88,6 +88,22 @@ h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--brand);font-size
 
 .foot{margin-top:28px;color:#888;font-size:.8rem;text-align:center;}
 code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
+
+/* --- date range picker --- */
+.range-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:16px;}
+.range-btn{font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;border:2px solid var(--line);background:#fff;color:var(--brand);padding:6px 14px;border-radius:999px;cursor:pointer;transition:all .15s;}
+.range-btn:hover{border-color:var(--ice);}
+.range-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+.range-custom{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.range-custom input[type=date]{font-family:'DM Sans',sans-serif;font-size:.82rem;border:2px solid var(--line);border-radius:10px;padding:5px 10px;color:var(--brand);}
+.range-label{font-size:.82rem;color:#888;margin-left:auto;}
+
+/* --- trend chart --- */
+.trend-wrap{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:24px;}
+.trend-wrap h2{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.05rem;color:var(--brand);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.trend-wrap .hint{color:#888;font-size:.8rem;margin-bottom:14px;}
+.trend-legend{display:flex;gap:16px;font-size:.78rem;color:#666;margin-bottom:8px;}
+.trend-legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle;}
 </style>
 </head>
 <body>
@@ -98,7 +114,21 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
 </header>
 
 <h1>Our Numbers</h1>
-<p class="intro">Everything we know about who visits our site, how they found us, what they do when they get here, and whether they book. This is what marketing looks like — real data about real people deciding whether to hire us. Last 7 days, updated when you reload.</p>
+<p class="intro">Everything we know about who visits our site, how they found us, what they do when they get here, and whether they book. This is what marketing looks like — real data about real people deciding whether to hire us. <span id="range-desc">Last 7 days</span>, updated when you reload.</p>
+
+<div class="range-bar" id="range-bar">
+  <button class="range-btn active" data-days="7">7 days</button>
+  <button class="range-btn" data-days="14">14 days</button>
+  <button class="range-btn" data-days="30">30 days</button>
+  <button class="range-btn" id="btn-custom">Custom</button>
+  <div class="range-custom" id="range-custom" style="display:none">
+    <input type="date" id="range-from">
+    <span style="color:#888;font-size:.82rem">to</span>
+    <input type="date" id="range-to">
+    <button class="range-btn" id="btn-apply">Go</button>
+  </div>
+  <span class="range-label" id="range-label">Last 7 days</span>
+</div>
 
 <div class="stats" id="stats">
   <div class="stat">
@@ -125,6 +155,12 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
 
 <div class="split" id="split">
   <div class="state">Loading traffic breakdown&hellip;</div>
+</div>
+
+<div class="trend-wrap" id="trend-wrap">
+  <h2>&#x1F4C8; Daily traffic</h2>
+  <p class="hint">Visitors and page views each day over the selected period.</p>
+  <div id="trend-body"><div class="state">Loading&hellip;</div></div>
 </div>
 
 <div class="section">&#x1F6AA; How People Find Us</div>
@@ -297,7 +333,7 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
   </div>
 </div>
 
-<p class="foot">Numbers cover the last 7 days and update when you reload. Nothing here is a secret about any customer — just totals. "Visitors" counts different people; "Visits" counts if the same person comes back twice; "Page Views" counts every page anyone read. The stat tiles only count real people using a browser, not robots.</p>
+<p class="foot">Numbers cover the selected time period and update when you reload. Nothing here is a secret about any customer — just totals. "Visitors" counts different people; "Visits" counts if the same person comes back twice; "Page Views" counts every page anyone read. The stat tiles only count real people using a browser, not robots.</p>
 </div>
 
 <script>
@@ -312,14 +348,16 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
   var SEG_LABELS = { human: "Real people", search: "Search engines", ai: "AI helpers", social: "Social apps", scraper: "Scrapers", none: "Unknown" };
   var SEG_ORDER = ["human", "search", "ai", "social", "scraper", "none"];
   var SEG_CSS = { human: "seg-human", search: "seg-search", ai: "seg-ai", social: "seg-social", scraper: "seg-scraper", none: "seg-none" };
+  var GAME_LABELS = { catch: "Slushie Catch", rush: "Slush Rush", playhouse: "Playhouse", style: "Slushie Style", street: "Slushie Street", guys: "Slushie Guys" };
 
   function el(id){ return document.getElementById(id); }
-  function body(cardId){ return el(cardId).querySelector(".body"); }
+  function body(cardId){ var c = el(cardId); return c ? c.querySelector(".body") : null; }
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){
     return ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" })[c]; }); }
   function prettyPath(p){ if(!p || p === "/") return "Home page"; return esc(p.replace(/\.html$/,"")); }
   function n(x){ return Number(x || 0).toLocaleString(); }
   function pct(part, whole){ return whole ? Math.round(part / whole * 100) : 0; }
+  function gameName(k){ return GAME_LABELS[k] || k; }
 
   function rowsHtml(items, keyFn, valFn){
     if (!items || !items.length) return empty();
@@ -341,6 +379,152 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     return ok(res);
   }
 
+  // --- Date range state ---
+  var currentDays = 7;
+  var currentFrom = null;
+  var currentTo = null;
+
+  function rangeQuery() {
+    if (currentFrom && currentTo) return '?from=' + currentFrom + '&to=' + currentTo;
+    return '?days=' + currentDays;
+  }
+
+  function rangeLabel() {
+    if (currentFrom && currentTo) {
+      var f = new Date(currentFrom + 'T12:00:00');
+      var t = new Date(currentTo + 'T12:00:00');
+      var opts = { month: 'short', day: 'numeric' };
+      return f.toLocaleDateString('en-US', opts) + ' – ' + t.toLocaleDateString('en-US', opts);
+    }
+    return 'Last ' + currentDays + ' days';
+  }
+
+  function updateRangeLabel() {
+    var desc = el('range-desc');
+    var label = el('range-label');
+    var txt = rangeLabel();
+    if (desc) desc.textContent = txt;
+    if (label) label.textContent = txt;
+  }
+
+  // --- Date picker ---
+  var btns = document.querySelectorAll('.range-btn[data-days]');
+  var btnCustom = el('btn-custom');
+  var customPanel = el('range-custom');
+  var inputFrom = el('range-from');
+  var inputTo = el('range-to');
+  var btnApply = el('btn-apply');
+
+  function setActive(activeEl) {
+    for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+    if (btnCustom) btnCustom.classList.remove('active');
+    if (activeEl) activeEl.classList.add('active');
+  }
+
+  for (var bi = 0; bi < btns.length; bi++) {
+    (function(btn){
+      btn.addEventListener('click', function(){
+        currentDays = parseInt(btn.getAttribute('data-days'), 10);
+        currentFrom = null;
+        currentTo = null;
+        setActive(btn);
+        if (customPanel) customPanel.style.display = 'none';
+        updateRangeLabel();
+        loadAll();
+      });
+    })(btns[bi]);
+  }
+
+  if (btnCustom) btnCustom.addEventListener('click', function(){
+    setActive(btnCustom);
+    if (customPanel) customPanel.style.display = 'flex';
+    if (inputFrom && !inputFrom.value) {
+      var today = new Date();
+      var ago = new Date(today.getTime() - 13 * 86400000);
+      inputTo.value = today.toISOString().slice(0, 10);
+      inputFrom.value = ago.toISOString().slice(0, 10);
+    }
+  });
+
+  if (btnApply) btnApply.addEventListener('click', function(){
+    if (inputFrom && inputTo && inputFrom.value && inputTo.value) {
+      currentFrom = inputFrom.value;
+      currentTo = inputTo.value;
+      currentDays = null;
+      updateRangeLabel();
+      loadAll();
+    }
+  });
+
+  // --- Trend chart ---
+  function renderTrend(data) {
+    if (!data || !data.length) return '<div class="state">No trend data yet.</div>';
+
+    var maxPV = 1, maxVis = 1;
+    data.forEach(function(d) {
+      if (d.pageviews > maxPV) maxPV = d.pageviews;
+      if (d.visitors > maxVis) maxVis = d.visitors;
+    });
+    var maxVal = Math.max(maxPV, maxVis);
+
+    var W = 560, H = 160, PL = 38, PR = 10, PT = 12, PB = 26;
+    var plotW = W - PL - PR;
+    var plotH = H - PT - PB;
+    var len = data.length;
+
+    function x(i) { return PL + (len > 1 ? i / (len - 1) * plotW : plotW / 2); }
+    function y(v) { return PT + plotH - (v / maxVal * plotH); }
+
+    var gridHtml = '';
+    [0, 0.5, 1].forEach(function(f) {
+      var yy = y(maxVal * f);
+      gridHtml += '<line x1="' + PL + '" x2="' + (W - PR) + '" y1="' + yy + '" y2="' + yy + '" stroke="#f0f3f8" stroke-width="1"/>';
+      gridHtml += '<text x="' + (PL - 4) + '" y="' + (yy + 3) + '" text-anchor="end" fill="#bbb" font-size="9" font-family="DM Sans,sans-serif">' + n(Math.round(maxVal * f)) + '</text>';
+    });
+
+    var labelCount = Math.min(len, 7);
+    var xLabels = '';
+    for (var li = 0; li < labelCount; li++) {
+      var idx = len <= 1 ? 0 : Math.round(li / (labelCount - 1) * (len - 1));
+      var dt = new Date(data[idx].day + 'T12:00:00');
+      var lbl = (dt.getMonth() + 1) + '/' + dt.getDate();
+      xLabels += '<text x="' + x(idx) + '" y="' + (H - 2) + '" text-anchor="middle" fill="#bbb" font-size="9" font-family="DM Sans,sans-serif">' + lbl + '</text>';
+    }
+
+    var pvPts = '', visPts = '';
+    var pvArea = PL + ',' + y(0);
+    var visArea = PL + ',' + y(0);
+    data.forEach(function(d, i) {
+      pvPts += ' ' + x(i) + ',' + y(d.pageviews);
+      visPts += ' ' + x(i) + ',' + y(d.visitors);
+      pvArea += ' ' + x(i) + ',' + y(d.pageviews);
+      visArea += ' ' + x(i) + ',' + y(d.visitors);
+    });
+    pvArea += ' ' + x(len - 1) + ',' + y(0);
+    visArea += ' ' + x(len - 1) + ',' + y(0);
+
+    var dotsHtml = '';
+    if (len <= 14) {
+      data.forEach(function(d, i) {
+        dotsHtml += '<circle cx="' + x(i) + '" cy="' + y(d.pageviews) + '" r="3" fill="var(--brand)"/>';
+        dotsHtml += '<circle cx="' + x(i) + '" cy="' + y(d.visitors) + '" r="3" fill="var(--ice-deep)"/>';
+      });
+    }
+
+    var legend = '<div class="trend-legend"><span><i style="background:var(--brand)"></i>Page views</span><span><i style="background:var(--ice-deep)"></i>Visitors</span></div>';
+
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto;display:block">' +
+      gridHtml +
+      '<polygon points="' + pvArea.trim() + '" fill="rgba(26,35,126,0.08)"/>' +
+      '<polygon points="' + visArea.trim() + '" fill="rgba(41,182,246,0.12)"/>' +
+      '<polyline points="' + pvPts.trim() + '" stroke="var(--brand)" stroke-width="2" fill="none" stroke-linejoin="round"/>' +
+      '<polyline points="' + visPts.trim() + '" stroke="var(--ice-deep)" stroke-width="2.5" fill="none" stroke-linejoin="round"/>' +
+      dotsHtml + xLabels + '</svg>';
+
+    return legend + svg;
+  }
+
+  // --- Load all data ---
   var trafficData = null;
 
   function updateSplit() {
@@ -376,261 +560,281 @@ code{background:var(--wash);border-radius:6px;padding:1px 6px;font-size:.85em;}
     splitEl.innerHTML = txt + '<div class="split-track">' + segs + '</div><div class="split-legend">' + legend + '</div>';
   }
 
-  // --- Traffic (Cloudflare Analytics Engine) ---
-  fetch("/api/stats/traffic").then(function(r){ return r.json(); }).then(function(res){
-    trafficData = res;
+  function loadAll() {
+    var q = rangeQuery();
 
-    if (el("stat-visitors").textContent === "…" && res.status === "ok") {
-      el("stat-pageviews").textContent = n(res.page_views);
-    }
+    ['stat-visitors','stat-pageviews','stat-sessions','stat-duration'].forEach(function(id){
+      var e = el(id); if (e) e.textContent = '…';
+    });
+    var tb = el('trend-body'); if (tb) tb.innerHTML = '<div class="state">Loading…</div>';
+    el('split').innerHTML = '<div class="state">Loading traffic breakdown…</div>';
 
-    body("card-crawlers").innerHTML = handle(res, function(d){
-      if (!d.crawlers || !d.crawlers.length) return empty();
-      var byKind = { search: [], ai: [], social: [], scraper: [] };
-      d.crawlers.forEach(function(c){ (byKind[c.kind] || (byKind[c.kind]=[])).push(c); });
-      var html = "";
-      ["search","ai","social","scraper"].forEach(function(k){
-        if (!byKind[k] || !byKind[k].length) return;
-        var info = KIND[k] || { emoji: "", label: k };
-        html += '<div class="group-label">' + info.emoji + " " + info.label + '</div>';
-        html += '<ul class="rows">' + byKind[k].map(function(c){
-          return '<li><span class="k">' + esc(c.name) + '</span><span class="v">' + n(c.hits) + '</span></li>';
-        }).join("") + '</ul>';
-      });
-      return html || empty();
-    }, "CF_ANALYTICS_TOKEN");
+    var cardIds = ['card-sources','card-ai-referrals','card-geo','card-devices','card-new-return',
+      'card-utm-source','card-utm-medium','card-utm-campaign',
+      'card-pages','card-funnel','card-entry','card-clicks','card-scroll','card-exits','card-outbound',
+      'card-game-pop','card-game-scores','card-game-hours','card-game-finish','card-crawlers'];
+    cardIds.forEach(function(id){ var b = body(id); if (b) b.innerHTML = '<div class="state">Loading…</div>'; });
 
-    updateSplit();
-  }).catch(function(){
-    body("card-crawlers").innerHTML = oops();
-    el("split").innerHTML = '<div class="state">Traffic breakdown unavailable.</div>';
-  });
+    // --- Traffic (Cloudflare Analytics Engine) ---
+    fetch('/api/stats/traffic' + q).then(function(r){ return r.json(); }).then(function(res){
+      trafficData = res;
 
-  // --- Content (PostHog): the big payload ---
-  fetch("/api/stats/content").then(function(r){ return r.json(); }).then(function(res){
-    if (res && res.status === "ok") {
-      el("stat-visitors").textContent = n(res.visitors);
-      el("stat-pageviews").textContent = n(res.pageviews);
-      el("stat-sessions").textContent = n(res.sessions);
-      el("stat-duration").textContent = res.avg_session_duration || "—";
-    } else if (res && res.status === "not_configured") {
-      el("stat-visitors").textContent = "—";
-      el("stat-sessions").textContent = "—";
-      el("stat-duration").textContent = "—";
-    }
-
-    body("card-pages").innerHTML = handle(res, function(d){
-      return rowsHtml(d.top_pages, function(p){ return prettyPath(p.path); }, function(p){ return n(p.views); });
-    }, "POSTHOG_API_KEY");
-
-    body("card-sources").innerHTML = handle(res, function(d){
-      return rowsHtml(d.sources, function(s){ return esc(s.source); }, function(s){ return n(s.views); });
-    }, "POSTHOG_API_KEY");
-
-    body("card-ai-referrals").innerHTML = handle(res, function(d){
-      if (!d.ai_referrals || !d.ai_referrals.length) return '<div class="state">No visits from AI assistants yet. This will light up when someone asks ChatGPT or Perplexity about margarita machine rentals and clicks through to our site. The llms.txt, markdown for agents, and Content-Signal headers are all in place to make that happen.</div>';
-      var aiNames = { "chat.openai.com": "ChatGPT", "chatgpt.com": "ChatGPT", "perplexity.ai": "Perplexity", "claude.ai": "Claude", "gemini.google.com": "Gemini", "copilot.microsoft.com": "Copilot", "you.com": "You.com", "poe.com": "Poe", "search.brave.com": "Brave Search", "kagi.com": "Kagi" };
-      var total = 0; d.ai_referrals.forEach(function(r){ total += r.visitors; });
-      var html = '<div class="rows"><div class="row"><span style="font-weight:600">Total from AI</span><span>' + n(total) + ' people</span></div>';
-      d.ai_referrals.forEach(function(r){
-        html += '<div class="row"><span>' + esc(aiNames[r.source] || r.source) + '</span><span>' + n(r.visitors) + ' people, ' + n(r.views) + ' views</span></div>';
-      });
-      return html + '</div>';
-    }, "POSTHOG_API_KEY");
-
-    body("card-devices").innerHTML = handle(res, function(d){
-      if (!d.devices || !d.devices.length) return empty();
-      var icons = { Mobile: "📱", Desktop: "💻", Tablet: "📝" };
-      return rowsHtml(d.devices, function(v){
-        return (icons[v.type] || "") + " " + esc(v.type);
-      }, function(v){ return n(v.visitors) + " people"; });
-    }, "POSTHOG_API_KEY");
-
-    body("card-funnel").innerHTML = handle(res, function(d){
-      var f = d.funnel;
-      if (!f || !f.all_sessions) return empty();
-      var steps = [
-        { label: "Visited the site", n: f.all_sessions, cls: "f1" },
-        { label: "Looked at the booking page", n: f.viewed_book, cls: "f2" },
-        { label: "Sent a booking", n: f.submitted, cls: "f3" }
-      ];
-      var max = f.all_sessions || 1;
-      return steps.map(function(s){
-        var w = Math.max(pct(s.n, max), 6);
-        return '<div class="funnel-step">' +
-          '<div class="funnel-track"><div class="funnel-fill ' + s.cls + '" style="width:' + w + '%">' +
-          n(s.n) + '</div></div>' +
-          '<div class="funnel-label">' + s.label +
-          (s.n < max ? ' (' + pct(s.n, max) + '% of visitors)' : '') +
-          '</div></div>';
-      }).join("");
-    }, "POSTHOG_API_KEY");
-
-    body("card-clicks").innerHTML = handle(res, function(d){
-      if (!d.clicks || !d.clicks.length) return '<div class="state">No click data yet. Once people start clicking buttons and links, the most popular ones show up here.</div>';
-      var locLabels = { nav: "Navigation bar", footer: "Footer", content: "Page content" };
-      var locEmoji = { nav: "🧭", footer: "👣", content: "📄" };
-      var byLoc = {};
-      d.clicks.forEach(function(c){ (byLoc[c.location] || (byLoc[c.location]=[])).push(c); });
-      var html = "";
-      ["nav","content","footer"].forEach(function(loc){
-        if (!byLoc[loc] || !byLoc[loc].length) return;
-        html += '<div class="group-label">' + (locEmoji[loc]||"") + " " + (locLabels[loc]||loc) + '</div>';
-        html += '<ul class="rows">' + byLoc[loc].map(function(c){
-          return '<li><span class="k">' + esc(c.label) + '</span><span class="v">' + n(c.count) + '×</span></li>';
-        }).join("") + '</ul>';
-      });
-      return html || empty();
-    }, "POSTHOG_API_KEY");
-
-    body("card-scroll").innerHTML = handle(res, function(d){
-      if (!d.scroll || !d.scroll.length) return '<div class="state">No scroll data yet. Once people browse the site, we\'ll see how far they read each page.</div>';
-      return '<ul class="rows">' + d.scroll.map(function(s){
-        var w = Math.max(Math.round(s.pct * 0.8), 3);
-        return '<li><span class="k">' + prettyPath(s.path) + '</span>' +
-          '<span class="v"><span class="scroll-bar" style="width:' + w + 'px"></span>' + s.pct + '%</span></li>';
-      }).join("") + '</ul>';
-    }, "POSTHOG_API_KEY");
-
-    body("card-geo").innerHTML = handle(res, function(d){
-      if (!d.geo || !d.geo.length) return empty();
-      return rowsHtml(d.geo, function(g){
-        return esc(g.city) + (g.region ? ", " + esc(g.region) : "");
-      }, function(g){ return n(g.visitors); });
-    }, "POSTHOG_API_KEY");
-
-    body("card-exits").innerHTML = handle(res, function(d){
-      if (!d.exits || !d.exits.length) return empty();
-      return rowsHtml(d.exits, function(e){ return prettyPath(e.path); }, function(e){ return n(e.count); });
-    }, "POSTHOG_API_KEY");
-
-    body("card-entry").innerHTML = handle(res, function(d){
-      if (!d.entry_pages || !d.entry_pages.length) return empty();
-      return rowsHtml(d.entry_pages, function(e){ return prettyPath(e.path); }, function(e){ return n(e.sessions) + " visits"; });
-    }, "POSTHOG_API_KEY");
-
-    body("card-new-return").innerHTML = handle(res, function(d){
-      if (!d.new_vs_returning || !d.new_vs_returning.length) return empty();
-      var total = 0;
-      d.new_vs_returning.forEach(function(v){ total += v.visitors; });
-      var icons = { "new": "🌟", "returning": "🔁" };
-      var labels = { "new": "New visitors", "returning": "Returning visitors" };
-      return '<ul class="rows">' + d.new_vs_returning.map(function(v){
-        return '<li><span class="k">' + (icons[v.kind]||"") + " " + (labels[v.kind]||v.kind) + '</span>' +
-          '<span class="v">' + n(v.visitors) + (total ? ' (' + pct(v.visitors, total) + '%)' : '') + '</span></li>';
-      }).join("") + '</ul>';
-    }, "POSTHOG_API_KEY");
-
-    body("card-outbound").innerHTML = handle(res, function(d){
-      if (!d.outbound_clicks || !d.outbound_clicks.length) return '<div class="state">No outbound clicks yet. When someone taps a link that takes them off our site, it shows here.</div>';
-      return rowsHtml(d.outbound_clicks, function(c){
-        try { return esc(new URL(c.url).hostname.replace("www.","")); } catch(e){ return esc(c.url); }
-      }, function(c){ return n(c.count) + "×"; });
-    }, "POSTHOG_API_KEY");
-
-    body("card-utm-source").innerHTML = handle(res, function(d){
-      if (!d.utm_sources || !d.utm_sources.length) return '<div class="state">No tagged visits yet. Start sharing links like slushsisters.com/go/fb and the sources show up here.</div>';
-      return rowsHtml(d.utm_sources, function(s){ return esc(s.source); }, function(s){ return n(s.visitors) + " people, " + n(s.views) + " views"; });
-    }, "POSTHOG_API_KEY");
-
-    body("card-utm-medium").innerHTML = handle(res, function(d){
-      if (!d.utm_mediums || !d.utm_mediums.length) return '<div class="state">No tagged visits yet.</div>';
-      return rowsHtml(d.utm_mediums, function(m){ return esc(m.medium); }, function(m){ return n(m.visitors) + " people, " + n(m.views) + " views"; });
-    }, "POSTHOG_API_KEY");
-
-    body("card-utm-campaign").innerHTML = handle(res, function(d){
-      if (!d.utm_campaigns || !d.utm_campaigns.length) return '<div class="state">No campaigns yet. Add a campaign name to any link: slushsisters.com/go/fb?utm_campaign=summer-2026</div>';
-      return rowsHtml(d.utm_campaigns, function(c){ return esc(c.campaign); }, function(c){ return n(c.visitors) + " people, " + n(c.views) + " views"; });
-    }, "POSTHOG_API_KEY");
-  }).catch(function(){
-    [el("stat-visitors"),el("stat-pageviews"),el("stat-sessions"),el("stat-duration")].forEach(function(e){ if(e) e.textContent = "—"; });
-    ["card-pages","card-sources","card-ai-referrals","card-devices","card-funnel","card-clicks","card-scroll","card-geo","card-exits","card-entry","card-new-return","card-outbound","card-utm-source","card-utm-medium","card-utm-campaign"].forEach(function(id){ body(id).innerHTML = oops(); });
-  });
-
-  // --- Game analytics (Analytics Engine) ---
-  var GAME_LABELS = { catch: "Slushie Catch", rush: "Slush Rush", playhouse: "Playhouse", style: "Slushie Style", street: "Slushie Street", guys: "Slushie Guys" };
-  function gameName(k){ return GAME_LABELS[k] || k; }
-
-  fetch("/api/stats/games").then(function(r){ return r.json(); }).then(function(res){
-    body("card-game-pop").innerHTML = handle(res, function(d){
-      if (!d.popularity || !d.popularity.length) return '<div class="state">No game plays yet. Once someone starts a game, it shows up here.</div>';
-      return rowsHtml(d.popularity, function(p){ return gameName(p.game); }, function(p){ return n(p.starts) + " plays"; });
-    }, "CF_ANALYTICS_TOKEN");
-
-    body("card-game-scores").innerHTML = handle(res, function(d){
-      if (!d.scores || !d.scores.length) return '<div class="state">No finished games yet.</div>';
-      return '<ul class="rows">' + d.scores.map(function(s){
-        var parts = [gameName(s.game)];
-        var vals = [];
-        if(s.best) vals.push("best: " + n(s.best));
-        if(s.avg) vals.push("avg: " + n(s.avg));
-        if(s.avg_dur_sec) vals.push(Math.round(s.avg_dur_sec) + "s avg round");
-        return '<li><span class="k">' + esc(parts[0]) + '</span><span class="v">' + esc(vals.join(" · ")) + '</span></li>';
-      }).join("") + '</ul>';
-    }, "CF_ANALYTICS_TOKEN");
-
-    body("card-game-hours").innerHTML = handle(res, function(d){
-      if (!d.hourly || !d.hourly.length) return '<div class="state">No game plays yet.</div>';
-      var max = Math.max.apply(null, d.hourly.map(function(h){ return h.starts; }));
-      return '<div style="display:flex;align-items:flex-end;gap:2px;height:80px;padding:8px 0">' +
-        d.hourly.map(function(h){
-          var pctH = max ? Math.max(4, Math.round(h.starts / max * 100)) : 4;
-          return '<div title="' + h.hour + ':00 UTC — ' + n(h.starts) + ' plays" style="flex:1;background:var(--ice);border-radius:3px 3px 0 0;height:' + pctH + '%;min-width:6px"></div>';
-        }).join("") + '</div>' +
-        '<div style="display:flex;justify-content:space-between;font-size:.65rem;color:#999"><span>12am</span><span>6am</span><span>noon</span><span>6pm</span><span>12am</span></div>';
-    }, "CF_ANALYTICS_TOKEN");
-
-    body("card-game-finish").innerHTML = handle(res, function(d){
-      if (!d.plays || !d.plays.length) return '<div class="state">No game plays yet.</div>';
-      var byGame = {};
-      d.plays.forEach(function(p){ if(!byGame[p.game]) byGame[p.game]={start:0,end:0}; byGame[p.game][p.event]=p.count; });
-      var games = Object.keys(byGame).sort(function(a,b){ return byGame[b].start - byGame[a].start; });
-      return '<ul class="rows">' + games.map(function(g){
-        var s = byGame[g].start, e = byGame[g].end;
-        var rate = s ? Math.round(e / s * 100) : 0;
-        return '<li><span class="k">' + gameName(g) + '</span><span class="v">' + n(s) + ' started, ' + n(e) + ' finished (' + rate + '%)</span></li>';
-      }).join("") + '</ul>';
-    }, "CF_ANALYTICS_TOKEN");
-  }).catch(function(){
-    ["card-game-pop","card-game-scores","card-game-hours","card-game-finish"].forEach(function(id){ body(id).innerHTML = oops(); });
-  });
-
-  // --- Search terms (Google Search Console) ---
-  fetch("/api/stats/search").then(function(r){ return r.json(); }).then(function(res){
-    body("card-search").innerHTML = handle(res, function(d){
-      if (!d.queries || !d.queries.length)
-        return '<div class="state">No search words yet — Google needs a few days of data after a site is verified. Check back this week.</div>';
-      return rowsHtml(d.queries, function(q){ return esc(q.query); }, function(q){ return n(q.impressions) + " times"; });
-    }, "GSC_SA_EMAIL");
-  }).catch(function(){
-    body("card-search").innerHTML = oops();
-  });
-
-  // --- AI prompt monitoring (DataForSEO weekly cron) ---
-  fetch("/api/stats/ai-monitor").then(function(r){ return r.json(); }).then(function(res){
-    body("card-ai-monitor").innerHTML = handle(res, function(d){
-      if (!d.last_run) return '<div class="state">No AI monitoring data yet. The weekly check runs every Sunday and tests whether AI assistants mention Slush Sisters when people ask about frozen drink rentals. Add your DataForSEO credentials as Worker secrets (DATAFORSEO_LOGIN, DATAFORSEO_PASSWORD) to turn it on.</div>';
-      var mentioned = d.prompts.filter(function(p){ return p.mentioned; });
-      var html = '<div style="margin-bottom:12px;font-size:.85em;color:#666">Last checked: ' + esc(new Date(d.last_run).toLocaleDateString()) + ' &middot; ' + mentioned.length + ' of ' + d.prompts.length + ' prompts mention us</div>';
-      html += '<ul class="rows">';
-      d.prompts.forEach(function(p){
-        var icon = p.mentioned ? "✅" : "❌";
-        var detail = p.mentioned ? p.mentions + " mention" + (p.mentions !== 1 ? "s" : "") : "not mentioned";
-        html += '<li><span class="k">' + icon + ' ' + esc(p.prompt) + '</span><span class="v">' + esc(detail) + '</span></li>';
-      });
-      html += '</ul>';
-      if (d.history && d.history.length > 1) {
-        html += '<div style="margin-top:12px;font-size:.8em;color:#666"><strong>History:</strong> ';
-        html += d.history.slice(0, 8).map(function(h){
-          return esc(new Date(h.date).toLocaleDateString()) + ': ' + h.mentioned + '/' + h.total;
-        }).join(' &rarr; ');
-        html += '</div>';
+      if (el('stat-visitors').textContent === '…' && res.status === 'ok') {
+        el('stat-pageviews').textContent = n(res.page_views);
       }
-      return html;
-    }, "DATAFORSEO_LOGIN");
-  }).catch(function(){
-    body("card-ai-monitor").innerHTML = oops();
-  });
+
+      body('card-crawlers').innerHTML = handle(res, function(d){
+        if (!d.crawlers || !d.crawlers.length) return empty();
+        var byKind = { search: [], ai: [], social: [], scraper: [] };
+        d.crawlers.forEach(function(c){ (byKind[c.kind] || (byKind[c.kind]=[])).push(c); });
+        var html = '';
+        ['search','ai','social','scraper'].forEach(function(k){
+          if (!byKind[k] || !byKind[k].length) return;
+          var info = KIND[k] || { emoji: '', label: k };
+          html += '<div class="group-label">' + info.emoji + ' ' + info.label + '</div>';
+          html += '<ul class="rows">' + byKind[k].map(function(c){
+            return '<li><span class="k">' + esc(c.name) + '</span><span class="v">' + n(c.hits) + '</span></li>';
+          }).join('') + '</ul>';
+        });
+        return html || empty();
+      }, 'CF_ANALYTICS_TOKEN');
+
+      updateSplit();
+    }).catch(function(){
+      body('card-crawlers').innerHTML = oops();
+      el('split').innerHTML = '<div class="state">Traffic breakdown unavailable.</div>';
+    });
+
+    // --- Content (PostHog): the big payload ---
+    fetch('/api/stats/content' + q).then(function(r){ return r.json(); }).then(function(res){
+      if (res && res.status === 'ok') {
+        el('stat-visitors').textContent = n(res.visitors);
+        el('stat-pageviews').textContent = n(res.pageviews);
+        el('stat-sessions').textContent = n(res.sessions);
+        el('stat-duration').textContent = res.avg_session_duration || '—';
+
+        var tb2 = el('trend-body');
+        if (tb2) tb2.innerHTML = renderTrend(res.trend);
+      } else if (res && res.status === 'not_configured') {
+        el('stat-visitors').textContent = '—';
+        el('stat-sessions').textContent = '—';
+        el('stat-duration').textContent = '—';
+        var tb3 = el('trend-body');
+        if (tb3) tb3.innerHTML = waiting('POSTHOG_API_KEY');
+      }
+
+      body('card-pages').innerHTML = handle(res, function(d){
+        return rowsHtml(d.top_pages, function(p){ return prettyPath(p.path); }, function(p){ return n(p.views); });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-sources').innerHTML = handle(res, function(d){
+        return rowsHtml(d.sources, function(s){ return esc(s.source); }, function(s){ return n(s.views); });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-ai-referrals').innerHTML = handle(res, function(d){
+        if (!d.ai_referrals || !d.ai_referrals.length) return '<div class="state">No visits from AI assistants yet. This will light up when someone asks ChatGPT or Perplexity about margarita machine rentals and clicks through to our site. The llms.txt, markdown for agents, and Content-Signal headers are all in place to make that happen.</div>';
+        var aiNames = { 'chat.openai.com': 'ChatGPT', 'chatgpt.com': 'ChatGPT', 'perplexity.ai': 'Perplexity', 'claude.ai': 'Claude', 'gemini.google.com': 'Gemini', 'copilot.microsoft.com': 'Copilot', 'you.com': 'You.com', 'poe.com': 'Poe', 'search.brave.com': 'Brave Search', 'kagi.com': 'Kagi' };
+        var total = 0; d.ai_referrals.forEach(function(r){ total += r.visitors; });
+        var html = '<div class="rows"><div class="row"><span style="font-weight:600">Total from AI</span><span>' + n(total) + ' people</span></div>';
+        d.ai_referrals.forEach(function(r){
+          html += '<div class="row"><span>' + esc(aiNames[r.source] || r.source) + '</span><span>' + n(r.visitors) + ' people, ' + n(r.views) + ' views</span></div>';
+        });
+        return html + '</div>';
+      }, 'POSTHOG_API_KEY');
+
+      body('card-devices').innerHTML = handle(res, function(d){
+        if (!d.devices || !d.devices.length) return empty();
+        var icons = { Mobile: '📱', Desktop: '💻', Tablet: '📝' };
+        return rowsHtml(d.devices, function(v){
+          return (icons[v.type] || '') + ' ' + esc(v.type);
+        }, function(v){ return n(v.visitors) + ' people'; });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-funnel').innerHTML = handle(res, function(d){
+        var f = d.funnel;
+        if (!f || !f.all_sessions) return empty();
+        var steps = [
+          { label: 'Visited the site', n: f.all_sessions, cls: 'f1' },
+          { label: 'Looked at the booking page', n: f.viewed_book, cls: 'f2' },
+          { label: 'Sent a booking', n: f.submitted, cls: 'f3' }
+        ];
+        var max = f.all_sessions || 1;
+        return steps.map(function(s){
+          var w = Math.max(pct(s.n, max), 6);
+          return '<div class="funnel-step">' +
+            '<div class="funnel-track"><div class="funnel-fill ' + s.cls + '" style="width:' + w + '%">' +
+            n(s.n) + '</div></div>' +
+            '<div class="funnel-label">' + s.label +
+            (s.n < max ? ' (' + pct(s.n, max) + '% of visitors)' : '') +
+            '</div></div>';
+        }).join('');
+      }, 'POSTHOG_API_KEY');
+
+      body('card-clicks').innerHTML = handle(res, function(d){
+        if (!d.clicks || !d.clicks.length) return '<div class="state">No click data yet. Once people start clicking buttons and links, the most popular ones show up here.</div>';
+        var locLabels = { nav: 'Navigation bar', footer: 'Footer', content: 'Page content' };
+        var locEmoji = { nav: '🧭', footer: '👣', content: '📄' };
+        var byLoc = {};
+        d.clicks.forEach(function(c){ (byLoc[c.location] || (byLoc[c.location]=[])).push(c); });
+        var html = '';
+        ['nav','content','footer'].forEach(function(loc){
+          if (!byLoc[loc] || !byLoc[loc].length) return;
+          html += '<div class="group-label">' + (locEmoji[loc]||'') + ' ' + (locLabels[loc]||loc) + '</div>';
+          html += '<ul class="rows">' + byLoc[loc].map(function(c){
+            return '<li><span class="k">' + esc(c.label) + '</span><span class="v">' + n(c.count) + '×</span></li>';
+          }).join('') + '</ul>';
+        });
+        return html || empty();
+      }, 'POSTHOG_API_KEY');
+
+      body('card-scroll').innerHTML = handle(res, function(d){
+        if (!d.scroll || !d.scroll.length) return '<div class="state">No scroll data yet. Once people browse the site, we\'ll see how far they read each page.</div>';
+        return '<ul class="rows">' + d.scroll.map(function(s){
+          var w = Math.max(Math.round(s.pct * 0.8), 3);
+          return '<li><span class="k">' + prettyPath(s.path) + '</span>' +
+            '<span class="v"><span class="scroll-bar" style="width:' + w + 'px"></span>' + s.pct + '%</span></li>';
+        }).join('') + '</ul>';
+      }, 'POSTHOG_API_KEY');
+
+      body('card-geo').innerHTML = handle(res, function(d){
+        if (!d.geo || !d.geo.length) return empty();
+        return rowsHtml(d.geo, function(g){
+          return esc(g.city) + (g.region ? ', ' + esc(g.region) : '');
+        }, function(g){ return n(g.visitors); });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-exits').innerHTML = handle(res, function(d){
+        if (!d.exits || !d.exits.length) return empty();
+        return rowsHtml(d.exits, function(e){ return prettyPath(e.path); }, function(e){ return n(e.count); });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-entry').innerHTML = handle(res, function(d){
+        if (!d.entry_pages || !d.entry_pages.length) return empty();
+        return rowsHtml(d.entry_pages, function(e){ return prettyPath(e.path); }, function(e){ return n(e.sessions) + ' visits'; });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-new-return').innerHTML = handle(res, function(d){
+        if (!d.new_vs_returning || !d.new_vs_returning.length) return empty();
+        var total = 0;
+        d.new_vs_returning.forEach(function(v){ total += v.visitors; });
+        var icons = { 'new': '🌟', 'returning': '🔁' };
+        var labels = { 'new': 'New visitors', 'returning': 'Returning visitors' };
+        return '<ul class="rows">' + d.new_vs_returning.map(function(v){
+          return '<li><span class="k">' + (icons[v.kind]||'') + ' ' + (labels[v.kind]||v.kind) + '</span>' +
+            '<span class="v">' + n(v.visitors) + (total ? ' (' + pct(v.visitors, total) + '%)' : '') + '</span></li>';
+        }).join('') + '</ul>';
+      }, 'POSTHOG_API_KEY');
+
+      body('card-outbound').innerHTML = handle(res, function(d){
+        if (!d.outbound_clicks || !d.outbound_clicks.length) return '<div class="state">No outbound clicks yet. When someone taps a link that takes them off our site, it shows here.</div>';
+        return rowsHtml(d.outbound_clicks, function(c){
+          try { return esc(new URL(c.url).hostname.replace('www.','')); } catch(e){ return esc(c.url); }
+        }, function(c){ return n(c.count) + '×'; });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-utm-source').innerHTML = handle(res, function(d){
+        if (!d.utm_sources || !d.utm_sources.length) return '<div class="state">No tagged visits yet. Start sharing links like slushsisters.com/go/fb and the sources show up here.</div>';
+        return rowsHtml(d.utm_sources, function(s){ return esc(s.source); }, function(s){ return n(s.visitors) + ' people, ' + n(s.views) + ' views'; });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-utm-medium').innerHTML = handle(res, function(d){
+        if (!d.utm_mediums || !d.utm_mediums.length) return '<div class="state">No tagged visits yet.</div>';
+        return rowsHtml(d.utm_mediums, function(m){ return esc(m.medium); }, function(m){ return n(m.visitors) + ' people, ' + n(m.views) + ' views'; });
+      }, 'POSTHOG_API_KEY');
+
+      body('card-utm-campaign').innerHTML = handle(res, function(d){
+        if (!d.utm_campaigns || !d.utm_campaigns.length) return '<div class="state">No campaigns yet. Add a campaign name to any link: slushsisters.com/go/fb?utm_campaign=summer-2026</div>';
+        return rowsHtml(d.utm_campaigns, function(c){ return esc(c.campaign); }, function(c){ return n(c.visitors) + ' people, ' + n(c.views) + ' views'; });
+      }, 'POSTHOG_API_KEY');
+    }).catch(function(){
+      [el('stat-visitors'),el('stat-pageviews'),el('stat-sessions'),el('stat-duration')].forEach(function(e){ if(e) e.textContent = '—'; });
+      ['card-pages','card-sources','card-ai-referrals','card-devices','card-funnel','card-clicks','card-scroll','card-geo','card-exits','card-entry','card-new-return','card-outbound','card-utm-source','card-utm-medium','card-utm-campaign'].forEach(function(id){ var b = body(id); if (b) b.innerHTML = oops(); });
+    });
+
+    // --- Game analytics (Analytics Engine) ---
+    fetch('/api/stats/games' + q).then(function(r){ return r.json(); }).then(function(res){
+      body('card-game-pop').innerHTML = handle(res, function(d){
+        if (!d.popularity || !d.popularity.length) return '<div class="state">No game plays yet. Once someone starts a game, it shows up here.</div>';
+        return rowsHtml(d.popularity, function(p){ return gameName(p.game); }, function(p){ return n(p.starts) + ' plays'; });
+      }, 'CF_ANALYTICS_TOKEN');
+
+      body('card-game-scores').innerHTML = handle(res, function(d){
+        if (!d.scores || !d.scores.length) return '<div class="state">No finished games yet.</div>';
+        return '<ul class="rows">' + d.scores.map(function(s){
+          var parts = [gameName(s.game)];
+          var vals = [];
+          if(s.best) vals.push('best: ' + n(s.best));
+          if(s.avg) vals.push('avg: ' + n(s.avg));
+          if(s.avg_dur_sec) vals.push(Math.round(s.avg_dur_sec) + 's avg round');
+          return '<li><span class="k">' + esc(parts[0]) + '</span><span class="v">' + esc(vals.join(' · ')) + '</span></li>';
+        }).join('') + '</ul>';
+      }, 'CF_ANALYTICS_TOKEN');
+
+      body('card-game-hours').innerHTML = handle(res, function(d){
+        if (!d.hourly || !d.hourly.length) return '<div class="state">No game plays yet.</div>';
+        var max = Math.max.apply(null, d.hourly.map(function(h){ return h.starts; }));
+        return '<div style="display:flex;align-items:flex-end;gap:2px;height:80px;padding:8px 0">' +
+          d.hourly.map(function(h){
+            var pctH = max ? Math.max(4, Math.round(h.starts / max * 100)) : 4;
+            return '<div title="' + h.hour + ':00 UTC — ' + n(h.starts) + ' plays" style="flex:1;background:var(--ice);border-radius:3px 3px 0 0;height:' + pctH + '%;min-width:6px"></div>';
+          }).join('') + '</div>' +
+          '<div style="display:flex;justify-content:space-between;font-size:.65rem;color:#999"><span>12am</span><span>6am</span><span>noon</span><span>6pm</span><span>12am</span></div>';
+      }, 'CF_ANALYTICS_TOKEN');
+
+      body('card-game-finish').innerHTML = handle(res, function(d){
+        if (!d.plays || !d.plays.length) return '<div class="state">No game plays yet.</div>';
+        var byGame = {};
+        d.plays.forEach(function(p){ if(!byGame[p.game]) byGame[p.game]={start:0,end:0}; byGame[p.game][p.event]=p.count; });
+        var games = Object.keys(byGame).sort(function(a,b){ return byGame[b].start - byGame[a].start; });
+        return '<ul class="rows">' + games.map(function(g){
+          var s = byGame[g].start, e = byGame[g].end;
+          var rate = s ? Math.round(e / s * 100) : 0;
+          return '<li><span class="k">' + gameName(g) + '</span><span class="v">' + n(s) + ' started, ' + n(e) + ' finished (' + rate + '%)</span></li>';
+        }).join('') + '</ul>';
+      }, 'CF_ANALYTICS_TOKEN');
+    }).catch(function(){
+      ['card-game-pop','card-game-scores','card-game-hours','card-game-finish'].forEach(function(id){ var b = body(id); if (b) b.innerHTML = oops(); });
+    });
+
+    // --- Search terms (Google Search Console) — always 28 days ---
+    fetch('/api/stats/search').then(function(r){ return r.json(); }).then(function(res){
+      body('card-search').innerHTML = handle(res, function(d){
+        if (!d.queries || !d.queries.length)
+          return '<div class="state">No search words yet — Google needs a few days of data after a site is verified. Check back this week.</div>';
+        return rowsHtml(d.queries, function(q){ return esc(q.query); }, function(q){ return n(q.impressions) + ' times'; });
+      }, 'GSC_SA_EMAIL');
+    }).catch(function(){
+      body('card-search').innerHTML = oops();
+    });
+
+    // --- AI prompt monitoring (DataForSEO weekly cron) ---
+    fetch('/api/stats/ai-monitor').then(function(r){ return r.json(); }).then(function(res){
+      body('card-ai-monitor').innerHTML = handle(res, function(d){
+        if (!d.last_run) return '<div class="state">No AI monitoring data yet. The weekly check runs every Sunday and tests whether AI assistants mention Slush Sisters when people ask about frozen drink rentals. Add your DataForSEO credentials as Worker secrets (DATAFORSEO_LOGIN, DATAFORSEO_PASSWORD) to turn it on.</div>';
+        var mentioned = d.prompts.filter(function(p){ return p.mentioned; });
+        var html = '<div style="margin-bottom:12px;font-size:.85em;color:#666">Last checked: ' + esc(new Date(d.last_run).toLocaleDateString()) + ' · ' + mentioned.length + ' of ' + d.prompts.length + ' prompts mention us</div>';
+        html += '<ul class="rows">';
+        d.prompts.forEach(function(p){
+          var icon = p.mentioned ? '✅' : '❌';
+          var detail = p.mentioned ? p.mentions + ' mention' + (p.mentions !== 1 ? 's' : '') : 'not mentioned';
+          html += '<li><span class="k">' + icon + ' ' + esc(p.prompt) + '</span><span class="v">' + esc(detail) + '</span></li>';
+        });
+        html += '</ul>';
+        if (d.history && d.history.length > 1) {
+          html += '<div style="margin-top:12px;font-size:.8em;color:#666"><strong>History:</strong> ';
+          html += d.history.slice(0, 8).map(function(h){
+            return esc(new Date(h.date).toLocaleDateString()) + ': ' + h.mentioned + '/' + h.total;
+          }).join(' → ');
+          html += '</div>';
+        }
+        return html;
+      }, 'DATAFORSEO_LOGIN');
+    }).catch(function(){
+      body('card-ai-monitor').innerHTML = oops();
+    });
+  }
+
+  loadAll();
 })();
 </script>
 </body>
