@@ -23,6 +23,9 @@
     5. WAITLIST — POST /api/waitlist saves an email to D1 for the "tell me
        when dates open" signup. One email, one time, not a newsletter.
 
+    6. LEADERBOARD — GET/POST /api/scores. Top 5 per game, initials only
+       (3 chars, no names). Stored in D1.
+
   Everything else is handed straight back to the static assets, unchanged.
 
   COPPA note: the logging is server-side operational logging — NO cookies, NO
@@ -155,6 +158,14 @@ export default {
     // Game telemetry beacon — lightweight, first-party, no cookies, no PII.
     if (url.pathname === "/api/game-event" && request.method === "POST") {
       return handleGameEvent(request, env);
+    }
+
+    // Leaderboard — top 5 per game, initials only (3 chars).
+    if (url.pathname === "/api/scores" && request.method === "GET") {
+      return handleGetScores(url, env);
+    }
+    if (url.pathname === "/api/scores" && request.method === "POST") {
+      return handlePostScore(request, env);
     }
 
     // Short links: /go/fb → /?utm_source=facebook&utm_medium=social etc.
@@ -840,6 +851,55 @@ async function handleGameEvent(request, env) {
     return json({ ok: true });
   } catch (_) {
     return json({ ok: false }, 400);
+  }
+}
+
+// --- Leaderboard — top 5 per game, initials only -----------------------------
+const LEADERBOARD_GAMES = new Set(["slushie-catch", "slush-rush", "slushie-guys-0", "slushie-guys-1", "slushie-guys-2"]);
+
+async function handleGetScores(url, env) {
+  const game = url.searchParams.get("game") || "";
+  if (!LEADERBOARD_GAMES.has(game)) return json({ ok: false, error: "unknown game" }, 400);
+  try {
+    const dir = game.startsWith("slushie-guys") ? "ASC" : "DESC";
+    const rows = await env.DB.prepare(
+      `SELECT initials, score FROM leaderboard WHERE game = ? ORDER BY score ${dir} LIMIT 5`
+    ).bind(game).all();
+    return json({ ok: true, scores: rows.results });
+  } catch (_) {
+    return json({ ok: false }, 500);
+  }
+}
+
+async function handlePostScore(request, env) {
+  try {
+    const body = await request.json();
+    const game = String(body.game || "").slice(0, 20);
+    const initials = String(body.initials || "").replace(/[^A-Za-z0-9]/g, "").slice(0, 3).toUpperCase();
+    const score = Number(body.score);
+    if (!LEADERBOARD_GAMES.has(game) || !initials || initials.length < 1 || !isFinite(score)) {
+      return json({ ok: false, error: "bad input" }, 400);
+    }
+    const lowerIsBetter = game.startsWith("slushie-guys");
+    const rows = await env.DB.prepare(
+      `SELECT score FROM leaderboard WHERE game = ? ORDER BY score ${lowerIsBetter ? "ASC" : "DESC"} LIMIT 5`
+    ).bind(game).all();
+    const scores = rows.results;
+    const qualifies = scores.length < 5 ||
+      (lowerIsBetter ? score < scores[scores.length - 1].score : score > scores[scores.length - 1].score);
+    if (!qualifies) return json({ ok: false, error: "score did not qualify" }, 200);
+    await env.DB.prepare(
+      "INSERT INTO leaderboard (game, initials, score) VALUES (?, ?, ?)"
+    ).bind(game, initials, score).run();
+    if (scores.length >= 5) {
+      const worst = lowerIsBetter
+        ? await env.DB.prepare("SELECT id FROM leaderboard WHERE game = ? ORDER BY score DESC LIMIT 1").bind(game).first()
+        : await env.DB.prepare("SELECT id FROM leaderboard WHERE game = ? ORDER BY score ASC LIMIT 1").bind(game).first();
+      if (worst) await env.DB.prepare("DELETE FROM leaderboard WHERE id = ?").bind(worst.id).run();
+    }
+    return json({ ok: true });
+  } catch (_) {
+    return json({ ok: false }, 500);
   }
 }
 

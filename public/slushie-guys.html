@@ -74,6 +74,23 @@ canvas{display:block;width:100%;height:100%;}
 .float{animation:bob 2.6s ease-in-out infinite;}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @media(prefers-reduced-motion:reduce){.float{animation:none;}}
+
+.lb{width:100%;max-width:260px;margin:8px auto 0;text-align:left;}
+.lb h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ice-deep);margin-bottom:6px;}
+.lb table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.lb td{padding:3px 6px;font-weight:700;}
+.lb td:first-child{width:22px;color:#8a95ad;}
+.lb td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--brand);}
+.lb .you{color:var(--pop);}
+.lb .empty{color:#bbb;font-weight:400;font-style:italic;}
+
+.init-row{display:none;align-items:center;justify-content:center;gap:10px;margin:8px 0;}
+.init-row.show{display:flex;}
+.init-row input{width:72px;text-align:center;font-family:inherit;font-weight:800;font-size:1.1rem;
+  text-transform:uppercase;border:3px solid var(--ice-deep);border-radius:10px;padding:6px;
+  background:rgba(255,255,255,.8);color:var(--brand);letter-spacing:4px;}
+.init-row button{border:none;border-radius:99px;padding:8px 18px;font-family:inherit;font-weight:800;
+  font-size:.88rem;color:#fff;background:var(--ice-deep);cursor:pointer;}
 </style>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -115,6 +132,14 @@ canvas{display:block;width:100%;height:100%;}
     <div class="place" id="rPlace">You finished!</div>
     <p class="sub" id="rTime">0.0s</p>
     <p class="rules" id="rBest"></p>
+    <div class="init-row" id="initRow">
+      <input id="initInput" maxlength="3" placeholder="AAA" autocomplete="off" autocapitalize="characters">
+      <button id="initSave">Save</button>
+    </div>
+    <div class="lb" id="lbWrap">
+      <h3>Top 5</h3>
+      <table><tbody id="lbBody"></tbody></table>
+    </div>
     <button class="go" id="rAgain">Race again</button>
     <button class="ghost" id="rMenu">Pick a course</button>
   </div>
@@ -408,6 +433,35 @@ canvas{display:block;width:100%;height:100%;}
     for(var i=0;i<60;i++) G.confetti.push({x:G.player.x,y:G.player.y-10,vx:(Math.random()-0.5)*400,vy:-Math.random()*400-100,life:1.4+Math.random(),c:cols[i%cols.length],s:4+Math.random()*5});
   }
 
+  var lbCache=[];
+  function lbKey(){ return 'slushie-guys-'+G.levelIdx; }
+  function fetchLB(cb){
+    fetch('/api/scores?game='+lbKey()).then(function(r){return r.json();}).then(function(d){
+      if(d.ok) lbCache=d.scores||[];
+      if(cb)cb();
+    }).catch(function(){if(cb)cb();});
+  }
+  function renderLB(highlight){
+    var tb=$('lbBody'); tb.innerHTML='';
+    for(var i=0;i<5;i++){
+      var tr=document.createElement('tr');
+      if(lbCache[i]){
+        var isYou=highlight&&Math.abs(lbCache[i].score-highlight)<0.01;
+        tr.innerHTML='<td>'+(i+1)+'</td><td'+(isYou?' class="you"':'')+'>'+escH(lbCache[i].initials)+'</td><td'+(isYou?' class="you"':'')+'>'+ fmtT(lbCache[i].score)+'</td>';
+        if(isYou) highlight=null;
+      }else{
+        tr.innerHTML='<td>'+(i+1)+'</td><td class="empty" colspan="2">---</td>';
+      }
+      tb.appendChild(tr);
+    }
+  }
+  function escH(s){var d=document.createElement('span');d.textContent=s;return d.innerHTML;}
+  function lbQualifies(t){
+    if(t<=0) return false;
+    if(lbCache.length<5) return true;
+    return t<lbCache[lbCache.length-1].score;
+  }
+
   function showResult(place,t,nb,prev){
     G.mode='result';
     $('hud').style.display='none'; $('controls').style.display='none';
@@ -418,8 +472,35 @@ canvas{display:block;width:100%;height:100%;}
     $('rPlace').className='place'+(win?' win':'');
     $('rTime').textContent='Your time: '+fmtT(t);
     $('rBest').textContent = nb ? (prev>0?'New best time! ⚡':'First finish — that is your time to beat.') : ('Best on this course: '+fmtT(getBest(G.levelIdx)));
+    G._lastTime=t;
+    fetchLB(function(){
+      if(lbQualifies(t)){
+        $('initRow').classList.add('show');
+        $('initInput').value='';
+        $('initInput').focus();
+      }else{
+        $('initRow').classList.remove('show');
+      }
+      renderLB();
+    });
     $('result').classList.remove('hide');
   }
+
+  $('initSave').addEventListener('click',function(){
+    var ini=$('initInput').value.replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase();
+    if(!ini) return;
+    var t=G._lastTime;
+    $('initSave').disabled=true;
+    fetch('/api/scores',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({game:lbKey(),initials:ini,score:parseFloat(t.toFixed(2))})
+    }).then(function(){return fetch('/api/scores?game='+lbKey());}).then(function(r){return r.json();}).then(function(d){
+      if(d.ok) lbCache=d.scores||[];
+      $('initRow').classList.remove('show');
+      renderLB(parseFloat(t.toFixed(2)));
+      $('initSave').disabled=false;
+    }).catch(function(){$('initSave').disabled=false;$('initRow').classList.remove('show');});
+  });
+  $('initInput').addEventListener('keydown',function(e){if(e.key==='Enter')$('initSave').click();});
 
   /* ---- render ---- */
   function render(){
