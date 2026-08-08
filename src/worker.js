@@ -20,6 +20,9 @@
        list/update bookings, add costs, add learnings, get ledger totals and
        jar balances. All backed by the slush_business D1 database.
 
+    5. WAITLIST — POST /api/waitlist saves an email to D1 for the "tell me
+       when dates open" signup. One email, one time, not a newsletter.
+
   Everything else is handed straight back to the static assets, unchanged.
 
   COPPA note: the logging is server-side operational logging — NO cookies, NO
@@ -131,6 +134,11 @@ export default {
       return handleBooking(request, env, ctx);
     }
 
+    // Job 5: waitlist — "tell me when dates open."
+    if (url.pathname === "/api/waitlist") {
+      return handleWaitlist(request, env);
+    }
+
     // Job 4: Cockpit + Ledger API.
     if (url.pathname.startsWith("/api/")) {
       const apiRes = await handleAPI(request, url, env);
@@ -139,10 +147,10 @@ export default {
 
     // Job 4: dashboard data for /dashboard. Server-side so API tokens never
     // reach the browser; each returns a placeholder when its secret is unset.
-    if (url.pathname === "/api/stats/traffic") return handleTrafficStats(env);
-    if (url.pathname === "/api/stats/content") return handleContentStats(env);
-    if (url.pathname === "/api/stats/search") return handleSearchStats(env);
-    if (url.pathname === "/api/stats/games") return handleGameStats(env);
+    if (url.pathname === "/api/stats/traffic") return handleTrafficStats(url, env);
+    if (url.pathname === "/api/stats/content") return handleContentStats(url, env);
+    if (url.pathname === "/api/stats/search") return handleSearchStats(url, env);
+    if (url.pathname === "/api/stats/games") return handleGameStats(url, env);
 
     // Game telemetry beacon — lightweight, first-party, no cookies, no PII.
     if (url.pathname === "/api/game-event" && request.method === "POST") {
@@ -372,6 +380,42 @@ async function saveBookingToD1(data, env) {
   }
 }
 
+// --- Job 5: waitlist --------------------------------------------------------
+async function handleWaitlist(request, env) {
+  if (request.method !== "POST") {
+    return json({ ok: false, error: "Method not allowed." }, 405);
+  }
+  if (!env.DB) {
+    return json({ ok: false, error: "Database is not configured yet." }, 503);
+  }
+
+  let data;
+  try {
+    const buf = await request.arrayBuffer();
+    if (buf.byteLength > 4096) return json({ ok: false, error: "Request too large." }, 413);
+    data = JSON.parse(new TextDecoder().decode(buf));
+  } catch {
+    return json({ ok: false, error: "Could not read your request." }, 400);
+  }
+
+  const email = (typeof data.email === "string" ? data.email : "").trim().toLowerCase();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return json({ ok: false, error: "That does not look like an email address." }, 400);
+  }
+  const source = typeof data.source === "string" ? data.source.slice(0, 200) : null;
+
+  try {
+    await env.DB.prepare(
+      "INSERT INTO waitlist (created_at, email, source) VALUES (?, ?, ?) ON CONFLICT(email) DO NOTHING"
+    ).bind(new Date().toISOString(), email, source).run();
+  } catch (err) {
+    console.error("Waitlist insert failed:", err && err.stack ? err.stack : err);
+    return json({ ok: false, error: "Something went wrong. Try again in a moment." }, 500);
+  }
+
+  return json({ ok: true });
+}
+
 // --- Job 4: Cockpit + Ledger API -------------------------------------------
 // Read-only APIs that the future Cockpit page and auto-generated /ledger will
 // call. All responses are JSON with CORS restricted to the same origin (the
@@ -552,12 +596,13 @@ async function aeQuery(env, sql) {
   return (await res.json()).data || [];
 }
 
-async function handleTrafficStats(env) {
+async function handleTrafficStats(url, env) {
   if (!env.CF_ANALYTICS_TOKEN) {
     return json({ status: "not_configured", need: "CF_ANALYTICS_TOKEN" });
   }
+  const range = parseDateRange(url);
   const PAGE = "blob6 = 'GET' AND blob1 NOT LIKE '%.%' AND blob1 NOT LIKE '/api/%'";
-  const WIN = "timestamp > NOW() - INTERVAL '7' DAY";
+  const WIN = aeWin(range);
   try {
     const [humanViews, allReqs, crawlers, split] = await Promise.all([
       aeQuery(env, `SELECT sum(_sample_interval) AS n FROM slush_traffic WHERE ${WIN} AND ${PAGE} AND blob3 = 'human'`),
@@ -567,7 +612,7 @@ async function handleTrafficStats(env) {
     ]);
     return json({
       status: "ok",
-      window_days: 7,
+      window_days: range.days,
       page_views: num(humanViews[0] && humanViews[0].n),
       total_page_requests: num(allReqs[0] && allReqs[0].n),
       crawlers: crawlers.map((r) => ({ name: r.crawler, kind: r.kind, hits: num(r.n) })),
@@ -578,10 +623,11 @@ async function handleTrafficStats(env) {
   }
 }
 
-async function handleContentStats(env) {
+async function handleContentStats(url, env) {
   if (!env.POSTHOG_API_KEY || !env.POSTHOG_PROJECT_ID) {
     return json({ status: "not_configured", need: "POSTHOG_API_KEY + POSTHOG_PROJECT_ID" });
   }
+  const range = parseDateRange(url);
   const host = env.POSTHOG_HOST || "https://us.posthog.com";
   async function hog(q) {
     const res = await fetch(`${host}/api/projects/${env.POSTHOG_PROJECT_ID}/query/`, {
@@ -592,10 +638,10 @@ async function handleContentStats(env) {
     if (!res.ok) throw new Error(`PostHog HTTP ${res.status}`);
     return (await res.json()).results || [];
   }
-  const WIN = "timestamp > now() - INTERVAL 7 DAY";
+  const WIN = hogWin(range);
   const PV = "event = '$pageview' AND " + WIN;
   try {
-    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits, entryPages, newVsReturn, outbound, duration, utmSources, utmMediums, utmCampaigns, aiReferrals] = await Promise.all([
+    const [overview, pages, refs, devices, clicks, scroll, funnelBook, funnelSubmit, geo, exits, entryPages, newVsReturn, outbound, duration, utmSources, utmMediums, utmCampaigns, aiReferrals, trend] = await Promise.all([
       hog("SELECT count() AS pv, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV),
       hog("SELECT properties.$pathname AS p, count() AS n FROM events WHERE " + PV + " GROUP BY p ORDER BY n DESC LIMIT 10"),
       hog("SELECT coalesce(nullIf(properties.$referring_domain, ''), 'direct / typed in') AS src, count() AS n FROM events WHERE " + PV + " GROUP BY src ORDER BY n DESC LIMIT 8"),
@@ -614,6 +660,7 @@ async function handleContentStats(env) {
       hog("SELECT properties.$utm_medium AS med, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_medium IS NOT NULL AND properties.$utm_medium != '' GROUP BY med ORDER BY n DESC LIMIT 10"),
       hog("SELECT properties.$utm_campaign AS cam, count() AS n, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " AND properties.$utm_campaign IS NOT NULL AND properties.$utm_campaign != '' GROUP BY cam ORDER BY n DESC LIMIT 10"),
       hog("SELECT properties.$referring_domain AS src, count() AS n, count(DISTINCT distinct_id) AS vis, count(DISTINCT \"$session_id\") AS sess FROM events WHERE " + PV + " AND properties.$referring_domain IN ('chat.openai.com','chatgpt.com','perplexity.ai','claude.ai','gemini.google.com','copilot.microsoft.com','you.com','poe.com','search.brave.com','kagi.com') GROUP BY src ORDER BY n DESC"),
+      hog("SELECT toDate(timestamp) AS day, count() AS pv, count(DISTINCT distinct_id) AS vis FROM events WHERE " + PV + " GROUP BY day ORDER BY day"),
     ]);
     const scrollPct = (v) => { const n = Number(v) || 0; return n <= 1 ? Math.round(n * 100) : Math.round(n); };
     const avgDur = num(duration[0] && duration[0][0]);
@@ -621,7 +668,7 @@ async function handleContentStats(env) {
     const durSec = avgDur % 60;
     return json({
       status: "ok",
-      window_days: 7,
+      window_days: range.days,
       visitors: num(overview[0] && overview[0][1]),
       pageviews: num(overview[0] && overview[0][0]),
       sessions: num(overview[0] && overview[0][2]),
@@ -645,6 +692,7 @@ async function handleContentStats(env) {
       utm_mediums: utmMediums.map((r) => ({ medium: r[0], views: num(r[1]), visitors: num(r[2]) })),
       utm_campaigns: utmCampaigns.map((r) => ({ campaign: r[0], views: num(r[1]), visitors: num(r[2]) })),
       ai_referrals: aiReferrals.map((r) => ({ source: r[0], views: num(r[1]), visitors: num(r[2]), sessions: num(r[3]) })),
+      trend: trend.map((r) => ({ day: r[0], pageviews: num(r[1]), visitors: num(r[2]) })),
     });
   } catch (err) {
     return json({ status: "error", message: String((err && err.message) || err) });
@@ -656,10 +704,33 @@ function num(v) {
   return Number.isFinite(n) ? Math.round(n) : 0;
 }
 
+function parseDateRange(url) {
+  const d = parseInt(url.searchParams.get("days"), 10);
+  const from = url.searchParams.get("from");
+  const to = url.searchParams.get("to");
+  if (from && to && /^\d{4}-\d{2}-\d{2}$/.test(from) && /^\d{4}-\d{2}-\d{2}$/.test(to)) {
+    const diffMs = new Date(to) - new Date(from);
+    const diffDays = Math.max(1, Math.round(diffMs / 86400000) + 1);
+    return { from, to, days: diffDays };
+  }
+  const days = d > 0 ? Math.min(d, 90) : 7;
+  return { days, from: null, to: null };
+}
+
+function aeWin(r) {
+  if (r.from) return `timestamp >= toDateTime('${r.from}T00:00:00') AND timestamp <= toDateTime('${r.to}T23:59:59')`;
+  return `timestamp > NOW() - INTERVAL '${r.days}' DAY`;
+}
+
+function hogWin(r) {
+  if (r.from) return `timestamp >= toDateTime('${r.from}') AND timestamp < toDateTime('${r.to}') + INTERVAL 1 DAY`;
+  return `timestamp > now() - INTERVAL ${r.days} DAY`;
+}
+
 // Search Console (top queries) via a service account. Needs GSC_SA_EMAIL +
 // GSC_SA_KEY (the PEM private key) as Worker secrets, and the service account
 // added as a read-only user on the property. GSC_SITE defaults to the domain.
-async function handleSearchStats(env) {
+async function handleSearchStats(url, env) {
   if (!env.GSC_SA_EMAIL || !env.GSC_SA_KEY) {
     return json({ status: "not_configured", need: "GSC_SA_EMAIL + GSC_SA_KEY" });
   }
@@ -772,21 +843,23 @@ async function handleGameEvent(request, env) {
   }
 }
 
-async function handleGameStats(env) {
+async function handleGameStats(url, env) {
   if (!env.CF_ANALYTICS_TOKEN) {
     return json({ status: "not_configured", need: "CF_ANALYTICS_TOKEN" });
   }
+  const range = parseDateRange(url);
   try {
     const sql = (q) => aeQuery(env, q);
+    const WIN = aeWin(range);
     const [plays, scores, popularity, hourly] = await Promise.all([
-      sql("SELECT blob1 AS game, blob2 AS evt, count() AS n FROM slush_traffic WHERE index1 = 'game' AND timestamp > NOW() - INTERVAL '7' DAY AND blob2 IN ('start','end') GROUP BY game, evt ORDER BY game, evt"),
-      sql("SELECT blob1 AS game, max(double1) AS best, avg(double1) AS avg_score, avg(double2) AS avg_dur FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'end' AND timestamp > NOW() - INTERVAL '7' DAY GROUP BY game ORDER BY game"),
-      sql("SELECT blob1 AS game, count() AS n FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'start' AND timestamp > NOW() - INTERVAL '7' DAY GROUP BY game ORDER BY n DESC"),
-      sql("SELECT toHour(timestamp) AS hr, count() AS n FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'start' AND timestamp > NOW() - INTERVAL '7' DAY GROUP BY hr ORDER BY hr"),
+      sql(`SELECT blob1 AS game, blob2 AS evt, count() AS n FROM slush_traffic WHERE index1 = 'game' AND ${WIN} AND blob2 IN ('start','end') GROUP BY game, evt ORDER BY game, evt`),
+      sql(`SELECT blob1 AS game, max(double1) AS best, avg(double1) AS avg_score, avg(double2) AS avg_dur FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'end' AND ${WIN} GROUP BY game ORDER BY game`),
+      sql(`SELECT blob1 AS game, count() AS n FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'start' AND ${WIN} GROUP BY game ORDER BY n DESC`),
+      sql(`SELECT toHour(timestamp) AS hr, count() AS n FROM slush_traffic WHERE index1 = 'game' AND blob2 = 'start' AND ${WIN} GROUP BY hr ORDER BY hr`),
     ]);
     return json({
       status: "ok",
-      window_days: 7,
+      window_days: range.days,
       plays: plays.map((r) => ({ game: r[0], event: r[1], count: num(r[2]) })),
       scores: scores.map((r) => ({ game: r[0], best: num(r[1]), avg: num(r[2]), avg_dur_sec: num(r[3]) })),
       popularity: popularity.map((r) => ({ game: r[0], starts: num(r[1]) })),

@@ -612,7 +612,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
   // Same honest-disable rule as the booking form: with no endpoint the form
   // says so instead of pretending it worked. A form that fakes success is the
   // exact defect this site was recovered from.
-  var LIST_ENDPOINT = '';
+  var LIST_ENDPOINT = '/api/waitlist';
 
   var f=document.getElementById('wl-form'), b=document.getElementById('wl-btn'),
       e=document.getElementById('wl-email'), m=document.getElementById('wl-msg');

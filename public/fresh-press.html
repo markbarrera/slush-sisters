@@ -240,7 +240,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
 <ul>
 <li>Bulk mix, the same base every rental company in Austin uses</li>
 <li>Corn syrup, citric acid, artificial color, &ldquo;natural and artificial flavor&rdquo;</li>
-<li>Six flavors, two at a time</li>
+<li>Seven flavors, two at a time</li>
 <li>Candy garnish on every cup</li>
 <li>Ready on a few days&rsquo; notice</li>
 <li>It is genuinely good, and it is what most parties want</li>
@@ -373,7 +373,7 @@ footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left
   // Same honest-disable rule as the booking form: with no endpoint the form
   // says so instead of pretending it worked. A form that fakes success is the
   // exact defect this site was recovered from.
-  var LIST_ENDPOINT = '';
+  var LIST_ENDPOINT = '/api/waitlist';
 
   var f=document.getElementById('wl-form'), b=document.getElementById('wl-btn'),
       e=document.getElementById('wl-email'), m=document.getElementById('wl-msg');
