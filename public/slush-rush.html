@@ -134,6 +134,23 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
 @media(min-height:760px){ .cup{width:150px;height:190px;} }
+
+.lb{width:100%;max-width:260px;margin:8px auto 0;text-align:left;}
+.lb h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ice-deep);margin-bottom:6px;}
+.lb table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.lb td{padding:3px 6px;font-weight:700;}
+.lb td:first-child{width:22px;color:#8a95ad;}
+.lb td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--brand);}
+.lb .you{color:var(--pop);}
+.lb .empty{color:#bbb;font-weight:400;font-style:italic;}
+
+.init-row{display:none;align-items:center;justify-content:center;gap:10px;margin:8px 0;}
+.init-row.show{display:flex;}
+.init-row input{width:72px;text-align:center;font-family:inherit;font-weight:800;font-size:1.1rem;
+  text-transform:uppercase;border:3px solid var(--ice-deep);border-radius:10px;padding:6px;
+  background:rgba(255,255,255,.8);color:var(--brand);letter-spacing:4px;}
+.init-row button{border:none;border-radius:99px;padding:8px 18px;font-family:inherit;font-weight:800;
+  font-size:.88rem;color:#fff;background:var(--ice-deep);cursor:pointer;}
 </style>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -193,6 +210,14 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;
     <p class="final" id="overFinal">You served 0 cups</p>
     <p class="best" id="overBest">Best: 0</p>
     <p class="rules" id="overMsg"></p>
+    <div class="init-row" id="initRow">
+      <input id="initInput" maxlength="3" placeholder="AAA" autocomplete="off" autocapitalize="characters">
+      <button id="initSave">Save</button>
+    </div>
+    <div class="lb" id="lbWrap">
+      <h3>Top 5</h3>
+      <table><tbody id="lbBody"></tbody></table>
+    </div>
     <button class="go" id="againBtn">Play again</button>
     <div class="foot"><a href="/play">‹ Arcade</a> · want the real thing? <a href="/book">Book a party</a></div>
   </div>
@@ -428,6 +453,35 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;
     newRound();
   }
 
+  var GAME_KEY='slush-rush';
+  var lbCache=[];
+  function fetchLB(cb){
+    fetch('/api/scores?game='+GAME_KEY).then(function(r){return r.json();}).then(function(d){
+      if(d.ok) lbCache=d.scores||[];
+      if(cb)cb();
+    }).catch(function(){if(cb)cb();});
+  }
+  function renderLB(highlight){
+    var tb=$('lbBody'); tb.innerHTML='';
+    for(var i=0;i<5;i++){
+      var tr=document.createElement('tr');
+      if(lbCache[i]){
+        var isYou=highlight&&lbCache[i].score===highlight;
+        tr.innerHTML='<td>'+(i+1)+'</td><td'+(isYou?' class="you"':'')+'>'+esc(lbCache[i].initials)+'</td><td'+(isYou?' class="you"':'')+'>'+ lbCache[i].score+'</td>';
+        if(isYou) highlight=null;
+      }else{
+        tr.innerHTML='<td>'+(i+1)+'</td><td class="empty" colspan="2">---</td>';
+      }
+      tb.appendChild(tr);
+    }
+  }
+  function esc(s){var d=document.createElement('span');d.textContent=s;return d.innerHTML;}
+  function qualifies(score){
+    if(score<=0) return false;
+    if(lbCache.length<5) return true;
+    return score>lbCache[lbCache.length-1].score;
+  }
+
   function gameOver(){
     S.running=false; stopTimer(); cancelAnimationFrame(S.raf);
     track('end',{score:S.score,detail:'round:'+S.round});
@@ -441,8 +495,35 @@ body{font-family:'Baloo 2',system-ui,-apple-system,sans-serif;
     $('overMsg').textContent = S.round<5
       ? 'Warm-up round. The orders get faster — go again.'
       : (S.round<12 ? 'Solid shift. Can you beat it?' : 'You ran that party like a pro.');
+    var myScore=S.score;
+    fetchLB(function(){
+      if(qualifies(myScore)){
+        $('initRow').classList.add('show');
+        $('initInput').value='';
+        $('initInput').focus();
+      }else{
+        $('initRow').classList.remove('show');
+      }
+      renderLB();
+    });
     $('overScreen').classList.remove('hide');
   }
+
+  $('initSave').addEventListener('click',function(){
+    var ini=$('initInput').value.replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase();
+    if(!ini) return;
+    $('initSave').disabled=true;
+    fetch('/api/scores',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({game:GAME_KEY,initials:ini,score:S.score})
+    }).then(function(){return fetch('/api/scores?game='+GAME_KEY);}).then(function(r){return r.json();}).then(function(d){
+      if(d.ok) lbCache=d.scores||[];
+      $('initRow').classList.remove('show');
+      renderLB(S.score);
+      $('initSave').disabled=false;
+    }).catch(function(){$('initSave').disabled=false;$('initRow').classList.remove('show');});
+  });
+  $('initInput').addEventListener('keydown',function(e){if(e.key==='Enter')$('initSave').click();});
+  fetchLB();
 
   // ---- wire buttons -------------------------------------------------------
   $('startBtn').addEventListener('click', start);
