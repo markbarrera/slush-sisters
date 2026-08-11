@@ -111,7 +111,7 @@ const PAGES = [
      `A second machine costs about $800, the same as the first, and pays for itself in around four parties. If you keep saying no to people because the machine is busy, the machine is the problem — and problems you can buy your way out of are the good kind.`],
 
     ['plain', 'The thing you actually run out of is Saturdays',
-     `Not machines. Not customers. There are roughly 25,000 to 35,000 households near you with money to spend on parties. You are never going to run out of those. You run out of weekend afternoons when a grown-up can drive the van.`],
+     `Not machines. Not customers. There are roughly 25,000 to 35,000 households near you with money to spend on parties. You are never going to run out of those. You run out of weekend afternoons when a grown-up can drive the truck.`],
 
     ['debate', 'So should you buy another machine?',
      `Machines are cheap and they pay for themselves fast. If you are turning people away you are turning away money.`,
@@ -128,7 +128,7 @@ const PAGES = [
      `Right now you rent the machine for $250 and someone else pours the drinks. There is another way to do it: take the machine to a school fair or a church festival and sell cups yourself, and give some of the money back to the school.`],
 
     ['number', 'Same machine. Same night. Twice the money.', '$540',
-     `A school carnival with 300 people, two hours, $3 a cup, and about six out of ten people buy one. That is around $540 — against $250 for renting it out. Same machine, same van, same evening.`],
+     `A school carnival with 300 people, two hours, $3 a cup, and about six out of ten people buy one. That is around $540 — against $250 for renting it out. Same machine, same truck, same evening.`],
 
     ['plain', 'A company already proved this works',
      `Kona Ice does exactly this with about 1,933 trucks and made $352 million in one year. That is roughly $182,000 per truck. They do not rent anything out. They show up at events and sell cups.`],
@@ -213,7 +213,7 @@ const PAGES = [
      `M3 Girl Designs was in over 1,000 stores. Then the company sued some small competitors over a design it had never actually registered, lost, and shut down in 2015. <b>Do not sue people.</b>`],
 
     ['plain', 'The pattern in all of them',
-     `Every single one that got big stopped doing a service and started selling a <b>thing</b> — something in a box that can be mailed to someone. You are currently a service: hours of a machine in a van. Somebody in another state cannot rent your machine. They could buy a box of your garnish.`],
+     `Every single one that got big stopped doing a service and started selling a <b>thing</b> — something in a box that can be mailed to someone. You are currently a service: hours of a machine in a truck. Somebody in another state cannot rent your machine. They could buy a box of your garnish.`],
 
     ['plain', 'And the honest bit',
      `Lots of kids start businesses. Most of them stop. The most likely thing that happens here is that it winds down in a few years when other things get more interesting — and that is completely normal and not a failure. It is just worth knowing, so that carrying on is a choice you make instead of something you assume.`],
@@ -415,7 +415,7 @@ const PAGES = [
      `More than 75,000 followers and a video with 1.3 million views. Her shop has sold 712 things in four months, mostly between $5 and $30. That is real and it is growing fast — and it is nowhere near what 75,000 followers sounds like it should be worth.`],
 
     ['plain', 'Why this matters for you specifically',
-     `Someone in Ohio can watch every video you ever make and still never rent your machine, because your van does not go to Ohio. A huge audience is worth almost nothing to a business that only delivers within about thirty miles. Nobody knows yet how many of your followers live close enough to book.`],
+     `Someone in Ohio can watch every video you ever make and still never rent your machine, because your truck does not go to Ohio. A huge audience is worth almost nothing to a business that only delivers within about thirty miles. Nobody knows yet how many of your followers live close enough to book.`],
   ],
 },
 {
@@ -489,7 +489,7 @@ const PAGES = [
      `Nobody has ever measured it. Every other number in the business depends on it.`],
 
     ['unknown', 'How many cups does one party actually use?', 'Free · 6 parties',
-     `A tally sheet in the van. Nobody has counted, so nobody knows what a party really costs.`],
+     `A tally sheet in the truck. Nobody has counted, so nobody knows what a party really costs.`],
 
     ['unknown', 'Does the money content really beat the drink content?', 'Free · 10 posts',
      `Everyone keeps saying it does. Five of each, same two weeks, then compare. Until then it is just a thing people say.`],
@@ -521,7 +521,7 @@ const PAGES = [
      `They share videos about two kids running a real business. A nice drink gets a like and gets forgotten. Counting the money out loud, or working out what you still owe Dad for the machine, gets <b>sent to someone</b>.`],
 
     ['plain', 'So post the boring parts',
-     `Cleaning the machine. Loading the van. The setup that went wrong in the rain. The math on whether a booking far away is even worth the drive. Those are the ones that travel.`],
+     `Cleaning the machine. Loading the truck. The setup that went wrong in the rain. The math on whether a booking far away is even worth the drive. Those are the ones that travel.`],
 
     ['plain', 'About half of it should not be selling anything',
      `If everything you post is about the product, the only people who follow you are people who already want one. That is a very small group. The other half is just you two being interesting.`],
@@ -574,7 +574,7 @@ const PAGES = [
 {
   name: 'The idea',
   color: '#81c784',
-  blurb: 'Same machine, same van, different mix.',
+  blurb: 'Same machine, same truck, different mix.',
   cards: [
     ['plain', 'Everyone uses the same syrup',
      `Every margarita machine company in Austin uses the same bulk mix: corn syrup, citric acid, artificial color, "natural and artificial flavor." It is fine. It is also exactly the ingredient list a lot of people around here read labels to avoid.`],
@@ -876,6 +876,82 @@ const PAGES = [
      `A hand-drawn, slightly wonky, candy-bright world looks like something two kids actually made. Perfect glossy photos look like every other company. The drawings are also free and load instantly, because they are made of code, not picture files.`],
     ['plain', 'No fancy cocktail photos, on purpose',
      `It is tempting to put a big shiny photo of a margarita on the grown-ups page. We do not, and here is why: a glossy cocktail photo makes an 11-year-old's company look like a tequila advert, which is exactly the wrong look for you. If we ever show a real drink, it is the frozen cup with the candy on the rim, next to real fruit — never a bar cocktail.`],
+  ],
+},
+  ],
+},
+
+/* ======================= 10. THE OTHER GUYS =============================== */
+{
+  slug: 'the-other-guys',
+  title: 'What the other guys do',
+  kicker: 'Know your competition',
+  lede: `We looked at every company that rents margarita machines in the Austin area. There are about seven of them. Here is what they charge, what their customers say, what they are good at, and what they are bad at — and where we are already ahead.`,
+  close: [
+    ['If you only remember one thing',
+     `Nobody in this market asks the guests for reviews. That is your biggest advantage. One rental puts 30–50 people in front of your machine, and every one of them has a phone. If three of them leave a review, you match a competitor’s entire year. Twenty rentals with that system and you are the most-reviewed frozen drink rental in Austin.`],
+  ],
+  groups: [
+{
+  name: 'Who they are and what they charge',
+  color: '#4fc3f7',
+  blurb: 'Seven dedicated margarita machine rental companies in the Austin area.',
+  cards: [
+    ['plain', 'The cheapest is $149, the most expensive is $350',
+     `Margaritas To Go (also called Margarita Man Austin) is the cheapest at about $149. ATX Marg is the most expensive at about $350. You are at $250 — right in the middle, and that is a good place to be, especially now that Fresh Press at $375 is the premium option for people who want real fruit.`],
+    ['number', 'Reviews the market leader has after 12 years', '13',
+     `Thirteen Yelp reviews. In twelve years. That is the most of any dedicated marg rental company in Austin. The rest have between zero and eight. The review numbers in this market are shockingly small.`],
+    ['plain', 'Two of them work in your area',
+     `Margaritas To Go and Crazy Party Rita’s both list Lakeway and Bee Cave as places they deliver. They are your direct competition for local customers.`],
+    ['plain', 'Big party companies are a different thing',
+     `Companies like Austin Bounce House Rentals have 200+ reviews, but they rent bounce houses, photo booths, and everything else. Margarita machines are just a thing on the side for them. They are not competing with you the way the dedicated marg companies are.`],
+  ],
+},
+{
+  name: 'Reviews — the big opportunity',
+  color: '#ff4081',
+  blurb: 'This is the most important section. Read it twice.',
+  cards: [
+    ['plain', 'Every single review is from the person who booked',
+     `We read every review every competitor has. All of them — 100% — are from the person who booked the rental. Not one is from a party guest. Nobody in this entire market asks the guests.`],
+    ['number', 'People at one of your parties who could review', '30–50',
+     `Every rental puts 30 to 50 people in front of the machine. They are standing there with a drink and a phone. If you put a card on the table with a QR code to your Google review page, some of them will scan it. Three reviews from one party is more than most competitors get in a year.`],
+    ['plain', 'The math',
+     `Twenty rentals in a year, five reviews each from the guests plus the booker. That is 100 reviews. The market leader has 13 after twelve years. You can be the most-reviewed frozen drink rental in Austin before your first birthday as a company.`],
+    ['plain', 'What the card says',
+     `A small printed card at the machine: "Had fun? Tell Google about us!" with a QR code. Same card stock as the party-play QR card. Put it where people are standing with their cups. That is it.`],
+    ['plain', 'Text the booker the next morning',
+     `When Dad picks up the machine, text the person who booked: "Thanks for having us! If you had a good time, a Google review helps us more than anything" with the link. Text, not email — people actually read texts. One follow-up three days later if they have not done it. One. Never pester.`],
+    ['plain', 'Respond to every single review',
+     `One of the competitors — Woolf’s Ritas — responds to every review they get. Nobody else does. Do what they do. When a review comes in, reply within 24 hours. Keep it short and from you two: "Thank you Ashley! We loved your party — the watermelon was a hit!" It tells people you are paying attention and encourages others to leave one too.`],
+  ],
+},
+{
+  name: 'What they do that we should steal',
+  color: '#ffb74d',
+  blurb: 'Some of their ideas are worth copying.',
+  cards: [
+    ['plain', 'Recipes page',
+     `Captain Ouzo’s has a page with exact drink recipes — how much tequila, how much mix, how many servings. That page captures people who search "how much tequila for a margarita machine" and nobody else has one. We should build one.`],
+    ['plain', 'Party story write-ups',
+     `ATX Marg wrote up a corporate party they did — 1,500 drinks for a TikTok event. After your first few rentals, write up each party (with the host’s permission). Those become content and proof that you actually do this.`],
+    ['plain', 'Instant checkout',
+     `Woolf’s Ritas lets people pay instantly with Apple Pay, Google Pay, or a card — no waiting for someone to email back. That is the best booking experience of any competitor. Our form works, but it is not instant.`],
+  ],
+},
+{
+  name: 'Where you are already ahead',
+  color: '#7ed957',
+  blurb: 'You might not know it, but you are ahead on a lot of things already.',
+  cards: [
+    ['plain', 'You have more pages than anyone',
+     `You have 23 pages. Most competitors have 2 to 5. Seven neighborhood pages, a pricing page, a flavors page, a lab page, a promise page — nobody else has anything close.`],
+    ['plain', 'Your website talks to Google better',
+     `The website has six different types of structured data — that is the code that tells Google exactly what you are, what you charge, where you deliver, and what questions people ask. Every competitor has basic page titles at most. That gives you a real advantage in search results.`],
+    ['plain', 'The non-alcoholic option is front and center',
+     `Only one other company — Captain Ouzo’s — even mentions that you can make drinks without alcohol, and theirs is buried in a FAQ. Yours is rule number one on the rules page. For every parent searching "kid-friendly party drinks," that matters.`],
+    ['number', 'A keyword nobody is fighting over', '200',
+     `Two hundred people a month search "slushie machine rental" and not a single company in Austin targets it. Every competitor fights over "margarita machine." You are literally called Slush Sisters. That keyword is yours for the taking.`],
   ],
 },
   ],

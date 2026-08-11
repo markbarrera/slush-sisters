@@ -30,6 +30,49 @@ Two audiences, on purpose:
 
 ---
 
+## 2026-08-11 — Product schema, van→truck, Instagram handle, competitive intel
+
+Four things shipped, plus the start of a competitive analysis.
+
+**Product schema on three pages.** Added `@type: Product` structured data to the
+homepage, `/margarita-machine-rental-austin`, and `/pricing`. Uses
+`AggregateOffer` with both tiers (Classic $250 / Fresh Press $375), real machine
+photos, and `InStock` availability. This mirrors how Jumparoo's gets their
+rental into Google's Shopping/product carousel at $145. The schema is the on-site
+half; the other half is a Google Merchant Center free listing (see
+`docs/competitive-intel.md` for the walkthrough). PR #60.
+
+**Van→truck across all public pages.** Dad drives a truck, not a van. Fixed in
+18 HTML files (26 replacements). Internal docs still say "van" in many places —
+those are flagged and will be a separate pass since some are in generated content
+(`docs/board/generate.js`, `docs/board/reading-room.js`).
+
+**Instagram handle confirmed.** `@slush_sisters` is the real handle. Updated
+from the placeholder `@slushsistersatx` on `launch-plan.html`, `index.html`,
+and `read/how-we-built-this.html`. The old `@slushsisters` handle belongs to
+someone else.
+
+**Inventory page accuracy.** Expanded the ORPHAN set in
+`scripts/build-inventory.js` from 4 to 16 entries so that noindex pages (games,
+dashboard, for-everest, etc.) are counted as orphans, not site pages. Inventory
+now reads: 23 site, 16 orphan, 12 reading room, 31 docs.
+
+**Competitive intelligence started.** `docs/competitive-intel.md` created with
+GSC baseline data (21 clicks / 28 days, zero commercial term visibility — all
+branded traffic). Competitor SEO, site teardowns, and review analysis in
+progress. PR #58 (Wimberley + Everest) and PR #59 (van + IG + inventory) also
+merged this session.
+
+### Corrections from Mark
+
+- Booking form DOES submit (to mark@markbarrera.com) — was listed as broken
+- hello@slushsisters.com works
+- Google Business Profile is done
+- Unboxing video exists, just needs editing — was listed as blocked
+- Dad drives a truck, not a van
+
+---
+
 ## 2026-08-06 — Tracking links, outreach list, and launch plan
 
 Three things shipped, all aimed at launch prep.

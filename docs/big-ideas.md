@@ -16,7 +16,7 @@ with each other. The argument, with every position and its counter, is in
 
 ### The Annual Report
 A real printed annual report from a 10-year-old CEO. Revenue, cost per party,
-cups poured, the loan balance still owed to Dad, a photo of the van, and a
+cups poured, the loan balance still owed to Dad, a photo of the truck, and a
 one-page letter from Finley about the year. Then mail forty physical copies to
 real people — investors, founders, the *Austin Monthly* editor, the Community
 Impact newsdesk, big Texas brands.
@@ -46,12 +46,12 @@ the list — nobody wants to be the company publicly ignoring two little girls.
 
 ### Cup Number
 Every cup ever poured is numbered, cumulatively, since day one. The count lives
-on the van and on the site. Hosts get told their party's range — *"you were cups
+on the truck and on the site. Hosts get told their party's range — *"you were cups
 5,140 to 5,266."* The 10,000th cup becomes an event.
 
 *Why it works:* it makes a story out of ordinary work, and gives you a number
 that only ever goes up.
-**Free. Needs one honest tally sheet in the van.**
+**Free. Needs one honest tally sheet in the truck.**
 
 ---
 
