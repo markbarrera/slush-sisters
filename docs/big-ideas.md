@@ -80,7 +80,7 @@ follow-up post months later.
 
 ### Dad's Performance Review
 Quarterly, on camera, the two owners formally review their driver. Punctuality,
-van cleanliness, attitude at setup, whether he talked too much to a customer
+truck cleanliness, attitude at setup, whether he talked too much to a customer
 again. Scored, with written feedback and a raise decision.
 
 *Why it works:* it is the funniest true thing about this company, and it

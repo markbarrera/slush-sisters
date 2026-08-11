@@ -548,7 +548,7 @@ const PAGES = [
   blurb: 'You do not have to invent everything from scratch.',
   cards: [
     ['plain', 'Use the sound everyone is already using',
-     `If there is a sound or a format going around, do your version with something only you have — the machine, the garnish, the van, the arguing.`],
+     `If there is a sound or a format going around, do your version with something only you have — the machine, the garnish, the truck, the arguing.`],
 
     ['plain', 'Be fast, not perfect',
      `A trend is worth something for about a week. A rough video posted on day two beats a beautiful one posted three weeks later.`],
