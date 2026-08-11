@@ -30,6 +30,76 @@ Two audiences, on purpose:
 
 ---
 
+## 2026-08-11 — Product schema, van→truck, Instagram handle, competitive intel
+
+Four things shipped, plus the start of a competitive analysis.
+
+**Product schema on three pages.** Added `@type: Product` structured data to the
+homepage, `/margarita-machine-rental-austin`, and `/pricing`. Uses
+`AggregateOffer` with both tiers (Classic $250 / Fresh Press $375), real machine
+photos, and `InStock` availability. This mirrors how Jumparoo's gets their
+rental into Google's Shopping/product carousel at $145. The schema is the on-site
+half; the other half is a Google Merchant Center free listing (see
+`docs/competitive-intel.md` for the walkthrough). PR #60.
+
+**Van→truck across all public pages.** Dad drives a truck, not a van. Fixed in
+18 HTML files (26 replacements). Internal docs were done in the same session —
+see "Van→truck finished across docs" below.
+
+**Instagram handle confirmed.** `@slush_sisters` is the real handle. Updated
+from the placeholder `@slushsistersatx` on `launch-plan.html`, `index.html`,
+and `read/how-we-built-this.html`. The old `@slushsisters` handle belongs to
+someone else.
+
+**Inventory page accuracy.** Expanded the ORPHAN set in
+`scripts/build-inventory.js` from 4 to 16 entries so that noindex pages (games,
+dashboard, for-everest, etc.) are counted as orphans, not site pages. Inventory
+now reads: 23 site, 16 orphan, 12 reading room, 31 docs.
+
+**Competitive intelligence complete.** `docs/competitive-intel.md` now has the
+full picture: 7 competitor profiles with pricing and service areas, review
+analysis (every single review across every competitor is from the booker — not
+one guest has ever reviewed), rental volume estimates inferred from review
+counts (market leader does ~3–5/month), Ahrefs data (DR 0 across the entire
+field — one real local backlink puts Slush Sisters ahead), the "slushie machine
+rental" keyword gap (200/mo, difficulty 0, nobody targets it), content and
+booking tactics comparison, and a review collection workflow designed around the
+guest-review angle that nobody in this market uses. A reading room version
+("The other guys") was added so the girls can read it too. PR #58 (Wimberley +
+Everest) and PR #59 (van + IG + inventory) also merged this session.
+
+**Van→truck finished across docs.** The previous pass fixed all 18 HTML files
+in `public/`. This pass caught the remaining ~30 instances across `docs/` —
+`big-ideas.md`, `marketing.md`, `case-review.md`, `research-2026-08-04.md`,
+`generate.js`, and `reading-room.js`. The generators use Unicode curly quotes
+(`'…'`) for in-word apostrophes (one's, Dad's) — these are deliberately
+different from the straight-quote string delimiters, not a typo. Do not
+"normalize" them.
+
+**Marketing status table updated.** GBP now marked as live, Instagram handle
+confirmed (`@slush_sisters`), competitive intel and review workflow cross-
+referenced, Product schema noted.
+
+**Reading room: 13 pages.** Added "The other guys" — the competitive intel
+rewritten for Harper and Finley. Covers competitor pricing, the guest-review
+opportunity, ideas worth stealing (recipes page, party write-ups, instant
+checkout), and where Slush Sisters is already ahead (23 pages vs competitors'
+2–5, structured data, non-alcoholic option front and center, the 200/mo keyword
+nobody fights over).
+
+**Inventory updated.** Now shows 23 site pages, 13 reading room, 16 orphan,
+32 docs.
+
+### Corrections from Mark
+
+- Booking form DOES submit (to mark@markbarrera.com) — was listed as broken
+- hello@slushsisters.com works
+- Google Business Profile is done
+- Unboxing video exists, just needs editing — was listed as blocked
+- Dad drives a truck, not a van
+
+---
+
 ## 2026-08-06 — Tracking links, outreach list, and launch plan
 
 Three things shipped, all aimed at launch prep.
@@ -264,7 +334,7 @@ watching `<head>` until something in `<head>` broke.
   `/margarita-machine-rental-austin` SEO page. Reason: if an Austin outlet runs
   a story, the whole metro arrives at once, and every existing page is either
   about one neighbourhood or written for adults booking a margarita machine.
-  This one covers the whole area, is honest about how far the van will go, and
+  This one covers the whole area, is honest about how far the truck will go, and
   answers "are you really kids" directly.
 - **Mobile-first written into `CLAUDE.md`** as a standing convention rather
   than a preference.

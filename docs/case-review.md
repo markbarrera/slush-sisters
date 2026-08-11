@@ -638,7 +638,7 @@ per-*guest*. Drive time, setup, breakdown and cleaning are roughly 85% of the
 cost base and are nearly identical whether twenty or sixty people attend. Only
 consumables scale.
 
-So: the same ~4 hours of van and family time yields about **$110 of
+So: the same ~4 hours of truck and family time yields about **$110 of
 contribution at $250, and about $278 at $450.** That is a **2.5× improvement on
 the scarcest input in the business.**
 
@@ -647,7 +647,7 @@ the scarcest input in the business.**
 
 That is a materially different claim from the one the docs were making, and it
 changes what you'd do. It also means market sizing was the wrong analysis
-throughout. Both markets are orders of magnitude larger than one van and one
+throughout. Both markets are orders of magnitude larger than one truck and one
 driver can serve. The right question is yield per adult weekend hour.
 
 **And then the finding that reframes it again.** The $250 flat rental is not a
@@ -664,7 +664,7 @@ Apply that to the machine that already exists. A 300-person school carnival,
 two hours, $3 a cup at a 60% take rate is roughly **$540 gross on one
 machine-night**, against $250 for renting it out. A church festival, an HOA pool
 party, a youth sports tournament, an elementary field day: same asset, same
-van, 2–3× the revenue, **no alcohol anywhere near it, and the girls can
+truck, 2–3× the revenue, **no alcohol anywhere near it, and the girls can
 actually be the ones serving.**
 
 **The counter, which is real.** Serving cups is a food-service operation in a
@@ -852,7 +852,7 @@ survived five people trying to disagree.
 8. **One brand.** Nobody who examined it recommended building a second.
 9. **The story is the only durable differentiator**, in a market where every
    competitor has a Domain Rating under 10.
-10. **Market sizing was the wrong analysis.** Both markets dwarf what one van
+10. **Market sizing was the wrong analysis.** Both markets dwarf what one truck
     can serve. Yield per adult weekend hour is the real question.
 
 ---
@@ -1082,7 +1082,7 @@ service-area pages and an SEO page bolted on. Specifically:
 /austin              BUILT 2026-08-04. The page for when Austin press
                      hits and the whole metro arrives at once. Covers
                      the full service area rather than one neighbourhood,
-                     is honest about how far the van will go, answers
+                     is honest about how far the truck will go, answers
                      "are you really kids" directly, and gives press and
                      event enquiries somewhere to land. Deliberately does
                      NOT target the margarita keyword — that would
@@ -1202,7 +1202,7 @@ hundred real bookings will be worth more than all of this analysis.
 
 **The precedent data cuts against the service business specifically.** Every
 kid founder who scaled sold a *thing*. Slush Sisters sells *hours of a machine
-in a van*. Until there is a product, the ceiling is the number of Saturdays in
+in a truck*. Until there is a product, the ceiling is the number of Saturdays in
 a year multiplied by the number of machines — and that is a number, however
 large you make it, that a serious person can calculate in advance.
 

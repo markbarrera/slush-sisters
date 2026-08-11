@@ -110,7 +110,7 @@ Most businesses invert that and wonder why nobody follows them.
 - Sibling challenges. Who is faster, who is stronger, who is right
 - Reacting to other kids who run businesses
 - Answering questions people ask in the comments
-- Being bored in the van on a long drive
+- Being bored in the truck on a long drive
 - Something you are learning that is hard
 - Your dog, if she cooperates
 
@@ -223,7 +223,7 @@ Nobody else can make these.
 
 ### A day at work
 
-25. Load the van.
+25. Load the truck.
 26. Set up at a party, sped up to ten seconds.
 27. The drive to a booking.
 28. Pick the machine up the next morning.
@@ -262,7 +262,7 @@ This is what gets you invited to speak at schools.
 50. Sister vs sister: who builds the machine faster.
 51. Rate each other's outfits.
 52. Answer comments on camera.
-53. Bored in the van on a long drive.
+53. Bored in the truck on a long drive.
 54. Try to make each other laugh without talking.
 55. Swap jobs for a day and see who struggles.
 56. Let Dad try a setup alone and time him.
@@ -434,7 +434,9 @@ serve — it lets a reporter say yes without a phone call.
   in-their-own-words answer is still the most useful signal at this volume.
 - **Google Search Console** — verified; search terms and crawl stats flowing.
 - **Cloudflare AI Crawl Control** — shows which AI crawlers hit the site.
-- Google Business Profile is not yet created.
+- **Google Business Profile** — confirmed live (Mark, 2026-08-11).
+- **Competitive intel** — full competitor teardown in `docs/competitive-intel.md`
+  including review volumes, keyword gaps, and a review collection workflow.
 
 ---
 
@@ -446,9 +448,9 @@ serve — it lets a reporter say yes without a phone call.
 - **Who runs the accounts?** Platform minimum is 13 and both are under it, so
   they must be parent-operated. Saying so in the bio is honest and protects the
   accounts from removal.
-- **The handles are not secured.** `@slushsisters` on Instagram belongs to
-  someone else. Everything here depends on the name. Most urgent item in this
-  document, and it costs nothing.
+- **~~The handles are not secured.~~** Resolved 2026-08-11. Instagram is
+  `@slush_sisters` (with underscore). `@slushsisters` belongs to someone else
+  and is not worth pursuing.
 
 ---
 
@@ -485,7 +487,10 @@ Add them. Do not wait for permission.
 | `/go/` tracking links | Live — 12 short links with UTM attribution |
 | `/outreach` outreach list | Live (orphaned) — 25+ targets across 6 tiers |
 | `/launch-plan` launch checklist | Live (orphaned) — interactive, localStorage |
-| Google Business Profile | Not created |
-| Social handles | Not secured |
+| Google Business Profile | Live (Mark confirmed 2026-08-11) |
+| Social handles | `@slush_sisters` on Instagram (confirmed 2026-08-11) |
+| Competitive intel | Live — `docs/competitive-intel.md` |
+| Review collection workflow | Designed — see `docs/competitive-intel.md` |
+| Product schema (Google Shopping) | Live — homepage, pricing, margarita page |
 | `/press` page | Not built |
 | Origin story page | Planned — see `origin-story.md` |

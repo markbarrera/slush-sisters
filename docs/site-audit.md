@@ -2,19 +2,17 @@
 
 Findings from the live site at the time it was recovered into this repo.
 
-**Status as of 2026-08-03.** Items 3, 4, 5, 8, 10 and most of 11 are fixed in
-this branch and ship on the next deploy. Item 1 is half-fixed — the form no
-longer lies, but it is not yet delivering anywhere. Items 2, 6, 7 and 9 are open.
+**Status as of 2026-08-11.** Most items are resolved. Items 9 and 11 remain open.
 
 | # | Finding | Status |
 | --- | --- | --- |
-| 1 | Booking form submits nowhere | Form rewritten; no longer shows false success. Needs a destination — see `docs/booking-form.md` |
-| 2 | No way to contact the business | **Open** — needs a real phone/email and the correct social handles |
+| 1 | Booking form submits nowhere | **Fixed** — form submits to mark@markbarrera.com via Email Routing Worker |
+| 2 | No way to contact the business | **Fixed** — hello@slushsisters.com works, Instagram is @slush_sisters |
 | 3 | Broken hero image | Fixed — `public/img/hero.svg` |
 | 4 | Unknown URLs return homepage with 200 | Fixed — `not_found_handling: 404-page` |
 | 5 | No robots.txt or sitemap.xml | Fixed — both added, robots explicitly allows all crawlers |
-| 6 | No analytics | **Open** |
-| 7 | No structured data | Fixed — `LocalBusiness` JSON-LD on the homepage |
+| 6 | No analytics | **Fixed** — PostHog + Cloudflare Analytics Engine via Worker, dashboard at `/dashboard` |
+| 7 | No structured data | **Fixed** — LocalBusiness, Service, FAQPage, Organization, BreadcrumbList, Product, HowTo JSON-LD across key pages |
 | 8 | No social preview tags | Fixed — OG + Twitter tags and a real 1200×630 card on all pages |
 | 9 | `www` does not resolve | **Open** — needs a DNS change |
 | 10 | Internal links cause an extra redirect | Fixed — all links now extensionless |
