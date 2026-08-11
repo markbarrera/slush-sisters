@@ -79,7 +79,13 @@ function mdInfo(file) {
 /* ------------------------------------------------------------- collection */
 
 // Pages that exist to be found, versus pages deliberately linked from nowhere.
-const ORPHAN = new Set(['cockpit.html', 'ideas.html', 'inventory.html', 'play.html']);
+const ORPHAN = new Set([
+  'cockpit.html', 'competition.html', 'dashboard.html', 'for-everest.html',
+  'ideas.html', 'inventory.html', 'launch-plan.html', 'outreach.html',
+  'party-play.html', 'play.html',
+  'slush-rush.html', 'slushie-catch.html', 'slushie-guys.html',
+  'slushie-playhouse.html', 'slushie-street.html', 'slushie-style.html',
+]);
 const SKIP = new Set(['404.html']);
 
 const sitePages = [], orphanPages = [];
