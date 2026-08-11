@@ -63,22 +63,33 @@ efforts grow, this number should grow proportionally.
 
 ## Competitor landscape
 
-Seven competitors identified and analyzed. The "Jumparoos" listing seen in
+Eight competitors identified and analyzed. The "Jumparoos" listing seen in
 Google Shopping was likely **Jump Around Party Rentals** (Round Rock) or
 **Sandi's Moon Walk** — not a dedicated marg rental company.
 
 ### Competitor profiles
 
-| Company | Focus | Price | Yelp reviews | Yelp rating | Service area overlap |
+Google reviews are what matter — they show up in the Map Pack, which is where
+the vast majority of local service leads come from. Yelp is secondary.
+
+| Company | Google reviews | Google rating | Price | Yelp reviews | Service area overlap |
 | --- | --- | --- | --- | --- | --- |
-| **Margarita Man Austin** (Margaritas To Go) | Dedicated marg rental | ~$149 variable | 13 | 4.5 | Yes — lists Lakeway, Bee Cave |
-| **Mr Margarita** | Dedicated marg rental | unknown | 8 | mixed | Austin area |
-| **Woolf's Ritas** | Dedicated marg rental | unknown | 6 | 5.0 | Austin area |
-| **Righteous Ritas** | Party supplies + marg | unknown | 6 | — | Austin area |
-| **Hill Country Margaritas** | Dedicated marg rental | unknown | 3 | — | Hill Country |
-| **ATX Marg Rentals** | Dedicated marg rental | ~$350 | 2 | 5.0 | Austin area |
-| **Captain Ouzo's** | Dedicated marg rental | unknown | 0 | — | Austin area |
-| **Crazy Party Rita's / Party Planet TX** | Party rental + marg | unknown | — | — | Yes — lists Lakeway, Bee Cave |
+| **River City Frozen Beverages** | ~200 (claimed) | 5.0 | $224 | 21 | Georgetown/Waco/Austin metro |
+| **Hill Country Margaritas** | 78 | 5.0 | unknown | 3 | Hill Country / Austin |
+| **Margarita Man Austin** (Margaritas To Go) | unknown | unknown | ~$149 | 13 | Yes — lists Lakeway, Bee Cave |
+| **Mr Margarita** | unknown | unknown | unknown | 8 (1.9★) | Austin area |
+| **Woolf's Ritas** | few (actively asking) | unknown | unknown | 6 | Austin area |
+| **Righteous Ritas** | unknown | unknown | unknown | 6 | Austin area |
+| **ATX Marg Rentals** | unknown | unknown | ~$350 | 2 | Austin area |
+| **Captain Ouzo's** | few (offers 15% discount) | unknown | unknown | 0 | Austin area |
+| **Crazy Party Rita's / Party Planet TX** | unknown | unknown | unknown | — | Yes — lists Lakeway, Bee Cave |
+
+**Note:** Margaritas To Go may be permanently closed — a Facebook post from
+their community asks this directly. Their website (margaritastogo.com) is still
+live but this should be verified. If true, they drop out of the competitive
+picture and one direct territorial threat goes away.
+
+**New entrant spotted:** Margs Y Mas (1 Yelp review, 5.0). Too early to assess.
 
 Broader party rental companies (bounce houses + marg machines as add-on):
 
@@ -90,36 +101,62 @@ Broader party rental companies (bounce houses + marg machines as add-on):
 | Operation Jump | 31 | Pflugerville, claims 200+ total |
 
 **Pricing position.** Slush Sisters at $250 sits in the middle. Cheapest is
-Margaritas To Go at ~$149. Most expensive is ATX Marg at ~$350. The price is
-defensible, especially with Fresh Press at $375 as the premium tier.
+River City at $224 (bargain package). Most expensive is ATX Marg at ~$350. The
+price is defensible, especially with Fresh Press at $375 as the premium tier.
 
-**Direct territorial threats.** Crazy Party Rita's and Margaritas To Go both
-explicitly list Lakeway and Bee Cave in their service areas.
+**Direct territorial threats.** Crazy Party Rita's explicitly lists Lakeway and
+Bee Cave. Margaritas To Go did too, but may now be closed. Hill Country
+Margaritas covers the broader Hill Country including Austin. River City covers
+Georgetown/Waco and the Austin metro — broader geography but not specifically
+targeting the Lakeway/Bee Cave corridor.
 
-### Review volumes and velocity
+### Google reviews — the real competitive picture
 
-**The market leader has 13 Yelp reviews accumulated over a decade.** The review
-landscape is remarkably thin.
+**The Yelp landscape is misleadingly thin.** When the original version of this
+doc was written, it looked at Yelp and concluded the market leader had 13
+reviews over a decade. On Google — which is the only platform that matters for
+Map Pack placement — the picture is dramatically different:
 
-| Company | Reviews | Years active | Reviews/year | Estimated review rate |
-| --- | --- | --- | --- | --- |
-| Margarita Man Austin | 13 | ~12 | ~1.1 | Passive (never asks) |
-| Woolf's Ritas | 6 | ~14 | ~0.4 | Passive (owner responds) |
-| ATX Marg Rentals | 2 | ~8 | ~0.25 | Passive |
-| Captain Ouzo's | 0 | unknown | 0 | Offers 15% discount — still 0 |
+| Company | Google reviews | Yelp reviews | What Yelp missed |
+| --- | --- | --- | --- |
+| River City Frozen Beverages | ~200 | 21 | 10× the Yelp count |
+| Hill Country Margaritas | 78 | 3 | 26× the Yelp count |
+| Margarita Man Austin | 13 (Yelp only) | 13 | Unknown Google count |
+| Woolf's Ritas | few | 6 | Actively requesting Google reviews via Instagram |
+| Captain Ouzo's | few | 0 | Offering 15% discount for reviews — still nearly 0 |
 
-Woolf's Ritas review dates show a cluster in 2022 (4 reviews), then a 2-year
-gap with only 1 review. No competitor shows signs of a systematic review
-collection campaign.
+**River City and Hill Country are the real competitors on Google.** River City
+claims ~200 Google reviews (from their own Facebook post) and displays a Google
+Reviews badge prominently on both of their websites. Hill Country shows "5.0
+(78)" on their homepage. Both are operating at a scale no other dedicated marg
+rental company in the area approaches.
 
-**Getting to 15–20 reviews within the first year would make Slush Sisters the
-most-reviewed frozen drink rental in the Austin metro on Yelp.** This is
-achievable with even a basic post-rental review request.
+**What this changes about the review target:** The Yelp analysis suggested 15–20
+reviews would make Slush Sisters the most-reviewed in the market. On Google,
+you'd need **80+ reviews** to match Hill Country and **200+** to match River
+City. That is still achievable with the guest-review flywheel (see below) —
+20 rentals × 5 reviews each = 100 — but the timeline is longer and the urgency
+is higher. Every rental without a review ask is a missed opportunity.
+
+**What the competitors are doing to get Google reviews:**
+- **River City:** Displaying Google review badge on their homepage — social
+  proof that drives more reviews. Likely asking customers directly.
+- **Hill Country:** Modern, well-built website with the review count displayed
+  prominently. 78 reviews at a perfect 5.0 suggests active curation.
+- **Woolf's Ritas:** Instagram post explicitly asking followers to leave Google
+  reviews — "We have a Google Page... Reviews help our small business."
+- **Captain Ouzo's:** Offering 15% discount for Google or Yelp reviews. This
+  violates platform ToS and clearly isn't working — they still have near-zero.
+- **Everyone else:** No visible Google review strategy.
+
+No competitor shows signs of prompting **party guests** (as opposed to the
+booker) to leave reviews. The guest-review flywheel remains untapped.
 
 ### Review source analysis (booker vs. guest)
 
-**Almost 100% of reviews across all competitors are from the person who booked
-the rental.** Not a single review clearly comes from a party guest.
+**Almost 100% of reviews across all competitors — on both Google and Yelp — are
+from the person who booked the rental.** Not a single review clearly comes from
+a party guest.
 
 Evidence from reading every available review:
 - "I rented a marg machine from these guys" — booker
@@ -133,25 +170,34 @@ the drink machine that they plan on using them for their future events." But the
 guests themselves never reviewed.
 
 **The guest-review flywheel does not exist in this market.** Nobody is prompting
-party guests to review. This is a massive untapped opportunity: one rental puts
-30–50 people in front of the machine, and every one of them has a phone. If
-even 3–5 guests leave a review per rental, that equals the review output of
-100–150 rentals under the current competitor model.
+party guests to leave Google reviews. This is a massive untapped opportunity:
+one rental puts 30–50 people in front of the machine, and every one of them has
+a phone. If even 3–5 guests leave a Google review per rental, that equals the
+review output of 50–100 rentals under the current competitor model (where only
+the booker occasionally reviews).
+
+River City's ~200 reviews likely come from years of booker-only collection at
+moderate volume. A guest-review strategy could match that number in a fraction
+of the time.
 
 ### Rental volume estimates (inferred from reviews)
 
-Using 1-in-30-to-50 rule for passive review collection (businesses that never
-ask):
+River City and Hill Country's Google review counts give a better picture of
+actual market size than Yelp alone:
 
-| Company | Yelp reviews | Est. total rentals | Est. years | Est. monthly volume |
-| --- | --- | --- | --- | --- |
-| Margarita Man Austin | 13 | 390–650 | ~12 | 3–5/month |
-| Woolf's Ritas | 6 | 180–300 | ~14 | 1–2/month |
-| ATX Marg Rentals | 2 | 60–100 | ~8 | <1/month |
+| Company | Google reviews | Yelp reviews | Est. total rentals | Est. years | Est. monthly volume |
+| --- | --- | --- | --- | --- | --- |
+| River City Frozen Beverages | ~200 | 21 | 2,000–4,000 | ~10+ | 15–30/month |
+| Hill Country Margaritas | 78 | 3 | 800–1,500 | ~5+ | 10–20/month |
+| Margarita Man Austin | unknown | 13 | 390–650 | ~12 | 3–5/month |
+| Woolf's Ritas | few | 6 | 180–300 | ~14 | 1–2/month |
+| ATX Marg Rentals | unknown | 2 | 60–100 | ~8 | <1/month |
 
-The market leader in dedicated marg rental in Austin appears to do roughly
-40–80 rentals per year. The broader party rental companies (bounce houses) do
-far more total jobs but margarita machines are a small add-on.
+River City and Hill Country are operating at significantly higher volume than
+the Yelp-only picture suggested. River City serves Georgetown, Waco, and Austin
+metro — a much larger geography — so their volume per neighborhood is lower.
+Hill Country at 78 reviews suggests they may be the most active dedicated
+competitor specifically in the Austin/Hill Country corridor.
 
 ### What reviewers praise and complain about
 
@@ -229,13 +275,17 @@ social media prompts to review.
 ## What they do that we don't (yet)
 
 **Worth copying:**
-1. **Recipes page** (Captain Ouzo's) — exact drink quantities, captures
+1. **Google Reviews badge on homepage** (River City, Hill Country) — both
+   display their Google review count and rating prominently. River City has a
+   clickable badge linking to their Google listing. Hill Country shows "5.0 (78)"
+   inline. This is the single most impactful social proof element — it drives
+   more reviews and more bookings at the same time.
+2. **Recipes page** (Captain Ouzo's) — exact drink quantities, captures
    how-to searches
-2. **Party story write-ups** (ATX Marg) — case studies of specific events
-3. **Instant checkout** (Woolf's Ritas) — Square with Apple/Google Pay
-4. **Respond to every review** (Woolf's Ritas) — signals engagement, costs
+3. **Party story write-ups** (ATX Marg) — case studies of specific events
+4. **Instant checkout** (Woolf's Ritas) — Square with Apple/Google Pay
+5. **Respond to every review** (Woolf's Ritas) — signals engagement, costs
    nothing
-5. **Google Reviews badge on homepage** (River City) — social proof on arrival
 
 **Not worth copying:**
 - Discount for reviews (Captain Ouzo's) — violates platform ToS and doesn't
@@ -248,12 +298,15 @@ social media prompts to review.
 
 ### The math
 
-A typical rental serves 30–50 guests. Competitors collect reviews from ~1 in
-30–50 rentals (booker only, passive). If Slush Sisters collects from 10% of
-guests + the booker, one rental generates 4–6 reviews instead of 0.03.
+A typical rental serves 30–50 guests. Most competitors collect reviews from
+the booker only, passively. If Slush Sisters collects from 10% of guests +
+the booker, one rental generates 4–6 Google reviews instead of ~1.
 
-**20 rentals × 5 reviews = 100 reviews in year one.** That's 8× the market
-leader's lifetime total.
+**20 rentals × 5 reviews = 100 Google reviews in year one.** That would put
+Slush Sisters ahead of Hill Country (78) and within striking distance of River
+City (~200). With the guest-review flywheel that nobody else is running, 100
+reviews in year one is realistic — and it would make Slush Sisters the
+most-reviewed dedicated marg rental in the Austin metro on Google.
 
 ### The two-kid story is a review accelerant
 
@@ -428,12 +481,16 @@ is setting up a Merchant Center account:
 ### Do after first few rentals
 9. **Party story write-ups** — after each rental, a short write-up with photos
    (with host permission). These become content AND social proof.
-10. **Respond to every review** — set up Google review notifications, respond
-    same day in the girls' voice.
+10. **Respond to every Google review** — set up Google review notifications,
+    respond same day in the girls' voice. Hill Country and River City both have
+    5.0 ratings — response quality matters as much as quantity.
 11. **Google Reviews badge on homepage** — once you have 5+ reviews, display the
-    rating.
-12. **Yelp listing** — claim the business on Yelp. Getting to 15 reviews would
-    make Slush Sisters the most-reviewed dedicated marg rental in Austin.
+    rating prominently. River City does this on both their websites. Hill
+    Country shows "5.0 (78)" right on their homepage. This is social proof that
+    drives more reviews — a virtuous cycle.
+12. **Yelp listing** — claim the business on Yelp, but treat it as secondary.
+    Google reviews are what drive Map Pack placement and local leads. Yelp is
+    worth having but not worth the same effort.
 
 ### Do later (months 2–6)
 13. **Party planning guides** — "what to serve with a margarita machine," "how
@@ -448,7 +505,9 @@ is setting up a Merchant Center account:
 ## Raw data — what we looked at
 
 - GSC search analytics, Jul 14 – Aug 8 2026
+- Google review counts from competitor websites and social media (Aug 2026)
 - Yelp listings for all Austin-area margarita machine rental companies
 - Competitor websites scraped via Firecrawl (Aug 2026)
 - Google Shopping results for "margarita machine austin"
 - Review text analysis across all competitors with dated reviews
+- Facebook and Instagram posts from competitors (review requests, closures)

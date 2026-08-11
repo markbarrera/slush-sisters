@@ -30,6 +30,34 @@ Two audiences, on purpose:
 
 ---
 
+## 2026-08-11 — Google review data, competitive intel rewrite
+
+**Competitive intel updated to lead with Google reviews.** The original version
+of `docs/competitive-intel.md` analyzed Yelp reviews and concluded the market
+leader had 13 reviews over a decade. On Google — which is the only platform that
+matters for Map Pack placement — the picture is dramatically different:
+
+- **River City Frozen Beverages:** ~200 Google reviews (claimed on Facebook),
+  5.0 rating, displays Google Reviews badge on both websites. Price: $224.
+- **Hill Country Margaritas:** 78 Google reviews, 5.0, shows the count on their
+  homepage. Modern, well-built site.
+- **Woolf's Ritas:** Actively asking for Google reviews via Instagram posts.
+- **Captain Ouzo's:** Still offering 15% discount for reviews (ToS violation),
+  still near zero.
+- **Margaritas To Go:** May be permanently closed (Facebook community post).
+
+The review target changed: the Yelp analysis suggested 15–20 reviews would lead
+the market; on Google, you need 80+ to pass Hill Country and 200+ for River
+City. The guest-review flywheel (which nobody in the market runs) still makes
+100 reviews in year one realistic — 20 rentals × 5 reviews each.
+
+**Reading room updated.** "The other guys" page now leads with Google review
+data, the pricing comparison includes River City at $224, and the review
+opportunity section explains why Google reviews are the ones that matter for
+getting found.
+
+---
+
 ## 2026-08-11 — Product schema, van→truck, Instagram handle, competitive intel
 
 Four things shipped, plus the start of a competitive analysis.
