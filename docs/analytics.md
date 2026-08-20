@@ -38,16 +38,26 @@ pages children use directly *and* collects a child's home address on `/book`
 *and* links the arcade from every page. That makes the COPPA posture a real open
 question. **One follow-up is outstanding:** a lawyer's review of the posture.
 
-**Cookie consent banner — added 2026-08-05.** A lightweight, self-built consent
-notice is now baked into `public/analytics.js` itself. On first visit a banner
-at the bottom of the page says what the cookies are for and offers two buttons:
-OK or No thanks. The answer is saved in localStorage (not a cookie). If they
-decline, PostHog never loads and no cookie is set. If they accept, tracking
-works normally. Returning visitors who already chose are never asked again. A
-"Cookie settings" link in the footer can re-open the choice via
-`window.slushResetConsent()`. This is the visible privacy notice that was
-flagged as outstanding — it doesn't replace a lawyer's COPPA review, but it's
-the companion a lawyer would want to see.
+**Cookie consent banner — added 2026-08-05, reworked 2026-08-20.** A
+lightweight, self-built consent notice is baked into `public/analytics.js`
+itself. On first visit a banner at the bottom of the page says what the cookies
+are for and offers two buttons. The answer is saved in localStorage (not a
+cookie). If they decline, PostHog never loads, no cookie is set, and anything
+PostHog previously stored is deleted. If they accept, tracking works normally.
+Returning visitors who already chose are never asked again.
+
+The 2026-08-20 rework brought it up to US-law standards (full law-by-law map in
+`docs/privacy-compliance.md`): the banner copy is now literally true (the old
+"No personal info is shared" wasn't — an FTC Act problem at any business size);
+**`/privacy` actually exists now** (the banner had linked to a 404); the footer
+"Cookie settings" link is real on every footered page (it had been documented
+but never built — `window.slushCookieSettings()`, old name
+`slushResetConsent` kept); **Global Privacy Control is honored** (GPC ≠ DNT:
+Mark's decision to ignore DNT stands, but GPC is the opt-out signal CA/CO/TX
+give legal force to — GPC browsers are treated as "no" without being nagged,
+while an explicit "yes" still wins); and the buttons meet the 44px tap-target
+rule. This still doesn't replace a lawyer's COPPA review, but it's the
+companion a lawyer would want to see.
 
 ## What is set up
 
@@ -115,19 +125,22 @@ business dashboard's per-customer funnel. The posture on those pages is now:
   into a third-party replay. **If a new sensitive field is added to any form, give
   it `ph-no-capture` too.**
 
-**The COPPA line did NOT move.** Every game and kid-facing page still carries no
-analytics, no cookies, no capture — the route guard in `public/analytics.js`
-still refuses to initialize on those paths. Turning cookies on for the rest of
-the site makes that separation *more* load-bearing: the site now sets tracking
-cookies AND collects a child's home address on `/book` AND links the arcade from
-every page. **Two follow-ups this raises, both open:**
+**The COPPA line MOVED later the same day** (this paragraph predated that
+change and was stale until 2026-08-20): the game pages ARE now instrumented —
+pageviews, `game_opened`, cookies — by Mark's decision, with session recording
+kept OFF on game paths and still no accounts, chat, names, or free-text
+capture. Only `/party-play` and the family pages (`/ideas`, `/read`,
+`/inventory`, `/dashboard`) carry nothing. That makes the remaining safeguards
+*more* load-bearing: the site sets tracking cookies on pages children use AND
+collects a child's home address on `/book` AND links the arcade from every
+page. **Follow-ups this raises:**
 
 - **Legal review is now worth doing, not just "at some point."** The COPPA
-  posture and a written privacy/cookie notice (there is none today) should get a
-  lawyer's eyes before this is leaned on hard. Instrumenting the *game* pages
-  themselves would be a further, separate decision — deliberately not done here.
-- **A visible privacy notice** describing the cookies and tracking is the normal
-  companion to this posture and does not exist yet.
+  posture should get a lawyer's eyes before this is leaned on hard.
+  `docs/privacy-compliance.md` (2026-08-20) is the briefing to hand them.
+- **A visible privacy notice** — done 2026-08-20: `/privacy` is live, linked
+  from the banner and every footer, and describes the cookies and tracking
+  honestly.
 
 **What it answers, once data flows:**
 
