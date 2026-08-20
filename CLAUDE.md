@@ -202,24 +202,28 @@ like `/read`: `noindex`, not in the footer, sitemap or `scripts/snapshot.js`
 set.** (`/play`, the hub, *is* in the main nav — see the standing decision
 below.)
 
-**The COPPA line moved 2026-08-05 — read this carefully.** The games used to
-carry **no analytics, no cookies, no capture — ever**, which is what kept a page
-a child plays from making the whole site "directed to children." Mark then asked
-to measure which games are popular, and accepted instrumenting them: the game
-pages now load `public/analytics.js` (pageviews, a `game_opened` event, cookies).
-So the analytics/cookies part of the old rule is **reversed by decision, not by
-accident** — if you see older notes saying "no analytics on any game page ever,"
-the current intended state is that games ARE instrumented. Do not "restore" the
-clean version.
+**The COPPA line moved twice — 2026-08-05 and 2026-08-20. Read this
+carefully.** The games originally carried **no analytics, no cookies, no
+capture — ever**. On 2026-08-05 Mark asked to measure which games are popular
+and accepted instrumenting them (pageviews, `game_opened`, cookies). On
+**2026-08-20 Mark refined that**: game pages keep the tracking but **must not
+set cookies** — the loader now runs PostHog on game paths in memory-only
+persistence (nothing written to cookies OR localStorage, no person profiles,
+no autocapture/heatmaps), counting pageviews and `game_opened` anonymously,
+and shows **no consent banner** on game pages (nothing is stored, so there is
+nothing to consent to). So the current intended state is: games ARE
+instrumented, **cookielessly**. Do not "restore" either old version — not the
+no-analytics-ever one, and not the cookies-on-games one.
 
 What **still** holds on game pages, and must not drift: **no accounts, no chat,
 no names, no free-text a child types is captured, and session recording is OFF**
 (the loader disables it on game paths). The only thing stored is a high score /
-save game, in the browser, on the device. And the honest consequence: setting
-cookies on pages children use directly, while `/book` collects a child's home
-address and the arcade is linked from every page, makes the site's COPPA footing
-a **real open question** — a lawyer's review of the posture and a visible
-privacy/cookie notice are both outstanding (`docs/analytics.md`).
+save game, in the browser, on the device. The cookieless change moved game
+analytics inside COPPA's "support for internal operations" exception; the
+remaining COPPA questions are the arcade's nav placement plus `/book`
+collecting a home address — a lawyer's review of that remaining posture is
+still outstanding, with `docs/privacy-compliance.md` as the briefing. The
+visible privacy/cookie notice exists now (`/privacy`, added 2026-08-20).
 
 When you add a game: build it, keep it one self-contained file, hold the reduced
 line above (no accounts/chat/names, recording off), include

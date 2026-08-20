@@ -112,6 +112,16 @@ constraint that must be honored *before* promotion, not after.
 > address and the arcade is linked site-wide, moves the COPPA question from
 > "compliant by accident" to "needs a real review + a privacy notice." Both are
 > outstanding. See `docs/analytics.md`.
+>
+> **UPDATE 2026-08-20 — refined again by Mark: tracking stays, cookies go.**
+> Game pages now count plays cookielessly (PostHog memory-only persistence: no
+> cookies, no localStorage, no person profiles, no consent banner on game
+> pages — just anonymous pageview + `game_opened` tallies). "Which games are
+> popular" is fully answered; nothing about a child is stored anywhere. This
+> moves game analytics back inside COPPA's internal-operations exception. The
+> privacy notice now exists (`/privacy`); the lawyer review of the remaining
+> posture (arcade in the nav + `/book` collecting a home address) is still the
+> outstanding item. Full map: `docs/privacy-compliance.md`.
 
 And one strategy echo worth hearing again: the creator research found that a
 1.7-million-like video produced ~$500 of revenue. A viral game played by

@@ -76,15 +76,23 @@ Where we stand, honestly:
   on the banner is not verifiable *parental* consent; COPPA's "support for
   internal operations" exception covers plain analytics but not
   profile-building for retargeting-grade audiences.
-- **Deliberately NOT changed in this PR:** pulling cookies/profiles off the
-  game paths (e.g., PostHog memory-only persistence + no person profiles on
-  `GAMES` routes — which would still count `game_opened` and answer "which
-  games are popular"). That would partially reverse Mark's explicit 2026-08-05
-  decision to instrument the games, so it is his call, not a session's. **It
-  is the single highest-value COPPA fix available and it costs none of the
-  data Mark actually asked for.** Recommended: make this change, or get the
-  lawyer's blessing for the current posture. The lawyer review remains
-  outstanding either way.
+- **DECIDED 2026-08-20 (Mark): game pages are cookieless.** "We shouldn't set
+  cookies but need tracking on those pages." Implemented the same day: on
+  `GAMES` routes PostHog runs with memory-only persistence (nothing written to
+  cookies or localStorage), no person profiles, and autocapture / heatmaps /
+  dead-clicks / performance off — pageviews and `game_opened` only. The
+  consent banner no longer appears on game pages (there is nothing stored to
+  consent to, and a child's tap was never meaningful consent); an explicit
+  site-wide "no" or a GPC signal still means game pages load nothing at all.
+  The `ss_journey` sessionStorage record also skips game paths now, so "game
+  pages store nothing in the browser" is literally true. What this costs:
+  cross-session uniques on games and marketing↔game stitching. What it keeps:
+  every "which games are popular" number Mark asked for. This moves game
+  analytics squarely into COPPA's "support for internal operations" exception
+  (anonymous counting, no persistent identifier set by us) — the single
+  biggest risk-reducer that was on the table. The lawyer review of the overall
+  posture (nav placement + booking form) remains outstanding, but the sharpest
+  item on the briefing list is now closed.
 
 ### FTC Act §5 (federal — applies at any size)
 
@@ -182,10 +190,43 @@ trigger list plus an annual check, not a subscription to legal news.
 | Send marketing texts | TCPA: written consent first. Per-text fines. |
 | Ship accounts / online multiplayer (tier 3, `docs/game.md`) | SCOPE Act + COPPA verifiable-parental-consent machinery. Already a dad decision; now doubly so. |
 | Serve meaningful non-US traffic or expand to other states at scale | Re-read this file top to bottom; GDPR/ePrivacy are opt-in-with-categories regimes and the CMP math changes (see below). |
-| Get a data request email | Answer within 45 days, as `/privacy` promises. Verify the requester (reply to the booking's own email address) before showing anything. |
+| Get a data request email | Follow the runbook below. Answer within 45 days, as `/privacy` promises. |
 | Get any lawyer letter mentioning CIPA / wiretapping / session replay | Don't panic — replay runs only after opt-in, which is the defense. Forward to the lawyer; do not reply directly. |
 
-**Annual review — every August (put it next to the domain renewal):**
+**The data-request runbook — what actually happens when someone emails
+hello@slushsisters.com asking to see / fix / delete their data.**
+
+The email lands in Mark's inbox (Email Routing forwards hello@ to
+mark@markbarrera.com). Nothing is automated, and at this volume nothing should
+be — expect roughly zero to a few requests per year. The steps:
+
+1. **Verify it's really them, before showing anything.** The only identity we
+   can check against is the booking itself, so reply to the email address *on
+   the booking* (not any address the requester supplies) and ask them to
+   confirm. If they never booked, skip to step 3 — there is probably nothing
+   to show anyway.
+2. **"Show me everything":** their booking row (Cloudflare D1 `bookings`
+   table + the booking email in the inbox) is the identified data. Analytics
+   is pseudonymous — it can only be tied to them if they booked while
+   accepting cookies, via the booking-reference `identify()` call; in PostHog,
+   search People for the booking reference. Screenshot / paste what exists,
+   send it. If nothing links, say that plainly: "our analytics can't tell
+   which visitor was you, so there is nothing more to show."
+3. **"Delete it":** delete the D1 row (`wrangler d1 execute slush_business`),
+   delete the booking email, and in PostHog use the person's Delete button
+   (which erases their events too). The `/privacy` caveat applies: a booking
+   for a party that hasn't happened yet is kept until it has.
+4. **"Turn off tracking":** point them at the footer Cookie settings link —
+   done instantly on their own device. (Their choice lives in their browser,
+   not on our server, so there is nothing for us to flip remotely.)
+5. **Reply within 45 days** — in practice, the same week. Keep the thread; the
+   email trail *is* the compliance record.
+
+**Annual review — every August.** This is not a calendar hope: a scheduled
+Claude routine ("Slush Sisters annual privacy review", created 2026-08-20,
+first run August 3, 2027) runs this checklist every year, opens a PR with any
+fixes, and notifies Mark by push + email. Mark can see or cancel it in his
+claude.ai routines. The checklist it runs:
 
 1. Re-read the banner and `/privacy` against what the site *actually does*
    now. Any drift is an FTC §5 problem — fix same day.
@@ -206,12 +247,14 @@ value is managing *many* vendors' tags against *many* regimes' rules. We have
 one tag and effectively one binding regime; a hand-rolled 250-line file we
 fully understand is the better tool until one of those flips.
 
-## Open items (unchanged by this work, restated so they don't get lost)
+## Open items
 
 1. **Lawyer review of the COPPA posture** — outstanding since 2026-08-05
-   (`docs/analytics.md`). This document is the briefing to hand them.
-2. **Dad decision: cookieless analytics on game paths** — the biggest COPPA
-   risk-reducer available, keeps every number Mark asked for. See the COPPA
-   section above.
+   (`docs/analytics.md`). This document is the briefing to hand them. The
+   scope shrank on 2026-08-20: game pages are now cookieless (decided, done),
+   so the remaining questions are the arcade's nav placement plus the booking
+   form's collection of a home address.
+2. ~~Dad decision: cookieless analytics on game paths~~ — **decided and
+   implemented 2026-08-20.** See the COPPA section above.
 3. The reading-room version of this document lives at `/read` so Harper and
    Finley get the real reasoning, per the standing deliverable rule.
