@@ -18,14 +18,23 @@ a child's party.
 **Mark changed this on 2026-08-05,** in two steps: (1) turn the marketing/booking
 pages up to maximum granularity *with cookies* (for the business dashboard and
 for retargeting when ads turn on), and (2) instrument the *game* pages too, to
-see which games are popular. Both are deliberate. The practical rule is now:
+see which games are popular. **On 2026-08-20 Mark refined step 2:** the games
+keep their tracking but must not set cookies ("we shouldn't set cookies but
+need tracking on those pages"). The practical rule is now:
 
 - **The marketing + booking pages track fully and set cookies** — profiles for
   everyone, DNT ignored, heatmaps, per-booking attribution. (Details under
   PostHog below.)
-- **The game pages now load analytics too** (pageviews + a `game_opened` event +
-  cookies), but **session recording stays OFF on them** — no screen-replays of
-  children — and they still have no accounts, chat, names, or free-text capture.
+- **The game pages count, cookieless** (changed 2026-08-20): pageviews + a
+  `game_opened` event via PostHog in memory-only persistence — **nothing is
+  written to cookies or localStorage, no person profiles, no autocapture, no
+  heatmaps**, and **session recording stays OFF** — no screen-replays of
+  children. They still have no accounts, chat, names, or free-text capture,
+  and they don't show the consent banner (there is nothing stored to consent
+  to; a child's tap was never meaningful consent anyway). A visitor's "no" or
+  a GPC signal still means game pages load nothing at all. The cost, accepted:
+  cross-session uniques on games and marketing↔game stitching. "Which games
+  are popular" is fully intact.
 - **`/party-play` gets nothing** (a printable card, hard-blocked in the loader),
   and **`/ideas`, `/read`, `/inventory` carry no beacon** — they are family
   pages and simply do not include the loader.
@@ -33,10 +42,13 @@ see which games are popular. Both are deliberate. The practical rule is now:
   at the source**, so raw contact PII is not duplicated into PostHog even at
   "maximum" granularity.
 
-**The honest consequence of the change:** the site now sets tracking cookies on
-pages children use directly *and* collects a child's home address on `/book`
-*and* links the arcade from every page. That makes the COPPA posture a real open
-question. **One follow-up is outstanding:** a lawyer's review of the posture.
+**Why the 2026-08-20 refinement matters:** under COPPA, a tracking cookie is a
+"persistent identifier" — personal information when collected on pages directed
+to children. Anonymous counting with nothing stored falls under COPPA's
+"support for internal operations" exception. The remaining open COPPA
+questions are the arcade's nav placement and the booking form's home-address
+collection. **The lawyer's review of that remaining posture is still the
+outstanding follow-up** — `docs/privacy-compliance.md` is the briefing for it.
 
 **Cookie consent banner — added 2026-08-05, reworked 2026-08-20.** A
 lightweight, self-built consent notice is baked into `public/analytics.js`
@@ -125,19 +137,19 @@ business dashboard's per-customer funnel. The posture on those pages is now:
   into a third-party replay. **If a new sensitive field is added to any form, give
   it `ph-no-capture` too.**
 
-**The COPPA line MOVED later the same day** (this paragraph predated that
-change and was stale until 2026-08-20): the game pages ARE now instrumented —
-pageviews, `game_opened`, cookies — by Mark's decision, with session recording
-kept OFF on game paths and still no accounts, chat, names, or free-text
-capture. Only `/party-play` and the family pages (`/ideas`, `/read`,
-`/inventory`, `/dashboard`) carry nothing. That makes the remaining safeguards
-*more* load-bearing: the site sets tracking cookies on pages children use AND
-collects a child's home address on `/book` AND links the arcade from every
-page. **Follow-ups this raises:**
+**The COPPA line moved twice after that** (2026-08-05 and 2026-08-20): the
+game pages ARE instrumented — pageviews and `game_opened` — but as of
+2026-08-20 **cookielessly**, by Mark's decision ("we shouldn't set cookies but
+need tracking on those pages"): memory-only persistence, no person profiles,
+no autocapture/heatmaps, no consent banner on game paths, session recording
+OFF, and still no accounts, chat, names, or free-text capture. Only
+`/party-play` and the family pages (`/ideas`, `/read`, `/inventory`,
+`/dashboard`) carry nothing at all. **Follow-ups:**
 
-- **Legal review is now worth doing, not just "at some point."** The COPPA
-  posture should get a lawyer's eyes before this is leaned on hard.
-  `docs/privacy-compliance.md` (2026-08-20) is the briefing to hand them.
+- **Legal review is still worth doing.** With game cookies gone, the questions
+  left for the lawyer are the arcade's nav placement and the booking form's
+  home-address collection. `docs/privacy-compliance.md` (2026-08-20) is the
+  briefing to hand them.
 - **A visible privacy notice** — done 2026-08-20: `/privacy` is live, linked
   from the banner and every footer, and describes the cookies and tracking
   honestly.

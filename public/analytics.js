@@ -47,7 +47,8 @@
   --------------------------------------------
   Track visitors as granularly as possible, WITH cookies, to power the business
   dashboard's per-customer funnel AND to build retargeting-grade audiences for
-  when ads turn on. Concretely, on every page this file loads:
+  when ads turn on. Concretely, on every MARKETING page this file loads (game
+  pages are the exception — see the next section):
 
     - Cookies ON (durable cross-session identity, not just localStorage).
     - "Do Not Track" is NOT honored — DNT visitors are tracked too.
@@ -58,25 +59,40 @@
     - Each booking is stitched to its visitor via posthog.identify() in
       public/book.html, with a conversion value ($250 / $375) on the event.
 
-  THE GAME / KID PAGES — changed 2026-08-05
-  -----------------------------------------
+  THE GAME / KID PAGES — instrumented 2026-08-05, made COOKIELESS 2026-08-20
+  --------------------------------------------------------------------------
   These pages USED to carry no analytics at all — the mechanism that kept a page
   a child plays from making the whole site "directed to children" under COPPA.
-  Mark asked to see which games are popular, so they are now instrumented too:
-  pageviews, a "game_opened" event, and cookies, so game popularity and
-  cross-game navigation are visible.
+  Mark asked to see which games are popular (2026-08-05), so they are
+  instrumented: pageviews and a "game_opened" event.
 
-  Two things about that, on the record:
-    1. **Session recording is OFF on game pages** (see isGame below). Watching
-       replays of individual children playing is the sharpest privacy exposure
-       here and adds nothing to "which games are popular." To capture it anyway,
-       set RECORD_GAMES = true below — a deliberate one-line change, not a
-       default.
-    2. This makes the site's COPPA posture a REAL open question, not a hedged
-       one: it now sets tracking cookies on pages children use directly AND
-       collects a child's home address on /book AND links the arcade from every
-       page. A lawyer's review of this posture, and a visible privacy/cookie
-       notice, are both outstanding (see docs/analytics.md).
+  On 2026-08-20 Mark decided the game pages must NOT set cookies while keeping
+  that tracking ("we shouldn't set cookies but need tracking on those pages").
+  So on any GAMES path below, PostHog runs in COUNTING mode:
+
+    - persistence: "memory" — nothing written to cookies OR localStorage. Each
+      visit is an anonymous tally mark, not a tracked person. This is what
+      moves game analytics inside COPPA's "support for internal operations"
+      exception (plain counting, no profile, no persistent identifier we set).
+    - person_profiles: "identified_only" — no person profile is ever created
+      for a game visitor (nothing calls identify() on game paths).
+    - autocapture / heatmaps / dead clicks / performance are OFF on games —
+      "which games are popular" needs pageviews + game_opened, nothing more.
+    - NO consent banner on game pages. A child tapping "OK" is not consent a
+      lawyer would count anyway; since these pages store nothing, there is
+      nothing to consent to. The banner belongs to the marketing pages.
+    - A visitor's explicit "no" (or a GPC browser signal) still wins: if they
+      opted out, game pages load nothing at all, same as the rest of the site.
+    - Session recording stays OFF on game pages. To capture it anyway, set
+      RECORD_GAMES = true below — a deliberate one-line change, not a default.
+
+  What we LOSE by design: cross-session uniques on games (the same kid twice =
+  two tally marks) and marketing↔game visitor stitching. "Which games are
+  popular" — the thing Mark asked for — is fully intact via game_opened counts.
+
+  If you are tempted to "fix" games back to cookies for better numbers: that
+  reverses a deliberate COPPA decision. Read docs/privacy-compliance.md first;
+  it is a dad decision either way.
 
   WHAT IS STILL MASKED, EVEN AT "MAXIMUM" GRANULARITY
   ---------------------------------------------------
@@ -122,9 +138,10 @@
 
   // --- First-party visit journey (sessionStorage, NO cookie, NO IP) ---------
   // Records where this visit came from and the pages seen this session, so a
-  // booking can be attributed to a source and path. Marketing pages only (the
-  // game/kids guard above already returned). Cleared when the browser closes.
-  try {
+  // booking can be attributed to a source and path. Marketing pages only —
+  // game pages store NOTHING in the browser (the 2026-08-20 rule), so they
+  // are skipped here too. Cleared when the browser closes.
+  if (!isGame) try {
     var JKEY = "ss_journey";
     var j = JSON.parse(sessionStorage.getItem(JKEY) || "null");
     if (!j) {
@@ -189,15 +206,21 @@
     if (reopen) sessionStorage.removeItem(REOPEN_KEY);
   } catch (_) {}
 
-  if (consent === "yes") {
+  if (consent === "no") {
+    // Opted out — nothing loads anywhere, game pages included. The footer
+    // link is there if they change their mind.
+  } else if (gpc && consent !== "yes") {
+    // GPC signal with no explicit yes: silently honor it site-wide. Nothing
+    // loads, no banner. The footer link still lets them opt in explicitly.
+  } else if (isGame) {
+    // Game pages: cookieless counting mode, and NO banner — these pages store
+    // nothing in the browser, so there is nothing to ask consent for, and a
+    // child's tap on "OK" wouldn't be meaningful consent anyway.
+    loadPostHog();
+  } else if (consent === "yes") {
     loadPostHog();
   } else if (reopen) {
     showConsentBanner();
-  } else if (consent === "no") {
-    // Nothing loads. The footer link is there if they change their mind.
-  } else if (gpc) {
-    // No stored choice + GPC signal: silently honor it. Nothing loads, no
-    // banner. The footer link still lets them opt in explicitly.
   } else {
     showConsentBanner();
   }
@@ -281,24 +304,28 @@
     else document.addEventListener("DOMContentLoaded", mount);
   }
 
-  // --- PostHog init (only runs after consent = "yes") ------------------------
+  // --- PostHog init ----------------------------------------------------------
+  // Runs after consent = "yes" on marketing pages, or in cookieless counting
+  // mode on game pages (unless the visitor opted out / sends GPC).
   function loadPostHog() {
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
-      persistence: "localStorage+cookie",
-      disable_cookie: false,
+      // Game pages: memory-only counting, nothing stored in the browser.
+      // Marketing pages: durable identity per the 2026-08-05 posture.
+      persistence: isGame ? "memory" : "localStorage+cookie",
+      disable_cookie: isGame,
       cross_subdomain_cookie: false,
       respect_dnt: false,
-      person_profiles: "always",
+      person_profiles: isGame ? "identified_only" : "always",
       capture_pageview: true,
       capture_pageleave: true,
-      autocapture: true,
+      autocapture: !isGame,
       mask_all_text: false,
-      enable_heatmaps: true,
-      capture_dead_clicks: true,
-      capture_performance: true,
+      enable_heatmaps: !isGame,
+      capture_dead_clicks: !isGame,
+      capture_performance: !isGame,
       disable_session_recording: isGame ? !RECORD_GAMES : false,
       session_recording: {
         maskAllInputs: false,

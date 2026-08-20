@@ -969,7 +969,7 @@ const PAGES = [
     ['The one rule that covers everything',
      `Every law we checked boils down to the same thing: <b>never say something about people's information that is not true.</b> Big companies get in trouble not for collecting information, but for lying about it. So the standing rule for this website is: if we change what we collect, we change the privacy page FIRST, and every sentence on it has to be literally true. That rule is free, it never expires, and no new law will ever make it wrong.`],
     ['What is still waiting on Dad',
-     `Two things. A real lawyer should read our setup once, because of the kids' law — that has been on the list for a while and there is now a document that makes the lawyer's job faster. And Dad has one decision to make about cookies on the game pages, which the card above explains. Both sides of that one are real, which is exactly why it is his call.`],
+     `One thing now. A real lawyer should read our setup once, because of the kids' law — that has been on the list for a while, and there is a document that makes the lawyer's job faster. The cookie question about the game pages WAS the second thing, but Dad decided it (the card above tells the story), so the lawyer's list got shorter. And one more thing that is not waiting on anyone: a robot check-up is booked for every August that re-reads the whole setup and reports back — so "check it yearly" is an appointment, not a hope.`],
   ],
   groups: [
 {
@@ -995,7 +995,7 @@ const PAGES = [
     ['plain', 'California and Texas wrote big privacy laws — for big companies',
      `California's law only applies to companies making about $25 million a year, or tracking 100,000 Californians. Texas's law has a rule that plainly excuses small businesses. You are a $250-a-party company in Lakeway — these laws do not apply to you, and would not even if you tripled. But we checked what they ask for anyway, and here is the fun part: <b>you already do almost all of it</b>, because asking first and selling nothing was the plan from day one. The laws are mostly good manners written down.`],
     ['plain', 'The kids\' law is the one that really applies',
-     `It is called COPPA and it protects kids under 13 online. It applies to every company, any size. It says a website made for kids cannot quietly put a tracking cookie on their computer — and it counts cookies as personal information, which surprises people. Your arcade is made for kids and linked from every page, and the game pages can set a cookie if someone taps yes. A kid tapping "yes" does not count as permission under this law — only a parent's yes counts. This is the real open question on your website, and it is why the lawyer visit is on Dad's list.`],
+     `It is called COPPA and it protects kids under 13 online. It applies to every company, any size. It says a website made for kids cannot quietly put a tracking cookie on their computer — and it counts cookies as personal information, which surprises people. Your arcade is made for kids and linked from every page, which is why this law matters here. The good news: as of August 20, the game pages set no cookies at all and save nothing about anyone — they just count plays anonymously (Dad's decision; the card below tells that story). What is left for the lawyer to look at is smaller: the arcade being linked everywhere, and the booking form collecting a home address for a kid's party.`],
     ['plain', 'The signal we now listen for',
      `Some people set their browser to send an automatic signal that means "please don't track me anywhere" — it is called Global Privacy Control. California, Colorado, and Texas all decided that companies they cover have to respect it. Nobody can make US respect it — too small — but we do anyway, because it costs us almost nothing and it is where every state's law is heading. If your browser sends it, our site never even asks about cookies. It just quietly doesn't track you.`],
     ['number', 'States with their own privacy law, and counting', '20+',
@@ -1003,14 +1003,14 @@ const PAGES = [
   ],
 },
 {
-  name: 'The decision that is left',
+  name: 'The decision Dad made',
   color: '#ffb74d',
-  blurb: 'One real choice remains, and it is a dad decision. Both sides, properly.',
+  blurb: 'This was the one real choice left. It went to Dad, and he decided. Here were the two sides.',
   cards: [
     ['debate', 'Should the game pages use cookies at all?',
      `Keep them: Dad decided in August that he wants to know which games are popular and how people move between them, and cookies let the tool recognize a returning player, so the counts are more accurate. The banner already asks first, recording is off on games, and no names are ever taken. The rules of the site say that decision stands unless Dad changes it.`,
      `Drop them (just on games): the kids' law counts a cookie on a kids' page as collecting personal information, and a kid tapping "yes" is not real permission. The tool has a mode that counts game plays WITHOUT a cookie — Dad would still see which games are popular, which is the thing he actually asked for. The tiny cost: a kid who comes back tomorrow counts as a new player.`,
-     `This one genuinely is not ours to decide — it changes a call Dad made on purpose, so it goes to him. What we can say: the no-cookie mode keeps every number Dad asked for, gives up almost nothing, and makes the lawyer conversation much shorter. It is written up properly in the grown-up document so he can decide with everything in front of him.`],
+     `Dad picked the second side, the same day he was asked: "we shouldn't set cookies but need tracking on those pages." So now the game pages count plays like a turnstile at a fair — click, someone came through — and save absolutely nothing about the person. They do not even show the cookie question anymore, because there is nothing to ask about. You still see which games are popular; a kid who plays twice just counts twice. And the lawyer conversation got shorter, exactly as promised.`],
   ],
 },
   ],
