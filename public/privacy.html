@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy — What We Know About You, Slush Sisters</title>
+<meta name="description" content="What information slushsisters.com collects, what we do with it, and the buttons that turn it off. Written in plain words by a real family business.">
+<style>
+:root{
+  --brand:#1a237e;
+  --ice:#4fc3f7;
+  --ice-deep:#29b6f6;
+  --wash:#e8f4fd;
+  --blush:#fff5f7;
+  --on-brand:#fff;
+  --ink-ice:#0165a8;    /* 6.13:1 on white, 5.48:1 on --wash */
+  --pop:#ff4081;        /* 3.33:1 — fills, big type, shapes ONLY */
+  --ink-pink:#c2185b;   /* 5.87:1 — body text, links, small labels */
+  --pink-pale:#ffd6e7;
+  --cta:#0277bd;        /* 4.80:1 with white text */
+  --cta-deep:#01579b;
+  --line-strong:#767b85;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+header{border-bottom:1px solid #eee;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:50;}
+.site-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.3rem;color:var(--brand);text-decoration:none;}
+.site-name span{color:var(--ice);}
+header nav{display:flex;gap:24px;}
+header nav a{font-size:.85rem;font-weight:500;color:#666;text-decoration:none;}
+header nav a:hover{color:#1a1a1a;}
+header nav a.cta{background:var(--cta);color:#fff;padding:8px 20px;border-radius:8px;font-weight:700;}
+header nav a.cta:hover{background:var(--cta-deep);}
+.cta-m{display:none;}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;}
+@media(max-width:600px){
+header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:12px;}
+header.open nav{display:flex;}
+.menu-btn{display:block;padding:10px 6px;line-height:1;}
+.cta-m{display:inline-block;background:var(--cta);color:#fff;padding:13px 18px;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:auto;margin-right:14px;}
+}
+
+section{padding:56px 24px;}
+.contain{max-width:760px;margin:0 auto;}
+section h1{font-family:'Baloo 2',sans-serif;font-size:clamp(1.9rem,7vw,2.6rem);font-weight:800;margin-bottom:10px;color:var(--brand);line-height:1.1;}
+section h2{font-family:'Baloo 2',sans-serif;font-size:1.45rem;font-weight:800;margin-bottom:8px;color:var(--brand);}
+section h3{font-family:'Baloo 2',sans-serif;font-size:1.06rem;font-weight:700;margin-bottom:6px;line-height:1.25;}
+section .lead{color:#555;font-size:1rem;line-height:1.65;margin-bottom:28px;}
+section p{line-height:1.65;}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-ice);margin-bottom:10px;}
+.btn{display:inline-block;background:var(--cta);color:#fff;font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:8px;text-decoration:none;border:none;font-family:inherit;cursor:pointer;}
+.btn:hover{background:var(--cta-deep);}
+.bg-light{background:#f8fbff;}
+.bg-wash{background:var(--wash);}
+
+/* The blocks — one per kind of information, so each can be read alone. */
+.block{padding:22px 0;border-bottom:1px solid #eaeff5;}
+.block:last-child{border-bottom:none;}
+.block p{font-size:.92rem;color:#444;}
+.block p + p{margin-top:8px;}
+.block .tag{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--ink-pink);background:var(--blush);border-radius:99px;padding:5px 12px;}
+
+.note{border-left:3px solid var(--ink-ice);padding:2px 0 2px 16px;margin-top:22px;}
+.note p{font-size:.88rem;color:#555;}
+.note p + p{margin-top:8px;}
+
+/* FOOTER — real internal linking. Mobile-first: one column, then two at
+   560px, then four at 900px. Every link is a 44px-tall tap target. */
+footer{background:var(--brand);color:#fff;padding:44px 24px 28px;text-align:left;}
+.f-wrap{max-width:800px;margin:0 auto;}
+.f-top{display:grid;grid-template-columns:1fr;gap:26px;}
+@media(min-width:560px){.f-top{grid-template-columns:1fr 1fr;gap:28px 32px;}}
+@media(min-width:900px){.f-top{grid-template-columns:repeat(4,1fr);}}
+.f-col h4{font-family:'Baloo 2',sans-serif;font-size:.74rem;font-weight:800;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ice);margin-bottom:6px;}
+.f-col ul{list-style:none;padding:0;margin:0;}
+.f-col li a{display:block;padding:9px 0;font-size:.86rem;color:rgba(255,255,255,.82);
+  text-decoration:none;line-height:1.35;}
+.f-col li a:hover{color:#fff;text-decoration:underline;}
+.f-bottom{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);}
+.f-bottom .f-name{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:6px;}
+.f-bottom .f-name span{color:var(--ice);}
+.f-bottom p{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:5px;}
+.f-bottom a{color:var(--ice);}
+</style>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://slushsisters.com/privacy">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Slush Sisters">
+<meta property="og:url" content="https://slushsisters.com/privacy">
+<meta property="og:title" content="Privacy — What We Know About You">
+<meta property="og:description" content="What our website collects, what we do with it, and the buttons that turn it off. In plain words.">
+<meta property="og:image" content="https://slushsisters.com/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script src="/analytics.js" defer></script>
+</head>
+<body><header id="hdr">
+<a href="/" class="site-name"><span>Slush</span> Sisters</a>
+<nav>
+<a href="/grown-ups">For Grown-Ups</a>
+<a href="/flavors">Flavors</a>
+<a href="/lab">The Lab</a>
+<a href="/pricing">Pricing</a>
+<a href="/about">About</a>
+<a href="/play">Arcade</a>
+<a href="/book" class="cta">Book Now</a>
+</nav>
+<a href="/book" class="cta-m">Book</a>
+<button class="menu-btn" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
+</header>
+
+<section>
+<div class="contain">
+<p class="kicker">The honest version, in plain words</p>
+<h1>What we know about you</h1>
+<p class="lead">Most privacy pages are written by lawyers so nobody reads them. Ours is written the way we talk, and it tells you everything &mdash; including the parts a company might rather skip. If anything here is unclear or looks wrong, <a href="mailto:hello@slushsisters.com" style="color:var(--ink-ice);font-weight:600;">email us</a> and a real person answers.</p>
+<p style="font-size:.85rem;color:#666;">Last updated August 20, 2026. When this page changes, we change this date and say what changed at the bottom.</p>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>The three kinds of information, one by one</h2>
+
+<div class="block">
+<h3>1. What you type into the booking form</h3>
+<p>When you book a party, you give us your name, the party address, your phone or email, the date, and your flavor picks. That goes to exactly two places: an email to our dad, Mark, who runs the deliveries, and our own bookings database, so we do not lose track of whose party is when.</p>
+<p>We use it to run your rental and for nothing else. We do not sell it, rent it, or hand it to advertisers &mdash; not now, not ever. Nobody outside our family reads it except the companies that carry it for us (our website host, Cloudflare, delivers the email), and they are not allowed to use it for themselves.</p>
+<p>The form also tells us how your visit found us &mdash; the page you landed on and the pages you looked at during that one visit. That is stored in your browser only while the tab is open, uses no cookie, and comes to us attached to your booking so we can learn which of our marketing actually works.</p>
+<span class="tag">Only if you book &middot; Never sold</span>
+</div>
+
+<div class="block" id="cookies">
+<h3>2. Cookies and analytics &mdash; only if you say yes</h3>
+<p>The first time you visit, a little bar at the bottom of the page asks whether we can use cookies and analytics. If you say no, or your browser sends the <a href="https://globalprivacycontrol.org" style="color:var(--ink-ice);">Global Privacy Control</a> signal, none of this loads and no tracking cookie is ever set. The site works exactly the same either way.</p>
+<p>If you say yes, here is the whole truth about what happens: a tool called PostHog sets a cookie in your browser and records which pages you read, what you tap, what kind of device you have, roughly what city you are in (from your internet connection, not GPS), and a replay of how you moved around the page. On the booking form, the boxes with your name, address, and phone are masked, so the replay never contains them. We use all of this to learn which pages work and which of our marketing brings real visitors &mdash; two kids learning to run a business on real numbers.</p>
+<p>PostHog holds this data for us and can only use it to do that job. We do not sell it, and we do not share it with ad companies. If that ever changes &mdash; for example, if we start running ads that use our visitor lists &mdash; we will say so here first and give you a clear way to say no.</p>
+<p><button class="btn" style="margin-top:12px;" onclick="if(window.slushCookieSettings){window.slushCookieSettings()}else{alert('The cookie asker is not loaded on this page.')}">Cookie settings &mdash; change your answer</button></p>
+<p style="font-size:.85rem;color:#666;">That button deletes our record of your answer and everything the analytics cookie stored, then asks you fresh. Saying no is really no: the tracking tool never loads.</p>
+<span class="tag">Optional &middot; Off until you say yes &middot; GPC honored</span>
+</div>
+
+<div class="block">
+<h3>3. The counter at the door</h3>
+<p>Our server counts every visit the way a shop counts people coming through the door: which page, what kind of browser, which country, and whether the visitor was a person or a robot (search engines and AI assistants visit constantly). This uses no cookies and stores no IP addresses &mdash; it cannot recognize you, it can only count you. It is how we spot problems and see whether robots are reading pages meant only for our family.</p>
+<span class="tag">Everyone &middot; No cookies &middot; No IP stored</span>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="contain">
+<h2>Kids</h2>
+<p style="font-size:.92rem;color:#444;margin-bottom:14px;">This business is run by kids, so we thought about this more than most websites do.</p>
+<p style="font-size:.92rem;color:#444;margin-bottom:14px;">The <a href="/play" style="color:var(--ink-ice);">arcade games</a> have no accounts, no chat, no way to type your name, and screen recording is switched off on every game page. High scores are saved in your own browser, on your own device, and never sent to us. Game pages do show the same cookie question as the rest of the site &mdash; if you are a kid, ask your grown-up before answering it, and it is always fine to tap No thanks.</p>
+<p style="font-size:.92rem;color:#444;margin-bottom:14px;">The booking form asks for a home address and phone number, which is grown-up information &mdash; a parent should be the one filling it in. There is a US law about kids' information online called COPPA, and our setup here is something our dad reviews with that law in mind (the honest state of that review is written up in our public build notes).</p>
+</div>
+</section>
+
+<section class="bg-light">
+<div class="contain">
+<h2>Your rights, whichever state you live in</h2>
+<p style="font-size:.92rem;color:#444;margin-bottom:14px;">Privacy laws like California&rsquo;s and Texas&rsquo;s mostly apply to companies far bigger than a two-kid slushie stand. We follow the spirit of them anyway, because they are just good manners written down. Email <a href="mailto:hello@slushsisters.com" style="color:var(--ink-ice);font-weight:600;">hello@slushsisters.com</a> and within 45 days we will:</p>
+<ul style="list-style:none;padding:0;">
+<li style="padding:8px 0;border-bottom:1px solid #eaeff5;font-size:.92rem;color:#444;"><b>Show you</b> everything we have about you (usually: your booking, and pseudonymous analytics if you said yes to cookies).</li>
+<li style="padding:8px 0;border-bottom:1px solid #eaeff5;font-size:.92rem;color:#444;"><b>Fix it</b> if something is wrong.</li>
+<li style="padding:8px 0;border-bottom:1px solid #eaeff5;font-size:.92rem;color:#444;"><b>Delete it</b>, unless we genuinely need it (like a booking for a party that has not happened yet).</li>
+<li style="padding:8px 0;font-size:.92rem;color:#444;"><b>Turn off tracking</b> &mdash; though the Cookie settings button above does that instantly, no email needed.</li>
+</ul>
+<p style="font-size:.92rem;color:#444;margin-top:14px;">We will never treat you differently for asking. And to say the big one plainly: <b>we do not sell your personal information, and we never have.</b></p>
+</div>
+</section>
+
+<section>
+<div class="contain">
+<div class="note">
+<p><b>Changes to this page.</b> August 20, 2026 &mdash; first version published. Before this, the cookie bar linked to a privacy page that did not exist yet, which was our mistake; this is that page, and the cookie bar's wording was tightened at the same time so it says exactly what happens.</p>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="f-wrap">
+<div class="f-top">
+
+<div class="f-col">
+<h4>Book</h4>
+<ul>
+<li><a href="/book">Check your date</a></li>
+<li><a href="/pricing">Pricing</a></li>
+<li><a href="/flavors">Flavors</a></li>
+<li><a href="/fresh-press">Fresh Press</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>What is it for</h4>
+<ul>
+<li><a href="/">Kids&rsquo; parties</a></li>
+<li><a href="/grown-ups">Grown-up parties</a></li>
+<li><a href="/office-parties">Office &amp; holiday parties</a></li>
+<li><a href="/community-events">HOA &amp; school events</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Who we are</h4>
+<ul>
+<li><a href="/about">Our story</a></li>
+<li><a href="/lab">The Lab</a></li>
+<li><a href="/our-rules">Our seven rules</a></li>
+<li><a href="/ledger">The Open Ledger</a></li>
+<li><a href="/promise">Our promise</a></li>
+<li><a href="/press">Press kit</a></li>
+</ul>
+</div>
+
+<div class="f-col">
+<h4>Where we go</h4>
+<ul>
+<li><a href="/frozen-drink-machine-rental-lakeway">Lakeway</a></li>
+<li><a href="/frozen-drink-machine-rental-bee-cave">Bee Cave</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-travis">Lake Travis</a></li>
+<li><a href="/frozen-drink-machine-rental-steiner-ranch">Steiner Ranch</a></li>
+<li><a href="/frozen-drink-machine-rental-lake-austin">Lake Austin</a></li>
+<li><a href="/frozen-drink-machine-rental-dripping-springs">Dripping Springs</a></li>
+<li><a href="/austin">All of Austin</a></li>
+<li><a href="/frozen-drink-machine-rental-wimberley">Wimberley (EEZ Freeze)</a></li>
+</ul>
+</div>
+
+</div>
+<div class="f-bottom">
+<div class="f-name"><span>Slush</span> Sisters</div>
+<p>Frozen drink machine rentals &mdash; Lakeway, Texas</p>
+<p><a href="mailto:hello@slushsisters.com">hello@slushsisters.com</a></p>
+<p><a href="/privacy">Privacy</a> &middot; <a href="/privacy#cookies" onclick="if(window.slushCookieSettings){window.slushCookieSettings();return false}">Cookie settings</a></p>
+<p style="margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.3);">&copy; 2026 Slush Sisters LLC &middot; Run by Harper, 11 and Finley, 8</p>
+</div>
+</div>
+</footer></body></html>

@@ -958,6 +958,63 @@ const PAGES = [
 },
   ],
 },
+
+/* ====================== 12. THE PRIVACY RULES =========================== */
+{
+  slug: 'the-privacy-rules',
+  title: 'The privacy rules',
+  kicker: 'Being trustworthy, on purpose',
+  lede: `Your website watches how people use it — which pages they read, which games get played — so you can learn what works. There are laws about doing that, and in August 2026 Dad asked for a check: are we following them? The answer was mostly yes, but we found some things that were wrong, and fixing them taught us the biggest rule in all of privacy.`,
+  close: [
+    ['The one rule that covers everything',
+     `Every law we checked boils down to the same thing: <b>never say something about people's information that is not true.</b> Big companies get in trouble not for collecting information, but for lying about it. So the standing rule for this website is: if we change what we collect, we change the privacy page FIRST, and every sentence on it has to be literally true. That rule is free, it never expires, and no new law will ever make it wrong.`],
+    ['What is still waiting on Dad',
+     `Two things. A real lawyer should read our setup once, because of the kids' law — that has been on the list for a while and there is now a document that makes the lawyer's job faster. And Dad has one decision to make about cookies on the game pages, which the card above explains. Both sides of that one are real, which is exactly why it is his call.`],
+  ],
+  groups: [
+{
+  name: 'What we found when we checked',
+  color: '#ff4081',
+  blurb: 'An honest check means writing down the broken parts too. Here they are.',
+  cards: [
+    ['plain', 'The cookie bar said something that was not true',
+     `It said "No personal info is shared." But when someone taps yes, our analytics tool learns what device they have, roughly what city they are in, and how they moved around the page. That IS information about a person, going to a tool. Probably nobody meant to lie — the sentence was just written to sound nice instead of to be true. It now says what actually happens. There is a law (the FTC Act) that says untrue privacy sentences are illegal for every company, even tiny ones — it is the one law with no "you're too small to matter" rule.`],
+    ['plain', 'The "learn more" link went nowhere',
+     `The cookie bar had a link that said how it works — and the page it pointed to did not exist. Clicking it got you an error. A promise that leads to a missing page is worse than no promise. The page is real now: slushsisters.com/privacy, written the way you two talk, and it tells the whole truth including the awkward parts.`],
+    ['plain', 'You could say no, but you could not change your mind',
+     `The notes said there was a "Cookie settings" link in the footer for people who wanted to change their answer. There wasn't — someone wrote it down and never built it. If someone says yes and can never take it back, that is not really asking. Now every page's footer has the link, and saying no also deletes what the cookie already stored — not just stops adding to it.`],
+    ['plain', 'The arcade page said "nothing is saved" — and that stopped being true',
+     `When the games were built, they had zero tracking, and the arcade page proudly said so. Then Dad decided to count which games get played (a fair thing to want), but nobody updated the sentence. It sat there being wrong for two weeks. That is how honest websites drift into dishonest ones — not by lying, by forgetting. It is fixed, and checking for this drift is now a yearly job.`],
+  ],
+},
+{
+  name: 'The laws, in plain words',
+  color: '#4fc3f7',
+  blurb: 'There are a lot of privacy laws. Here is which ones actually apply to a two-kid company in Texas.',
+  cards: [
+    ['plain', 'California and Texas wrote big privacy laws — for big companies',
+     `California's law only applies to companies making about $25 million a year, or tracking 100,000 Californians. Texas's law has a rule that plainly excuses small businesses. You are a $250-a-party company in Lakeway — these laws do not apply to you, and would not even if you tripled. But we checked what they ask for anyway, and here is the fun part: <b>you already do almost all of it</b>, because asking first and selling nothing was the plan from day one. The laws are mostly good manners written down.`],
+    ['plain', 'The kids\' law is the one that really applies',
+     `It is called COPPA and it protects kids under 13 online. It applies to every company, any size. It says a website made for kids cannot quietly put a tracking cookie on their computer — and it counts cookies as personal information, which surprises people. Your arcade is made for kids and linked from every page, and the game pages can set a cookie if someone taps yes. A kid tapping "yes" does not count as permission under this law — only a parent's yes counts. This is the real open question on your website, and it is why the lawyer visit is on Dad's list.`],
+    ['plain', 'The signal we now listen for',
+     `Some people set their browser to send an automatic signal that means "please don't track me anywhere" — it is called Global Privacy Control. California, Colorado, and Texas all decided that companies they cover have to respect it. Nobody can make US respect it — too small — but we do anyway, because it costs us almost nothing and it is where every state's law is heading. If your browser sends it, our site never even asks about cookies. It just quietly doesn't track you.`],
+    ['number', 'States with their own privacy law, and counting', '20+',
+     `Twenty-something states have copied California's idea, each slightly differently. Sounds scary — but every single one has a size floor you are nowhere near, and because your website asks BEFORE tracking (most laws only require letting people say no AFTER), new state laws keep landing below you. The plan for keeping up is not reading law news every week. It is a short list of triggers — things the business might do that change the rules, like sending marketing texts — and one check-up every August.`],
+  ],
+},
+{
+  name: 'The decision that is left',
+  color: '#ffb74d',
+  blurb: 'One real choice remains, and it is a dad decision. Both sides, properly.',
+  cards: [
+    ['debate', 'Should the game pages use cookies at all?',
+     `Keep them: Dad decided in August that he wants to know which games are popular and how people move between them, and cookies let the tool recognize a returning player, so the counts are more accurate. The banner already asks first, recording is off on games, and no names are ever taken. The rules of the site say that decision stands unless Dad changes it.`,
+     `Drop them (just on games): the kids' law counts a cookie on a kids' page as collecting personal information, and a kid tapping "yes" is not real permission. The tool has a mode that counts game plays WITHOUT a cookie — Dad would still see which games are popular, which is the thing he actually asked for. The tiny cost: a kid who comes back tomorrow counts as a new player.`,
+     `This one genuinely is not ours to decide — it changes a call Dad made on purpose, so it goes to him. What we can say: the no-cookie mode keeps every number Dad asked for, gives up almost nothing, and makes the lawyer conversation much shorter. It is written up properly in the grown-up document so he can decide with everything in front of him.`],
+  ],
+},
+  ],
+},
 ];
 
 /* ------------------------------------------------------------------ render */

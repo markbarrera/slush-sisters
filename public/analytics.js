@@ -4,19 +4,44 @@
 
   This is the ONE place analytics is configured for the whole site, on purpose.
 
-  COOKIE CONSENT — added 2026-08-05
-  ---------------------------------
+  COOKIE CONSENT — added 2026-08-05, reworked for US-law fit 2026-08-20
+  ---------------------------------------------------------------------
   A small banner asks first-time visitors whether to set tracking cookies. Their
   answer is saved in localStorage (not a cookie, so even "no" leaves nothing).
   If they decline, PostHog never loads, no cookie is set, and the banner stays
-  quietly available via a link in the site footer. If they accept, tracking loads
-  normally. Returning visitors who already chose are never asked again.
+  quietly available via the "Cookie settings" link in the site footer. If they
+  accept, tracking loads normally. Returning visitors who already chose are
+  never asked again.
 
-  This is not a full CMP — the site sets exactly one tracking cookie (PostHog)
-  and controls all its own code, so a $30/month vendor widget would be overkill.
-  It IS the visible privacy/cookie notice that was flagged as outstanding in
-  docs/analytics.md, and it's the thing a lawyer would want to see before
-  signing off on the COPPA posture.
+  The 2026-08-20 rework (see docs/privacy-compliance.md for the full law-by-law
+  reasoning):
+    - The banner copy is now literally true. The old text said "No personal
+      info is shared" — but PostHog receives device data, coarse location, and
+      session replays, and builds a profile per visitor. A false statement in a
+      privacy notice is an FTC Act problem at ANY business size, so the copy
+      now says what actually happens and links to /privacy for the rest.
+    - /privacy actually exists now (it was a 404 before) and the footer
+      "Cookie settings" link is real on every page with a footer (it was
+      documented but never added).
+    - GLOBAL PRIVACY CONTROL (GPC) is honored: a browser sending
+      navigator.globalPrivacyControl is treated as "no" without nagging them
+      with the banner. GPC is NOT the old DNT header — DNT never had legal
+      force and Mark's decision to ignore it stands; GPC is the specific
+      opt-out signal that California (CPPA regs), Colorado, and Texas's TDPSA
+      universal-opt-out provision give legal force to. Honoring it is what
+      "compliant as laws evolve" looks like, and it costs almost no traffic.
+      A GPC visitor can still opt IN explicitly: the footer Cookie settings
+      link opens the banner, and an explicit stored "yes" wins over GPC.
+    - Declining (or re-opening settings after accepting) now also DELETES the
+      PostHog cookie + localStorage it left behind, so "no" really means
+      nothing remains — that's the CCPA/TDPSA notion of opt-out, not just
+      "stop collecting."
+    - Banner buttons are 44px tall (the site's own mobile tap-target rule).
+
+  This is still not a vendor CMP — the site sets exactly one tracking cookie
+  (PostHog) and controls all its own code, so a $30/month widget remains
+  overkill. What a CMP would add (and when that changes) is written down in
+  docs/privacy-compliance.md.
 
   POSTURE — as of 2026-08-05 (decided by Mark)
   --------------------------------------------
@@ -125,53 +150,103 @@
   if (POSTHOG_KEY.indexOf("phc_") !== 0) return;
 
   // --- Cookie consent -------------------------------------------------------
-  // Stored in localStorage so even "no" sets no cookies. Three states:
-  //   "yes"  — tracking loads normally
+  // Stored in localStorage so even "no" sets no cookies. States:
+  //   "yes"  — tracking loads normally (explicit consent wins, even over GPC)
   //   "no"   — PostHog never loads, no cookies set
-  //   absent — show the banner
+  //   absent — show the banner, UNLESS the browser sends Global Privacy
+  //            Control, in which case treat it as "no" without nagging
   var CONSENT_KEY = "slush_cookie_consent";
+  var REOPEN_KEY = "slush_cookie_reopen";
   var consent = null;
   try { consent = localStorage.getItem(CONSENT_KEY); } catch (_) {}
 
-  if (consent === "no") {
-    // They said no. Expose a global so the footer "Cookie settings" link can
-    // re-open the banner if they change their mind.
-    window.slushResetConsent = function () {
-      try { localStorage.removeItem(CONSENT_KEY); } catch (_) {}
+  // GPC — the browser-level opt-out signal that CA, CO, and TX give legal
+  // force to. Not the same thing as the old DNT header (which stays ignored).
+  var gpc = !!(navigator.globalPrivacyControl);
+
+  var phLoaded = false;
+
+  // Footer "Cookie settings" link — one global, defined in EVERY state.
+  // (window.slushResetConsent is the old name, kept so nothing breaks.)
+  window.slushCookieSettings = window.slushResetConsent = function () {
+    try { localStorage.removeItem(CONSENT_KEY); } catch (_) {}
+    if (phLoaded) {
+      // PostHog is running: stop it, delete what it stored, and reload with a
+      // flag so the banner reopens even for a GPC browser (they asked for it).
+      try { if (window.posthog && posthog.opt_out_capturing) posthog.opt_out_capturing(); } catch (_) {}
+      clearTrackingData();
+      try { sessionStorage.setItem(REOPEN_KEY, "1"); } catch (_) {}
       location.reload();
-    };
-    return;
-  }
+    } else {
+      showConsentBanner();
+    }
+  };
 
-  if (consent !== "yes") {
+  // Did the settings link just reload us to re-ask?
+  var reopen = false;
+  try {
+    reopen = sessionStorage.getItem(REOPEN_KEY) === "1";
+    if (reopen) sessionStorage.removeItem(REOPEN_KEY);
+  } catch (_) {}
+
+  if (consent === "yes") {
+    loadPostHog();
+  } else if (reopen) {
     showConsentBanner();
-    return;
+  } else if (consent === "no") {
+    // Nothing loads. The footer link is there if they change their mind.
+  } else if (gpc) {
+    // No stored choice + GPC signal: silently honor it. Nothing loads, no
+    // banner. The footer link still lets them opt in explicitly.
+  } else {
+    showConsentBanner();
   }
 
-  // consent === "yes" — load PostHog normally.
-  loadPostHog();
+  // Deletes everything PostHog stored in this browser (cookie + localStorage),
+  // so declining actually removes the tracking identity rather than just
+  // pausing collection.
+  function clearTrackingData() {
+    try {
+      for (var k = localStorage.length - 1; k >= 0; k--) {
+        var key = localStorage.key(k);
+        if (key && key.indexOf("ph_") === 0) localStorage.removeItem(key);
+      }
+    } catch (_) {}
+    try {
+      var cookies = document.cookie.split(";");
+      for (var c = 0; c < cookies.length; c++) {
+        var name = cookies[c].split("=")[0].replace(/^\s+/, "");
+        if (name.indexOf("ph_") === 0) {
+          document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        }
+      }
+    } catch (_) {}
+  }
 
   // --- Banner ---------------------------------------------------------------
   function showConsentBanner() {
+    if (document.getElementById("cookie-banner")) return;
     var banner = document.createElement("div");
     banner.id = "cookie-banner";
     banner.setAttribute("role", "dialog");
     banner.setAttribute("aria-label", "Cookie notice");
+    // The copy has to be TRUE, not just short: analytics cookies, sent to our
+    // analytics tool, and "no" is a real option. Details live on /privacy.
     banner.innerHTML =
       '<div style="max-width:600px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">' +
         '<p style="flex:1;min-width:200px;margin:0;font-size:14px;line-height:1.4;">' +
-          'We use cookies to see which pages are popular and how people find us. ' +
-          'No personal info is shared. ' +
-          '<a href="/privacy" style="color:inherit;text-decoration:underline;">Learn more</a>' +
+          'Can we use cookies and analytics to see which pages people read and ' +
+          'how they found us? It’s fine to say no — the site works the same. ' +
+          '<a href="/privacy" style="color:inherit;text-decoration:underline;">How it works</a>' +
         '</p>' +
         '<div style="display:flex;gap:8px;flex-shrink:0;">' +
           '<button id="cookie-yes" style="' +
-            'background:#1a237e;color:#fff;border:none;padding:8px 18px;' +
+            'background:#1a237e;color:#fff;border:none;padding:10px 22px;min-height:44px;' +
             'border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer;' +
-          '">OK</button>' +
+          '">Yes, that’s fine</button>' +
           '<button id="cookie-no" style="' +
             'background:transparent;color:#1a237e;border:1px solid #1a237e;' +
-            'padding:8px 18px;border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer;' +
+            'padding:10px 22px;min-height:44px;border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer;' +
           '">No thanks</button>' +
         '</div>' +
       '</div>';
@@ -192,6 +267,7 @@
       try { localStorage.setItem(CONSENT_KEY, answer); } catch (_) {}
       banner.parentNode.removeChild(banner);
       if (answer === "yes") loadPostHog();
+      else clearTrackingData();
     }
 
     // Wait for the DOM to be ready, then append.
@@ -238,10 +314,6 @@
       posthog.capture("game_opened", { game: gameSlug });
     }
 
-    window.slushResetConsent = function () {
-      try { localStorage.removeItem(CONSENT_KEY); } catch (_) {}
-      if (window.posthog) posthog.opt_out_capturing();
-      location.reload();
-    };
+    phLoaded = true;
   }
 })();
